@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 use App\Models\Processuse;
 use App\Models\Objectif;
@@ -54,7 +55,7 @@ class SuiviactionController extends Controller
                 {
                     $his = new Historique_action();
                     $his->nom_formulaire = 'Tableau du suivi des actions';
-                    $his->nom_action = 'Modification';
+                    $his->nom_action = 'Suivi';
                     $his->user_id = Auth::user()->id;
                     $his->save();
                 }
@@ -76,6 +77,17 @@ class SuiviactionController extends Controller
                 ->get();
 
        return view('historique.historique', ['historiques' => $historiques]);
+    }
+
+    public function index_historique_profil()
+    {
+        $historiques = Historique_action::join('users', 'historique_actions.user_id', '=', 'users.id')
+                ->orderBy('historique_actions.created_at', 'desc')
+                ->where('historique_actions.user_id', Auth::user()->id)
+                ->select('historique_actions.*', 'users.poste as poste', 'users.name as nom', 'users.matricule as matricule')
+                ->get();
+
+       return view('historique.historique_profil', ['historiques' => $historiques]);
     }
 
 }

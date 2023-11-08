@@ -173,7 +173,15 @@
                                         <div class="dropdown-inner">
                                             <ul class="link-list">
                                                 <li>
-                                                    <a href="user-profile-regular.html">
+                                                    <a href="{{ route('index_accueil') }}">
+                                                        <em class="icon ni ni-home"></em>
+                                                        <span>
+                                                            Accueil
+                                                        </span>
+                                                    </a>
+                                                </li>
+                                                <li>
+                                                    <a href="{{ route('index_profil') }}">
                                                         <em class="icon ni ni-user-alt"></em>
                                                         <span>
                                                             Voir Profil
@@ -181,7 +189,7 @@
                                                     </a>
                                                 </li>
                                                 <li>
-                                                    <a href="user-profile-activity.html">
+                                                    <a href="{{ route('index_historique_profil')}}">
                                                         <em class="icon ni ni-activity-alt"></em>
                                                         <span>
                                                             Activité
