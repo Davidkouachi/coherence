@@ -384,16 +384,16 @@
                                                     <option value="">
                                                         Choisir un traitement
                                                     </option>
-                                                    <option value="reduire">
+                                                    <option value="reduire le risque">
                                                         Réduire le risque
                                                     </option>
-                                                    <option value="accepter">
+                                                    <option value="accepter le risque">
                                                         Accepter le risque
                                                     </option>
-                                                    <option value="partager">
+                                                    <option value="partager le risque">
                                                         Partager le risque
                                                     </option>
-                                                    <option value="eliminer">
+                                                    <option value="eliminer le risque">
                                                         Éliminer le risque
                                                     </option>
                                                 </select>
@@ -407,7 +407,7 @@
                             <div class="card card-bordered">
                                 <div class="card-inner">
                                     <div class="row g-4">
-                                        <div class="col-lg-8">
+                                        <div class="col-lg-7">
                                             <div class="form-group">
                                                 <label class="form-label" for="preventif">
                                                     Action préventive
@@ -429,7 +429,7 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="col-lg-2">
+                                        <div class="col-lg-3">
                                             <div class="form-group">
                                                 <label class="form-label" for="Responsabilité">
                                                     Responsabilité

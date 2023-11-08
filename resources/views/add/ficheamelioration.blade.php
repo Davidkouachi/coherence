@@ -25,35 +25,23 @@
         <div class="container-fluid">
             <div class="nk-content-inner">
                 <div class="nk-content-body">
-                    <!--<div class="nk-block-head nk-block-head-sm" >
-                                            <div class="nk-block-between">
-                                                <div class="nk-block-head-content">
-                                                    <h3 class="nk-block-title page-title">
-
-                                                    </h3>
-                                                </div>
-                                                <div class="nk-block-head-content">
-                                                    <div class="toggle-wrap nk-block-tools-toggle">
-                                                        <a class="btn btn-icon btn-trigger toggle-expand me-n1"
-                                                            data-target="pageMenu" href="#">
-                                                            <em class="icon ni ni-more-v"></em>
-                                                        </a>
-                                                        <div class="toggle-expand-content" data-content="pageMenu">
-                                                            <ul class="nk-block-tools g-3">
-                                                                <li>
-                                                                    <a class="btn btn-white btn-dim btn-outline-primary" href="#">
-                                                                        <em class="icon ni ni-reports"></em>
-                                                                        <span>
-                                                                            Reports
-                                                                        </span>
-                                                                    </a>
-                                                                </li>
-                                                            </ul>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>-->
+                    <div class="nk-block-head nk-block-head-sm" >
+                                <div class="nk-block-between">
+                                    <div class="nk-block-head-content">
+                                        <h3 class="text-center">
+                                            Fiche d'amélioration
+                                        </h3>
+                                    </div>
+                                    <div class="nk-block-head-content">
+                                        <div class="toggle-wrap nk-block-tools-toggle">
+                                            <a class="btn btn-white btn-dim btn-outline-primary" href="{{ route('index_accueil') }}">
+                                                <em class="icon ni ni-home"></em>
+                                                <span>Accueil</span>
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                     <form class="nk-block" method="post" action="{{ route('add_prc') }}">
                         @csrf
                         <div class="row g-gs">
@@ -194,7 +182,7 @@
                                                         <div class="form-control-wrap">
                                                             <select class="form-select js-select2" id="risqueSelect" data-search="on" data-placeholder="Recherche Risque">
                                                                 <option value="">
-                                                                    
+
                                                                 </option>
                                                                 @foreach($risques as $risque)
                                                                 <option value="{{$risque->id}}">
@@ -435,6 +423,16 @@
                                                                 </div>
                                                             </div>
                                                         </div>
+                                                        <div class="col-lg-3">
+                                                            <div class="form-group">
+                                                                <label class="form-label" for="controle">
+                                                                    Traitement
+                                                                </label>
+                                                                <div class="form-control-wrap">
+                                                                    <input value="{{ $risque->traitement }}" disabled type="text" class="form-control" id="controle">
+                                                                </div>
+                                                            </div>
+                                                        </div>
                                                     </div>
                                                 </form>
                                             </div>
@@ -442,31 +440,23 @@
                                     </div>
                                 </div>
                                 @foreach ($actionsData[$Suivi_action2->risque_id] as $actionsDatas)
+
+                                @if ($actionsDatas['type'] === 'preventive')
                                 <div class="col-md-12 col-xxl-4" id="groupesAction">
                                     <div class="card card-bordered">
                                         <div class="card-inner">
                                                 <div class="row g-4">
-                                                    <div class="col-lg-6">
-                                                        <div class="form-group">
-                                                            <label class="form-label" for="corectif">
-                                                                Action corrective
-                                                            </label>
-                                                            <div class="form-control-wrap">
-                                                                <input value="{{ $actionsDatas['actionc'] }}" disabled type="text" class="form-control" id="corectif">
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-lg-6">
+                                                    <div class="col-lg-12">
                                                         <div class="form-group">
                                                             <label class="form-label" for="preventif">
                                                                 Action préventive
                                                             </label>
                                                             <div class="form-control-wrap">
-                                                                <input value="{{ $actionsDatas['actionp'] }}" disabled type="text" class="form-control" id="preventif">
+                                                                <input value="{{ $actionsDatas['action'] }}" disabled type="text" class="form-control" id="preventif">
                                                             </div>
                                                         </div>
                                                     </div>
-                                                    <div class="col-lg-4">
+                                                    <div class="col-lg-6">
                                                         <div class="form-group">
                                                             <label class="form-label" for="email-address-1">
                                                                 Délai
@@ -478,19 +468,7 @@
                                                             </div>
                                                         </div>
                                                     </div>
-                                                    <div class="col-lg-4">
-                                                        <div class="form-group">
-                                                            <label class="form-label" for="email-address-1">
-                                                                Traitement
-                                                            </label>
-                                                            <div class="form-group">
-                                                                <div class="form-control-wrap">
-                                                                    <input value="{{ $actionsDatas['traitement'] }}" disabled type="text" class="form-control">
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-lg-4">
+                                                    <div class="col-lg-6">
                                                         <div class="form-group">
                                                             <label class="form-label" for="email-address-1">
                                                                 Responsabilité
@@ -562,13 +540,105 @@
                                                                 </div>
                                                             </div>
                                                     @endif
-
-                                                    
-
                                                 </div>
                                         </div>
                                     </div>
                                 </div>
+                                @endif
+
+                                @if ($actionsDatas['type'] === 'corrective')
+                                <div class="col-md-12 col-xxl-4" id="groupesAction">
+                                    <div class="card card-bordered">
+                                        <div class="card-inner">
+                                                <div class="row g-4">
+                                                    <div class="col-lg-12">
+                                                        <div class="form-group">
+                                                            <label class="form-label" for="corectif">
+                                                                Action corrective
+                                                            </label>
+                                                            <div class="form-control-wrap">
+                                                                <input value="{{ $actionsDatas['action'] }}" disabled type="text" class="form-control" id="corectif">
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-lg-12">
+                                                        <div class="form-group">
+                                                            <label class="form-label" for="email-address-1">
+                                                                Responsabilité
+                                                            </label>
+                                                            <div class="form-group">
+                                                                <div class="form-control-wrap">
+                                                                    <input value="{{ $actionsDatas['responsable'] }}" disabled type="text" class="form-control">
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-lg-12">
+                                                        <div class="form-group">
+                                                            <label class="form-label" for="email-address-1">
+                                                                Statut
+                                                            </label>
+                                                            <div class="form-group">
+                                                                <div class="form-control-wrap">
+                                                                    <input value="{{ $actionsDatas['statut'] }}" disabled type="text" class="form-control text-white text-center 
+                                                                    @php
+                                                                        if ($actionsDatas['statut'] ==='non-realiser') {
+                                                                            echo 'bg-danger';
+                                                                        } elseif ($actionsDatas['statut'] ==='realiser') {
+                                                                            echo 'bg-success';
+                                                                        }
+                                                                    @endphp
+                                                                    ">
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    @if ($actionsDatas['statut'] ==='realiser')
+
+                                                            <div class="col-lg-4">
+                                                                <div class="form-group">
+                                                                    <label class="form-label" for="email-address-1">
+                                                                        Réaliser le 
+                                                                    </label>
+                                                                    <div class="form-group">
+                                                                        <div class="form-control-wrap">
+                                                                            <input value="{{ $actionsDatas['date_action'] }}" disabled type="date" class="form-control">
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-lg-4">
+                                                                <div class="form-group">
+                                                                    <label class="form-label" for="email-address-1">
+                                                                        Suivi éffectué le 
+                                                                    </label>
+                                                                    <div class="form-group">
+                                                                        <div class="form-control-wrap">
+                                                                            <input value="{{ $actionsDatas['date_suivi'] }}" disabled type="datetime" class="form-control">
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-lg-4">
+                                                                <div class="form-group">
+                                                                    <label class="form-label" for="email-address-1">
+                                                                        Efficacité 
+                                                                    </label>
+                                                                    <div class="form-group">
+                                                                        <div class="form-control-wrap">
+                                                                            <input value="{{ $actionsDatas['efficacite'] }}" disabled type="text" class="form-control">
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                    @endif
+                                                </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                @endif
+
                                 @endforeach
                                 <div class="col-md-12 col-xxl-4">
                                     <div class="card card-bordered card-preview">
@@ -801,6 +871,16 @@
                                                                 </div>
                                                             </div>
                                                         </div>
+                                                        <div class="col-lg-3">
+                                                            <div class="form-group">
+                                                                <label class="form-label" for="controle">
+                                                                    Traitement
+                                                                </label>
+                                                                <div class="form-control-wrap">
+                                                                    <input value="{{ $causes_select->traitement }}" disabled type="text" class="form-control" id="controle">
+                                                                </div>
+                                                            </div>
+                                                        </div>
                                                     </div>
                                                 </form>
                                             </div>
@@ -808,31 +888,23 @@
                                     </div>
                                 </div>
                                 @foreach ($actionsData2[$causes_select->risque_id] as $actionData2)
+
+                                @if ($actionData2['type'] === 'preventive')
                                 <div class="col-md-12 col-xxl-4" id="groupesAction">
                                     <div class="card card-bordered">
                                         <div class="card-inner">
                                                 <div class="row g-4">
-                                                    <div class="col-lg-6">
-                                                        <div class="form-group">
-                                                            <label class="form-label" for="corectif">
-                                                                Action corrective
-                                                            </label>
-                                                            <div class="form-control-wrap">
-                                                                <input value="{{ $actionData2['actionc'] }}" disabled type="text" class="form-control" id="corectif">
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-lg-6">
+                                                    <div class="col-lg-12">
                                                         <div class="form-group">
                                                             <label class="form-label" for="preventif">
                                                                 Action préventive
                                                             </label>
                                                             <div class="form-control-wrap">
-                                                                <input value="{{ $actionData2['actionp'] }}" disabled type="text" class="form-control" id="preventif">
+                                                                <input value="{{ $actionData2['action'] }}" disabled type="text" class="form-control" id="preventif">
                                                             </div>
                                                         </div>
                                                     </div>
-                                                    <div class="col-lg-4">
+                                                    <div class="col-lg-6">
                                                         <div class="form-group">
                                                             <label class="form-label" for="email-address-1">
                                                                 Délai
@@ -844,19 +916,7 @@
                                                             </div>
                                                         </div>
                                                     </div>
-                                                    <div class="col-lg-4">
-                                                        <div class="form-group">
-                                                            <label class="form-label" for="email-address-1">
-                                                                Traitement
-                                                            </label>
-                                                            <div class="form-group">
-                                                                <div class="form-control-wrap">
-                                                                    <input value="{{ $actionData2['traitement'] }}" disabled type="text" class="form-control">
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-lg-4">
+                                                    <div class="col-lg-6">
                                                         <div class="form-group">
                                                             <label class="form-label" for="email-address-1">
                                                                 Responsabilité
@@ -928,13 +988,105 @@
                                                                 </div>
                                                             </div>
                                                     @endif
-
-                                                    
-
                                                 </div>
                                         </div>
                                     </div>
                                 </div>
+                                @endif
+
+                                @if ($actionData2['type'] === 'corrective')
+                                <div class="col-md-12 col-xxl-4" id="groupesAction">
+                                    <div class="card card-bordered">
+                                        <div class="card-inner">
+                                                <div class="row g-4">
+                                                    <div class="col-lg-12">
+                                                        <div class="form-group">
+                                                            <label class="form-label" for="corectif">
+                                                                Action corrective
+                                                            </label>
+                                                            <div class="form-control-wrap">
+                                                                <input value="{{ $actionData2['action'] }}" disabled type="text" class="form-control" id="corectif">
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-lg-12">
+                                                        <div class="form-group">
+                                                            <label class="form-label" for="email-address-1">
+                                                                Responsabilité
+                                                            </label>
+                                                            <div class="form-group">
+                                                                <div class="form-control-wrap">
+                                                                    <input value="{{ $actionData2['responsable'] }}" disabled type="text" class="form-control">
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-lg-12">
+                                                        <div class="form-group">
+                                                            <label class="form-label" for="email-address-1">
+                                                                Statut
+                                                            </label>
+                                                            <div class="form-group">
+                                                                <div class="form-control-wrap">
+                                                                    <input value="{{ $actionData2['statut'] }}" disabled type="text" class="form-control text-white text-center 
+                                                                    @php
+                                                                        if ($actionData2['statut'] ==='non-realiser') {
+                                                                            echo 'bg-danger';
+                                                                        } elseif ($actionData2['statut'] ==='realiser') {
+                                                                            echo 'bg-success';
+                                                                        }
+                                                                    @endphp
+                                                                    ">
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    @if ($actionData2['statut'] ==='realiser')
+
+                                                            <div class="col-lg-4">
+                                                                <div class="form-group">
+                                                                    <label class="form-label" for="email-address-1">
+                                                                        Réaliser le 
+                                                                    </label>
+                                                                    <div class="form-group">
+                                                                        <div class="form-control-wrap">
+                                                                            <input value="{{ $actionData2['date_action'] }}" disabled type="date" class="form-control">
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-lg-4">
+                                                                <div class="form-group">
+                                                                    <label class="form-label" for="email-address-1">
+                                                                        Suivi éffectué le 
+                                                                    </label>
+                                                                    <div class="form-group">
+                                                                        <div class="form-control-wrap">
+                                                                            <input value="{{ $actionData2['date_suivi'] }}" disabled type="datetime" class="form-control">
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-lg-4">
+                                                                <div class="form-group">
+                                                                    <label class="form-label" for="email-address-1">
+                                                                        Efficacité 
+                                                                    </label>
+                                                                    <div class="form-group">
+                                                                        <div class="form-control-wrap">
+                                                                            <input value="{{ $actionData2['efficacite'] }}" disabled type="text" class="form-control">
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                    @endif
+                                                </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                @endif
+
                                 @endforeach
                                 <div class="col-md-12 col-xxl-4">
                                     <div class="card card-bordered card-preview">

@@ -38,11 +38,10 @@
                                 <img alt="logo-dark" class="logo-dark logo-img" src="images/logo.png"
                                     srcset="/images/logo.png 2x">
                                 </img>
-                                <span><B>COHÉRENCE</B></span>
                             </a>
                         </div>
                         <div class="nk-header-menu ms-auto" data-content="headerNav">
-                            <div class="nk-header-mobile">
+                            <!--<div class="nk-header-mobile">
                                 <div class="nk-header-brand">
                                     <a class="logo-link" href="index-2.html">
                                         <img alt="logo-dark" class="logo-dark logo-img" src="images/logo.png"
@@ -56,7 +55,7 @@
                                         <em class="icon ni ni-arrow-left"></em>
                                     </a>
                                 </div>
-                            </div>
+                            </div>-->
                             <ul class="nk-menu nk-menu-main ui-s2">
                                 <!--<li >
                                     <a class="nk-menu-link" href="{{ route('index_accueil') }}">
