@@ -188,7 +188,7 @@
                                         <div class="row g-gs">
                                             <div class="col-md-12">
                                                 <div class="card-head">
-                                                    <h5 class="card-title">Evaluation risque inhérent</h5>
+                                                    <h5 class="card-title">Evaluation risque sans dispositif de contrôle interne ou dispositif antérieur</h5>
                                                 </div>
                                                 <form action="#">
                                                     <div class="row g-4">
@@ -302,7 +302,7 @@
                             <div class="card card-bordered" id="divToChangee">
                                 <div class="card-inner">
                                     <div class="card-head">
-                                        <h5 class="card-title">Evaluation risque résiduel</h5>
+                                        <h5 class="card-title">Evaluation risque avec dispositif de contrôle interne actuel</h5>
                                     </div>
                                     <div class="row g-4">
                                         <div class="col-md-2">
@@ -363,7 +363,7 @@
                                                 <input disabled type="text" class="form-control " id="resultt">
                                             </div>
                                         </div>
-                                        <div class="col-md-2">
+                                        <div class="col-md-3">
                                             <div class="form-group">
                                                 <label id="labelcolor" class="form-label">Coût</label>
                                                 <input placeholder="Entrer le montant" id="cout_residuel" autocomplete="off" required name="cout_residuel" type="text" class="form-control">
@@ -375,7 +375,7 @@
                                                 </script>
                                             </div>
                                         </div>
-                                        <div class="col-lg-4">
+                                        <div class="col-lg-3">
                                             <div class="form-group">
                                                 <label class="form-label" for="email-address-1">
                                                     Traitement
@@ -799,7 +799,7 @@
                                                                 <label class="form-label" for="Responsabilité">
                                                                     Responsabilité
                                                                 </label>
-                                                                <select required name="responsable_id[]" class="form-select">
+                                                                <select required name="responsable_idc[]" class="form-select">
                                                                     <option value="">
                                                                         Choisir un responsable
                                                                     </option>

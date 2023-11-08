@@ -2,22 +2,6 @@
 
 @section('titre', 'Nouveau Processus')
 
-@section('menu')
-<li class="nk-menu-item ">
-                                    <!--<a id="ajouterGroupe" class=" btn btn-sm btn-warning " href="#">
-                                        <span class="nk-menu-text">
-                                            Ajouter une cause
-                                        </span>
-                                    </a>
-                                </li>
-                                <li class="nk-menu-item ">
-                                    <a id="ajouterAction" class=" btn btn-sm btn-warning " href="#">
-                                        <span class="nk-menu-text">
-                                            Ajouter une action
-                                        </span>
-                                    </a>
-                                </li>-->
-@endsection
 
 @section('content')
 
@@ -51,6 +35,29 @@
                                             <div class="row g-4">
                                                 <div class="col-lg-4">
                                                     <div class="form-group">
+                                                        <div class="custom-control custom-radio"><input type="radio" class="custom-control-input" name="radioSize" id="customRadio7"><label class="custom-control-label" for="customRadio7">Non conformité interne</label></div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-4">
+                                                    <div class="form-group">
+                                                        <div class="custom-control custom-radio"><input type="radio" class="custom-control-input" name="radioSize" id="customRadio6"><label class="custom-control-label" for="customRadio6">Reclamation</label></div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-4">
+                                                    <div class="form-group">
+                                                        <div class="custom-control custom-radio"><input type="radio" class="custom-control-input" name="radioSize" id="customRadio5"><label class="custom-control-label" for="customRadio5">Contentieux</label></div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-12 col-xxl-4" id="groupesContainer">
+                                <div class="card card-bordered">
+                                    <div class="card-inner">
+                                            <div class="row g-4">
+                                                <div class="col-lg-4">
+                                                    <div class="form-group">
                                                         <label class="form-label" for="Cause">
                                                             Date
                                                         </label>
@@ -72,7 +79,7 @@
                                                 <div class="col-lg-4">
                                                     <div class="form-group">
                                                         <label class="form-label" for="controle">
-                                                            Détecteur
+                                                            Détecteur (Agent / Client)
                                                         </label>
                                                         <div class="form-control-wrap">
                                                             <input type="text" class="form-control" id="controle">
@@ -127,34 +134,6 @@
                                                 </div>
                                                 <div class="col-lg-6">
                                                     <div class="form-group">
-                                                        <label class="form-label" for="Cause">
-                                                            Resumé des cause(s)
-                                                        </label>
-                                                        <div class="form-control-wrap">
-                                                            <input type="text" class="form-control" id="Cause">
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="col-lg-6">
-                                                    <div class="form-group">
-                                                        <label class="form-label" for="Cause">
-                                                            Resumé des risque(s)
-                                                        </label>
-                                                        <div class="form-control-wrap">
-                                                            <input type="text" class="form-control" id="Cause">
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-6 col-xxl-6" id="groupesContainer">
-                                <div class="card card-bordered">
-                                    <div class="card-inner text-center">
-                                            <div class="row g-4">
-                                                <div class="col-lg-12">
-                                                    <div class="form-group">
                                                         <div class="form-control-wrap">
                                                             <select class="form-select js-select2 " id="causeSelect" data-search="on" data-placeholder="Recherche Cause">
                                                                 <option value="" >
@@ -169,15 +148,7 @@
                                                         </div>
                                                     </div>
                                                 </div>
-                                            </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-6 col-xxl-6" id="groupesContainer">
-                                <div class="card card-bordered">
-                                    <div class="card-inner text-center">
-                                            <div class="row g-4">
-                                                <div class="col-lg-12">
+                                                <div class="col-lg-6">
                                                     <div class="form-group">
                                                         <div class="form-control-wrap">
                                                             <select class="form-select js-select2" id="risqueSelect" data-search="on" data-placeholder="Recherche Risque">
@@ -196,6 +167,115 @@
                                             </div>
                                     </div>
                                 </div>
+                            </div>
+                            <div class="col-md-12 col-xxl-4" id="groupesContainer">
+                                <div class="card card-bordered">
+                                    <div class="card-inner">
+                                        <div class="row g-4">
+                                            <div class="col-lg-4">
+                                                <div class="form-group">
+                                                    <a class="btn btn-outline-primary btn-dim action-button-select" data-type="acceptee">
+                                                        Afficher Action(s)
+                                                    </a>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-4">
+                                                <div class="form-group">
+                                                    <a class="btn btn-outline-primary btn-dim action-button-new" data-type="nouvelle-action">
+                                                        Nouvelle action corrective
+                                                    </a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!--<div class="col-md-12 col-xxl-4" id="groupesContainer">
+                                <div class="card card-bordered">
+                                    <div class="card-inner">
+                                        <div class="row g-4">
+                                            <div class="col-lg-12 col-xxl-12" >
+                                                <div class="card">
+                                                    <div class="card-inner">
+                                                            <div class="row g-4">
+                                                                <div class="col-lg-6">
+                                                                    <div class="form-group">
+                                                                        <label class="form-label" for="Cause">
+                                                                            Processus
+                                                                        </label>
+                                                                        <div class="form-control-wrap">
+                                                                            <input value="" type="text" class="form-control" disabled>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-lg-6">
+                                                                    <div class="form-group">
+                                                                        <label class="form-label" for="controle">
+                                                                            Risque
+                                                                        </label>
+                                                                        <div class="form-control-wrap">
+                                                                            <input value="" type="text" class="form-control" disabled>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-lg-12">
+                                                                    <div class="form-group">
+                                                                        <label class="form-label" for="controle">
+                                                                            Résumé des causes
+                                                                        </label>
+                                                                        <div class="form-control-wrap">
+                                                                            <input value="" type="text" class="form-control" disabled>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-lg-12">
+                                                                    <div class="form-group">
+                                                                        <label class="form-label" for="controle">
+                                                                            Action Corrective
+                                                                        </label>
+                                                                        <div class="form-control-wrap">
+                                                                            <input value="" type="text" class="form-control" disabled>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-lg-4">
+                                                                            <div class="form-group">
+                                                                                <label class="form-label" for="Coût">
+                                                                                    Responsable
+                                                                                </label>
+                                                                                <div class="form-control-wrap">
+                                                                                    <input value="" type="text" class="form-control" disabled>
+                                                                                </div>
+                                                                            </div>
+                                                                            <div class="form-group">
+                                                                                <label class="form-label" for="Coût">
+                                                                                    Date prévisionnelle de réalisation
+                                                                                </label>
+                                                                                <div class="form-control-wrap">
+                                                                                    <input name="date_action" type="date" class="form-control" >
+                                                                                </div>
+                                                                            </div>
+                                                                </div>
+                                                                <div class="col-lg-8">
+                                                                    <div class="form-group text-center">
+                                                                        <label class="form-label" for="description">
+                                                                            Commentaire
+                                                                        </label>
+                                                                        <div class="form-control-wrap">
+                                                                            <textarea name="commentaire" class="form-control no-resize" id="default-textarea"></textarea>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>-->
+                            <div id="dynamic-fields">
+                                <!-- Vos groupes de champs dynamiques seront ajoutés ici -->
                             </div>
                             <div class="col-md-12 col-xxl-4">
                                 <div class="card card-bordered card-preview">
@@ -336,7 +416,7 @@
                                     <div class="card card-bordered">
                                         <div class="card-inner">
                                                 <div class="row g-4">
-                                                    <div class="col-lg-6">
+                                                    <div class="col-lg-12">
                                                         <div class="form-group">
                                                             <label class="form-label" for="Cause">
                                                                 Cause
@@ -346,7 +426,7 @@
                                                             </div>
                                                         </div>
                                                     </div>
-                                                    <div class="col-lg-6">
+                                                    <div class="col-lg-12">
                                                         <div class="form-group">
                                                             <label class="form-label" for="controle">
                                                                 Dispositif de Contrôle
@@ -399,7 +479,7 @@
                                                                 </div>
                                                             </div>
                                                         </div>
-                                                        <div class="col-lg-3">
+                                                        <div class="col-lg-2">
                                                             <div class="form-group">
                                                                 <label class="form-label" for="controle">
                                                                     Evaluation
@@ -409,7 +489,7 @@
                                                                 </div>
                                                             </div>
                                                         </div>
-                                                        <div class="col-lg-3">
+                                                        <div class="col-lg-4">
                                                             <div class="form-group">
                                                                 <label class="form-label" for="controle">
                                                                     Coût
@@ -423,7 +503,7 @@
                                                                 </div>
                                                             </div>
                                                         </div>
-                                                        <div class="col-lg-3">
+                                                        <div class="col-lg-12">
                                                             <div class="form-group">
                                                                 <label class="form-label" for="controle">
                                                                     Traitement
@@ -573,66 +653,6 @@
                                                             </div>
                                                         </div>
                                                     </div>
-                                                    <div class="col-lg-12">
-                                                        <div class="form-group">
-                                                            <label class="form-label" for="email-address-1">
-                                                                Statut
-                                                            </label>
-                                                            <div class="form-group">
-                                                                <div class="form-control-wrap">
-                                                                    <input value="{{ $actionsDatas['statut'] }}" disabled type="text" class="form-control text-white text-center 
-                                                                    @php
-                                                                        if ($actionsDatas['statut'] ==='non-realiser') {
-                                                                            echo 'bg-danger';
-                                                                        } elseif ($actionsDatas['statut'] ==='realiser') {
-                                                                            echo 'bg-success';
-                                                                        }
-                                                                    @endphp
-                                                                    ">
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-
-                                                    @if ($actionsDatas['statut'] ==='realiser')
-
-                                                            <div class="col-lg-4">
-                                                                <div class="form-group">
-                                                                    <label class="form-label" for="email-address-1">
-                                                                        Réaliser le 
-                                                                    </label>
-                                                                    <div class="form-group">
-                                                                        <div class="form-control-wrap">
-                                                                            <input value="{{ $actionsDatas['date_action'] }}" disabled type="date" class="form-control">
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                            <div class="col-lg-4">
-                                                                <div class="form-group">
-                                                                    <label class="form-label" for="email-address-1">
-                                                                        Suivi éffectué le 
-                                                                    </label>
-                                                                    <div class="form-group">
-                                                                        <div class="form-control-wrap">
-                                                                            <input value="{{ $actionsDatas['date_suivi'] }}" disabled type="datetime" class="form-control">
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                            <div class="col-lg-4">
-                                                                <div class="form-group">
-                                                                    <label class="form-label" for="email-address-1">
-                                                                        Efficacité 
-                                                                    </label>
-                                                                    <div class="form-group">
-                                                                        <div class="form-control-wrap">
-                                                                            <input value="{{ $actionsDatas['efficacite'] }}" disabled type="text" class="form-control">
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                    @endif
                                                 </div>
                                         </div>
                                     </div>
@@ -722,7 +742,7 @@
                                                 echo 'bg-warning border-white';
                                             } elseif ($causes_select->evaluation >= 20 && $causes_select->evaluation <= 25) {
                                                 echo 'bg-danger border-white';
-                                        } @endphp">
+                                            } @endphp">
                                             <div class="card-inner">
                                                 <div class="card-head">
                                                     <h5 class="card-title">Evaluation risque inhérent</h5>
@@ -749,7 +769,7 @@
                                                                 </div>
                                                             </div>
                                                         </div>
-                                                        <div class="col-lg-3">
+                                                        <div class="col-lg-2">
                                                             <div class="form-group">
                                                                 <label class="form-label" for="controle">
                                                                     Evaluation
@@ -759,7 +779,7 @@
                                                                 </div>
                                                             </div>
                                                         </div>
-                                                        <div class="col-lg-3">
+                                                        <div class="col-lg-4">
                                                             <div class="form-group">
                                                                 <label class="form-label" for="controle">
                                                                     Coût
@@ -784,7 +804,7 @@
                                             <div class="card card-bordered">
                                                 <div class="card-inner">
                                                     <div class="row g-4">
-                                                        <div class="col-lg-6">
+                                                        <div class="col-lg-12">
                                                             <div class="form-group">
                                                                 <label class="form-label" for="Cause">
                                                                     Cause
@@ -794,7 +814,7 @@
                                                                 </div>
                                                             </div>
                                                         </div>
-                                                        <div class="col-lg-6">
+                                                        <div class="col-lg-12">
                                                             <div class="form-group">
                                                                 <label class="form-label" for="controle">
                                                                     Dispositif de Contrôle
@@ -847,7 +867,7 @@
                                                                 </div>
                                                             </div>
                                                         </div>
-                                                        <div class="col-lg-3">
+                                                        <div class="col-lg-2">
                                                             <div class="form-group">
                                                                 <label class="form-label" for="controle">
                                                                     Evaluation
@@ -857,7 +877,7 @@
                                                                 </div>
                                                             </div>
                                                         </div>
-                                                        <div class="col-lg-3">
+                                                        <div class="col-lg-4">
                                                             <div class="form-group">
                                                                 <label class="form-label" for="controle">
                                                                     Coût
@@ -871,7 +891,7 @@
                                                                 </div>
                                                             </div>
                                                         </div>
-                                                        <div class="col-lg-3">
+                                                        <div class="col-lg-12">
                                                             <div class="form-group">
                                                                 <label class="form-label" for="controle">
                                                                     Traitement
@@ -1021,66 +1041,6 @@
                                                             </div>
                                                         </div>
                                                     </div>
-                                                    <div class="col-lg-12">
-                                                        <div class="form-group">
-                                                            <label class="form-label" for="email-address-1">
-                                                                Statut
-                                                            </label>
-                                                            <div class="form-group">
-                                                                <div class="form-control-wrap">
-                                                                    <input value="{{ $actionData2['statut'] }}" disabled type="text" class="form-control text-white text-center 
-                                                                    @php
-                                                                        if ($actionData2['statut'] ==='non-realiser') {
-                                                                            echo 'bg-danger';
-                                                                        } elseif ($actionData2['statut'] ==='realiser') {
-                                                                            echo 'bg-success';
-                                                                        }
-                                                                    @endphp
-                                                                    ">
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-
-                                                    @if ($actionData2['statut'] ==='realiser')
-
-                                                            <div class="col-lg-4">
-                                                                <div class="form-group">
-                                                                    <label class="form-label" for="email-address-1">
-                                                                        Réaliser le 
-                                                                    </label>
-                                                                    <div class="form-group">
-                                                                        <div class="form-control-wrap">
-                                                                            <input value="{{ $actionData2['date_action'] }}" disabled type="date" class="form-control">
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                            <div class="col-lg-4">
-                                                                <div class="form-group">
-                                                                    <label class="form-label" for="email-address-1">
-                                                                        Suivi éffectué le 
-                                                                    </label>
-                                                                    <div class="form-group">
-                                                                        <div class="form-control-wrap">
-                                                                            <input value="{{ $actionData2['date_suivi'] }}" disabled type="datetime" class="form-control">
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                            <div class="col-lg-4">
-                                                                <div class="form-group">
-                                                                    <label class="form-label" for="email-address-1">
-                                                                        Efficacité 
-                                                                    </label>
-                                                                    <div class="form-group">
-                                                                        <div class="form-control-wrap">
-                                                                            <input value="{{ $actionData2['efficacite'] }}" disabled type="text" class="form-control">
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                    @endif
                                                 </div>
                                         </div>
                                     </div>
@@ -1145,6 +1105,261 @@
                 $(`#modalVucause${selectedValu}`).modal('show');
             });
         });
+    </script>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            document.querySelectorAll(".action-button-new").forEach(function (button) {
+                button.addEventListener("click", function () {
+                    var type_new = this.getAttribute("data-type");
+                    addGroup(type_new);
+                });
+            });
+        });
+
+        function addGroup(type_new) {
+            var groupe = document.createElement("div");
+            groupe.className = "card card-bordered";
+            groupe.innerHTML = `
+                                    <div class="card-inner">
+                                        <div class="row g-4">
+                                            <div class="col-lg-12 col-xxl-12" >
+                                                <div class="card">
+                                                    <div class="card-inner">
+                                                            <div class="row g-4">
+                                                                <div class="col-lg-6">
+                                                                    <div class="form-group">
+                                                                        <label class="form-label" for="Cause">
+                                                                            Processus
+                                                                        </label>
+                                                                        <select id="responsable_idc" required name="responsable_idc[]" class="form-select">
+                                                                            <option selected value="">
+                                                                                Choisir un responsable
+                                                                            </option>
+                                                                            <option value="1">
+                                                                                1
+                                                                            </option>
+                                                                        </select>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-lg-6">
+                                                                    <div class="form-group">
+                                                                        <label class="form-label" for="controle">
+                                                                            Risque
+                                                                        </label>
+                                                                        <div class="form-control-wrap">
+                                                                            <input value="" type="text" class="form-control" >
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-lg-12">
+                                                                    <div class="form-group">
+                                                                        <label class="form-label" for="controle">
+                                                                            Résumé des causes
+                                                                        </label>
+                                                                        <div class="form-control-wrap">
+                                                                            <input value="" type="text" class="form-control" >
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-lg-12">
+                                                                    <div class="form-group">
+                                                                        <label class="form-label" for="controle">
+                                                                            Action Corrective
+                                                                        </label>
+                                                                        <div class="form-control-wrap">
+                                                                            <input value="" type="text" class="form-control" >
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-lg-4">
+                                                                            <div class="form-group">
+                                                                                <label class="form-label" for="Coût">
+                                                                                    Responsable
+                                                                                </label>
+                                                                                <select id="responsable_idc" required name="responsable_idc[]" class="form-select">
+                                                                                    <option selected value="">
+                                                                                        Choisir un responsable
+                                                                                    </option>
+                                                                                    <option value="1">
+                                                                                        1
+                                                                                    </option>
+                                                                                </select>
+                                                                            </div>
+                                                                            <div class="form-group">
+                                                                                <label class="form-label" for="Coût">
+                                                                                    Date prévisionnelle de réalisation
+                                                                                </label>
+                                                                                <div class="form-control-wrap">
+                                                                                    <input name="date_action" type="date" class="form-control" >
+                                                                                </div>
+                                                                            </div>
+                                                                </div>
+                                                                <div class="col-lg-8">
+                                                                    <div class="form-group text-center">
+                                                                        <label class="form-label" for="description">
+                                                                            Commentaire
+                                                                        </label>
+                                                                        <div class="form-control-wrap">
+                                                                            <textarea name="commentaire" class="form-control no-resize" id="default-textarea"></textarea>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-lg-12">
+                                                                    <div class="form-group text-center">
+                                                                        <a class="btn btn-outline-danger btn-dim " id="suppr_nouvelle_action" >
+                                                                            Supprimer
+                                                                        </a>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+            `;
+
+            groupe.querySelector("#suppr_nouvelle_action").addEventListener("click", function(event) {
+                event.preventDefault();
+                groupe.remove();
+            });
+
+            document.getElementById("dynamic-fields").appendChild(groupe);
+        }
+    </script>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            document.querySelectorAll(".action-button-select").forEach(function (button) {
+                button.addEventListener("click", function () {
+                    var type = this.getAttribute("data-type");
+                    var selectedCause = $("#causeSelect").val();
+                    var selectedRisque = $("#risqueSelect").val();
+
+                    if (selectedCause !== '') {
+                        $.ajax({
+                            url: '/get-process-risk-info/' + selectedCause,
+                            method: 'GET',
+                            success: function (data) {
+                                addGroups(type, data);
+                            },
+                            error: function () {
+                                toastr.error("Une erreur s'est produite lors de la récupération des informations.");
+                            }
+                        });
+                    }else {
+                        toastr.error("Sélectionnez une cause avant de continuer.");
+                    }
+                });
+            });
+        });
+
+        function addGroups(type, data) {
+            // Récupérer l'élément qui contient les groupes
+            var dynamicFields = document.getElementById("dynamic-fields");
+
+            // Supprimer le contenu existant
+            while (dynamicFields.firstChild) {
+                dynamicFields.removeChild(dynamicFields.firstChild);
+            }
+
+            data.actions.forEach(function(action) {
+                var groupe = document.createElement("div");
+                groupe.className = "card card-bordered";
+                groupe.innerHTML = `
+                    <div class="card-inner">
+                                        <div class="row g-4">
+                                            <div class="col-lg-12 col-xxl-12" >
+                                                <div class="card">
+                                                    <div class="card-inner">
+                                                            <div class="row g-4">
+                                                                <div class="col-lg-6">
+                                                                    <div class="form-group">
+                                                                        <label class="form-label" for="Cause">
+                                                                            Processus
+                                                                        </label>
+                                                                        <div class="form-control-wrap">
+                                                                            <input value="${action.nom_processus}" type="text" class="form-control" disabled >
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-lg-6">
+                                                                    <div class="form-group">
+                                                                        <label class="form-label" for="controle">
+                                                                            Risque
+                                                                        </label>
+                                                                        <div class="form-control-wrap">
+                                                                            <input value="${action.nom_risque}" type="text" class="form-control" >
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-lg-12">
+                                                                    <div class="form-group">
+                                                                        <label class="form-label" for="controle">
+                                                                            Action Corrective
+                                                                        </label>
+                                                                        <div class="form-control-wrap">
+                                                                            <input value="${action.action}" type="text" class="form-control" >
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-lg-4">
+                                                                            <div class="form-group">
+                                                                                <label class="form-label" for="Coût">
+                                                                                    Responsable
+                                                                                </label>
+                                                                                <select id="responsable_idc" required name="responsable_idc[]" class="form-select">
+                                                                                    <option selected value="">
+                                                                                        Choisir un responsable
+                                                                                    </option>
+                                                                                    <option value="1">
+                                                                                        1
+                                                                                    </option>
+                                                                                </select>
+                                                                            </div>
+                                                                            <div class="form-group">
+                                                                                <label class="form-label" for="Coût">
+                                                                                    Date prévisionnelle de réalisation
+                                                                                </label>
+                                                                                <div class="form-control-wrap">
+                                                                                    <input name="date_action" type="date" class="form-control" >
+                                                                                </div>
+                                                                            </div>
+                                                                </div>
+                                                                <div class="col-lg-8">
+                                                                    <div class="form-group text-center">
+                                                                        <label class="form-label" for="description">
+                                                                            Commentaire
+                                                                        </label>
+                                                                        <div class="form-control-wrap">
+                                                                            <textarea name="commentaire" class="form-control no-resize" id="default-textarea"></textarea>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-lg-12">
+                                                                    <div class="form-group text-center">
+                                                                        <a class="btn btn-outline-danger btn-dim " id="suppr_action" >
+                                                                            Supprimer
+                                                                        </a>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                `;
+
+                groupe.querySelector("#suppr_action").addEventListener("click", function(event) {
+                    event.preventDefault();
+                    groupe.remove();
+                });
+
+                document.getElementById("dynamic-fields").appendChild(groupe);
+            });
+        }
     </script>
 
 

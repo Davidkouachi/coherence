@@ -135,6 +135,7 @@ class AmeliorationController extends Controller
             foreach($actions2 as $action2)
             {
                $Suivi_action2 = Suivi_action::where('action_id', $action2->id)->first();
+               $Type_action = Suivi_action::where('action_id', $action2->id)->first();
                $actionsData2[$Suivi_action2->risque_id][] = [
                     'action' => $action2->action,
                     'delai' => $action2->delai,
@@ -154,5 +155,24 @@ class AmeliorationController extends Controller
             'causes_selects' => $causes_selects, 'Suivi_action2' => $Suivi_action2, 'caus2' => $caus2, 'causesData2' => $causesData2, 'actionsData2' => $actionsData2]);
    }
     
+    public function action_non_accepte($id)
+    {
+        $cause = Cause::find($id);
+        $risque = Risque::find($cause->risque_id);
+        $actions = Action::where('risque_id', $risque->id )
+                    ->where('type', 'corrective' )
+                    ->get();
+        foreach ($actions as $action) {
+            $risque = Risque::find($action->risque_id);
+            $action->nom_risque = $risque->nom;
+
+            $processus = Processuse::find($risque->processus_id);
+            $action->nom_processus = $processus->nom;
+        }
+
+        return response()->json([
+            'actions' => $actions,
+        ]);
+    }
 
 }
