@@ -30,7 +30,7 @@
                             <div class="col-md-12 col-xxl-4">
                                 <div class="card card-bordered card-preview">
                                     <div class="card-inner">
-                                        <table class="datatable-init-export nowrap table" data-export-title="Export">
+                                        <table class="datatable-init table">
                                             <thead>
                                                 <tr class="text-center">
                                                     <th></th>

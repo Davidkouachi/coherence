@@ -49,6 +49,8 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/Profil', [ProfilController::class, 'index_profil'])->name('index_profil');
 
     Route::post('/verifi_session', [AuthController::class, 'verifi_session']);
+
+    Route::get('/Historique', [SuiviactionController::class, 'index_historique'])->name('index_historique');
 });
 
 Route::get('/Res-va', [ResvaController::class, 'index_add_resva'])->name('index_add_resva');

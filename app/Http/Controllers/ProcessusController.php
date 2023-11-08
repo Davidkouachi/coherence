@@ -13,6 +13,7 @@ use App\Models\Action;
 use App\Models\Suivi_action;
 use App\Models\Pdf_file;
 use App\Models\User;
+use App\Models\Historique_action;
 
 use Illuminate\Support\Facades\Validator;
 use Carbon\Carbon;
@@ -136,6 +137,15 @@ class ProcessusController extends Controller
             $suivic->processus_id = $processus_id;
             $suivic->save();
 
+        }
+
+        if ($risque || $cause || $nouvelleActionP || $suivip || $nouvelleActionC || $suivic)
+        {
+            $his = new Historique_action();
+            $his->nom_formulaire = 'Nouveau Risque';
+            $his->nom_action = 'Ajouter';
+            $his->user_id = Auth::user()->id;
+            $his->save();
         }
 
         return redirect()
@@ -278,6 +288,15 @@ class ProcessusController extends Controller
             $nouvelObjectif->save();
         }
 
+        if ($processus)
+        {
+            $his = new Historique_action();
+            $his->nom_formulaire = 'Nouveau Processus';
+            $his->nom_action = 'Ajouter';
+            $his->user_id = Auth::user()->id;
+            $his->save();
+        }
+
         return redirect()
             ->route('index_add_processus')
             ->with('ajouter', 'Enregistrement éffectuée.');
@@ -290,7 +309,15 @@ class ProcessusController extends Controller
         $valide->date_validation = now()->format('Y-m-d\TH:i');
         $valide->statut = 'valider';
         $valide->update();
-            
+
+        if ($valide)
+        {
+            $his = new Historique_action();
+            $his->nom_formulaire = 'Tableau de validation';
+            $his->nom_action = 'Validation';
+            $his->user_id = Auth::user()->id;
+            $his->save();
+        }
 
         return redirect()
             ->back()
@@ -313,6 +340,15 @@ class ProcessusController extends Controller
             $valide->statut = 'modifier';
             $valide->date_validation = now()->format('Y-m-d\TH:i');
             $valide->update();
+
+            if ($valide || $rejet)
+            {
+                $his = new Historique_action();
+                $his->nom_formulaire = 'Tableau de validation';
+                $his->nom_action = 'Rejet - Modification';
+                $his->user_id = Auth::user()->id;
+                $his->save();
+            }
             
         } elseif ($request->input('radio') === 'supprimer') {
             
@@ -320,6 +356,15 @@ class ProcessusController extends Controller
             $valide->statut = 'supprimer';
             $valide->date_validation = now()->format('Y-m-d\TH:i');
             $valide->update();
+
+            if ($valide || $rejet)
+            {
+                $his = new Historique_action();
+                $his->nom_formulaire = 'Tableau de validation';
+                $his->nom_action = 'Rejet - Supprimer';
+                $his->user_id = Auth::user()->id;
+                $his->save();
+            }
         }
 
         return redirect()

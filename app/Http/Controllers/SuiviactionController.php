@@ -13,6 +13,7 @@ use App\Models\Rejet;
 use App\Models\Action;
 use App\Models\Suivi_action;
 use App\Models\User;
+use App\Models\Historique_action;
 
 use Illuminate\Support\Facades\Validator;
 use Carbon\Carbon;
@@ -48,6 +49,15 @@ class SuiviactionController extends Controller
             {
                 $action->statut = 'realiser';
                 $action->update();
+
+                if ($action || $suivi)
+                {
+                    $his = new Historique_action();
+                    $his->nom_formulaire = 'Tableau du suivi des actions';
+                    $his->nom_action = 'Modification';
+                    $his->user_id = Auth::user()->id;
+                    $his->save();
+                }
             }
 
         }
@@ -55,6 +65,17 @@ class SuiviactionController extends Controller
         return redirect()
             ->back()
             ->with('valider', 'Suivi éffectué.');
+    }
+
+    public function index_historique()
+    {
+
+        $historiques = Historique_action::join('users', 'historique_actions.user_id', '=', 'users.id')
+                ->orderBy('historique_actions.created_at', 'desc')
+                ->select('historique_actions.*', 'users.poste as poste', 'users.name as nom', 'users.matricule as matricule')
+                ->get();
+
+       return view('historique.historique', ['historiques' => $historiques]);
     }
 
 }
