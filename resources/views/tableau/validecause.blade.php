@@ -37,9 +37,10 @@
                                                     <th>Processus</th>
                                                     <th>Risque</th>
                                                     <th>Nombre de cause</th>
-                                                    <th>Nombre d'action</th>
-                                                    <th>Vaisemblence</th>
-                                                    <th>Gravité</th>
+                                                    <th>Nombre d'action Préventive</th>
+                                                    <th>Nombre d'action Corrective</th>
+                                                    <!--<th>Vaisemblence</th>
+                                                    <th>Gravité</th>-->
                                                     <th>Evaluation</th>
                                                     <th>Coût</th>
                                                     <th></th>
@@ -52,9 +53,10 @@
                                                         <td>{{ $risque->nom_processus }}</td>
                                                         <td>{{ $risque->nom }}</td>
                                                         <td>{{ $risque->nbre_cause }}</td>
-                                                        <td>{{ $risque->nbre_action }}</td>
-                                                        <td>{{ $risque->vraisemblence_residuel }}</td>
-                                                        <td>{{ $risque->gravite_residuel }}</td>
+                                                        <td>{{ $risque->nbre_actionp }}</td>
+                                                        <td>{{ $risque->nbre_actionc }}</td>
+                                                        <!--<td>{{ $risque->vraisemblence_residuel }}</td>
+                                                        <td>{{ $risque->gravite_residuel }}</td>-->
                                                         <td
                                                             class="@php
                                                                 if ($risque->evaluation_residuel <= 10) {
@@ -115,6 +117,10 @@
                 <div class="modal-content" data-simplebar>
                     @if ($risque->pdf_nom != '')
                         <embed src="{{ asset('storage/pdf/' . $risque->pdf_nom) }}" type="application/pdf" width="100%" height="1100px">
+                    @endif
+                    
+                    @if ($risque->pdf_nom == '')
+                        <p class="text-center mt-2"  >Aucun fichier </p>
                     @endif
                 </div>
             </div>
@@ -177,7 +183,9 @@
                                         } @endphp">
                                             <div class="card-inner">
                                                 <div class="card-head">
-                                                    <h5 class="card-title">Evaluation risque inhérent</h5>
+                                                    <h5 class="card-title">
+                                                        Evaluation risque sans dispositif de contrôle interne ou dispositif antérieur
+                                                    </h5>
                                                 </div>
                                                 <form action="#">
                                                     <div class="row g-4">
@@ -275,7 +283,9 @@
                                         " >
                                             <div class="card-inner">
                                                 <div class="card-head">
-                                                    <h5 class="card-title">Evaluation risque résiduel</h5>
+                                                    <h5 class="card-title">
+                                                        Evaluation risque avec dispositif de contrôle interne actuel
+                                                    </h5>
                                                 </div>
                                                 <form action="#">
                                                     <div class="row g-4">

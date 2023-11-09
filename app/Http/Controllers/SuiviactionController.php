@@ -23,13 +23,13 @@ class SuiviactionController extends Controller
 {
     public function index_suiviaction()
     {
-        $actions = Action::join('poste', 'actions.poste_id', '=', 'poste.id')
+        $actions = Action::join('postes', 'actions.poste_id', '=', 'postes.id')
                 ->join('risques', 'actions.risque_id', '=', 'risques.id')
                 ->join('processuses', 'risques.processus_id', '=', 'processuses.id')
                 ->where('risques.statut', 'valider')
                 ->where('actions.statut', 'non-realiser')
                 ->where('actions.type', 'preventive')
-                ->select('actions.*','poste.nom as responsable','risques.nom as risque','processuses.nom as processus')
+                ->select('actions.*','postes.nom as responsable','risques.nom as risque','processuses.nom as processus')
                 ->get();
 
         return view('traitement.suiviaction',  ['actions' => $actions]);
@@ -73,7 +73,7 @@ class SuiviactionController extends Controller
     {
 
         $historiques = Historique_action::join('users', 'historique_actions.user_id', '=', 'users.id')
-                ->join('poste', 'users.poste_id', '=', 'postes.id')
+                ->join('postes', 'users.poste_id', '=', 'postes.id')
                 ->orderBy('historique_actions.created_at', 'desc')
                 ->select('historique_actions.*', 'postes.nom as poste', 'users.name as nom', 'users.matricule as matricule')
                 ->get();

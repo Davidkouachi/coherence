@@ -290,7 +290,7 @@
                                                     Dispositif de Contrôle
                                                 </label>
                                                 <div class="form-control-wrap">
-                                                    <input placeholder="Saisie Obligatoire" autocomplete="off" id="dispositif" required name="dispositif[]" type="text" class="form-control" id="controle">
+                                                    <input value="neant" placeholder="Saisie Obligatoire" autocomplete="off" id="dispositif" required name="dispositif[]" type="text" class="form-control" id="controle">
                                                 </div>
                                             </div>
                                         </div>
@@ -302,7 +302,9 @@
                             <div class="card card-bordered" id="divToChangee">
                                 <div class="card-inner">
                                     <div class="card-head">
-                                        <h5 class="card-title">Evaluation risque avec dispositif de contrôle interne actuel</h5>
+                                        <h5 class="card-title">
+                                            Evaluation risque avec dispositif de contrôle interne actuel
+                                        </h5>
                                     </div>
                                     <div class="row g-4">
                                         <div class="col-md-2">
@@ -407,7 +409,7 @@
                             <div class="card card-bordered">
                                 <div class="card-inner">
                                     <div class="row g-4">
-                                        <div class="col-lg-7">
+                                        <div class="col-lg-8">
                                             <div class="form-group">
                                                 <label class="form-label" for="preventif">
                                                     Action préventive
@@ -429,7 +431,7 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="col-lg-3">
+                                        <div class="col-lg-2">
                                             <div class="form-group">
                                                 <label class="form-label" for="Responsabilité">
                                                     Responsabilité
@@ -664,7 +666,7 @@
                                                                     Dispositif de Contrôle
                                                                 </label>
                                                                 <div class="form-control-wrap">
-                                                                    <input placeholder="Saisie obligatoire" autocomplete="off" required name="dispositif[]" type="text" class="form-control" id="controle">
+                                                                    <input value="neant" placeholder="Saisie obligatoire" autocomplete="off" required name="dispositif[]" type="text" class="form-control" id="controle">
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -734,13 +736,13 @@
                                                                 <label class="form-label" for="Responsabilité">
                                                                     Responsabilité
                                                                 </label>
-                                                                <select required name="responsable_id[]" class="form-select">
+                                                                <select required name="poste_idp[]" class="form-select">
                                                                     <option value="">
                                                                         Choisir un responsable
                                                                     </option>
                                                                     @foreach ($postes as $poste)
                                                                     <option value="{{ $poste->id }}">
-                                                                        {{ $poste->poste }}
+                                                                        {{ $poste->nom }}
                                                                     </option>
                                                                     @endforeach
                                                                 </select>
@@ -799,13 +801,13 @@
                                                                 <label class="form-label" for="Responsabilité">
                                                                     Responsabilité
                                                                 </label>
-                                                                <select required name="responsable_idc[]" class="form-select">
+                                                                <select required name="poste_idc[]" class="form-select">
                                                                     <option value="">
                                                                         Choisir un responsable
                                                                     </option>
                                                                     @foreach ($postes as $poste)
                                                                     <option value="{{ $poste->id }}">
-                                                                        {{ $poste->poste }}
+                                                                        {{ $poste->nom }}
                                                                     </option>
                                                                     @endforeach
                                                                 </select>

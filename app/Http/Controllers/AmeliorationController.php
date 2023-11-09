@@ -32,9 +32,9 @@ class AmeliorationController extends Controller
             $processus = Processuse::where('id', $risque->processus_id)->first();
             $risque->nom_processus = $processus->nom;
 
-            $actions = Action::join('postes', 'actions.postes_id', '=', 'postes.id')
+            $actions = Action::join('postes', 'actions.poste_id', '=', 'postes.id')
                 ->where('actions.risque_id', $risque->id)
-                ->select('actions.*','poste.nom as responsable')
+                ->select('actions.*','postes.nom as responsable')
                 ->get();
 
             $actionsData[$risque->id] = [];

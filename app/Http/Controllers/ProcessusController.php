@@ -128,7 +128,7 @@ class ProcessusController extends Controller
             $nouvelleActionC = new Action();
             $nouvelleActionC->action = $actionc[$index];
             $nouvelleActionC->statut = 'non-realiser';
-            $nouvelleActionC->poste_id = $poste_idc[$index];
+            $nouvelleActionC->poste_id = $responsable_idc[$index];
             $nouvelleActionC->risque_id = $risque_id;
             $nouvelleActionC->type = 'corrective';
             $nouvelleActionC->save();
@@ -166,7 +166,7 @@ class ProcessusController extends Controller
     {
         $risques = Risque::join('postes', 'risques.poste_id', '=', 'postes.id')
                 ->where('statut' ,'soumis')
-                ->->select('risques.*','postes.nom as validateur')
+                ->select('risques.*','postes.nom as validateur')
                 ->get();
 
         $causesData = [];
@@ -186,11 +186,19 @@ class ProcessusController extends Controller
             $processus = Processuse::where('id', $risque->processus_id)->first();
             $risque->nom_processus = $processus->nom;
 
-            $actions = Action::join('postes', 'actions.poste_id', '=', 'postes.id')
+            $actionsc = Action::join('postes', 'actions.poste_id', '=', 'postes.id')
                 ->where('actions.risque_id', $risque->id)
+                ->where('actions.type', 'corrective')
                 ->select('actions.*','postes.nom as responsable_name')
                 ->get();
-            $risque->nbre_action = count($actions);
+            $risque->nbre_actionc = count($actionsc);
+
+            $actionsp = Action::join('postes', 'actions.poste_id', '=', 'postes.id')
+                ->where('actions.risque_id', $risque->id)
+                ->where('actions.type', 'preventive')
+                ->select('actions.*','postes.nom as responsable_name')
+                ->get();
+            $risque->nbre_actionp = count($actionsp);
 
             $actionsp = Action::join('postes', 'actions.poste_id', '=', 'postes.id')
                 ->where('actions.risque_id', $risque->id)
@@ -209,7 +217,7 @@ class ProcessusController extends Controller
                 ];
             }
 
-            $actionsp = Action::join('postes', 'actions.poste_id', '=', 'postes.id')
+            $actionsc = Action::join('postes', 'actions.poste_id', '=', 'postes.id')
                 ->where('actions.risque_id', $risque->id)
                 ->where('actions.type', 'corrective')
                 ->select('actions.*','postes.nom as responsable')
@@ -227,11 +235,6 @@ class ProcessusController extends Controller
 
             $causes = Cause::where('causes.risque_id', $risque->id)->get();
             $risque->nbre_cause = count($causes);
-
-            foreach($causes->unique() as $caus)
-            {
-                $risque->validateur = $caus->validateur;
-            }
             
             $causesData[$risque->id] = [];
             
