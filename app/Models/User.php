@@ -14,13 +14,18 @@ class User extends Authenticatable
     use HasApiTokens, HasFactory, Notifiable, HasApiTokens;
 
     protected $fillable = [
+        'id',
         'name',
         'email',
         'password',
         'matricule',
-        'poste',
+        'poste_id',
         'tel',
     ];
+
+    public function poste() {
+        return $this->belongsTo(Poste::class, 'poste_id');
+    }
 
     protected $hidden = [
         'password',

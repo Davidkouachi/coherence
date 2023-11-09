@@ -138,7 +138,7 @@
                                                 <em class="icon ni ni-user-alt"></em>
                                             </div>
                                             <div class="user-info">
-                                                <div class="user-status text-primary">{{ Auth::user()->poste }}</div>
+                                                <div class="user-status text-primary"> </div>
                                                 <div class="user-name dropdown-indicator">
                                                     {{ Auth::user()->name }}
                                                 </div>

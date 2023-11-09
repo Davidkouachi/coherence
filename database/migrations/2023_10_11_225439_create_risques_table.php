@@ -29,6 +29,9 @@ class CreateRisquesTable extends Migration
             $table->datetime('date_validation')->nullable();
             $table->unsignedBigInteger('processus_id');
             $table->foreign('processus_id')->references('id')->on('processuses');
+            $table->unsignedBigInteger('poste_id');
+            $table->foreign('poste_id')->references('id')->on('postes');
+            $table->unsignedBigInteger('risque_id');
             $table->timestamps();
         });
     }

@@ -434,13 +434,13 @@
                                                 <label class="form-label" for="Responsabilité">
                                                     Responsabilité
                                                 </label>
-                                                <select id="responsable_idp" name="responsable_idp[]" class="form-select">
+                                                <select id="responsable_idp" name="poste_idp[]" class="form-select">
                                                     <option value="">
                                                         Choisir un responsable
                                                     </option>
                                                     @foreach ($postes as $poste)
                                                     <option value="{{ $poste->id }}">
-                                                        {{ $poste->poste }}
+                                                        {{ $poste->nom }}
                                                     </option>
                                                     @endforeach
                                                 </select>
@@ -469,13 +469,13 @@
                                                 <label class="form-label" for="Responsabilité">
                                                     Responsabilité
                                                 </label>
-                                                <select id="responsable_idc" required name="responsable_idc[]" class="form-select">
+                                                <select id="responsable_idc" required name="poste_idc[]" class="form-select">
                                                     <option selected value="">
                                                         Choisir un responsable
                                                     </option>
                                                     @foreach ($postes as $poste)
                                                     <option value="{{ $poste->id }}">
-                                                        {{ $poste->poste }}
+                                                        {{ $poste->nom }}
                                                     </option>
                                                     @endforeach
                                                 </select>
@@ -493,13 +493,13 @@
                                             <label class="form-label" for="Responsabilité">
                                                 Validateur
                                             </label>
-                                            <select required name="validateur_id" class="form-select">
+                                            <select required name="poste_id" class="form-select">
                                                 <option value="">
                                                     Choisir le validateur
                                                 </option>
                                                 @foreach ($postes as $poste)
                                                 <option value="{{ $poste->id }}">
-                                                    {{ $poste->poste }}
+                                                    {{ $poste->nom }}
                                                 </option>
                                                 @endforeach
                                             </select>

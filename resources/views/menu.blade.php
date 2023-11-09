@@ -30,6 +30,14 @@
                                         </div>
                                         <div class="col-md-3">
                                             <div class="form-group text-center">
+                                                <a class="btn btn-lg btn-outline-primary w-80-auto text-center" href="{{ route('index_add_poste') }}" >
+                                                    <em class="ni ni-user-add me-2"></em>
+                                                    <em>Nouveau poste</em>
+                                                </a>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <div class="form-group text-center">
                                                 <a class="btn btn-lg btn-outline-primary w-80-auto text-center" href="{{ route('index_add_processus') }}" >
                                                     <em class="ni ni-property me-2"></em>
                                                     <em>Nouveau processus</em>

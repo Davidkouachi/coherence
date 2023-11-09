@@ -26,10 +26,16 @@ class Risque extends Model
         'processus_id',
         'statut',
         'traitement',
+        'poste_id',
     ];
 
     public function processus()
     {
         return $this->belongsTo(Processus::class, 'processus_id');
+    }
+
+    public function poste()
+    {
+        return $this->belongsTo(Poste::class, 'poste_id');
     }
 }

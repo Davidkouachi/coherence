@@ -16,18 +16,12 @@ class Cause extends Model
         'id',
         'nom',
         'dispositif',
-        'validateur_id',
         'risque_id',
     ];
 
     public function risque()
     {
         return $this->belongsTo(Risque::class, 'risque_id');
-    }
-
-    public function user()
-    {
-        return $this->belongsTo(User::class, 'validateur_id');
     }
 
 }

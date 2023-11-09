@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\Processuse;
 use App\Models\Objectif;
 use App\Models\Resva;
+use App\Models\Poste;
 use Illuminate\Support\Facades\Validator;
 use Carbon\Carbon;
 
@@ -13,7 +14,8 @@ class ResvaController extends Controller
 {
     public function index_add_resva()
     {
-        return view('add.res-va');
+        $postes = Poste::all();
+        return view('add.res-va', ['postes' => $postes]);
     }
 
     public function add_resva(Request $request)

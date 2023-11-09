@@ -108,25 +108,15 @@
                                                                 <label class="form-label" for="email-address-1">
                                                                     Poste
                                                                 </label>
-                                                                <select required name="poste" class="form-select ">
+                                                                <select required name="poste_id" class="form-select ">
                                                                     <option value="">
                                                                         Choisir
                                                                     </option>
-                                                                    <option value="drh">
-                                                                        Directeur des ressources humaines
+                                                                    @foreach ($postes as $poste)
+                                                                    <option value="{{ $poste->id }}">
+                                                                       {{ $poste->nom }}
                                                                     </option>
-                                                                    <option value="dg">
-                                                                        Directeur generale
-                                                                    </option>
-                                                                    <option value="comp">
-                                                                        Comptable
-                                                                    </option>
-                                                                    <option value="assis">
-                                                                        Assistant(e)
-                                                                    </option>
-                                                                    <option value="infor">
-                                                                        Informaticien
-                                                                    </option>
+                                                                    @endforeach
                                                                 </select>
                                                             </div>
                                                         </div>

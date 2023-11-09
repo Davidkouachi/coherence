@@ -24,6 +24,9 @@ Route::middleware(['auth'])->group(function () {
 
     Route::get('/Nouveau Processus', [ProcessusController::class, 'index_add_processus'])->name('index_add_processus');
 
+    Route::get('/Nouveau Poste', [Controller::class, 'index_add_poste'])->name('index_add_poste');
+    Route::post('/Nouveau Poste', [Controller::class, 'index_add_poste_traitement'])->name('index_add_poste_traitement');
+
     Route::post('/traitement_processus', [ProcessusController::class, 'add_processus'])->name('add_processus');
 
     Route::get('/Nouveau Processus Eva', [ProcessusController::class, 'index_add_processuseva'])->name('index_add_processuseva');
@@ -58,6 +61,10 @@ Route::middleware(['auth'])->group(function () {
 Route::get('/Res-va', [ResvaController::class, 'index_add_resva'])->name('index_add_resva');
 Route::post('/traitement_resva', [ResvaController::class, 'add_resva'])->name('add_resva');
 Route::post('/add_user', [AuthController::class, 'add_user'])->name('add_user');
+
+Route::get('/Nouveau Poste', [Controller::class, 'index_add_poste'])->name('index_add_poste');
+Route::post('/Nouveau Poste', [Controller::class, 'index_add_poste_traitement'])->name('index_add_poste_traitement');
+
 
 /*--------------------------------------------------------------------------------------------------------------*/
 

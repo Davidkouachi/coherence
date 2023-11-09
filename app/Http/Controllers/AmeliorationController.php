@@ -20,7 +20,9 @@ class AmeliorationController extends Controller
 {
    public function index()
    {
-        $risques = Risque::all();
+        $risques = Risque::join('postes', 'risques.poste_id', '=', 'postes.id')
+                ->select('risques.*','postes.nom as validateur')
+                ->get();
 
         $causesData = [];
         $actionsData = [];
@@ -30,9 +32,9 @@ class AmeliorationController extends Controller
             $processus = Processuse::where('id', $risque->processus_id)->first();
             $risque->nom_processus = $processus->nom;
 
-            $actions = Action::join('users', 'actions.responsable_id', '=', 'users.id')
+            $actions = Action::join('postes', 'actions.postes_id', '=', 'postes.id')
                 ->where('actions.risque_id', $risque->id)
-                ->select('actions.*','users.poste as responsable')
+                ->select('actions.*','poste.nom as responsable')
                 ->get();
 
             $actionsData[$risque->id] = [];
@@ -52,10 +54,7 @@ class AmeliorationController extends Controller
                 ];
             }
 
-            $causes = Cause::join('users', 'causes.validateur_id', '=', 'users.id')
-                ->where('causes.risque_id', $risque->id)
-                ->select('causes.*','users.poste as validateur')
-                ->get();
+            $causes = Cause::where('causes.risque_id', $risque->id)->get();
             $risque->nbre_cause = count($causes);
 
             foreach($causes->unique() as $caus)
@@ -70,7 +69,7 @@ class AmeliorationController extends Controller
                 $causesData[$risque->id][] = [
                     'cause' => $cause->nom,
                     'dispositif' => $cause->dispositif,
-                    'validateur' => $cause->validateur,
+                    'validateur' => $risque->validateur,
                 ];
             }
         }
@@ -87,7 +86,10 @@ class AmeliorationController extends Controller
         foreach($causes_selects as $causes_select)
         {
 
-            $risques2 = Risque::where('id', $causes_select->risque_id )->first();
+            $risques2 = Risque::join('postes', 'risques.poste_id', '=', 'postes.id')
+                    ->where('risques.id', $causes_select->risque_id )
+                    ->select('risques.*','postes.nom as validateur')
+                    ->first();
             $causes_select->nom_risque = $risques2->nom;
             $causes_select->vraisemblence = $risques2->vraisemblence;
             $causes_select->gravite = $risques2->gravite;
@@ -103,10 +105,7 @@ class AmeliorationController extends Controller
             $processus2 = Processuse::where('id', $risques2->processus_id)->first();
             $causes_select->nom_processus = $processus2->nom;
 
-            $causes2 = Cause::join('users', 'causes.validateur_id', '=', 'users.id')
-                ->where('causes.risque_id', $causes_select->risque_id)
-                ->select('causes.*','users.poste as validateur')
-                ->get();
+            $causes2 = Cause::where('causes.risque_id', $causes_select->risque_id)->get();
 
             foreach($causes2->unique() as $caus2)
             {
@@ -120,13 +119,13 @@ class AmeliorationController extends Controller
                $causesData2[$caus2->risque_id][] = [
                     'cause' => $caus2->nom,
                     'dispositif' => $caus2->dispositif,
-                    'validateur' => $caus2->validateur,
+                    'validateur' => $risque->validateur,
                 ];
             }
 
-            $actions2 = Action::join('users', 'actions.responsable_id', '=', 'users.id')
+            $actions2 = Action::join('postes', 'actions.poste_id', '=', 'postes.id')
                   ->where('actions.risque_id', $causes_select->risque_id)
-                  ->select('actions.*','users.poste as responsable')
+                  ->select('actions.*','postes.nom as responsable')
                   ->get();
 
             $actionsData2[$causes_select->risque_id] = [];
@@ -135,7 +134,6 @@ class AmeliorationController extends Controller
             foreach($actions2 as $action2)
             {
                $Suivi_action2 = Suivi_action::where('action_id', $action2->id)->first();
-               $Type_action = Suivi_action::where('action_id', $action2->id)->first();
                $actionsData2[$Suivi_action2->risque_id][] = [
                     'action' => $action2->action,
                     'delai' => $action2->delai,

@@ -19,8 +19,8 @@ class CreateActionsTable extends Migration
             $table->date('delai')->nullable();
             $table->string('statut')->nullable();
             $table->string('type')->nullable();
-            $table->unsignedBigInteger('responsable_id')->nullable();
-            $table->foreign('responsable_id')->references('id')->on('users');
+            $table->unsignedBigInteger('poste_id')->nullable();
+            $table->foreign('poste_id')->references('id')->on('postes');
             $table->unsignedBigInteger('risque_id')->nullable();
             $table->foreign('risque_id')->references('id')->on('risques');
             $table->timestamps();

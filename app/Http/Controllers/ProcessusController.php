@@ -15,6 +15,7 @@ use App\Models\Suivi_action;
 use App\Models\Pdf_file;
 use App\Models\User;
 use App\Models\Historique_action;
+use App\Models\Poste;
 
 use Illuminate\Support\Facades\Validator;
 use Carbon\Carbon;
@@ -29,8 +30,8 @@ class ProcessusController extends Controller
     public function index_add_processuseva()
     {
         $processuses = Processuse::all();
-        $postes = User::all();
-        return view('add.processuseva', compact('processuses','postes'));
+        $postes = Poste::all();
+        return view('add.processuseva', ['processuses' => $processuses, 'postes' => $postes]);
     }
 
     public function add_prc(Request $request)
@@ -48,6 +49,7 @@ class ProcessusController extends Controller
         $evaluation_residuel = $request->input('vrai_residuel') * $request->input('gravite_residuel');
         $cout_residuel = $request->input('cout_residuel');
         $traitement = $request->input('traitement');
+        $validateur = $request->input('poste_id');
 
         $risque = new Risque();
         $risque->nom = $nom_risque;
@@ -61,6 +63,7 @@ class ProcessusController extends Controller
         $risque->cout_residuel = $cout_residuel;
         $risque->processus_id = $processus_id;
         $risque->traitement = $traitement;
+        $risque->poste_id = $validateur;
         $risque->statut = 'soumis';
         $risque->save();
 
@@ -83,14 +86,12 @@ class ProcessusController extends Controller
 
         $nom_cause = $request->input('nom_cause');
         $dispositif = $request->input('dispositif');
-        $validateur_id = $request->input('validateur_id');
         $risque_id = $risque->id;
 
         foreach ($nom_cause as $index => $valeur) {
             $cause = new Cause();
             $cause->nom = $nom_cause[$index];
             $cause->dispositif = $dispositif[$index];
-            $cause->validateur_id = $validateur_id;
             $cause->risque_id = $risque_id;
             $cause->save();
         }
@@ -98,8 +99,8 @@ class ProcessusController extends Controller
         $actionc = $request->input('actionc');
         $actionp = $request->input('actionp');
         $delai = $request->input('delai');
-        $responsable_idp = $request->input('responsable_idp');
-        $responsable_idc = $request->input('responsable_idc');
+        $responsable_idp = $request->input('poste_idp');
+        $responsable_idc = $request->input('poste_idc');
 
         foreach ($actionp as $index => $valeur) {
 
@@ -109,7 +110,7 @@ class ProcessusController extends Controller
                 $nouvelleActionP->action = $actionp[$index];
                 $nouvelleActionP->delai = $delai[$index];
                 $nouvelleActionP->statut = 'non-realiser';
-                $nouvelleActionP->responsable_id = $responsable_idp[$index];
+                $nouvelleActionP->poste_id = $responsable_idp[$index];
                 $nouvelleActionP->risque_id = $risque_id;
                 $nouvelleActionP->type = 'preventive';
                 $nouvelleActionP->save();
@@ -127,7 +128,7 @@ class ProcessusController extends Controller
             $nouvelleActionC = new Action();
             $nouvelleActionC->action = $actionc[$index];
             $nouvelleActionC->statut = 'non-realiser';
-            $nouvelleActionC->responsable_id = $responsable_idc[$index];
+            $nouvelleActionC->poste_id = $poste_idc[$index];
             $nouvelleActionC->risque_id = $risque_id;
             $nouvelleActionC->type = 'corrective';
             $nouvelleActionC->save();
@@ -163,7 +164,10 @@ class ProcessusController extends Controller
 
     public function index_validation_processus()
     {
-        $risques = Risque::where('statut' ,'soumis')->get();
+        $risques = Risque::join('postes', 'risques.poste_id', '=', 'postes.id')
+                ->where('statut' ,'soumis')
+                ->->select('risques.*','postes.nom as validateur')
+                ->get();
 
         $causesData = [];
         $actionsDatap = [];
@@ -182,16 +186,16 @@ class ProcessusController extends Controller
             $processus = Processuse::where('id', $risque->processus_id)->first();
             $risque->nom_processus = $processus->nom;
 
-            $actions = Action::join('users', 'actions.responsable_id', '=', 'users.id')
+            $actions = Action::join('postes', 'actions.poste_id', '=', 'postes.id')
                 ->where('actions.risque_id', $risque->id)
-                ->select('actions.*','users.name as responsable_name')
+                ->select('actions.*','postes.nom as responsable_name')
                 ->get();
             $risque->nbre_action = count($actions);
 
-            $actionsp = Action::join('users', 'actions.responsable_id', '=', 'users.id')
+            $actionsp = Action::join('postes', 'actions.poste_id', '=', 'postes.id')
                 ->where('actions.risque_id', $risque->id)
                 ->where('actions.type', 'preventive')
-                ->select('actions.*','users.poste as responsable')
+                ->select('actions.*','postes.nom as responsable')
                 ->get();
 
             $actionsDatap[$risque->id] = [];
@@ -205,10 +209,10 @@ class ProcessusController extends Controller
                 ];
             }
 
-            $actionsc = Action::join('users', 'actions.responsable_id', '=', 'users.id')
+            $actionsp = Action::join('postes', 'actions.poste_id', '=', 'postes.id')
                 ->where('actions.risque_id', $risque->id)
                 ->where('actions.type', 'corrective')
-                ->select('actions.*','users.poste as responsable')
+                ->select('actions.*','postes.nom as responsable')
                 ->get();
 
             $actionsDatac[$risque->id] = [];
@@ -221,10 +225,7 @@ class ProcessusController extends Controller
                 ];
             }
 
-            $causes = Cause::join('users', 'causes.validateur_id', '=', 'users.id')
-                ->where('causes.risque_id', $risque->id)
-                ->select('causes.*','users.poste as validateur')
-                ->get();
+            $causes = Cause::where('causes.risque_id', $risque->id)->get();
             $risque->nbre_cause = count($causes);
 
             foreach($causes->unique() as $caus)
@@ -239,7 +240,7 @@ class ProcessusController extends Controller
                 $causesData[$risque->id][] = [
                     'cause' => $cause->nom,
                     'dispositif' => $cause->dispositif,
-                    'validateur' => $cause->validateur_name,
+                    'validateur' => $risque->validateur,
                 ];
             }
         }

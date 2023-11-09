@@ -18,13 +18,13 @@ class Action extends Model
         'delai',
         'type',
         'statut',
-        'responsable_id',
+        'poste_id',
         'risque_id',
     ];
 
-    public function user()
+    public function poste()
     {
-        return $this->belongsTo(User::class, 'responsable_id');
+        return $this->belongsTo(Poste::class, 'poste_id');
     }
 
     public function risque()

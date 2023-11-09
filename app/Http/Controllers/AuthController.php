@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Auth;
 
 use App\Models\User;
 use App\Models\Historique_action;
+use App\Models\Poste;
 
 use Illuminate\Support\Facades\Validator;
 use Carbon\Carbon;
@@ -51,17 +52,10 @@ class AuthController extends Controller
             'password' => bcrypt($request->mdp),
             'matricule' => $request->matricule,
             'tel' => $request->tel,
-            'poste' => $request->poste,
+            'poste_id' => $request->poste_id,
         ]);
 
-        if ($user) {
-
-            $his = new Historique_action();
-            $his->nom_formulaire = 'Nouvel utilisateur';
-            $his->nom_action = 'Ajouter';
-            $his->user_id = Auth::user()->id;
-            $his->save();
-        }
+        
 
         return back()->with('ajouter', 'Enregistrement éffectuée.');
     }
@@ -69,14 +63,14 @@ class AuthController extends Controller
     public function auth_user(Request $request)
     {
         $credentials = $request->only('email', 'password');
-        $remember = $request->has('remember');
 
-        if (Auth::attempt($credentials, $remember)) {
+        if (Auth::attempt($credentials)) {
 
             Auth::user()->logoutOtherDevices($request->password);
-            
-            return redirect()->intended(route('index_accueil'));
+            $id = Auth::user()->poste_id;
+            $poste = Poste::find($id);
 
+            return redirect()->intended(route('index_accueil', ['poste' => $poste]));
         }
 
         return back()->with('error_login', 'Coordonnées incorrecte.');

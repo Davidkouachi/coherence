@@ -23,12 +23,13 @@ class SuiviactionController extends Controller
 {
     public function index_suiviaction()
     {
-        $actions = Action::join('users', 'actions.responsable_id', '=', 'users.id')
+        $actions = Action::join('poste', 'actions.poste_id', '=', 'poste.id')
                 ->join('risques', 'actions.risque_id', '=', 'risques.id')
                 ->join('processuses', 'risques.processus_id', '=', 'processuses.id')
                 ->where('risques.statut', 'valider')
                 ->where('actions.statut', 'non-realiser')
-                ->select('actions.*','users.poste as responsable','risques.nom as risque','processuses.nom as processus')
+                ->where('actions.type', 'preventive')
+                ->select('actions.*','poste.nom as responsable','risques.nom as risque','processuses.nom as processus')
                 ->get();
 
         return view('traitement.suiviaction',  ['actions' => $actions]);
@@ -72,8 +73,9 @@ class SuiviactionController extends Controller
     {
 
         $historiques = Historique_action::join('users', 'historique_actions.user_id', '=', 'users.id')
+                ->join('poste', 'users.poste_id', '=', 'postes.id')
                 ->orderBy('historique_actions.created_at', 'desc')
-                ->select('historique_actions.*', 'users.poste as poste', 'users.name as nom', 'users.matricule as matricule')
+                ->select('historique_actions.*', 'postes.nom as poste', 'users.name as nom', 'users.matricule as matricule')
                 ->get();
 
        return view('historique.historique', ['historiques' => $historiques]);
@@ -82,9 +84,10 @@ class SuiviactionController extends Controller
     public function index_historique_profil()
     {
         $historiques = Historique_action::join('users', 'historique_actions.user_id', '=', 'users.id')
+                ->join('poste', 'users.poste_id', '=', 'postes.id')
                 ->orderBy('historique_actions.created_at', 'desc')
                 ->where('historique_actions.user_id', Auth::user()->id)
-                ->select('historique_actions.*', 'users.poste as poste', 'users.name as nom', 'users.matricule as matricule')
+                ->select('historique_actions.*', 'postes.nom as poste', 'users.name as nom', 'users.matricule as matricule')
                 ->get();
 
        return view('historique.historique_profil', ['historiques' => $historiques]);
