@@ -77,7 +77,7 @@
                                                             Date
                                                         </label>
                                                         <div class="form-control-wrap">
-                                                            <input type="date" class="form-control" id="Cause">
+                                                            <input name="date" type="date" class="form-control" id="Cause">
                                                         </div>
                                                     </div>
                                                 </div>
@@ -87,7 +87,7 @@
                                                             Lieu
                                                         </label>
                                                         <div class="form-control-wrap">
-                                                            <input type="text" class="form-control" id="controle">
+                                                            <input name="lieu" type="text" class="form-control" id="controle">
                                                         </div>
                                                     </div>
                                                 </div>
@@ -97,7 +97,7 @@
                                                             Détecteur (Agent / Client)
                                                         </label>
                                                         <div class="form-control-wrap">
-                                                            <input type="text" class="form-control" id="controle">
+                                                            <input name="detecteur" type="text" class="form-control" id="controle">
                                                         </div>
                                                     </div>
                                                 </div>
@@ -115,7 +115,7 @@
                                                             Non conformité
                                                         </label>
                                                         <div class="form-control-wrap">
-                                                            <input id="inputMots" type="text" class="form-control" id="Cause">
+                                                            <input name="non_conformite" id="inputMots" type="text" class="form-control" id="Cause">
                                                         </div>
                                                     </div>
                                                 </div>
@@ -125,7 +125,7 @@
                                                             Conséquence(s)
                                                         </label>
                                                         <div class="form-control-wrap" id="resultat">
-                                                            <textarea name="description" class="form-control no-resize" id="default-textarea"></textarea>
+                                                            <textarea name="consequence" class="form-control no-resize" id="default-textarea"></textarea>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -143,7 +143,7 @@
                                                             Cause(s)
                                                         </label>
                                                         <div class="form-control-wrap">
-                                                            <textarea name="description" class="form-control no-resize" id="default-textarea"></textarea>
+                                                            <textarea name="cause" class="form-control no-resize" id="default-textarea"></textarea>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -1178,7 +1178,7 @@
                                                                         <label class="form-label" for="Cause">
                                                                             Processus
                                                                         </label>
-                                                                        <select id="responsable_idc" required name="responsable_idc[]" class="form-select">
+                                                                        <select id="responsable_idc" required name="processus_new[]" class="form-select">
                                                                             <option selected value="">
                                                                                 Choisir un responsable
                                                                             </option>
@@ -1196,7 +1196,7 @@
                                                                             Risque
                                                                         </label>
                                                                         <div class="form-control-wrap">
-                                                                            <input value="" type="text" class="form-control" >
+                                                                            <input name="risque_new[]" value="" type="text" class="form-control" >
                                                                         </div>
                                                                     </div>
                                                                 </div>
@@ -1206,7 +1206,7 @@
                                                                             Résumé des causes
                                                                         </label>
                                                                         <div class="form-control-wrap">
-                                                                            <input value="" type="text" class="form-control" >
+                                                                            <input name="resume_cause_new[]" value="" type="text" class="form-control" >
                                                                         </div>
                                                                     </div>
                                                                 </div>
@@ -1216,7 +1216,7 @@
                                                                             Action Corrective
                                                                         </label>
                                                                         <div class="form-control-wrap">
-                                                                            <input value="" type="text" class="form-control" >
+                                                                            <input name="actionc_new[]" value="" type="text" class="form-control" >
                                                                         </div>
                                                                     </div>
                                                                 </div>
@@ -1225,7 +1225,7 @@
                                                                                 <label class="form-label" for="Coût">
                                                                                     Responsable
                                                                                 </label>
-                                                                                <select id="responsable_idc" required name="responsable_idc[]" class="form-select">
+                                                                                <select id="responsable_idc" required name="poste_idc_new[]" class="form-select">
                                                                                     <option selected value="">
                                                                                         Choisir un responsable
                                                                                     </option>
@@ -1241,7 +1241,7 @@
                                                                                     Date prévisionnelle de réalisation
                                                                                 </label>
                                                                                 <div class="form-control-wrap">
-                                                                                    <input name="date_action" type="date" class="form-control" >
+                                                                                    <input name="date_action_new[]" type="date" class="form-control" >
                                                                                 </div>
                                                                             </div>
                                                                 </div>
@@ -1251,7 +1251,7 @@
                                                                             Commentaire
                                                                         </label>
                                                                         <div class="form-control-wrap">
-                                                                            <textarea name="commentaire" class="form-control no-resize" id="default-textarea"></textarea>
+                                                                            <textarea name="commentaire_new[]" class="form-control no-resize" id="default-textarea"></textarea>
                                                                         </div>
                                                                     </div>
                                                                 </div>
@@ -1353,7 +1353,7 @@
                                                                             Processus
                                                                         </label>
                                                                         <div class="form-control-wrap">
-                                                                            <input value="${action.processus}" type="text" class="form-control" disabled >
+                                                                            <input name="processus_accepte[]" value="${action.processus}" type="text" class="form-control" disabled >
                                                                         </div>
                                                                     </div>
                                                                 </div>
@@ -1363,7 +1363,7 @@
                                                                             Risque
                                                                         </label>
                                                                         <div class="form-control-wrap">
-                                                                            <input value="${action.risque}" type="text" class="form-control" disabled>
+                                                                            <input name="risque_accepte[]" value="${action.risque}" type="text" class="form-control" disabled>
                                                                         </div>
                                                                     </div>
                                                                 </div>
@@ -1373,7 +1373,7 @@
                                                                             Action Corrective
                                                                         </label>
                                                                         <div class="form-control-wrap">
-                                                                            <input value="${action.action}" type="text" class="form-control" disabled>
+                                                                            <input name="actionc_accepte[]" value="${action.action}" type="text" class="form-control" disabled>
                                                                         </div>
                                                                     </div>
                                                                 </div>
@@ -1383,7 +1383,7 @@
                                                                                     Responsable
                                                                                 </label>
                                                                                 <div class="form-control-wrap">
-                                                                                    <input value="${action.responsable}" type="text" class="form-control" disabled>
+                                                                                    <input name="poste_idc_accepte[]" value="${action.responsable}" type="text" class="form-control" disabled>
                                                                                 </div>
                                                                             </div>
                                                                             <div class="form-group">
@@ -1391,7 +1391,7 @@
                                                                                     Date prévisionnelle de réalisation
                                                                                 </label>
                                                                                 <div class="form-control-wrap">
-                                                                                    <input name="date_action" type="date" class="form-control" >
+                                                                                    <input name="date_action_accepte[]" type="date" class="form-control" >
                                                                                 </div>
                                                                             </div>
                                                                 </div>
@@ -1401,7 +1401,7 @@
                                                                             Commentaire
                                                                         </label>
                                                                         <div class="form-control-wrap">
-                                                                            <textarea name="commentaire" class="form-control no-resize" id="default-textarea"></textarea>
+                                                                            <textarea name="commentaire_accepte[]" class="form-control no-resize" id="default-textarea"></textarea>
                                                                         </div>
                                                                     </div>
                                                                 </div>
@@ -1504,7 +1504,7 @@
                                                                             Processus
                                                                         </label>
                                                                         <div class="form-control-wrap">
-                                                                            <input value="${action.processus}" type="text" class="form-control" disabled >
+                                                                            <input name="processus_non_accepte[]" value="${action.processus}" type="text" class="form-control" disabled >
                                                                         </div>
                                                                     </div>
                                                                 </div>
@@ -1514,7 +1514,7 @@
                                                                             Risque
                                                                         </label>
                                                                         <div class="form-control-wrap">
-                                                                            <input value="${action.risque}" type="text" class="form-control" disabled>
+                                                                            <input name="risque_non_accepte[]" value="${action.risque}" type="text" class="form-control" disabled>
                                                                         </div>
                                                                     </div>
                                                                 </div>
@@ -1524,7 +1524,7 @@
                                                                             Action Corrective
                                                                         </label>
                                                                         <div class="form-control-wrap">
-                                                                            <input value="${action.action}" type="text" class="form-control" >
+                                                                            <input name="actionc_non_accepte[]" value="${action.action}" type="text" class="form-control" >
                                                                         </div>
                                                                     </div>
                                                                 </div>
@@ -1533,7 +1533,7 @@
                                                                                 <label class="form-label" for="Coût">
                                                                                     Responsable
                                                                                 </label>
-                                                                                <select id="responsable_idc" required name="responsable_idc[]" class="form-select">
+                                                                                <select id="responsable_idc" required name="poste_idc_non_accepte[]" class="form-select">
                                                                                     <option selected value="">
                                                                                         Choisir un responsable
                                                                                     </option>
@@ -1549,7 +1549,7 @@
                                                                                     Date prévisionnelle de réalisation
                                                                                 </label>
                                                                                 <div class="form-control-wrap">
-                                                                                    <input name="date_action" type="date" class="form-control" >
+                                                                                    <input name="date_action_non_accepte[]" type="date" class="form-control" >
                                                                                 </div>
                                                                             </div>
                                                                 </div>
@@ -1559,7 +1559,7 @@
                                                                             Commentaire
                                                                         </label>
                                                                         <div class="form-control-wrap">
-                                                                            <textarea name="commentaire" class="form-control no-resize" id="default-textarea"></textarea>
+                                                                            <textarea name="commentaire_non_accepte[]" class="form-control no-resize" id="default-textarea"></textarea>
                                                                         </div>
                                                                     </div>
                                                                 </div>
