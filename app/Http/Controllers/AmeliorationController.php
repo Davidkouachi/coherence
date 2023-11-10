@@ -12,6 +12,8 @@ use App\Models\Cause;
 use App\Models\Rejet;
 use App\Models\Action;
 use App\Models\Suivi_action;
+use App\Models\Poste;
+use App\Models\User;
 
 use Illuminate\Support\Facades\Validator;
 use Carbon\Carbon;
@@ -69,7 +71,6 @@ class AmeliorationController extends Controller
                 $causesData[$risque->id][] = [
                     'cause' => $cause->nom,
                     'dispositif' => $cause->dispositif,
-                    'validateur' => $risque->validateur,
                 ];
             }
         }
@@ -90,6 +91,7 @@ class AmeliorationController extends Controller
                     ->where('risques.id', $causes_select->risque_id )
                     ->select('risques.*','postes.nom as validateur')
                     ->first();
+
             $causes_select->nom_risque = $risques2->nom;
             $causes_select->vraisemblence = $risques2->vraisemblence;
             $causes_select->gravite = $risques2->gravite;
@@ -101,6 +103,8 @@ class AmeliorationController extends Controller
             $causes_select->cout_residuel = $risques2->cout_residuel;
             $causes_select->statut = $risques2->statut;
             $causes_select->date_validation = $risques2->date_validation;
+            $causes_select->traitement = $risques2->traitement;
+            $causes_select->validateur = $risques2->validateur;
 
             $processus2 = Processuse::where('id', $risques2->processus_id)->first();
             $causes_select->nom_processus = $processus2->nom;
@@ -119,7 +123,6 @@ class AmeliorationController extends Controller
                $causesData2[$caus2->risque_id][] = [
                     'cause' => $caus2->nom,
                     'dispositif' => $caus2->dispositif,
-                    'validateur' => $risque->validateur,
                 ];
             }
 
@@ -148,24 +151,54 @@ class AmeliorationController extends Controller
               
         }
 
+        $postes = Poste::all();
+        $processus = Processuse::all();
+
         return view('add.ficheamelioration', 
             ['risques' => $risques, 'causesData' => $causesData, 'actionsData' => $actionsData, 
-            'causes_selects' => $causes_selects, 'Suivi_action2' => $Suivi_action2, 'caus2' => $caus2, 'causesData2' => $causesData2, 'actionsData2' => $actionsData2]);
+            'causes_selects' => $causes_selects, 'Suivi_action2' => $Suivi_action2, 'caus2' => $caus2, 'causesData2' => $causesData2, 'actionsData2' => $actionsData2, 'postes' => $postes, 'processus' => $processus]);
    }
     
-    public function action_non_accepte($id)
+    public function get_cause_info($id)
     {
         $cause = Cause::find($id);
         $risque = Risque::find($cause->risque_id);
-        $actions = Action::where('risque_id', $risque->id )
-                    ->where('type', 'corrective' )
-                    ->get();
+        $actions = Action::join('postes', 'actions.poste_id', '=', 'postes.id')
+                      ->where('actions.risque_id', $risque->id)
+                      ->where('actions.type', 'corrective')
+                      ->select('actions.*', 'postes.nom as responsable')
+                      ->get();
+
         foreach ($actions as $action) {
-            $risque = Risque::find($action->risque_id);
-            $action->nom_risque = $risque->nom;
+
+            $action->risque = $risque->nom;
 
             $processus = Processuse::find($risque->processus_id);
-            $action->nom_processus = $processus->nom;
+            $action->processus = $processus->nom;
+
+        }
+
+        return response()->json([
+            'actions' => $actions,
+        ]);
+    }
+
+    public function get_risque_info($id)
+    {
+        $risque = Risque::find($id);
+        $actions = Action::join('postes', 'actions.poste_id', '=', 'postes.id')
+                      ->where('actions.risque_id', $risque->id)
+                      ->where('actions.type', 'corrective')
+                      ->select('actions.*', 'postes.nom as responsable')
+                      ->get();
+
+        foreach ($actions as $action) {
+
+            $action->risque = $risque->nom;
+
+            $processus = Processuse::find($risque->processus_id);
+            $action->processus = $processus->nom;
+
         }
 
         return response()->json([

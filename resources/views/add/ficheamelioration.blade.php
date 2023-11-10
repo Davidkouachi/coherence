@@ -32,20 +32,35 @@
                             <div class="col-md-12 col-xxl-4" id="groupesContainer">
                                 <div class="card card-bordered">
                                     <div class="card-inner">
-                                            <div class="row g-4">
+                                            <div class="row g-4 ">
                                                 <div class="col-lg-4">
-                                                    <div class="form-group">
-                                                        <div class="custom-control custom-radio"><input type="radio" class="custom-control-input" name="radioSize" id="customRadio7"><label class="custom-control-label" for="customRadio7">Non conformité interne</label></div>
+                                                    <div class="form-group text-center">
+                                                        <div class="custom-control custom-radio">
+                                                            <input type="radio" class="custom-control-input" name="type" id="customRadio7" value="non-conformite-interne">
+                                                            <label class="custom-control-label" for="customRadio7">
+                                                                Non conformité interne
+                                                            </label>
+                                                        </div>
                                                     </div>
                                                 </div>
                                                 <div class="col-lg-4">
-                                                    <div class="form-group">
-                                                        <div class="custom-control custom-radio"><input type="radio" class="custom-control-input" name="radioSize" id="customRadio6"><label class="custom-control-label" for="customRadio6">Reclamation</label></div>
+                                                    <div class="form-group text-center">
+                                                        <div class="custom-control custom-radio">
+                                                            <input type="radio" class="custom-control-input" name="type" id="customRadio6" value="reclamation">
+                                                            <label class="custom-control-label" for="customRadio6">
+                                                                Reclamation
+                                                            </label>
+                                                        </div>
                                                     </div>
                                                 </div>
                                                 <div class="col-lg-4">
-                                                    <div class="form-group">
-                                                        <div class="custom-control custom-radio"><input type="radio" class="custom-control-input" name="radioSize" id="customRadio5"><label class="custom-control-label" for="customRadio5">Contentieux</label></div>
+                                                    <div class="form-group text-center">
+                                                        <div class="custom-control custom-radio">
+                                                            <input type="radio" class="custom-control-input" name="type" id="customRadio5" value="contentieux">
+                                                            <label class="custom-control-label" for="customRadio5">
+                                                                Contentieux
+                                                            </label>
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
@@ -164,6 +179,30 @@
                                                         </div>
                                                     </div>
                                                 </div>
+                                                <div class="col-lg-12">
+                                                    <div class="row g-2" >
+                                                        <div class="col-md-6" >
+                                                            <div class="form-group text-center">
+                                                                <div class="custom-control custom-radio">
+                                                                    <input type="radio" class="custom-control-input choix_select" name="choix_select" id="choixcause" value="cause">
+                                                                    <label class="custom-control-label" for="choixcause">
+                                                                        Cause trouvé
+                                                                    </label>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-6" >
+                                                            <div class="form-group text-center">
+                                                                <div class="custom-control custom-radio">
+                                                                    <input type="radio" class="custom-control-input choix_select" name="choix_select" id="choixrisque" value="risque">
+                                                                    <label class="custom-control-label" for="choixrisque">
+                                                                        Risque trouvé
+                                                                    </label>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
                                             </div>
                                     </div>
                                 </div>
@@ -173,15 +212,22 @@
                                     <div class="card-inner">
                                         <div class="row g-4">
                                             <div class="col-lg-4">
-                                                <div class="form-group">
-                                                    <a class="btn btn-outline-primary btn-dim action-button-select" data-type="acceptee">
-                                                        Afficher Action(s)
+                                                <div class="form-group text-center">
+                                                    <a class="btn btn-outline-primary btn-dim action-accepte" data-type="acceptee">
+                                                        Action corrective acceptée
                                                     </a>
                                                 </div>
                                             </div>
                                             <div class="col-lg-4">
-                                                <div class="form-group">
-                                                    <a class="btn btn-outline-primary btn-dim action-button-new" data-type="nouvelle-action">
+                                                <div class="form-group text-center">
+                                                    <a class="btn btn-outline-primary btn-dim action-non-accepte" data-type="nouvelle-action">
+                                                        Action corrective non-acceptée
+                                                    </a>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-4">
+                                                <div class="form-group text-center">
+                                                    <a class="btn btn-outline-primary btn-dim action-new" data-type="nouvelle-action">
                                                         Nouvelle action corrective
                                                     </a>
                                                 </div>
@@ -857,7 +903,7 @@
                                                                 </div>
                                                             </div>
                                                         </div>
-                                                        <div class="col-lg-3">
+                                                        <div class="col-lg-2">
                                                             <div class="form-group">
                                                                 <label class="form-label" for="controle">
                                                                     gravite
@@ -877,7 +923,7 @@
                                                                 </div>
                                                             </div>
                                                         </div>
-                                                        <div class="col-lg-4">
+                                                        <div class="col-lg-5">
                                                             <div class="form-group">
                                                                 <label class="form-label" for="controle">
                                                                     Coût
@@ -1109,7 +1155,7 @@
 
     <script>
         document.addEventListener("DOMContentLoaded", function () {
-            document.querySelectorAll(".action-button-new").forEach(function (button) {
+            document.querySelectorAll(".action-new").forEach(function (button) {
                 button.addEventListener("click", function () {
                     var type_new = this.getAttribute("data-type");
                     addGroup(type_new);
@@ -1136,9 +1182,11 @@
                                                                             <option selected value="">
                                                                                 Choisir un responsable
                                                                             </option>
-                                                                            <option value="1">
-                                                                                1
+                                                                            @foreach ($processus as $processu)
+                                                                            <option value="{{$processu->id}}">
+                                                                                {{$processu->nom}}
                                                                             </option>
+                                                                            @endforeach
                                                                         </select>
                                                                     </div>
                                                                 </div>
@@ -1181,9 +1229,11 @@
                                                                                     <option selected value="">
                                                                                         Choisir un responsable
                                                                                     </option>
-                                                                                    <option value="1">
-                                                                                        1
+                                                                                    @foreach ($postes as $poste)
+                                                                                    <option value="{{$poste->id}}">
+                                                                                        {{$poste->nom}}
                                                                                     </option>
+                                                                                    @endforeach
                                                                                 </select>
                                                                             </div>
                                                                             <div class="form-group">
@@ -1231,7 +1281,316 @@
 
     <script>
         document.addEventListener("DOMContentLoaded", function () {
-            document.querySelectorAll(".action-button-select").forEach(function (button) {
+            document.querySelectorAll(".action-accepte").forEach(function (button) {
+                button.addEventListener("click", function () {
+                    var type = this.getAttribute("data-type");
+                    var selectedCause = $("#causeSelect").val();
+                    var selectedRisque = $("#risqueSelect").val();
+                    var choixSelect = $("input[name='choix_select']:checked").val();
+
+                    if (choixSelect !== undefined) {
+                        // Faites quelque chose avec la valeur sélectionnée
+                        if (choixSelect === "cause") {
+                            if (selectedCause !== '') {
+                                $.ajax({
+                                    url: '/get-cause-info/' + selectedCause,
+                                    method: 'GET',
+                                    success: function (data) {
+                                        addGroups_accepte(type, data);
+                                    },
+                                    error: function () {
+                                        toastr.error("Une erreur s'est produite lors de la récupération des informations.");
+                                    }
+                                });
+                            }else{
+                                toastr.warning("Veuillez sélectionner une cause.");
+                            }
+                        } else if (choixSelect === "risque") {
+                            if (selectedRisque !== '') {
+                                $.ajax({
+                                    url: '/get-risque-info/' + selectedRisque,
+                                    method: 'GET',
+                                    success: function (data) {
+                                        addGroups_accepte(type, data);
+                                    },
+                                    error: function () {
+                                        toastr.error("Une erreur s'est produite lors de la récupération des informations.");
+                                    }
+                                });
+                            }else{
+                                toastr.warning("Veuillez sélectionner un risque.");
+                            }
+                        }
+                    } else {
+                        toastr.error("Veuillez préciser le choix de sélection.");
+                    }
+                });
+            });
+        });
+
+        function addGroups_accepte(type, data) {
+            // Récupérer l'élément qui contient les groupes
+            var dynamicFields = document.getElementById("dynamic-fields");
+
+            // Supprimer le contenu existant
+            while (dynamicFields.firstChild) {
+                dynamicFields.removeChild(dynamicFields.firstChild);
+            }
+
+            data.actions.forEach(function(action) {
+                var groupe = document.createElement("div");
+                groupe.className = "card card-bordered";
+                groupe.innerHTML = `
+                    <div class="card-inner">
+                                        <div class="row g-4">
+                                            <div class="col-lg-12 col-xxl-12" >
+                                                <div class="card">
+                                                    <div class="card-inner">
+                                                            <div class="row g-4">
+                                                                <div class="col-lg-6">
+                                                                    <div class="form-group">
+                                                                        <label class="form-label" for="Cause">
+                                                                            Processus
+                                                                        </label>
+                                                                        <div class="form-control-wrap">
+                                                                            <input value="${action.processus}" type="text" class="form-control" disabled >
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-lg-6">
+                                                                    <div class="form-group">
+                                                                        <label class="form-label" for="controle">
+                                                                            Risque
+                                                                        </label>
+                                                                        <div class="form-control-wrap">
+                                                                            <input value="${action.risque}" type="text" class="form-control" disabled>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-lg-12">
+                                                                    <div class="form-group">
+                                                                        <label class="form-label" for="controle">
+                                                                            Action Corrective
+                                                                        </label>
+                                                                        <div class="form-control-wrap">
+                                                                            <input value="${action.action}" type="text" class="form-control" disabled>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-lg-4">
+                                                                            <div class="form-group">
+                                                                                <label class="form-label" for="Coût">
+                                                                                    Responsable
+                                                                                </label>
+                                                                                <div class="form-control-wrap">
+                                                                                    <input value="${action.responsable}" type="text" class="form-control" disabled>
+                                                                                </div>
+                                                                            </div>
+                                                                            <div class="form-group">
+                                                                                <label class="form-label" for="Coût">
+                                                                                    Date prévisionnelle de réalisation
+                                                                                </label>
+                                                                                <div class="form-control-wrap">
+                                                                                    <input name="date_action" type="date" class="form-control" >
+                                                                                </div>
+                                                                            </div>
+                                                                </div>
+                                                                <div class="col-lg-8">
+                                                                    <div class="form-group text-center">
+                                                                        <label class="form-label" for="description">
+                                                                            Commentaire
+                                                                        </label>
+                                                                        <div class="form-control-wrap">
+                                                                            <textarea name="commentaire" class="form-control no-resize" id="default-textarea"></textarea>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-lg-12">
+                                                                    <div class="form-group text-center">
+                                                                        <a class="btn btn-outline-danger btn-dim " id="suppr_action" >
+                                                                            Supprimer
+                                                                        </a>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                `;
+
+                groupe.querySelector("#suppr_action").addEventListener("click", function(event) {
+                    event.preventDefault();
+                    groupe.remove();
+                });
+
+                document.getElementById("dynamic-fields").appendChild(groupe);
+            });
+        }
+    </script>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            document.querySelectorAll(".action-non-accepte").forEach(function (button) {
+                button.addEventListener("click", function () {
+                    var type = this.getAttribute("data-type");
+                    var selectedCause = $("#causeSelect").val();
+                    var selectedRisque = $("#risqueSelect").val();
+                    var choixSelect = $("input[name='choix_select']:checked").val();
+
+                    if (choixSelect !== undefined) {
+                        // Faites quelque chose avec la valeur sélectionnée
+                        if (choixSelect === "cause") {
+                            if (selectedCause !== '') {
+                                $.ajax({
+                                    url: '/get-cause-info/' + selectedCause,
+                                    method: 'GET',
+                                    success: function (data) {
+                                        addGroups_non_accepte(type, data);
+                                    },
+                                    error: function () {
+                                        toastr.error("Une erreur s'est produite lors de la récupération des informations.");
+                                    }
+                                });
+                            }else{
+                                toastr.warning("Veuillez sélectionner une cause.");
+                            }
+                        } else if (choixSelect === "risque") {
+                            if (selectedRisque !== '') {
+                                $.ajax({
+                                    url: '/get-risque-info/' + selectedRisque,
+                                    method: 'GET',
+                                    success: function (data) {
+                                        addGroups_non_accepte(type, data);
+                                    },
+                                    error: function () {
+                                        toastr.error("Une erreur s'est produite lors de la récupération des informations.");
+                                    }
+                                });
+                            }else{
+                                toastr.warning("Veuillez sélectionner un risque.");
+                            }
+                        }
+                    } else {
+                        toastr.error("Veuillez préciser le choix de sélection.");
+                    }
+                });
+            });
+        });
+
+        function addGroups_non_accepte(type, data) {
+            // Récupérer l'élément qui contient les groupes
+            var dynamicFields = document.getElementById("dynamic-fields");
+
+            // Supprimer le contenu existant
+            while (dynamicFields.firstChild) {
+                dynamicFields.removeChild(dynamicFields.firstChild);
+            }
+
+            data.actions.forEach(function(action) {
+                var groupe = document.createElement("div");
+                groupe.className = "card card-bordered";
+                groupe.innerHTML = `
+                    <div class="card-inner">
+                                        <div class="row g-4">
+                                            <div class="col-lg-12 col-xxl-12" >
+                                                <div class="card">
+                                                    <div class="card-inner">
+                                                            <div class="row g-4">
+                                                                <div class="col-lg-6">
+                                                                    <div class="form-group">
+                                                                        <label class="form-label" for="Cause">
+                                                                            Processus
+                                                                        </label>
+                                                                        <div class="form-control-wrap">
+                                                                            <input value="${action.processus}" type="text" class="form-control" disabled >
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-lg-6">
+                                                                    <div class="form-group">
+                                                                        <label class="form-label" for="controle">
+                                                                            Risque
+                                                                        </label>
+                                                                        <div class="form-control-wrap">
+                                                                            <input value="${action.risque}" type="text" class="form-control" disabled>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-lg-12">
+                                                                    <div class="form-group">
+                                                                        <label class="form-label" for="controle">
+                                                                            Action Corrective
+                                                                        </label>
+                                                                        <div class="form-control-wrap">
+                                                                            <input value="${action.action}" type="text" class="form-control" >
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-lg-4">
+                                                                            <div class="form-group">
+                                                                                <label class="form-label" for="Coût">
+                                                                                    Responsable
+                                                                                </label>
+                                                                                <select id="responsable_idc" required name="responsable_idc[]" class="form-select">
+                                                                                    <option selected value="">
+                                                                                        Choisir un responsable
+                                                                                    </option>
+                                                                                    @foreach ($postes as $poste)
+                                                                                    <option value="{{$poste->id}}">
+                                                                                        {{$poste->nom}}
+                                                                                    </option>
+                                                                                    @endforeach
+                                                                                </select>
+                                                                            </div>
+                                                                            <div class="form-group">
+                                                                                <label class="form-label" for="Coût">
+                                                                                    Date prévisionnelle de réalisation
+                                                                                </label>
+                                                                                <div class="form-control-wrap">
+                                                                                    <input name="date_action" type="date" class="form-control" >
+                                                                                </div>
+                                                                            </div>
+                                                                </div>
+                                                                <div class="col-lg-8">
+                                                                    <div class="form-group text-center">
+                                                                        <label class="form-label" for="description">
+                                                                            Commentaire
+                                                                        </label>
+                                                                        <div class="form-control-wrap">
+                                                                            <textarea name="commentaire" class="form-control no-resize" id="default-textarea"></textarea>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-lg-12">
+                                                                    <div class="form-group text-center">
+                                                                        <a class="btn btn-outline-danger btn-dim " id="suppr_action" >
+                                                                            Supprimer
+                                                                        </a>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                `;
+
+                groupe.querySelector("#suppr_action").addEventListener("click", function(event) {
+                    event.preventDefault();
+                    groupe.remove();
+                });
+
+                document.getElementById("dynamic-fields").appendChild(groupe);
+            });
+        }
+    </script>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            document.querySelectorAll(".ewdyghjiui").forEach(function (button) {
                 button.addEventListener("click", function () {
                     var type = this.getAttribute("data-type");
                     var selectedCause = $("#causeSelect").val();

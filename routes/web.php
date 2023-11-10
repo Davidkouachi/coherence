@@ -48,7 +48,8 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/Eva_proces', [EvaluationController::class, 'index'])->name('index_evaluation');
 
     Route::get('/fiche_amelioration', [AmeliorationController::class, 'index'])->name('index_amelioration');
-    Route::get('/get-process-risk-info/{id}', [AmeliorationController::class, 'action_non_accepte']);
+    Route::get('/get-cause-info/{id}', [AmeliorationController::class, 'get_cause_info']);
+    Route::get('/get-risque-info/{id}', [AmeliorationController::class, 'get_risque_info']);
 
     Route::get('/Profil', [ProfilController::class, 'index_profil'])->name('index_profil');
 
