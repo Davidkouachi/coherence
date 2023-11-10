@@ -427,7 +427,7 @@
                                                                 </div>
                                                             </div>
                                                         </div>
-                                                        <div class="col-lg-3">
+                                                        <div class="col-lg-2">
                                                             <div class="form-group">
                                                                 <label class="form-label" for="controle">
                                                                     Evaluation
@@ -437,7 +437,7 @@
                                                                 </div>
                                                             </div>
                                                         </div>
-                                                        <div class="col-lg-3">
+                                                        <div class="col-lg-4">
                                                             <div class="form-group">
                                                                 <label class="form-label" for="controle">
                                                                     Coût
@@ -903,7 +903,7 @@
                                                                 </div>
                                                             </div>
                                                         </div>
-                                                        <div class="col-lg-2">
+                                                        <div class="col-lg-3">
                                                             <div class="form-group">
                                                                 <label class="form-label" for="controle">
                                                                     gravite
@@ -923,7 +923,7 @@
                                                                 </div>
                                                             </div>
                                                         </div>
-                                                        <div class="col-lg-5">
+                                                        <div class="col-lg-4">
                                                             <div class="form-group">
                                                                 <label class="form-label" for="controle">
                                                                     Coût
@@ -1542,139 +1542,6 @@
                                                                                         {{$poste->nom}}
                                                                                     </option>
                                                                                     @endforeach
-                                                                                </select>
-                                                                            </div>
-                                                                            <div class="form-group">
-                                                                                <label class="form-label" for="Coût">
-                                                                                    Date prévisionnelle de réalisation
-                                                                                </label>
-                                                                                <div class="form-control-wrap">
-                                                                                    <input name="date_action" type="date" class="form-control" >
-                                                                                </div>
-                                                                            </div>
-                                                                </div>
-                                                                <div class="col-lg-8">
-                                                                    <div class="form-group text-center">
-                                                                        <label class="form-label" for="description">
-                                                                            Commentaire
-                                                                        </label>
-                                                                        <div class="form-control-wrap">
-                                                                            <textarea name="commentaire" class="form-control no-resize" id="default-textarea"></textarea>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                                <div class="col-lg-12">
-                                                                    <div class="form-group text-center">
-                                                                        <a class="btn btn-outline-danger btn-dim " id="suppr_action" >
-                                                                            Supprimer
-                                                                        </a>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                `;
-
-                groupe.querySelector("#suppr_action").addEventListener("click", function(event) {
-                    event.preventDefault();
-                    groupe.remove();
-                });
-
-                document.getElementById("dynamic-fields").appendChild(groupe);
-            });
-        }
-    </script>
-
-    <script>
-        document.addEventListener("DOMContentLoaded", function () {
-            document.querySelectorAll(".ewdyghjiui").forEach(function (button) {
-                button.addEventListener("click", function () {
-                    var type = this.getAttribute("data-type");
-                    var selectedCause = $("#causeSelect").val();
-                    var selectedRisque = $("#risqueSelect").val();
-
-                    if (selectedCause !== '') {
-                        $.ajax({
-                            url: '/get-process-risk-info/' + selectedCause,
-                            method: 'GET',
-                            success: function (data) {
-                                addGroups(type, data);
-                            },
-                            error: function () {
-                                toastr.error("Une erreur s'est produite lors de la récupération des informations.");
-                            }
-                        });
-                    }else {
-                        toastr.error("Sélectionnez une cause avant de continuer.");
-                    }
-                });
-            });
-        });
-
-        function addGroups(type, data) {
-            // Récupérer l'élément qui contient les groupes
-            var dynamicFields = document.getElementById("dynamic-fields");
-
-            // Supprimer le contenu existant
-            while (dynamicFields.firstChild) {
-                dynamicFields.removeChild(dynamicFields.firstChild);
-            }
-
-            data.actions.forEach(function(action) {
-                var groupe = document.createElement("div");
-                groupe.className = "card card-bordered";
-                groupe.innerHTML = `
-                    <div class="card-inner">
-                                        <div class="row g-4">
-                                            <div class="col-lg-12 col-xxl-12" >
-                                                <div class="card">
-                                                    <div class="card-inner">
-                                                            <div class="row g-4">
-                                                                <div class="col-lg-6">
-                                                                    <div class="form-group">
-                                                                        <label class="form-label" for="Cause">
-                                                                            Processus
-                                                                        </label>
-                                                                        <div class="form-control-wrap">
-                                                                            <input value="${action.nom_processus}" type="text" class="form-control" disabled >
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                                <div class="col-lg-6">
-                                                                    <div class="form-group">
-                                                                        <label class="form-label" for="controle">
-                                                                            Risque
-                                                                        </label>
-                                                                        <div class="form-control-wrap">
-                                                                            <input value="${action.nom_risque}" type="text" class="form-control" >
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                                <div class="col-lg-12">
-                                                                    <div class="form-group">
-                                                                        <label class="form-label" for="controle">
-                                                                            Action Corrective
-                                                                        </label>
-                                                                        <div class="form-control-wrap">
-                                                                            <input value="${action.action}" type="text" class="form-control" >
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                                <div class="col-lg-4">
-                                                                            <div class="form-group">
-                                                                                <label class="form-label" for="Coût">
-                                                                                    Responsable
-                                                                                </label>
-                                                                                <select id="responsable_idc" required name="responsable_idc[]" class="form-select">
-                                                                                    <option selected value="">
-                                                                                        Choisir un responsable
-                                                                                    </option>
-                                                                                    <option value="1">
-                                                                                        1
-                                                                                    </option>
                                                                                 </select>
                                                                             </div>
                                                                             <div class="form-group">

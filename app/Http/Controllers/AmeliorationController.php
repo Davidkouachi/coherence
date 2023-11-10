@@ -58,11 +58,6 @@ class AmeliorationController extends Controller
 
             $causes = Cause::where('causes.risque_id', $risque->id)->get();
             $risque->nbre_cause = count($causes);
-
-            foreach($causes->unique() as $caus)
-            {
-                $risque->validateur = $caus->validateur;
-            }
             
             $causesData[$risque->id] = [];
             
@@ -110,11 +105,6 @@ class AmeliorationController extends Controller
             $causes_select->nom_processus = $processus2->nom;
 
             $causes2 = Cause::where('causes.risque_id', $causes_select->risque_id)->get();
-
-            foreach($causes2->unique() as $caus2)
-            {
-                $causes_select->validateur = $caus2->validateur;
-            }
 
             $causesData2[$causes_select->risque_id] = [];
 
