@@ -181,7 +181,7 @@
                                                 </div>
                                                 <div class="col-lg-12">
                                                     <div class="row g-2" >
-                                                        <div class="col-md-6" >
+                                                        <div class="col-md-4" >
                                                             <div class="form-group text-center">
                                                                 <div class="custom-control custom-radio">
                                                                     <input type="radio" class="custom-control-input choix_select" name="choix_select" id="choixcause" value="cause">
@@ -191,7 +191,17 @@
                                                                 </div>
                                                             </div>
                                                         </div>
-                                                        <div class="col-md-6" >
+                                                        <div class="col-md-4" >
+                                                            <div class="form-group text-center">
+                                                                <div class="custom-control custom-radio">
+                                                                    <input type="radio" class="custom-control-input choix_select" name="choix_select" id="choixnt" value="cause_risque_nt">
+                                                                    <label class="custom-control-label" for="choixnt">
+                                                                        Cause / Risque non-trouvé
+                                                                    </label>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-4" >
                                                             <div class="form-group text-center">
                                                                 <div class="custom-control custom-radio">
                                                                     <input type="radio" class="custom-control-input choix_select" name="choix_select" id="choixrisque" value="risque">
@@ -207,25 +217,33 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-md-12 col-xxl-4" id="groupesContainer">
+                            <div class="col-md-12 col-xxl-4" id="groupesContainer_btn_trouve">
                                 <div class="card card-bordered">
                                     <div class="card-inner">
                                         <div class="row g-4">
-                                            <div class="col-lg-4">
+                                            <div class="col-lg-6" id="btn-cause-trouve">
                                                 <div class="form-group text-center">
                                                     <a class="btn btn-outline-primary btn-dim action-accepte" data-type="acceptee">
                                                         Action corrective acceptée
                                                     </a>
                                                 </div>
                                             </div>
-                                            <div class="col-lg-4">
+                                            <div class="col-lg-6" id="btn-risque-trouve">
                                                 <div class="form-group text-center">
                                                     <a class="btn btn-outline-primary btn-dim action-non-accepte" data-type="nouvelle-action">
                                                         Action corrective non-acceptée
                                                     </a>
                                                 </div>
                                             </div>
-                                            <div class="col-lg-4">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-12 col-xxl-4" id="groupesContainer_btn_new">
+                                <div class="card card-bordered">
+                                    <div class="card-inner">
+                                        <div class="row g-4">
+                                            <div class="col-lg-12"id="btn-non-trouve">
                                                 <div class="form-group text-center">
                                                     <a class="btn btn-outline-primary btn-dim action-new" data-type="nouvelle-action">
                                                         Nouvelle action corrective
@@ -236,90 +254,6 @@
                                     </div>
                                 </div>
                             </div>
-                            <!--<div class="col-md-12 col-xxl-4" id="groupesContainer">
-                                <div class="card card-bordered">
-                                    <div class="card-inner">
-                                        <div class="row g-4">
-                                            <div class="col-lg-12 col-xxl-12" >
-                                                <div class="card">
-                                                    <div class="card-inner">
-                                                            <div class="row g-4">
-                                                                <div class="col-lg-6">
-                                                                    <div class="form-group">
-                                                                        <label class="form-label" for="Cause">
-                                                                            Processus
-                                                                        </label>
-                                                                        <div class="form-control-wrap">
-                                                                            <input value="" type="text" class="form-control" disabled>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                                <div class="col-lg-6">
-                                                                    <div class="form-group">
-                                                                        <label class="form-label" for="controle">
-                                                                            Risque
-                                                                        </label>
-                                                                        <div class="form-control-wrap">
-                                                                            <input value="" type="text" class="form-control" disabled>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                                <div class="col-lg-12">
-                                                                    <div class="form-group">
-                                                                        <label class="form-label" for="controle">
-                                                                            Résumé des causes
-                                                                        </label>
-                                                                        <div class="form-control-wrap">
-                                                                            <input value="" type="text" class="form-control" disabled>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                                <div class="col-lg-12">
-                                                                    <div class="form-group">
-                                                                        <label class="form-label" for="controle">
-                                                                            Action Corrective
-                                                                        </label>
-                                                                        <div class="form-control-wrap">
-                                                                            <input value="" type="text" class="form-control" disabled>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                                <div class="col-lg-4">
-                                                                            <div class="form-group">
-                                                                                <label class="form-label" for="Coût">
-                                                                                    Responsable
-                                                                                </label>
-                                                                                <div class="form-control-wrap">
-                                                                                    <input value="" type="text" class="form-control" disabled>
-                                                                                </div>
-                                                                            </div>
-                                                                            <div class="form-group">
-                                                                                <label class="form-label" for="Coût">
-                                                                                    Date prévisionnelle de réalisation
-                                                                                </label>
-                                                                                <div class="form-control-wrap">
-                                                                                    <input name="date_action" type="date" class="form-control" >
-                                                                                </div>
-                                                                            </div>
-                                                                </div>
-                                                                <div class="col-lg-8">
-                                                                    <div class="form-group text-center">
-                                                                        <label class="form-label" for="description">
-                                                                            Commentaire
-                                                                        </label>
-                                                                        <div class="form-control-wrap">
-                                                                            <textarea name="commentaire" class="form-control no-resize" id="default-textarea"></textarea>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>-->
                             <div id="dynamic-fields">
                                 <!-- Vos groupes de champs dynamiques seront ajoutés ici -->
                             </div>
@@ -392,18 +326,21 @@
                                 </div>
                                 <div class="col-md-12 row g-2" style="margin-left:1px;">
                                     <div class="col-md-12">
-                                        <div class="card card-bordered h-100 
-                                        @php
-                                            if ($risque->evaluation <= 10) {
-                                                echo 'bg-success border-white';
-                                            } elseif ($risque->evaluation > 10 && $risque->evaluation < 20) {
-                                                echo 'bg-warning border-white';
-                                            } elseif ($risque->evaluation >= 20 && $risque->evaluation <= 25) {
-                                                echo 'bg-danger border-white';
-                                        } @endphp">
+                                        @if ($risque->evaluation >= 1 && $risque->evaluation <= 2 )
+                                            <div class="card card-bordered h-100 border-white" style="background-color:#5eccbf;" >
+                                        @endif
+                                        @if ($risque->evaluation >= 3 && $risque->evaluation <= 9)
+                                            <div class="card card-bordered h-100 border-white" style="background-color:#f7f880;">
+                                        @endif
+                                        @if ($risque->evaluation >= 10 && $risque->evaluation <= 16)
+                                            <div class="card card-bordered h-100 border-white" style="background-color:#f2b171;">
+                                        @endif
+                                        @if ($risque->evaluation > 16)
+                                            <div class="card card-bordered h-100 border-white" style="background-color:#ea6072;">
+                                        @endif
                                             <div class="card-inner">
                                                 <div class="card-head">
-                                                    <h5 class="card-title">Evaluation risque inhérent</h5>
+                                                    <h5 class="card-title">Evaluation risque sans dispositif de contrôle interne ou dispositif antérieur</h5>
                                                 </div>
                                                 <form action="#">
                                                     <div class="row g-4">
@@ -489,19 +426,21 @@
                                 @endforeach
                                 <div class="col-md-12 row g-2" style="margin-left:1px;">
                                     <div class="col-md-12">
-                                        <div class="card card-bordered h-100 
-                                        @php
-                                            if ($risque->evaluation_residuel <= 10) {
-                                                echo 'bg-success border-white';
-                                            } elseif ($risque->evaluation_residuel > 10 && $risque->evaluation_residuel < 20) {
-                                                echo 'bg-warning border-white';
-                                            } elseif ($risque->evaluation_residuel >= 20 && $risque->evaluation_residuel <= 25) {
-                                                echo 'bg-danger border-white';
-                                        } @endphp
-                                        " >
+                                        @if ($risque->evaluation_residuel >= 1 && $risque->evaluation_residuel <= 2 )
+                                            <div class="card card-bordered h-100 border-white" style="background-color:#5eccbf;" >
+                                        @endif
+                                        @if ($risque->evaluation_residuel >= 3 && $risque->evaluation_residuel <= 9)
+                                            <div class="card card-bordered h-100 border-white" style="background-color:#f7f880;">
+                                        @endif
+                                        @if ($risque->evaluation_residuel >= 10 && $risque->evaluation_residuel <= 16)
+                                            <div class="card card-bordered h-100 border-white" style="background-color:#f2b171;">
+                                        @endif
+                                        @if ($risque->evaluation_residuel > 16)
+                                            <div class="card card-bordered h-100 border-white" style="background-color:#ea6072;">
+                                        @endif
                                             <div class="card-inner">
                                                 <div class="card-head">
-                                                    <h5 class="card-title">Evaluation risque résiduel</h5>
+                                                    <h5 class="card-title">Evaluation risque avec dispositif de contrôle interne actuel</h5>
                                                 </div>
                                                 <form action="#">
                                                     <div class="row g-4">
@@ -780,18 +719,21 @@
                                 </div>
                                 <div class="col-md-12 row g-2" style="margin-left:1px;">
                                     <div class="col-md-12">
-                                        <div class="card card-bordered h-100 
-                                        @php
-                                            if ($causes_select->evaluation <= 10) {
-                                                echo 'bg-success border-white';
-                                            } elseif ($causes_select->evaluation > 10 && $causes_select->evaluation < 20) {
-                                                echo 'bg-warning border-white';
-                                            } elseif ($causes_select->evaluation >= 20 && $causes_select->evaluation <= 25) {
-                                                echo 'bg-danger border-white';
-                                            } @endphp">
+                                        @if ($causes_select->evaluation >= 1 && $causes_select->evaluation <= 2 )
+                                            <div class="card card-bordered h-100 border-white" style="background-color:#5eccbf;" >
+                                        @endif
+                                        @if ($causes_select->evaluation >= 3 && $causes_select->evaluation <= 9)
+                                            <div class="card card-bordered h-100 border-white" style="background-color:#f7f880;">
+                                        @endif
+                                        @if ($causes_select->evaluation >= 10 && $causes_select->evaluation <= 16)
+                                            <div class="card card-bordered h-100 border-white" style="background-color:#f2b171;">
+                                        @endif
+                                        @if ($causes_select->evaluation > 16)
+                                            <div class="card card-bordered h-100 border-white" style="background-color:#ea6072;">
+                                        @endif
                                             <div class="card-inner">
                                                 <div class="card-head">
-                                                    <h5 class="card-title">Evaluation risque inhérent</h5>
+                                                    <h5 class="card-title">Evaluation risque sans dispositif de contrôle interne ou dispositif antérieur</h5>
                                                 </div>
                                                 <form action="#">
                                                     <div class="row g-4">
@@ -877,19 +819,21 @@
                                 @endforeach
                                 <div class="col-md-12 row g-2" style="margin-left:1px;">
                                     <div class="col-md-12">
-                                        <div class="card card-bordered h-100 
-                                        @php
-                                            if ($causes_select->evaluation_residuel <= 10) {
-                                                echo 'bg-success border-white';
-                                            } elseif ($causes_select->evaluation_residuel > 10 && $causes_select->evaluation_residuel < 20) {
-                                                echo 'bg-warning border-white';
-                                            } elseif ($causes_select->evaluation_residuel >= 20 && $causes_select->evaluation_residuel <= 25) {
-                                                echo 'bg-danger border-white';
-                                        } @endphp
-                                        " >
+                                        @if ($causes_select->evaluation_residuel >= 1 && $causes_select->evaluation_residuel <= 2 )
+                                            <div class="card card-bordered h-100 border-white" style="background-color:#5eccbf;" >
+                                        @endif
+                                        @if ($causes_select->evaluation_residuel >= 3 && $causes_select->evaluation_residuel <= 9)
+                                            <div class="card card-bordered h-100 border-white" style="background-color:#f7f880;">
+                                        @endif
+                                        @if ($causes_select->evaluation_residuel >= 10 && $causes_select->evaluation_residuel <= 16)
+                                            <div class="card card-bordered h-100 border-white" style="background-color:#f2b171;">
+                                        @endif
+                                        @if ($causes_select->evaluation_residuel > 16)
+                                            <div class="card card-bordered h-100 border-white" style="background-color:#ea6072;">
+                                        @endif
                                             <div class="card-inner">
                                                 <div class="card-head">
-                                                    <h5 class="card-title">Evaluation risque résiduel</h5>
+                                                    <h5 class="card-title">Evaluation risque avec dispositif de contrôle interne actuel</h5>
                                                 </div>
                                                 <form action="#">
                                                     <div class="row g-4">
@@ -1122,6 +1066,7 @@
 
 
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
     <script>
         $(document).ready(function() {
             // Écoutez l'événement de changement de l'élément select
@@ -1137,6 +1082,7 @@
             });
         });
     </script>
+
     <script>
         $(document).ready(function() {
             // Écoutez l'événement de changement de l'élément select
@@ -1151,6 +1097,11 @@
                 $(`#modalVucause${selectedValu}`).modal('show');
             });
         });
+    </script>
+
+    <script>
+        var postes = @json($postes);
+        var processuss = @json($processuss);
     </script>
 
     <script>
@@ -1182,11 +1133,7 @@
                                                                             <option selected value="">
                                                                                 Choisir un responsable
                                                                             </option>
-                                                                            @foreach ($processus as $processu)
-                                                                            <option value="{{$processu->id}}">
-                                                                                {{$processu->nom}}
-                                                                            </option>
-                                                                            @endforeach
+                                                                            ${processuss.map(processus => `<option value="${processus.id}">${processus.nom}</option>`).join('')}
                                                                         </select>
                                                                     </div>
                                                                 </div>
@@ -1229,11 +1176,7 @@
                                                                                     <option selected value="">
                                                                                         Choisir un responsable
                                                                                     </option>
-                                                                                    @foreach ($postes as $poste)
-                                                                                    <option value="{{$poste->id}}">
-                                                                                        {{$poste->nom}}
-                                                                                    </option>
-                                                                                    @endforeach
+                                                                                    ${postes.map(poste => `<option value="${poste.id}">${poste.nom}</option>`).join('')}
                                                                                 </select>
                                                                             </div>
                                                                             <div class="form-group">
@@ -1353,7 +1296,9 @@
                                                                             Processus
                                                                         </label>
                                                                         <div class="form-control-wrap">
-                                                                            <input name="processus_accepte[]" value="${action.processus}" type="text" class="form-control" disabled >
+                                                                            <select id="responsable_idc" required name="processus[]" class="form-select" disabled>
+                                                                                    ${processuss.map(processus => `<option value="${processus.id}" ${action.processus_id == processus.id ? 'selected' : ''}>${processus.nom}</option>`).join('')}
+                                                                            </select>
                                                                         </div>
                                                                     </div>
                                                                 </div>
@@ -1382,9 +1327,9 @@
                                                                                 <label class="form-label" for="Coût">
                                                                                     Responsable
                                                                                 </label>
-                                                                                <div class="form-control-wrap">
-                                                                                    <input name="poste_idc_accepte[]" value="${action.responsable}" type="text" class="form-control" disabled>
-                                                                                </div>
+                                                                                <select id="responsable_idc" required name="poste_idc_accepte[]" class="form-select" disabled>
+                                                                                    ${postes.map(poste => `<option value="${poste.id}" ${action.poste_id == poste.id ? 'selected' : ''}>${poste.nom}</option>`).join('')}
+                                                                                </select>
                                                                             </div>
                                                                             <div class="form-group">
                                                                                 <label class="form-label" for="Coût">
@@ -1504,7 +1449,9 @@
                                                                             Processus
                                                                         </label>
                                                                         <div class="form-control-wrap">
-                                                                            <input name="processus_non_accepte[]" value="${action.processus}" type="text" class="form-control" disabled >
+                                                                            <select id="responsable_idc" required name="processus_accepte[]" class="form-select" disabled>
+                                                                                    ${processuss.map(processus => `<option value="${processus.id}" ${action.processus_id == processus.id ? 'selected' : ''}>${processus.nom}</option>`).join('')}
+                                                                            </select>
                                                                         </div>
                                                                     </div>
                                                                 </div>
@@ -1533,15 +1480,11 @@
                                                                                 <label class="form-label" for="Coût">
                                                                                     Responsable
                                                                                 </label>
-                                                                                <select id="responsable_idc" required name="poste_idc_non_accepte[]" class="form-select">
+                                                                                <select id="responsable_idc" required name="poste_idc_non_accepte[]" class="form-select" >
                                                                                     <option selected value="">
                                                                                         Choisir un responsable
                                                                                     </option>
-                                                                                    @foreach ($postes as $poste)
-                                                                                    <option value="{{$poste->id}}">
-                                                                                        {{$poste->nom}}
-                                                                                    </option>
-                                                                                    @endforeach
+                                                                                    ${postes.map(poste => `<option value="${poste.id}" ${action.poste_id == poste.id ? 'selected' : ''}>${poste.nom}</option>`).join('')}
                                                                                 </select>
                                                                             </div>
                                                                             <div class="form-group">
@@ -1586,6 +1529,29 @@
                 document.getElementById("dynamic-fields").appendChild(groupe);
             });
         }
+    </script>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+
+            document.getElementById("groupesContainer_btn_trouve").style.display = "none";
+            document.getElementById("groupesContainer_btn_new").style.display = "none";
+
+            document.querySelectorAll(".choix_select").forEach(function (radio) {
+                radio.addEventListener("change", function () {
+
+                    // Affichez la section appropriée en fonction du choix sélectionné
+                    var selectedValue = this.value;
+                    if (selectedValue === "cause" || selectedValue === "risque") {
+                        document.getElementById("groupesContainer_btn_trouve").style.display = "block";
+                        document.getElementById("groupesContainer_btn_new").style.display = "none";
+                    } else if (selectedValue === "cause_risque_nt") {
+                        document.getElementById("groupesContainer_btn_trouve").style.display = "none";
+                        document.getElementById("groupesContainer_btn_new").style.display = "block";
+                    }
+                });
+            });
+        });
     </script>
 
 

@@ -142,11 +142,11 @@ class AmeliorationController extends Controller
         }
 
         $postes = Poste::all();
-        $processus = Processuse::all();
+        $processuss = Processuse::all();
 
         return view('add.ficheamelioration', 
             ['risques' => $risques, 'causesData' => $causesData, 'actionsData' => $actionsData, 
-            'causes_selects' => $causes_selects, 'Suivi_action2' => $Suivi_action2, 'caus2' => $caus2, 'causesData2' => $causesData2, 'actionsData2' => $actionsData2, 'postes' => $postes, 'processus' => $processus]);
+            'causes_selects' => $causes_selects, 'Suivi_action2' => $Suivi_action2, 'caus2' => $caus2, 'causesData2' => $causesData2, 'actionsData2' => $actionsData2, 'postes' => $postes, 'processuss' => $processuss]);
    }
     
     public function get_cause_info($id)
@@ -165,6 +165,10 @@ class AmeliorationController extends Controller
 
             $processus = Processuse::find($risque->processus_id);
             $action->processus = $processus->nom;
+            $action->processus_id = $processus->id;
+
+            $action->nature="cause";
+
 
         }
 
@@ -188,6 +192,9 @@ class AmeliorationController extends Controller
 
             $processus = Processuse::find($risque->processus_id);
             $action->processus = $processus->nom;
+            $action->processus_id = $processus->id;
+
+            $action->nature="risque";
 
         }
 

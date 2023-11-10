@@ -50,20 +50,18 @@
                                                         <td>
                                                             {{ $processu->evag }}
                                                         </td>
-                                                        <td class="
-                                                            @php
-                                                                if ($processu->evag <= 10 && $processu->evag > 0) {
-                                                                    echo 'bg-success border-white';
-                                                                } elseif ($processu->evag > 10 && $processu->evag < 20) {
-                                                                    echo 'bg-warning border-white';
-                                                                } elseif ($processu->evag >= 20 && $processu->evag <= 25) {
-                                                                    echo 'bg-danger border-white';
-                                                                } elseif ($processu->evag == 0 ) {
-                                                                        echo 'bg-light border-white';
-                                                                } 
-                                                            @endphp
-                                                        ">
-                                                        </td>
+                                                        @if ($processu->evag >= 1 && $processu->evag <= 2 )
+                                                            <td class="border-white" style="background-color:#5eccbf;" ></td>
+                                                        @endif
+                                                        @if ($processu->evag >= 3 && $processu->evag <= 9)
+                                                            <td class="border-white"style="background-color:#f7f880;"></td>
+                                                        @endif
+                                                        @if ($processu->evag >= 10 && $processu->evag <= 16)
+                                                            <td class="border-white"style="background-color:#f2b171;"></td>
+                                                        @endif
+                                                        @if ($processu->evag > 16)
+                                                            <td class="border-white" style="background-color:#ea6072;"></td>
+                                                        @endif
                                                         <td>
                                                             <a data-bs-toggle="modal"
                                                                 data-bs-target="#modalDetail{{$processu->id}}"
@@ -110,21 +108,22 @@
                                                                 Processus : {{$processu->nom}}
                                                             </label>
                                                             <div class="form-control-wrap">
-                                                                <input value="{{ $processu->evag }}" 
-                                                                disabled type="text" 
-                                                                class="form-control text-center 
-                                                                @php
-                                                                    if ($processu->evag <= 10 && $processu->evag > 0) {
-                                                                        echo 'bg-success border-white';
-                                                                    } elseif ($processu->evag > 10 && $processu->evag < 20) {
-                                                                        echo 'bg-warning border-white';
-                                                                    } elseif ($processu->evag >= 20 && $processu->evag <= 25) {
-                                                                        echo 'bg-danger border-white';
-                                                                    } elseif ($processu->evag == 0 ) {
-                                                                        echo 'bg-light border-white';
-                                                                    } 
-                                                                @endphp
-                                                                " id="Cause">
+                                                                @if ($processu->evag >= 1 && $processu->evag <= 2 )
+                                                                    <input value="{{ $processu->evag }}" disabled type="text" 
+                                                                    class="form-control border-white text-center " id="Cause" style="background-color:#5eccbf;" >
+                                                                @endif
+                                                                @if ($processu->evag >= 3 && $processu->evag <= 9)
+                                                                    <input value="{{ $processu->evag }}" disabled type="text" 
+                                                                    class="form-control border-white text-center " id="Cause"style="background-color:#f7f880;">
+                                                                @endif
+                                                                @if ($processu->evag >= 10 && $processu->evag <= 16)
+                                                                    <input value="{{ $processu->evag }}" disabled type="text" 
+                                                                    class="form-control border-white text-center " id="Cause"style="background-color:#f2b171;">
+                                                                @endif
+                                                                @if ($processu->evag > 16)
+                                                                    <input value="{{ $processu->evag }}" disabled type="text" 
+                                                                    class="form-control border-white text-center " id="Cause"style="background-color:#ea6072;">
+                                                                @endif
                                                             </div>
                                                         </div>
                                                     </div>
@@ -143,18 +142,22 @@
                                                                 Risque : {{ $risqueData['nom'] }}
                                                             </label>
                                                             <div class="form-control-wrap">
-                                                                <input value="{{ $risqueData['evaluation_residuel'] }}" 
-                                                                disabled type="text" 
-                                                                class="form-control text-center 
-                                                                @php
-                                                                    if ($risqueData['evaluation_residuel'] <= 10) {
-                                                                        echo 'bg-success border-white';
-                                                                    } elseif ($risqueData['evaluation_residuel'] > 10 && $risqueData['evaluation_residuel'] < 20) {
-                                                                        echo 'bg-warning border-white';
-                                                                    } elseif ($risqueData['evaluation_residuel'] >= 20 && $risqueData['evaluation_residuel'] <= 25) {
-                                                                        echo 'bg-danger border-white';} 
-                                                                @endphp
-                                                                " id="Cause">
+                                                                @if ($risqueData['evaluation_residuel'] >= 1 && $risqueData['evaluation_residuel'] <= 2 )
+                                                                    <input value="{{ $risqueData['evaluation_residuel'] }}" disabled type="text" 
+                                                                    class="form-control border-white text-center " id="Cause" style="background-color:#5eccbf;" >
+                                                                @endif
+                                                                @if ($risqueData['evaluation_residuel'] >= 3 && $risqueData['evaluation_residuel'] <= 9)
+                                                                    <input value="{{ $risqueData['evaluation_residuel'] }}" disabled type="text" 
+                                                                    class="form-control border-white text-center " id="Cause"style="background-color:#f7f880;">
+                                                                @endif
+                                                                @if ($risqueData['evaluation_residuel'] >= 10 && $risqueData['evaluation_residuel'] <= 16)
+                                                                    <input value="{{ $risqueData['evaluation_residuel'] }}" disabled type="text" 
+                                                                    class="form-control border-white text-center " id="Cause"style="background-color:#f2b171;">
+                                                                @endif
+                                                                @if ($risqueData['evaluation_residuel'] > 16)
+                                                                    <input value="{{ $risqueData['evaluation_residuel'] }}" disabled type="text" 
+                                                                    class="form-control border-white text-center " id="Cause"style="background-color:#ea6072;">
+                                                                @endif
                                                             </div>
                                                         </div>
                                                     </div>
