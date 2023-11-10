@@ -87,7 +87,7 @@
                                                             Lieu
                                                         </label>
                                                         <div class="form-control-wrap">
-                                                            <input name="lieu" type="text" class="form-control" id="controle">
+                                                            <input placeholder="Saisie obligatoire" name="lieu" type="text" class="form-control" id="controle">
                                                         </div>
                                                     </div>
                                                 </div>
@@ -97,7 +97,7 @@
                                                             Détecteur (Agent / Client)
                                                         </label>
                                                         <div class="form-control-wrap">
-                                                            <input name="detecteur" type="text" class="form-control" id="controle">
+                                                            <input placeholder="Saisie obligatoire" name="detecteur" type="text" class="form-control" id="controle">
                                                         </div>
                                                     </div>
                                                 </div>
@@ -115,7 +115,7 @@
                                                             Non conformité
                                                         </label>
                                                         <div class="form-control-wrap">
-                                                            <input name="non_conformite" id="inputMots" type="text" class="form-control" id="Cause">
+                                                            <input placeholder="Saisie obligatoire" name="non_conformite" id="inputMots" type="text" class="form-control" id="Cause">
                                                         </div>
                                                     </div>
                                                 </div>
@@ -150,7 +150,7 @@
                                                 <div class="col-lg-6">
                                                     <div class="form-group">
                                                         <div class="form-control-wrap">
-                                                            <select class="form-select js-select2 " id="causeSelect" data-search="on" data-placeholder="Recherche Cause">
+                                                            <select class="form-select js-select2 select_rech" id="causeSelect" data-search="on" data-placeholder="Recherche Cause">
                                                                 <option value="" >
 
                                                                 </option>
@@ -166,7 +166,7 @@
                                                 <div class="col-lg-6">
                                                     <div class="form-group">
                                                         <div class="form-control-wrap">
-                                                            <select class="form-select js-select2" id="risqueSelect" data-search="on" data-placeholder="Recherche Risque">
+                                                            <select class="form-select js-select2 select_rech" id="risqueSelect" data-search="on" data-placeholder="Recherche Risque">
                                                                 <option value="">
 
                                                                 </option>
@@ -179,7 +179,7 @@
                                                         </div>
                                                     </div>
                                                 </div>
-                                                <div class="col-lg-12">
+                                                <div class="col-lg-12" id="div_choix" >
                                                     <div class="row g-2" >
                                                         <div class="col-md-4" >
                                                             <div class="form-group text-center">
@@ -221,17 +221,24 @@
                                 <div class="card card-bordered">
                                     <div class="card-inner">
                                         <div class="row g-4">
-                                            <div class="col-lg-6" id="btn-cause-trouve">
+                                            <div class="col-lg-4" id="btn-cause-trouve">
                                                 <div class="form-group text-center">
                                                     <a class="btn btn-outline-primary btn-dim action-accepte" data-type="acceptee">
                                                         Action corrective acceptée
                                                     </a>
                                                 </div>
                                             </div>
-                                            <div class="col-lg-6" id="btn-risque-trouve">
+                                            <div class="col-lg-4" id="btn-risque-trouve">
                                                 <div class="form-group text-center">
                                                     <a class="btn btn-outline-primary btn-dim action-non-accepte" data-type="nouvelle-action">
                                                         Action corrective non-acceptée
+                                                    </a>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-4" id="btn-risque-trouve">
+                                                <div class="form-group text-center">
+                                                    <a class="btn btn-outline-primary btn-dim action-accepte-new" data-type="nouvelle-action">
+                                                        Ajouter un action corrective
                                                     </a>
                                                 </div>
                                             </div>
@@ -265,7 +272,7 @@
                                                 <button type="submit" class="btn btn-lg btn-success btn-dim ">
                                                     <em class="ni ni-check me-2"></em>
                                                     <em>Soumettre</em>
-                                                </button>
+                                                </button >
                                             </div>
                                         </div>
                                     </div>
@@ -1069,6 +1076,7 @@
 
     <script>
         $(document).ready(function() {
+            document.getElementById("div_choix").style.display = "none"; 
             // Écoutez l'événement de changement de l'élément select
             $('#risqueSelect').on('change', function() {
                 // Récupérez la valeur sélectionnée
@@ -1079,12 +1087,15 @@
 
                 // Ouvrez le modal correspondant à la valeur sélectionnée
                 $(`#modalVurisque${selectedValue}`).modal('show');
+
+                document.getElementById("div_choix").style.display = "block"; 
             });
         });
     </script>
 
     <script>
         $(document).ready(function() {
+            document.getElementById("div_choix").style.display = "none"; 
             // Écoutez l'événement de changement de l'élément select
             $('#causeSelect').on('change', function() {
                 // Récupérez la valeur sélectionnée
@@ -1095,6 +1106,8 @@
 
                 // Ouvrez le modal correspondant à la valeur sélectionnée
                 $(`#modalVucause${selectedValu}`).modal('show');
+
+                document.getElementById("div_choix").style.display = "block"; 
             });
         });
     </script>
@@ -1115,6 +1128,14 @@
         });
 
         function addGroup(type_new) {
+
+            var dynamicFields = document.getElementById("dynamic-fields");
+
+            // Supprimer le contenu existant
+            while (dynamicFields.firstChild) {
+                dynamicFields.removeChild(dynamicFields.firstChild);
+            }
+
             var groupe = document.createElement("div");
             groupe.className = "card card-bordered";
             groupe.innerHTML = `
@@ -1123,13 +1144,19 @@
                                             <div class="col-lg-12 col-xxl-12" >
                                                 <div class="card">
                                                     <div class="card-inner">
+                                                        <div class="card-head">
+                                                            <span class="badge badge-dot bg-primary">
+                                                                Nouveau
+                                                            </span>
+                                                        </div>
                                                             <div class="row g-4">
                                                                 <div class="col-lg-6">
                                                                     <div class="form-group">
                                                                         <label class="form-label" for="Cause">
                                                                             Processus
                                                                         </label>
-                                                                        <select id="responsable_idc" required name="processus_new[]" class="form-select">
+                                                                        <input style="display:none;" name="nature[]" value="new" type="text" >
+                                                                        <select id="responsable_idc" required name="processus[]" class="form-select">
                                                                             <option selected value="">
                                                                                 Choisir un responsable
                                                                             </option>
@@ -1143,7 +1170,7 @@
                                                                             Risque
                                                                         </label>
                                                                         <div class="form-control-wrap">
-                                                                            <input name="risque_new[]" value="" type="text" class="form-control" >
+                                                                            <input placeholder="Saisie obligatoire" name="risque[]" type="text" class="form-control" >
                                                                         </div>
                                                                     </div>
                                                                 </div>
@@ -1153,7 +1180,7 @@
                                                                             Résumé des causes
                                                                         </label>
                                                                         <div class="form-control-wrap">
-                                                                            <input name="resume_cause_new[]" value="" type="text" class="form-control" >
+                                                                            <input placeholder="Saisie obligatoire" name="resume[]" type="text" class="form-control" >
                                                                         </div>
                                                                     </div>
                                                                 </div>
@@ -1163,7 +1190,7 @@
                                                                             Action Corrective
                                                                         </label>
                                                                         <div class="form-control-wrap">
-                                                                            <input name="actionc_new[]" value="" type="text" class="form-control" >
+                                                                            <input placeholder="Saisie obligatoire" name="action[]" type="text" class="form-control" >
                                                                         </div>
                                                                     </div>
                                                                 </div>
@@ -1172,7 +1199,7 @@
                                                                                 <label class="form-label" for="Coût">
                                                                                     Responsable
                                                                                 </label>
-                                                                                <select id="responsable_idc" required name="poste_idc_new[]" class="form-select">
+                                                                                <select id="responsable_idc" required name="poste_id[]" class="form-select">
                                                                                     <option selected value="">
                                                                                         Choisir un responsable
                                                                                     </option>
@@ -1184,7 +1211,7 @@
                                                                                     Date prévisionnelle de réalisation
                                                                                 </label>
                                                                                 <div class="form-control-wrap">
-                                                                                    <input name="date_action_new[]" type="date" class="form-control" >
+                                                                                    <input name="date_action[]" type="date" class="form-control" >
                                                                                 </div>
                                                                             </div>
                                                                 </div>
@@ -1194,7 +1221,7 @@
                                                                             Commentaire
                                                                         </label>
                                                                         <div class="form-control-wrap">
-                                                                            <textarea name="commentaire_new[]" class="form-control no-resize" id="default-textarea"></textarea>
+                                                                            <textarea name="commentaire[]" class="form-control no-resize" id="default-textarea"></textarea>
                                                                         </div>
                                                                     </div>
                                                                 </div>
@@ -1289,12 +1316,19 @@
                                             <div class="col-lg-12 col-xxl-12" >
                                                 <div class="card">
                                                     <div class="card-inner">
+                                                        <div class="card-head">
+                                                            <span class="badge badge-dot bg-success">
+                                                                Accepté
+                                                            </span>
+                                                        </div>
                                                             <div class="row g-4">
                                                                 <div class="col-lg-6">
                                                                     <div class="form-group">
                                                                         <label class="form-label" for="Cause">
                                                                             Processus
                                                                         </label>
+                                                                        <input style="display:none;" name="nature[]" value="accepte" type="text" >
+                                                                        <input style="display:none;" name="resume[]" value="" type="text" >
                                                                         <div class="form-control-wrap">
                                                                             <select id="responsable_idc" required name="processus[]" class="form-select" disabled>
                                                                                     ${processuss.map(processus => `<option value="${processus.id}" ${action.processus_id == processus.id ? 'selected' : ''}>${processus.nom}</option>`).join('')}
@@ -1308,7 +1342,7 @@
                                                                             Risque
                                                                         </label>
                                                                         <div class="form-control-wrap">
-                                                                            <input name="risque_accepte[]" value="${action.risque}" type="text" class="form-control" disabled>
+                                                                            <input name="risque[]" value="${action.risque}" type="text" class="form-control" disabled>
                                                                         </div>
                                                                     </div>
                                                                 </div>
@@ -1318,7 +1352,7 @@
                                                                             Action Corrective
                                                                         </label>
                                                                         <div class="form-control-wrap">
-                                                                            <input name="actionc_accepte[]" value="${action.action}" type="text" class="form-control" disabled>
+                                                                            <input name="action[]" value="${action.action}" type="text" class="form-control" disabled>
                                                                         </div>
                                                                     </div>
                                                                 </div>
@@ -1327,7 +1361,7 @@
                                                                                 <label class="form-label" for="Coût">
                                                                                     Responsable
                                                                                 </label>
-                                                                                <select id="responsable_idc" required name="poste_idc_accepte[]" class="form-select" disabled>
+                                                                                <select id="responsable_idc" required name="poste_id[]" class="form-select" disabled>
                                                                                     ${postes.map(poste => `<option value="${poste.id}" ${action.poste_id == poste.id ? 'selected' : ''}>${poste.nom}</option>`).join('')}
                                                                                 </select>
                                                                             </div>
@@ -1336,7 +1370,7 @@
                                                                                     Date prévisionnelle de réalisation
                                                                                 </label>
                                                                                 <div class="form-control-wrap">
-                                                                                    <input name="date_action_accepte[]" type="date" class="form-control" >
+                                                                                    <input name="date_action[]" type="date" class="form-control" >
                                                                                 </div>
                                                                             </div>
                                                                 </div>
@@ -1346,7 +1380,7 @@
                                                                             Commentaire
                                                                         </label>
                                                                         <div class="form-control-wrap">
-                                                                            <textarea name="commentaire_accepte[]" class="form-control no-resize" id="default-textarea"></textarea>
+                                                                            <textarea name="commentaire[]" class="form-control no-resize" id="default-textarea"></textarea>
                                                                         </div>
                                                                     </div>
                                                                 </div>
@@ -1442,14 +1476,21 @@
                                             <div class="col-lg-12 col-xxl-12" >
                                                 <div class="card">
                                                     <div class="card-inner">
+                                                        <div class="card-head">
+                                                            <span class="badge badge-dot bg-danger">
+                                                                Non-accepté
+                                                            </span>
+                                                        </div>
                                                             <div class="row g-4">
                                                                 <div class="col-lg-6">
                                                                     <div class="form-group">
                                                                         <label class="form-label" for="Cause">
                                                                             Processus
                                                                         </label>
+                                                                        <input style="display:none;" name="nature[]" value="non-accepte" type="text" >
+                                                                        <input style="display:none;" name="resume[]" value="" type="text" >
                                                                         <div class="form-control-wrap">
-                                                                            <select id="responsable_idc" required name="processus_accepte[]" class="form-select" disabled>
+                                                                            <select id="responsable_idc" required name="processus[]" class="form-select" disabled>
                                                                                     ${processuss.map(processus => `<option value="${processus.id}" ${action.processus_id == processus.id ? 'selected' : ''}>${processus.nom}</option>`).join('')}
                                                                             </select>
                                                                         </div>
@@ -1461,7 +1502,7 @@
                                                                             Risque
                                                                         </label>
                                                                         <div class="form-control-wrap">
-                                                                            <input name="risque_non_accepte[]" value="${action.risque}" type="text" class="form-control" disabled>
+                                                                            <input name="risque[]" value="${action.risque}" type="text" class="form-control" disabled>
                                                                         </div>
                                                                     </div>
                                                                 </div>
@@ -1471,7 +1512,7 @@
                                                                             Action Corrective
                                                                         </label>
                                                                         <div class="form-control-wrap">
-                                                                            <input name="actionc_non_accepte[]" value="${action.action}" type="text" class="form-control" >
+                                                                            <input placeholder="Saisie obligatoire" name="action[]" value="${action.action}" type="text" class="form-control" >
                                                                         </div>
                                                                     </div>
                                                                 </div>
@@ -1480,7 +1521,7 @@
                                                                                 <label class="form-label" for="Coût">
                                                                                     Responsable
                                                                                 </label>
-                                                                                <select id="responsable_idc" required name="poste_idc_non_accepte[]" class="form-select" >
+                                                                                <select id="responsable_idc" required name="poste_id[]" class="form-select" >
                                                                                     <option selected value="">
                                                                                         Choisir un responsable
                                                                                     </option>
@@ -1492,7 +1533,7 @@
                                                                                     Date prévisionnelle de réalisation
                                                                                 </label>
                                                                                 <div class="form-control-wrap">
-                                                                                    <input name="date_action_non_accepte[]" type="date" class="form-control" >
+                                                                                    <input name="date_action[]" type="date" class="form-control" >
                                                                                 </div>
                                                                             </div>
                                                                 </div>
@@ -1502,7 +1543,7 @@
                                                                             Commentaire
                                                                         </label>
                                                                         <div class="form-control-wrap">
-                                                                            <textarea name="commentaire_non_accepte[]" class="form-control no-resize" id="default-textarea"></textarea>
+                                                                            <textarea name="commentaire[]" class="form-control no-resize" id="default-textarea"></textarea>
                                                                         </div>
                                                                     </div>
                                                                 </div>
@@ -1533,14 +1574,128 @@
 
     <script>
         document.addEventListener("DOMContentLoaded", function () {
+            document.querySelectorAll(".action-accepte-new").forEach(function (button) {
+                button.addEventListener("click", function () {
+                    var type_new = this.getAttribute("data-type");
+                    addGroup(type_new);
+                });
+            });
+        });
 
+        function addGroup(type_new) {
+
+            var groupe = document.createElement("div");
+            groupe.className = "card card-bordered";
+            groupe.innerHTML = `
+                                    <div class="card-inner">
+                                        <div class="row g-4">
+                                            <div class="col-lg-12 col-xxl-12" >
+                                                <div class="card">
+                                                    <div class="card-inner">
+                                                        <div class="card-head">
+                                                            <span class="badge badge-dot bg-primary">
+                                                                Nouveau
+                                                            </span>
+                                                        </div>
+                                                            <div class="row g-4">
+                                                                <div class="col-lg-6">
+                                                                    <div class="form-group">
+                                                                        <label class="form-label" for="Cause">
+                                                                            Processus
+                                                                        </label>
+                                                                        <input style="display:none;" name="nature[]" value="action-new" type="text" >
+                                                                        <input style="display:none;" name="resume[]" value="" type="text" >
+                                                                        <select id="responsable_idc" required name="processus[]" class="form-select">
+                                                                            <option selected value="">
+                                                                                Choisir un responsable
+                                                                            </option>
+                                                                            ${processuss.map(processus => `<option value="${processus.id}">${processus.nom}</option>`).join('')}
+                                                                        </select>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-lg-6">
+                                                                    <div class="form-group">
+                                                                        <label class="form-label" for="controle">
+                                                                            Risque
+                                                                        </label>
+                                                                        <div class="form-control-wrap">
+                                                                            <input placeholder="Saisie obligatoire" name="risque[]" value="" type="text" class="form-control" >
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-lg-12">
+                                                                    <div class="form-group">
+                                                                        <label class="form-label" for="controle">
+                                                                            Action Corrective
+                                                                        </label>
+                                                                        <div class="form-control-wrap">
+                                                                            <input placeholder="Saisie obligatoire" name="action[]" value="" type="text" class="form-control" >
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-lg-4">
+                                                                            <div class="form-group">
+                                                                                <label class="form-label" for="Coût">
+                                                                                    Responsable
+                                                                                </label>
+                                                                                <select id="responsable_idc" required name="poste_id[]" class="form-select">
+                                                                                    <option selected value="">
+                                                                                        Choisir un responsable
+                                                                                    </option>
+                                                                                    ${postes.map(poste => `<option value="${poste.id}">${poste.nom}</option>`).join('')}
+                                                                                </select>
+                                                                            </div>
+                                                                            <div class="form-group">
+                                                                                <label class="form-label" for="Coût">
+                                                                                    Date prévisionnelle de réalisation
+                                                                                </label>
+                                                                                <div class="form-control-wrap">
+                                                                                    <input name="date_action[]" type="date" class="form-control" >
+                                                                                </div>
+                                                                            </div>
+                                                                </div>
+                                                                <div class="col-lg-8">
+                                                                    <div class="form-group text-center">
+                                                                        <label class="form-label" for="description">
+                                                                            Commentaire
+                                                                        </label>
+                                                                        <div class="form-control-wrap">
+                                                                            <textarea name="commentaire[]" class="form-control no-resize" id="default-textarea"></textarea>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-lg-12">
+                                                                    <div class="form-group text-center">
+                                                                        <a class="btn btn-outline-danger btn-dim " id="suppr_nouvelle_action" >
+                                                                            Supprimer
+                                                                        </a>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+            `;
+
+            groupe.querySelector("#suppr_nouvelle_action").addEventListener("click", function(event) {
+                event.preventDefault();
+                groupe.remove();
+            });
+
+            document.getElementById("dynamic-fields").appendChild(groupe);
+        }
+    </script>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            // Initial setup
             document.getElementById("groupesContainer_btn_trouve").style.display = "none";
             document.getElementById("groupesContainer_btn_new").style.display = "none";
 
             document.querySelectorAll(".choix_select").forEach(function (radio) {
                 radio.addEventListener("change", function () {
-
-                    // Affichez la section appropriée en fonction du choix sélectionné
                     var selectedValue = this.value;
                     if (selectedValue === "cause" || selectedValue === "risque") {
                         document.getElementById("groupesContainer_btn_trouve").style.display = "block";
@@ -1553,6 +1708,7 @@
             });
         });
     </script>
+
 
 
 @endsection
