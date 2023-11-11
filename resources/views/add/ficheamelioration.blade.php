@@ -261,8 +261,88 @@
                                     </div>
                                 </div>
                             </div>
+                            <div id="dynamic-fields-parent" style="display: none;" >
+                                <div class="card card-bordered">
+                                    <div class="card-inner">
+                                        <div class="row g-4">
+                                            <div class="col-lg-12 col-xxl-12" >
+                                                <div class="card">
+                                                    <div class="card-inner">
+                                                            <div class="row g-4">
+                                                                <div class="col-lg-6">
+                                                                    <div class="form-group">
+                                                                        <label class="form-label" for="Cause">
+                                                                            Processus
+                                                                        </label>
+                                                                        <input  name="nature[]" value="0" type="text" >
+                                                                        <div class="form-control-wrap">
+                                                                            <select id="responsable_idc" required name="processus_id[]" class="form-select" >
+                                                                                    <option selected value="1">1</option>
+                                                                            </select>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-lg-6">
+                                                                    <div class="form-group">
+                                                                        <label class="form-label" for="controle">
+                                                                            Risque
+                                                                        </label>
+                                                                        <div class="form-control-wrap">
+                                                                            <input name="risque[]" value="0" type="text" class="form-control">
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <input name="resume[]" value="0" type="text" >
+                                                                <div class="col-lg-12">
+                                                                    <div class="form-group">
+                                                                        <label class="form-label" for="controle">
+                                                                            Action Corrective
+                                                                        </label>
+                                                                        <div class="form-control-wrap">
+                                                                            <input placeholder="Saisie obligatoire" name="action[]" value="0" type="text" class="form-control" >
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-lg-4">
+                                                                            <div class="form-group">
+                                                                                <label class="form-label" for="Coût">
+                                                                                    Responsable
+                                                                                </label>
+                                                                                <select id="responsable_idc" required name="poste_id[]" class="form-select" >
+                                                                                    <option selected value="1">
+                                                                                        1
+                                                                                    </option>
+                                                                                </select>
+                                                                            </div>
+                                                                            <div class="form-group">
+                                                                                <label class="form-label" for="Coût">
+                                                                                    Date prévisionnelle de réalisation
+                                                                                </label>
+                                                                                <div class="form-control-wrap">
+                                                                                    <input name="date_action[]" value="2023-11-11" type="date" class="form-control" >
+                                                                                </div>
+                                                                            </div>
+                                                                </div>
+                                                                <div class="col-lg-8">
+                                                                    <div class="form-group text-center">
+                                                                        <label class="form-label" for="description">
+                                                                            Commentaire
+                                                                        </label>
+                                                                        <div class="form-control-wrap">
+                                                                            <textarea name="commentaire[]" class="form-control no-resize" id="default-textarea">0</textarea>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                             <div id="dynamic-fields">
-                                <!-- Vos groupes de champs dynamiques seront ajoutés ici -->
+                                
                             </div>
                             <div class="col-md-12 col-xxl-4" id="btn_enrg">
                                 <div class="card card-bordered card-preview">
@@ -307,7 +387,7 @@
                                                                 Processus
                                                             </label>
                                                             <div class="form-control-wrap">
-                                                                <input value="{{ $risque->nom_processus }}" disabled type="text" class="form-control" id="Cause">
+                                                                <input value="{{ $risque->nom_processus }}" readonly type="text" class="form-control" id="Cause">
                                                             </div>
                                                         </div>
                                                     </div>
@@ -323,7 +403,7 @@
                                                                 @endif
                                                             </label>
                                                             <div class="form-control-wrap">
-                                                                <input value="{{ $risque->nom }}" disabled type="text" class="form-control" id="controle">
+                                                                <input value="{{ $risque->nom }}" readonly type="text" class="form-control" id="controle">
                                                             </div>
                                                         </div>
                                                     </div>
@@ -357,7 +437,7 @@
                                                                     Vraisemblence
                                                                 </label>
                                                                 <div class="form-control-wrap">
-                                                                    <input value="{{ $risque->vraisemblence }}" disabled type="text" class="form-control" id="Cause">
+                                                                    <input value="{{ $risque->vraisemblence }}" readonly type="text" class="form-control" id="Cause">
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -367,7 +447,7 @@
                                                                     gravite
                                                                 </label>
                                                                 <div class="form-control-wrap">
-                                                                    <input value="{{ $risque->gravite }}" disabled type="text" class="form-control" id="controle">
+                                                                    <input value="{{ $risque->gravite }}" readonly type="text" class="form-control" id="controle">
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -377,7 +457,7 @@
                                                                     Evaluation
                                                                 </label>
                                                                 <div class="form-control-wrap">
-                                                                    <input value="{{ $risque->evaluation }}" disabled type="text" class="form-control" id="controle">
+                                                                    <input value="{{ $risque->evaluation }}" readonly type="text" class="form-control" id="controle">
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -391,7 +471,7 @@
                                                                     $formatcommande = number_format($cout, 0, '.', '.');
                                                                 @endphp
                                                                 <div class="form-control-wrap">
-                                                                    <input value="{{ $formatcommande }} Fcfa" disabled type="text" class="form-control" id="controle">
+                                                                    <input value="{{ $formatcommande }} Fcfa" readonly type="text" class="form-control" id="controle">
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -412,7 +492,7 @@
                                                                 Cause
                                                             </label>
                                                             <div class="form-control-wrap">
-                                                                <input value="{{ $causesDatas['cause'] }}" disabled type="text" class="form-control" id="Cause">
+                                                                <input value="{{ $causesDatas['cause'] }}" readonly type="text" class="form-control" id="Cause">
                                                             </div>
                                                         </div>
                                                     </div>
@@ -422,7 +502,7 @@
                                                                 Dispositif de Contrôle
                                                             </label>
                                                             <div class="form-control-wrap">
-                                                                <input value="{{ $causesDatas['dispositif'] }}" disabled type="text" class="form-control" id="controle">
+                                                                <input value="{{ $causesDatas['dispositif'] }}" readonly type="text" class="form-control" id="controle">
                                                             </div>
                                                         </div>
                                                     </div>
@@ -457,7 +537,7 @@
                                                                     Vraisemblence
                                                                 </label>
                                                                 <div class="form-control-wrap">
-                                                                    <input value="{{ $risque->vraisemblence_residuel }}" disabled type="text" class="form-control" id="Cause">
+                                                                    <input value="{{ $risque->vraisemblence_residuel }}" readonly type="text" class="form-control" id="Cause">
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -467,7 +547,7 @@
                                                                     gravite
                                                                 </label>
                                                                 <div class="form-control-wrap">
-                                                                    <input value="{{ $risque->gravite_residuel }}" disabled type="text" class="form-control" id="controle">
+                                                                    <input value="{{ $risque->gravite_residuel }}" readonly type="text" class="form-control" id="controle">
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -477,7 +557,7 @@
                                                                     Evaluation
                                                                 </label>
                                                                 <div class="form-control-wrap">
-                                                                    <input value="{{ $risque->evaluation_residuel }}" disabled type="text" class="form-control" id="controle">
+                                                                    <input value="{{ $risque->evaluation_residuel }}" readonly type="text" class="form-control" id="controle">
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -491,7 +571,7 @@
                                                                     $formatcommande2 = number_format($cout2, 0, '.', '.');
                                                                 @endphp
                                                                 <div class="form-control-wrap">
-                                                                    <input value="{{ $formatcommande2 }} Fcfa" disabled type="text" class="form-control" id="controle">
+                                                                    <input value="{{ $formatcommande2 }} Fcfa" readonly type="text" class="form-control" id="controle">
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -501,7 +581,7 @@
                                                                     Traitement
                                                                 </label>
                                                                 <div class="form-control-wrap">
-                                                                    <input value="{{ $risque->traitement }}" disabled type="text" class="form-control" id="controle">
+                                                                    <input value="{{ $risque->traitement }}" readonly type="text" class="form-control" id="controle">
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -524,7 +604,7 @@
                                                                 Action préventive
                                                             </label>
                                                             <div class="form-control-wrap">
-                                                                <input value="{{ $actionsDatas['action'] }}" disabled type="text" class="form-control" id="preventif">
+                                                                <input value="{{ $actionsDatas['action'] }}" readonly type="text" class="form-control" id="preventif">
                                                             </div>
                                                         </div>
                                                     </div>
@@ -535,7 +615,7 @@
                                                             </label>
                                                             <div class="form-group">
                                                                 <div class="form-control-wrap">
-                                                                    <input value="{{ $actionsDatas['delai'] }}" disabled type="date" class="form-control">
+                                                                    <input value="{{ $actionsDatas['delai'] }}" readonly type="date" class="form-control">
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -547,7 +627,7 @@
                                                             </label>
                                                             <div class="form-group">
                                                                 <div class="form-control-wrap">
-                                                                    <input value="{{ $actionsDatas['responsable'] }}" disabled type="text" class="form-control">
+                                                                    <input value="{{ $actionsDatas['responsable'] }}" readonly type="text" class="form-control">
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -559,7 +639,7 @@
                                                             </label>
                                                             <div class="form-group">
                                                                 <div class="form-control-wrap">
-                                                                    <input value="{{ $actionsDatas['statut'] }}" disabled type="text" class="form-control text-white text-center 
+                                                                    <input value="{{ $actionsDatas['statut'] }}" readonly type="text" class="form-control text-white text-center 
                                                                     @php
                                                                         if ($actionsDatas['statut'] ==='non-realiser') {
                                                                             echo 'bg-danger';
@@ -582,7 +662,7 @@
                                                                     </label>
                                                                     <div class="form-group">
                                                                         <div class="form-control-wrap">
-                                                                            <input value="{{ $actionsDatas['date_action'] }}" disabled type="date" class="form-control">
+                                                                            <input value="{{ $actionsDatas['date_action'] }}" readonly type="date" class="form-control">
                                                                         </div>
                                                                     </div>
                                                                 </div>
@@ -594,7 +674,7 @@
                                                                     </label>
                                                                     <div class="form-group">
                                                                         <div class="form-control-wrap">
-                                                                            <input value="{{ $actionsDatas['date_suivi'] }}" disabled type="datetime" class="form-control">
+                                                                            <input value="{{ $actionsDatas['date_suivi'] }}" readonly type="datetime" class="form-control">
                                                                         </div>
                                                                     </div>
                                                                 </div>
@@ -606,7 +686,7 @@
                                                                     </label>
                                                                     <div class="form-group">
                                                                         <div class="form-control-wrap">
-                                                                            <input value="{{ $actionsDatas['efficacite'] }}" disabled type="text" class="form-control">
+                                                                            <input value="{{ $actionsDatas['efficacite'] }}" readonly type="text" class="form-control">
                                                                         </div>
                                                                     </div>
                                                                 </div>
@@ -629,7 +709,7 @@
                                                                 Action corrective
                                                             </label>
                                                             <div class="form-control-wrap">
-                                                                <input value="{{ $actionsDatas['action'] }}" disabled type="text" class="form-control" id="corectif">
+                                                                <input value="{{ $actionsDatas['action'] }}" readonly type="text" class="form-control" id="corectif">
                                                             </div>
                                                         </div>
                                                     </div>
@@ -640,7 +720,7 @@
                                                             </label>
                                                             <div class="form-group">
                                                                 <div class="form-control-wrap">
-                                                                    <input value="{{ $actionsDatas['responsable'] }}" disabled type="text" class="form-control">
+                                                                    <input value="{{ $actionsDatas['responsable'] }}" readonly type="text" class="form-control">
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -662,7 +742,7 @@
                                                     </label>
                                                     <div class="form-group">
                                                         <div class="form-control-wrap">
-                                                            <input value="{{$risque->validateur}}" disabled type="text" class="form-control">
+                                                            <input value="{{$risque->validateur}}" readonly type="text" class="form-control">
                                                         </div>
                                                     </div>
                                                 </div>
@@ -700,7 +780,7 @@
                                                                 Processus
                                                             </label>
                                                             <div class="form-control-wrap">
-                                                                <input value="{{ $causes_select->nom_processus }}" disabled type="text" class="form-control" id="Cause">
+                                                                <input value="{{ $causes_select->nom_processus }}" readonly type="text" class="form-control" id="Cause">
                                                             </div>
                                                         </div>
                                                     </div>
@@ -716,7 +796,7 @@
                                                                 @endif
                                                             </label>
                                                             <div class="form-control-wrap">
-                                                                <input value="{{ $causes_select->nom_risque }}" disabled type="text" class="form-control" id="controle">
+                                                                <input value="{{ $causes_select->nom_risque }}" readonly type="text" class="form-control" id="controle">
                                                             </div>
                                                         </div>
                                                     </div>
@@ -750,7 +830,7 @@
                                                                     Vraisemblence
                                                                 </label>
                                                                 <div class="form-control-wrap">
-                                                                    <input value="{{ $causes_select->vraisemblence }}" disabled type="text" class="form-control" id="Cause">
+                                                                    <input value="{{ $causes_select->vraisemblence }}" readonly type="text" class="form-control" id="Cause">
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -760,7 +840,7 @@
                                                                     gravite
                                                                 </label>
                                                                 <div class="form-control-wrap">
-                                                                    <input value="{{ $causes_select->gravite }}" disabled type="text" class="form-control" id="controle">
+                                                                    <input value="{{ $causes_select->gravite }}" readonly type="text" class="form-control" id="controle">
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -770,7 +850,7 @@
                                                                     Evaluation
                                                                 </label>
                                                                 <div class="form-control-wrap">
-                                                                    <input value="{{ $causes_select->evaluation }}" disabled type="text" class="form-control" id="controle">
+                                                                    <input value="{{ $causes_select->evaluation }}" readonly type="text" class="form-control" id="controle">
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -784,7 +864,7 @@
                                                                     $formatcommande2 = number_format($cout2, 0, '.', '.');
                                                                 @endphp
                                                                 <div class="form-control-wrap">
-                                                                    <input value="{{ $formatcommande2 }} Fcfa" disabled type="text" class="form-control" id="controle">
+                                                                    <input value="{{ $formatcommande2 }} Fcfa" readonly type="text" class="form-control" id="controle">
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -805,7 +885,7 @@
                                                                     Cause
                                                                 </label>
                                                                 <div class="form-control-wrap">
-                                                                    <input value="{{ $causeData2['cause'] }}" disabled type="text" class="form-control" id="Cause">
+                                                                    <input value="{{ $causeData2['cause'] }}" readonly type="text" class="form-control" id="Cause">
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -815,7 +895,7 @@
                                                                     Dispositif de Contrôle
                                                                 </label>
                                                                 <div class="form-control-wrap">
-                                                                    <input value="{{ $causeData2['dispositif'] }}" disabled type="text" class="form-control" id="controle">
+                                                                    <input value="{{ $causeData2['dispositif'] }}" readonly type="text" class="form-control" id="controle">
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -850,7 +930,7 @@
                                                                     Vraisemblence
                                                                 </label>
                                                                 <div class="form-control-wrap">
-                                                                    <input value="{{ $causes_select->vraisemblence_residuel }}" disabled type="text" class="form-control" id="Cause">
+                                                                    <input value="{{ $causes_select->vraisemblence_residuel }}" readonly type="text" class="form-control" id="Cause">
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -860,7 +940,7 @@
                                                                     gravite
                                                                 </label>
                                                                 <div class="form-control-wrap">
-                                                                    <input value="{{ $causes_select->gravite_residuel }}" disabled type="text" class="form-control" id="controle">
+                                                                    <input value="{{ $causes_select->gravite_residuel }}" readonly type="text" class="form-control" id="controle">
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -870,7 +950,7 @@
                                                                     Evaluation
                                                                 </label>
                                                                 <div class="form-control-wrap">
-                                                                    <input value="{{ $causes_select->evaluation_residuel }}" disabled type="text" class="form-control" id="controle">
+                                                                    <input value="{{ $causes_select->evaluation_residuel }}" readonly type="text" class="form-control" id="controle">
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -884,7 +964,7 @@
                                                                     $formatcommande2 = number_format($cout2, 0, '.', '.');
                                                                 @endphp
                                                                 <div class="form-control-wrap">
-                                                                    <input value="{{ $formatcommande2 }} Fcfa" disabled type="text" class="form-control" id="controle">
+                                                                    <input value="{{ $formatcommande2 }} Fcfa" readonly type="text" class="form-control" id="controle">
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -894,7 +974,7 @@
                                                                     Traitement
                                                                 </label>
                                                                 <div class="form-control-wrap">
-                                                                    <input value="{{ $causes_select->traitement }}" disabled type="text" class="form-control" id="controle">
+                                                                    <input value="{{ $causes_select->traitement }}" readonly type="text" class="form-control" id="controle">
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -917,7 +997,7 @@
                                                                 Action préventive
                                                             </label>
                                                             <div class="form-control-wrap">
-                                                                <input value="{{ $actionData2['action'] }}" disabled type="text" class="form-control" id="preventif">
+                                                                <input value="{{ $actionData2['action'] }}" readonly type="text" class="form-control" id="preventif">
                                                             </div>
                                                         </div>
                                                     </div>
@@ -928,7 +1008,7 @@
                                                             </label>
                                                             <div class="form-group">
                                                                 <div class="form-control-wrap">
-                                                                    <input value="{{ $actionData2['delai'] }}" disabled type="date" class="form-control">
+                                                                    <input value="{{ $actionData2['delai'] }}" readonly type="date" class="form-control">
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -940,7 +1020,7 @@
                                                             </label>
                                                             <div class="form-group">
                                                                 <div class="form-control-wrap">
-                                                                    <input value="{{ $actionData2['responsable'] }}" disabled type="text" class="form-control">
+                                                                    <input value="{{ $actionData2['responsable'] }}" readonly type="text" class="form-control">
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -952,7 +1032,7 @@
                                                             </label>
                                                             <div class="form-group">
                                                                 <div class="form-control-wrap">
-                                                                    <input value="{{ $actionData2['statut'] }}" disabled type="text" class="form-control text-white text-center 
+                                                                    <input value="{{ $actionData2['statut'] }}" readonly type="text" class="form-control text-white text-center 
                                                                     @php
                                                                         if ($actionData2['statut'] ==='non-realiser') {
                                                                             echo 'bg-danger';
@@ -975,7 +1055,7 @@
                                                                     </label>
                                                                     <div class="form-group">
                                                                         <div class="form-control-wrap">
-                                                                            <input value="{{ $actionData2['date_action'] }}" disabled type="date" class="form-control">
+                                                                            <input value="{{ $actionData2['date_action'] }}" readonly type="date" class="form-control">
                                                                         </div>
                                                                     </div>
                                                                 </div>
@@ -987,7 +1067,7 @@
                                                                     </label>
                                                                     <div class="form-group">
                                                                         <div class="form-control-wrap">
-                                                                            <input value="{{ $actionData2['date_suivi'] }}" disabled type="datetime" class="form-control">
+                                                                            <input value="{{ $actionData2['date_suivi'] }}" readonly type="datetime" class="form-control">
                                                                         </div>
                                                                     </div>
                                                                 </div>
@@ -999,7 +1079,7 @@
                                                                     </label>
                                                                     <div class="form-group">
                                                                         <div class="form-control-wrap">
-                                                                            <input value="{{ $actionData2['efficacite'] }}" disabled type="text" class="form-control">
+                                                                            <input value="{{ $actionData2['efficacite'] }}" readonly type="text" class="form-control">
                                                                         </div>
                                                                     </div>
                                                                 </div>
@@ -1022,7 +1102,7 @@
                                                                 Action corrective
                                                             </label>
                                                             <div class="form-control-wrap">
-                                                                <input value="{{ $actionData2['action'] }}" disabled type="text" class="form-control" id="corectif">
+                                                                <input value="{{ $actionData2['action'] }}" readonly type="text" class="form-control" id="corectif">
                                                             </div>
                                                         </div>
                                                     </div>
@@ -1033,7 +1113,7 @@
                                                             </label>
                                                             <div class="form-group">
                                                                 <div class="form-control-wrap">
-                                                                    <input value="{{ $actionData2['responsable'] }}" disabled type="text" class="form-control">
+                                                                    <input value="{{ $actionData2['responsable'] }}" readonly type="text" class="form-control">
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -1055,7 +1135,7 @@
                                                     </label>
                                                     <div class="form-group">
                                                         <div class="form-control-wrap">
-                                                            <input value="{{$causes_select->validateur}}" disabled type="text" class="form-control">
+                                                            <input value="{{$causes_select->validateur}}" readonly type="text" class="form-control">
                                                         </div>
                                                     </div>
                                                 </div>
@@ -1323,11 +1403,9 @@
                                                                             Processus
                                                                         </label>
                                                                         <input required style="display:none;" name="nature[]" value="accepte" type="text" >
-                                                                        <input required style="display:none;" name="resume[]" value="" type="text" >
                                                                         <div class="form-control-wrap">
-                                                                            <select required id="responsable_idc" required name="processus_id[]" class="form-select" disabled>
-                                                                                    ${processuss.map(processus => `<option value="${processus.id}" ${action.processus_id == processus.id ? 'selected' : ''}>${processus.nom}</option>`).join('')}
-                                                                            </select>
+                                                                            <input style="display:none;" name="processus_id[]" value="${action.processus_id}" type="text" class="form-control">
+                                                                            <input value="${action.processus}" type="text" class="form-control" disabled>
                                                                         </div>
                                                                     </div>
                                                                 </div>
@@ -1337,17 +1415,18 @@
                                                                             Risque
                                                                         </label>
                                                                         <div class="form-control-wrap">
-                                                                            <input required name="risque[]" value="${action.risque}" type="text" class="form-control" disabled>
+                                                                            <input required name="risque[]" value="${action.risque}" type="text" class="form-control" readonly>
                                                                         </div>
                                                                     </div>
                                                                 </div>
+                                                                <input required style="display:none;" name="resume[]" value="0" type="text" >
                                                                 <div class="col-lg-12">
                                                                     <div class="form-group">
                                                                         <label class="form-label" for="controle">
                                                                             Action Corrective
                                                                         </label>
                                                                         <div class="form-control-wrap">
-                                                                            <input required name="action[]" value="${action.action}" type="text" class="form-control" disabled>
+                                                                            <input required name="action[]" value="${action.action}" type="text" class="form-control" readonly>
                                                                         </div>
                                                                     </div>
                                                                 </div>
@@ -1356,9 +1435,8 @@
                                                                                 <label class="form-label" for="Coût">
                                                                                     Responsable
                                                                                 </label>
-                                                                                <select required id="responsable_idc" required name="poste_id[]" class="form-select" disabled>
-                                                                                    ${postes.map(poste => `<option value="${poste.id}" ${action.poste_id == poste.id ? 'selected' : ''}>${poste.nom}</option>`).join('')}
-                                                                                </select>
+                                                                                <input style="display:none;" name="poste_id[]" value="${action.poste_id}" type="text" class="form-control">
+                                                                                <input value="${action.responsable}" type="text" class="form-control" disabled>
                                                                             </div>
                                                                             <div class="form-group">
                                                                                 <label class="form-label" for="Coût">
@@ -1466,7 +1544,7 @@
                 var groupe = document.createElement("div");
                 groupe.className = "card card-bordered";
                 groupe.innerHTML = `
-                    <div class="card-inner">
+                                    <div class="card-inner">
                                         <div class="row g-4">
                                             <div class="col-lg-12 col-xxl-12" >
                                                 <div class="card">
@@ -1483,9 +1561,8 @@
                                                                             Processus
                                                                         </label>
                                                                         <input required style="display:none;" name="nature[]" value="non-accepte" type="text" >
-                                                                        <input required style="display:none;" name="resume[]" value="" type="text" >
                                                                         <div class="form-control-wrap">
-                                                                            <select required id="responsable_idc" required name="processus_id[]" class="form-select" disabled>
+                                                                            <select required id="responsable_idc" required name="processus_id[]" class="form-select" readonly>
                                                                                     ${processuss.map(processus => `<option value="${processus.id}" ${action.processus_id == processus.id ? 'selected' : ''}>${processus.nom}</option>`).join('')}
                                                                             </select>
                                                                         </div>
@@ -1497,10 +1574,11 @@
                                                                             Risque
                                                                         </label>
                                                                         <div class="form-control-wrap">
-                                                                            <input required name="risque[]" value="${action.risque}" type="text" class="form-control" disabled>
+                                                                            <input required name="risque[]" value="${action.risque}" type="text" class="form-control" readonly>
                                                                         </div>
                                                                     </div>
                                                                 </div>
+                                                                <input required style="display:none;" name="resume[]" value="0" type="text" >
                                                                 <div class="col-lg-12">
                                                                     <div class="form-group">
                                                                         <label class="form-label" for="controle">

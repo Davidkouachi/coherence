@@ -224,28 +224,35 @@ class AmeliorationController extends Controller
         $date_action = $request->input('date_action');
         $commentaire = $request->input('commentaire');
 
-        foreach ($nature as $nature) {
-            
-            $am = new Amelioration();
-            $am->type = $type;
-            $am->date_fiche = $date_fiche;
-            $am->lieu =$lieu;
-            $am->detecteur = $detecteur;
-            $am->non_conformite = $non_conformite;
-            $am->consequence = $consequence;
-            $am->cause = $cause;
-            $am->choix_select = $choix_select;
-            $am->nature = $nature;
-            $am->risque = $risque;
-            $am->resume = $resume;
-            $am->action = $action;
-            $am->date_action = $date_action;
-            $am->commentaire = $commentaire;
-            $am->processus_id = $processus_id;
-            $am->poste_id = $poste_id;
-            $am->save();
+        foreach ($nature as $index => $valeur) {
 
+            if ($nature[$index] !== '0') {
+
+                $am = new Amelioration();
+                $am->type = $type;
+                $am->date_fiche = $date_fiche;
+                $am->lieu =$lieu;
+                $am->detecteur = $detecteur;
+                $am->non_conformite = $non_conformite;
+                $am->consequence = $consequence;
+                $am->cause = $cause;
+                $am->choix_select = $choix_select;
+                $am->nature = $nature[$index];
+                $am->risque = $risque[$index];
+                $am->resume = $resume[$index];
+                $am->action = $action[$index];
+                $am->date_action = $date_action[$index];
+                $am->commentaire = $commentaire[$index];
+                $am->processus_id = $processus_id[$index];
+                $am->poste_id = $poste_id[$index];
+                $am->save();
+            }
+            
         }
+
+        return redirect()
+            ->back()
+            ->with('ajouter', 'Enregistrement éffectuée.');
 
     }
 
