@@ -39,7 +39,7 @@
                                                                     Nom du processus
                                                                 </label>
                                                                 <div class="form-control-wrap">
-                                                                    <input placeholder="Saisie obligatoire" autocomplete="off" required name="nprocessus" type="text" class="form-control text-center" id="Cause">
+                                                                    <input placeholder="Saisie obligatoire" autocomplete="off" required name="nprocessus" type="text" class="form-control text-center" id="Cause" oninput="this.value = this.value.toUpperCase()">
                                                                 </div>
                                                             </div>
                                                             <div class="form-group text-center">

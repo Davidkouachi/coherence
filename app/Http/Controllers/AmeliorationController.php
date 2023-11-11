@@ -14,6 +14,7 @@ use App\Models\Action;
 use App\Models\Suivi_action;
 use App\Models\Poste;
 use App\Models\User;
+use App\Models\Amelioration;
 
 use Illuminate\Support\Facades\Validator;
 use Carbon\Carbon;
@@ -201,6 +202,51 @@ class AmeliorationController extends Controller
         return response()->json([
             'actions' => $actions,
         ]);
+    }
+
+    public function index_add(Request $request) 
+    {
+        $type = $request->input('type');
+        $date_fiche = $request->input('date_fiche');
+        $lieu = $request->input('lieu');
+        $detecteur = $request->input('detecteur');
+        $non_conformite = $request->input('non_conformite');
+        $consequence = $request->input('consequence');
+        $cause = $request->input('cause');
+        $choix_select = $request->input('choix_select');
+
+        $nature = $request->input('nature');
+        $processus_id = $request->input('processus_id');
+        $risque = $request->input('risque');
+        $resume = $request->input('resume');
+        $action = $request->input('action');
+        $poste_id = $request->input('poste_id');
+        $date_action = $request->input('date_action');
+        $commentaire = $request->input('commentaire');
+
+        foreach ($nature as $nature) {
+            
+            $am = new Amelioration();
+            $am->type = $type;
+            $am->date_fiche = $date_fiche;
+            $am->lieu =$lieu;
+            $am->detecteur = $detecteur;
+            $am->non_conformite = $non_conformite;
+            $am->consequence = $consequence;
+            $am->cause = $cause;
+            $am->choix_select = $choix_select;
+            $am->nature = $nature;
+            $am->risque = $risque;
+            $am->resume = $resume;
+            $am->action = $action;
+            $am->date_action = $date_action;
+            $am->commentaire = $commentaire;
+            $am->processus_id = $processus_id;
+            $am->poste_id = $poste_id;
+            $am->save();
+
+        }
+
     }
 
 }

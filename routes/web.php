@@ -50,6 +50,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/fiche_amelioration', [AmeliorationController::class, 'index'])->name('index_amelioration');
     Route::get('/get-cause-info/{id}', [AmeliorationController::class, 'get_cause_info']);
     Route::get('/get-risque-info/{id}', [AmeliorationController::class, 'get_risque_info']);
+    Route::post('/add_amelioration', [AmeliorationController::class, 'index_add'])->name('index_add');
 
     Route::get('/Profil', [ProfilController::class, 'index_profil'])->name('index_profil');
 
