@@ -4,8 +4,6 @@
 
 @section('content')
 
-<script src="{{asset('chart.js')}}"></script>
-
 <div class="nk-content ">
     <div class="container-fluid">
         <div class="nk-content-inner">
@@ -108,7 +106,7 @@
                                         </script>
 
                                         <div class="card-amount">
-                                            <div class="">
+                                            <div >
                                                 <a class="btn btn-outline-warning btn-dim">
                                                     <span  class="me-2" >Voir plus</span>
                                                     <span>

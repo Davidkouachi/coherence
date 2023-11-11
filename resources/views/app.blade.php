@@ -13,6 +13,7 @@
     <title>@yield('titre')</title>
     <link href="assets/css/dashlite0226.css?" rel="stylesheet">
     <link href="assets/css/theme0226.css" rel="stylesheet">
+    <script src="{{asset('chart.js')}}"></script>
     </link>
     </link>
     </link>
