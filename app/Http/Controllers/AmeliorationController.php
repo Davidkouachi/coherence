@@ -227,6 +227,7 @@ class AmeliorationController extends Controller
         foreach ($nature as $index => $valeur) {
 
             if ($nature[$index] !== '0') {
+                $hasNonZeroNature = true;
 
                 $am = new Amelioration();
                 $am->type = $type;
@@ -248,6 +249,12 @@ class AmeliorationController extends Controller
                 $am->save();
             }
             
+        }
+
+        if (!$hasNonZeroNature) {
+            return redirect()
+                ->back()
+                ->with('am_choisir', 'Aucune action identifiée.');
         }
 
         return redirect()

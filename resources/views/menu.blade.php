@@ -92,6 +92,14 @@
                                                 </a>
                                             </div>
                                         </div>
+                                        <div class="col-md-3">
+                                            <div class="form-group text-center">
+                                                <a class="btn btn-lg btn-outline-primary w-80-auto text-center" href="{{ route('index_stat') }}" >
+                                                    <em class="ni ni-bar-chart-alt me-2"></em>
+                                                    <em>Statistique</em>
+                                                </a>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>

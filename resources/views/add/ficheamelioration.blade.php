@@ -36,7 +36,7 @@
                                                 <div class="col-lg-4">
                                                     <div class="form-group text-center">
                                                         <div class="custom-control custom-radio">
-                                                            <input required type="radio" class="custom-control-input" name="type" id="customRadio7" value="non-conformite-interne">
+                                                            <input required type="radio" class="custom-control-input" name="type" id="customRadio7" value="non_conformite_interne">
                                                             <label class="custom-control-label" for="customRadio7">
                                                                 Non conformité interne
                                                             </label>
@@ -1562,9 +1562,8 @@
                                                                         </label>
                                                                         <input required style="display:none;" name="nature[]" value="non-accepte" type="text" >
                                                                         <div class="form-control-wrap">
-                                                                            <select required id="responsable_idc" required name="processus_id[]" class="form-select" readonly>
-                                                                                    ${processuss.map(processus => `<option value="${processus.id}" ${action.processus_id == processus.id ? 'selected' : ''}>${processus.nom}</option>`).join('')}
-                                                                            </select>
+                                                                            <input style="display:none;" name="processus_id[]" value="${action.processus_id}" type="text" class="form-control">
+                                                                            <input value="${action.processus}" type="text" class="form-control" disabled>
                                                                         </div>
                                                                     </div>
                                                                 </div>
@@ -1797,12 +1796,32 @@
                     if (selectedValue === "cause") {
                         document.getElementById("groupesContainer_btn_trouve").style.display = "block";
                         document.getElementById("groupesContainer_btn_new").style.display = "none";
+
+                        var dynamicFields = document.getElementById("dynamic-fields");
+                        // Supprimer le contenu existant
+                        while (dynamicFields.firstChild) {
+                            dynamicFields.removeChild(dynamicFields.firstChild);
+                        }
+
                     } else if (selectedValue === "risque") {
                         document.getElementById("groupesContainer_btn_trouve").style.display = "block";
                         document.getElementById("groupesContainer_btn_new").style.display = "none";
+
+                        var dynamicFields = document.getElementById("dynamic-fields");
+                        // Supprimer le contenu existant
+                        while (dynamicFields.firstChild) {
+                            dynamicFields.removeChild(dynamicFields.firstChild);
+                        }
+
                     } else if (selectedValue === "cause_risque_nt") {
                         document.getElementById("groupesContainer_btn_trouve").style.display = "none";
                         document.getElementById("groupesContainer_btn_new").style.display = "block";
+
+                        var dynamicFields = document.getElementById("dynamic-fields");
+                        // Supprimer le contenu existant
+                        while (dynamicFields.firstChild) {
+                            dynamicFields.removeChild(dynamicFields.firstChild);
+                        }
                     }
                 });
             });

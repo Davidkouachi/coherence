@@ -9,6 +9,7 @@ use App\Http\Controllers\SuiviactionController;
 use App\Http\Controllers\EvaluationController;
 use App\Http\Controllers\AmeliorationController;
 use App\Http\Controllers\ProfilController;
+use App\Http\Controllers\StatistiqueController;
 
 
 Route::get('/Login', [AuthController::class, 'view_login'])->name('login');
@@ -58,6 +59,8 @@ Route::middleware(['auth'])->group(function () {
 
     Route::get('/Historique', [SuiviactionController::class, 'index_historique'])->name('index_historique');
     Route::get('/Historique Profil', [SuiviactionController::class, 'index_historique_profil'])->name('index_historique_profil');
+
+    Route::get('/Statistique', [StatistiqueController::class, 'index_stat'])->name('index_stat');
 });
 
 Route::get('/Res-va', [ResvaController::class, 'index_add_resva'])->name('index_add_resva');
