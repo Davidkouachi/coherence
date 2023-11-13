@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Support\Facades\Auth;
 
+use Illuminate\Http\Request;
+
 use App\Models\Processuse;
 use App\Models\Objectif;
 use App\Models\Risque;
@@ -78,6 +80,47 @@ class StatistiqueController extends Controller
                 ->where('choix_select', 'cause_risque_nt')->count();
         }
 
-        return view('statistique.index', ['statistics' => $statistics]);
+
+        $processus = Processuse::all();
+
+        return view('statistique.index', ['statistics' => $statistics, 'processus' => $processus]);
     }
+
+    public function get_processus($id)
+    {
+        $processus = Processuse::find($id);
+
+        $types = ['non_conformite_interne', 'reclamation', 'contentieux'];
+        $nbres = [];
+
+        foreach ($types as $type) {
+            $nbres[$type] = Amelioration::where('type', $type)
+                ->where('processus_id', $id)->count();
+        }
+
+        return response()->json([
+            'data' => array_values($nbres),
+        ]);
+    }
+
+    public function get_date(Request $request)
+    {
+        $date1 = Carbon::parse($request->input('date1'))->format('Y-m-d');
+        $date2 = Carbon::parse($request->input('date2'))->format('Y-m-d');
+
+        $types = ['non_conformite_interne', 'reclamation', 'contentieux'];
+        $nbres = [];
+
+        foreach ($types as $type) {
+            $nbres[$type] = Amelioration::where('date_fiche', '>=', $date1)
+                ->where('date_fiche', '<=', $date2)
+                ->where('type', $type)->count();
+        }
+
+        return response()->json([
+            'data' => array_values($nbres),
+        ]);
+    }
+
+
 }

@@ -1151,9 +1151,6 @@
     </div>
     @endforeach
 
-
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-
     <script>
         $(document).ready(function() {
             // Écoutez l'événement de changement de l'élément select

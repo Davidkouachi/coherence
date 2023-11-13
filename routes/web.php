@@ -61,6 +61,8 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/Historique Profil', [SuiviactionController::class, 'index_historique_profil'])->name('index_historique_profil');
 
     Route::get('/Statistique', [StatistiqueController::class, 'index_stat'])->name('index_stat');
+    Route::get('/get_processus/{id}', [StatistiqueController::class, 'get_processus'])->name('get_processus');
+    Route::get('/get_date', [StatistiqueController::class, 'get_date'])->name('get_date');
 });
 
 Route::get('/Res-va', [ResvaController::class, 'index_add_resva'])->name('index_add_resva');

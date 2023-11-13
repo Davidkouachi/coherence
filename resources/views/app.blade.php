@@ -14,6 +14,8 @@
     <link href="assets/css/dashlite0226.css?" rel="stylesheet">
     <link href="assets/css/theme0226.css" rel="stylesheet">
     <script src="{{asset('chart.js')}}"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-zoom"></script>
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
     </link>
     </link>
     </link>
