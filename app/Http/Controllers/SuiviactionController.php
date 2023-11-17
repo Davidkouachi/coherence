@@ -15,6 +15,7 @@ use App\Models\Action;
 use App\Models\Suivi_action;
 use App\Models\User;
 use App\Models\Historique_action;
+use App\Models\Amelioration;
 
 use Illuminate\Support\Facades\Validator;
 use Carbon\Carbon;
@@ -33,6 +34,19 @@ class SuiviactionController extends Controller
                 ->get();
 
         return view('traitement.suiviaction',  ['actions' => $actions]);
+    }
+
+    public function index_suiviactionc()
+    {
+        $actions = Action::join('postes', 'actions.poste_id', '=', 'postes.id')
+                ->join('risques', 'actions.risque_id', '=', 'risques.id')
+                ->join('processuses', 'risques.processus_id', '=', 'processuses.id')
+                ->where('actions.statut', 'non-realiser')
+                ->where('actions.type', 'corrective')
+                ->select('actions.*','postes.nom as responsable','risques.nom as risque','processuses.nom as processus')
+                ->get();
+
+        return view('traitement.suiviactionc',  ['actions' => $actions]);
     }
 
     public function add_suivi_action(Request $request, $id)

@@ -24,15 +24,9 @@ class CreateAmeliorationsTable extends Migration
             $table->text('cause');
             $table->string('choix_select');
             $table->string('nature');
-            $table->string('risque');
-            $table->string('resume');
-            $table->string('action');
-            $table->date('date_action');
-            $table->string('commentaire');
-            $table->unsignedBigInteger('processus_id');
-            $table->foreign('processus_id')->references('id')->on('processuses');
-            $table->unsignedBigInteger('poste_id');
-            $table->foreign('poste_id')->references('id')->on('postes');
+            $table->text('commentaire');
+            $table->unsignedBigInteger('action_id');
+            $table->foreign('action_id')->references('id')->on('actions');
             $table->timestamps();
         });
     }

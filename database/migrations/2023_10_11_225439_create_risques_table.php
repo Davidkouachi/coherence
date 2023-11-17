@@ -16,16 +16,16 @@ class CreateRisquesTable extends Migration
         Schema::create('risques', function (Blueprint $table) {
             $table->id();
             $table->string('nom');
-            $table->integer('vraisemblence');
-            $table->integer('gravite');
-            $table->integer('evaluation');
-            $table->string('cout');
-            $table->string('traitement');
-            $table->string('statut');
-            $table->integer('vraisemblence_residuel');
-            $table->integer('gravite_residuel');
-            $table->integer('evaluation_residuel');
-            $table->string('cout_residuel');
+            $table->integer('vraisemblence')->nullable();
+            $table->integer('gravite')->nullable();
+            $table->integer('evaluation')->nullable();
+            $table->string('cout')->nullable();
+            $table->string('traitement')->nullable();
+            $table->string('statut')->nullable();
+            $table->integer('vraisemblence_residuel')->nullable();
+            $table->integer('gravite_residuel')->nullable();
+            $table->integer('evaluation_residuel')->nullable();
+            $table->string('cout_residuel')->nullable();
             $table->datetime('date_validation')->nullable();
             $table->unsignedBigInteger('processus_id');
             $table->foreign('processus_id')->references('id')->on('processuses');

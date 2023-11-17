@@ -174,14 +174,14 @@
                                         </div>
                                         <div class="dropdown-inner">
                                             <ul class="link-list">
-                                                <li>
+                                                <!--<li>
                                                     <a href="{{ route('index_accueil') }}">
                                                         <em class="icon ni ni-home"></em>
                                                         <span>
                                                             Accueil
                                                         </span>
                                                     </a>
-                                                </li>
+                                                </li>-->
                                                 <li>
                                                     <a href="{{ route('index_profil') }}">
                                                         <em class="icon ni ni-user-alt"></em>
@@ -314,6 +314,16 @@
             showEasing:"swing",showMethod:"fadeIn",hideMethod:"fadeOut"})
         </script>
         {{ session()->forget('am_choisir') }}
+    @endif
+
+    @if (session('error'))
+        <script>
+            toastr.danger("{{ session('error') }}"," ",
+            {positionClass:"toast-top-left",timeOut:5e3,debug:!1,newestOnTop:!0,
+            preventDuplicates:!0,showDuration:"300",hideDuration:"1000",extendedTimeOut:"1000",
+            showEasing:"swing",showMethod:"fadeIn",hideMethod:"fadeOut"})
+        </script>
+        {{ session()->forget('error') }}
     @endif
 
 </body>

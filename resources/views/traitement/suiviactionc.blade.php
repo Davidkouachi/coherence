@@ -24,7 +24,7 @@
                         <div class="nk-block-between">
                                     <div class="nk-block-head-content" style="margin:0px auto;">
                                         <h3 class="text-center">
-                                            <span>Tableau de suivi des actions preventives</span>
+                                            <span>Tableau de suivi dea actions correctives</span>
                                             <em class="icon ni ni-list-index "></em>
                                         </h3>
                                     </div>

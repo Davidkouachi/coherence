@@ -1,6 +1,18 @@
 @extends('app')
 
-@section('titre', 'Nouveau Processus')
+@section('titre', 'Tableau de validation')
+
+@section('option_btn')
+
+    <li class="dropdown chats-dropdown">
+        <a href="{{ route('index_accueil') }}" class="dropdown-toggle nk-quick-nav-icon">
+            <div class="icon-status icon-status-na">
+                <em class="icon ni ni-home"></em>
+            </div>
+        </a>
+    </li>
+
+@endsection
 
 @section('content')
 
@@ -10,24 +22,17 @@
                 <div class="nk-content-body">
                     <div class="nk-block-head nk-block-head-sm">
                         <div class="nk-block-between">
-                            <div class="nk-block-head-content">
-                                <h3 class="text-center">
-                                    Validation
-                                </h3>
-                            </div>
-                            <div class="nk-block-head-content">
-                                <div class="toggle-wrap nk-block-tools-toggle">
-                                    <a class="btn btn-white btn-dim btn-outline-primary" href="{{ route('index_accueil') }}">
-                                        <em class="icon ni ni-home"></em>
-                                        <span>Accueil</span>
-                                    </a>
+                                    <div class="nk-block-head-content" style="margin:0px auto;">
+                                        <h3 class="text-center">
+                                            <span>Tableau de Validation</span>
+                                            <em class="icon ni ni-list-index"></em>
+                                        </h3>
+                                    </div>
                                 </div>
-                            </div>
-                        </div>
                     </div>
                     <div class="nk-block">
                         <div class="row g-gs">
-                            <div class="col-md-12 col-xxl-4">
+                            <div class="col-md-12 col-xxl-12">
                                 <div class="card card-bordered card-preview">
                                     <div class="card-inner">
                                         <table class="datatable-init table">
@@ -39,8 +44,6 @@
                                                     <th>Nombre de cause</th>
                                                     <th>Nombre d'action Préventive</th>
                                                     <th>Nombre d'action Corrective</th>
-                                                    <!--<th>Vaisemblence</th>
-                                                    <th>Gravité</th>-->
                                                     <th>Evaluation</th>
                                                     <th>Coût</th>
                                                     <th></th>
@@ -57,17 +60,18 @@
                                                         <td>{{ $risque->nbre_actionc }}</td>
                                                         <!--<td>{{ $risque->vraisemblence_residuel }}</td>
                                                         <td>{{ $risque->gravite_residuel }}</td>-->
-                                                        <td
-                                                            class="@php
-                                                                if ($risque->evaluation_residuel <= 10) {
-                                                                    echo 'bg-success border-white';
-                                                                } elseif ($risque->evaluation_residuel > 10 && $risque->evaluation_residuel < 20) {
-                                                                    echo 'bg-warning border-white';
-                                                                } elseif ($risque->evaluation_residuel >= 20 && $risque->evaluation_residuel <= 25) {
-                                                                    echo 'bg-danger border-white';
-                                                                } @endphp">
-                                                            {{ $risque->evaluation_residuel }}
-                                                        </td>
+                                                        @if ($risque->evaluation_residuel >= 1 && $risque->evaluation_residuel <= 2 )
+                                                            <td class="border-white" style="background-color:#5eccbf;" ></td>
+                                                        @endif
+                                                        @if ($risque->evaluation_residuel >= 3 && $risque->evaluation_residuel <= 9)
+                                                            <td class="border-white"style="background-color:#f7f880;"></td>
+                                                        @endif
+                                                        @if ($risque->evaluation_residuel >= 10 && $risque->evaluation_residuel <= 16)
+                                                            <td class="border-white"style="background-color:#f2b171;"></td>
+                                                        @endif
+                                                        @if ($risque->evaluation_residuel > 16)
+                                                            <td class="border-white" style="background-color:#ea6072;"></td>
+                                                        @endif
                                                         <td>
                                                             @php
                                                                 $cout = $risque->cout_residuel;
@@ -139,7 +143,7 @@
                     <div class="modal-body">
                         <form class="nk-block" >
                             <div class="row g-gs">
-                                <div class="col-md-12 col-xxl-4" id="groupesContainer">
+                                <div class="col-md-12 col-xxl-122" id="groupesContainer">
                                     <div class="card card-bordered">
                                         <div class="card-inner">
                                                 <div class="row g-4">
@@ -172,15 +176,18 @@
                                 </div>
                                 <div class="col-md-12 row g-2" style="margin-left:1px;">
                                     <div class="col-md-12">
-                                        <div class="card card-bordered h-100 
-                                        @php
-                                            if ($risque->evaluation <= 10) {
-                                                echo 'bg-success border-white';
-                                            } elseif ($risque->evaluation > 10 && $risque->evaluation < 20) {
-                                                echo 'bg-warning border-white';
-                                            } elseif ($risque->evaluation >= 20 && $risque->evaluation <= 25) {
-                                                echo 'bg-danger border-white';
-                                        } @endphp">
+                                        @if ($risque->evaluation >= 1 && $risque->evaluation <= 2 )
+                                            <div class="card card-bordered h-100 border-white" style="background-color:#5eccbf;">
+                                        @endif
+                                        @if ($risque->evaluation >= 3 && $risque->evaluation <= 9)
+                                            <div class="card card-bordered h-100 border-white" style="background-color:#f7f880;">
+                                        @endif
+                                        @if ($risque->evaluation >= 10 && $risque->evaluation <= 16)
+                                            <div class="card card-bordered h-100 border-white" style="background-color:#f2b171;">
+                                        @endif
+                                        @if ($risque->evaluation > 16)
+                                            <div class="card card-bordered h-100 border-white" style="background-color:#ea6072;">
+                                        @endif
                                             <div class="card-inner">
                                                 <div class="card-head">
                                                     <h5 class="card-title">
@@ -240,7 +247,7 @@
                                     </div>
                                 </div>
                                 @foreach ($causesData[$risque->id] as $causesDatas)
-                                <div class="col-md-12 col-xxl-4" id="groupesContainer">
+                                <div class="col-md-12 col-xxl-122" id="groupesContainer">
                                     <div class="card card-bordered">
                                         <div class="card-inner">
                                                 <div class="row g-4">
@@ -271,16 +278,18 @@
                                 @endforeach
                                 <div class="col-md-12 row g-2" style="margin-left:1px;">
                                     <div class="col-md-12">
-                                        <div class="card card-bordered h-100 
-                                        @php
-                                            if ($risque->evaluation_residuel <= 10) {
-                                                echo 'bg-success border-white';
-                                            } elseif ($risque->evaluation_residuel > 10 && $risque->evaluation_residuel < 20) {
-                                                echo 'bg-warning border-white';
-                                            } elseif ($risque->evaluation_residuel >= 20 && $risque->evaluation_residuel <= 25) {
-                                                echo 'bg-danger border-white';
-                                        } @endphp
-                                        " >
+                                        @if ($risque->evaluation_residuel >= 1 && $risque->evaluation_residuel <= 2 )
+                                            <div class="card card-bordered h-100 border-white" style="background-color:#5eccbf;">
+                                        @endif
+                                        @if ($risque->evaluation_residuel >= 3 && $risque->evaluation_residuel <= 9)
+                                            <div class="card card-bordered h-100 border-white" style="background-color:#f7f880;">
+                                        @endif
+                                        @if ($risque->evaluation_residuel >= 10 && $risque->evaluation_residuel <= 16)
+                                            <div class="card card-bordered h-100 border-white" style="background-color:#f2b171;">
+                                        @endif
+                                        @if ($risque->evaluation_residuel > 16)
+                                            <div class="card card-bordered h-100 border-white" style="background-color:#ea6072;">
+                                        @endif
                                             <div class="card-inner">
                                                 <div class="card-head">
                                                     <h5 class="card-title">
@@ -350,7 +359,7 @@
                                     </div>
                                 </div>
                                 @foreach ($actionsDatap[$risque->id] as $actionsDatas)
-                                <div class="col-md-12 col-xxl-4" id="groupesAction">
+                                <div class="col-md-12 col-xxl-12" id="groupesAction">
                                     <div class="card card-bordered">
                                         <div class="card-inner">
                                                 <div class="row g-4">
@@ -394,7 +403,7 @@
                                 </div>
                                 @endforeach
                                 @foreach ($actionsDatac[$risque->id] as $actionsDatas)
-                                <div class="col-md-12 col-xxl-4" id="groupesAction">
+                                <div class="col-md-12 col-xxl-12" id="groupesAction">
                                     <div class="card card-bordered">
                                         <div class="card-inner">
                                                 <div class="row g-4">
@@ -425,7 +434,7 @@
                                     </div>
                                 </div>
                                 @endforeach
-                                <div class="col-md-12 col-xxl-4">
+                                <div class="col-md-12 col-xxl-12">
                                     <div class="card card-bordered card-preview">
                                         <div class="card-inner row g-gs">
                                             <div class="col-lg-12">

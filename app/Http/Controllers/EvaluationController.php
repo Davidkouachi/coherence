@@ -40,7 +40,8 @@ class EvaluationController extends Controller
             }
 
             if ($risques->count() > 0) {
-                $evag = $totalEvaluation / $risques->count();
+                $evagg = $totalEvaluation / $risques->count();
+                $evag = number_format($evagg, 1);
             } else {
                 $evag = 0;
             }

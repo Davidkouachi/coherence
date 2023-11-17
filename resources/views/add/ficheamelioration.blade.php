@@ -1,7 +1,18 @@
 @extends('app')
 
-@section('titre', 'Nouveau Processus')
+@section('titre', 'Fiche Amélioration')
 
+@section('option_btn')
+
+    <li class="dropdown chats-dropdown">
+        <a href="{{ route('index_accueil') }}" class="dropdown-toggle nk-quick-nav-icon">
+            <div class="icon-status icon-status-na">
+                <em class="icon ni ni-home"></em>
+            </div>
+        </a>
+    </li>
+
+@endsection
 
 @section('content')
 
@@ -11,25 +22,18 @@
                 <div class="nk-content-body">
                     <div class="nk-block-head nk-block-head-sm" >
                                 <div class="nk-block-between">
-                                    <div class="nk-block-head-content">
+                                    <div class="nk-block-head-content" style="margin:0px auto;">
                                         <h3 class="text-center">
-                                            Fiche d'amélioration
+                                            <span>Fiche d'amélioration</span>
+                                            <em class="icon ni ni-reports"></em>
                                         </h3>
-                                    </div>
-                                    <div class="nk-block-head-content">
-                                        <div class="toggle-wrap nk-block-tools-toggle">
-                                            <a class="btn btn-white btn-dim btn-outline-primary" href="{{ route('index_accueil') }}">
-                                                <em class="icon ni ni-home"></em>
-                                                <span>Accueil</span>
-                                            </a>
-                                        </div>
                                     </div>
                                 </div>
                             </div>
                     <form class="nk-block" method="post" action="{{ route('index_add') }}">
                         @csrf
                         <div class="row g-gs">
-                            <div class="col-md-12 col-xxl-4" id="groupesContainer">
+                            <div class="col-md-12 col-xxl-12" id="groupesContainer">
                                 <div class="card card-bordered">
                                     <div class="card-inner">
                                             <div class="row g-4 ">
@@ -67,7 +71,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-md-12 col-xxl-4" id="groupesContainer">
+                            <div class="col-md-12 col-xxl-12" id="groupesContainer">
                                 <div class="card card-bordered">
                                     <div class="card-inner">
                                             <div class="row g-4">
@@ -105,7 +109,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-md-12 col-xxl-4" id="groupesContainer">
+                            <div class="col-md-12 col-xxl-12" id="groupesContainer">
                                 <div class="card card-bordered">
                                     <div class="card-inner">
                                             <div class="row g-4">
@@ -133,7 +137,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-md-12 col-xxl-4" id="groupesContainer">
+                            <div class="col-md-12 col-xxl-12" id="groupesContainer">
                                 <div class="card card-bordered">
                                     <div class="card-inner">
                                             <div class="row g-4">
@@ -217,7 +221,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-md-12 col-xxl-4" id="groupesContainer_btn_trouve">
+                            <div class="col-md-12 col-xxl-12" id="groupesContainer_btn_trouve">
                                 <div class="card card-bordered">
                                     <div class="card-inner">
                                         <div class="row g-4">
@@ -246,7 +250,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-md-12 col-xxl-4" id="groupesContainer_btn_new">
+                            <div class="col-md-12 col-xxl-12" id="groupesContainer_btn_new">
                                 <div class="card card-bordered">
                                     <div class="card-inner">
                                         <div class="row g-4">
@@ -261,90 +265,10 @@
                                     </div>
                                 </div>
                             </div>
-                            <div id="dynamic-fields-parent" style="display: none;" >
-                                <div class="card card-bordered">
-                                    <div class="card-inner">
-                                        <div class="row g-4">
-                                            <div class="col-lg-12 col-xxl-12" >
-                                                <div class="card">
-                                                    <div class="card-inner">
-                                                            <div class="row g-4">
-                                                                <div class="col-lg-6">
-                                                                    <div class="form-group">
-                                                                        <label class="form-label" for="Cause">
-                                                                            Processus
-                                                                        </label>
-                                                                        <input  name="nature[]" value="0" type="text" >
-                                                                        <div class="form-control-wrap">
-                                                                            <select id="responsable_idc" required name="processus_id[]" class="form-select" >
-                                                                                    <option selected value="1">1</option>
-                                                                            </select>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                                <div class="col-lg-6">
-                                                                    <div class="form-group">
-                                                                        <label class="form-label" for="controle">
-                                                                            Risque
-                                                                        </label>
-                                                                        <div class="form-control-wrap">
-                                                                            <input name="risque[]" value="0" type="text" class="form-control">
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                                <input name="resume[]" value="0" type="text" >
-                                                                <div class="col-lg-12">
-                                                                    <div class="form-group">
-                                                                        <label class="form-label" for="controle">
-                                                                            Action Corrective
-                                                                        </label>
-                                                                        <div class="form-control-wrap">
-                                                                            <input placeholder="Saisie obligatoire" name="action[]" value="0" type="text" class="form-control" >
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                                <div class="col-lg-4">
-                                                                            <div class="form-group">
-                                                                                <label class="form-label" for="Coût">
-                                                                                    Responsable
-                                                                                </label>
-                                                                                <select id="responsable_idc" required name="poste_id[]" class="form-select" >
-                                                                                    <option selected value="1">
-                                                                                        1
-                                                                                    </option>
-                                                                                </select>
-                                                                            </div>
-                                                                            <div class="form-group">
-                                                                                <label class="form-label" for="Coût">
-                                                                                    Date prévisionnelle de réalisation
-                                                                                </label>
-                                                                                <div class="form-control-wrap">
-                                                                                    <input name="date_action[]" value="2023-11-11" type="date" class="form-control" >
-                                                                                </div>
-                                                                            </div>
-                                                                </div>
-                                                                <div class="col-lg-8">
-                                                                    <div class="form-group text-center">
-                                                                        <label class="form-label" for="description">
-                                                                            Commentaire
-                                                                        </label>
-                                                                        <div class="form-control-wrap">
-                                                                            <textarea name="commentaire[]" class="form-control no-resize" id="default-textarea">0</textarea>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
                             <div id="dynamic-fields">
                                 
                             </div>
-                            <div class="col-md-12 col-xxl-4" id="btn_enrg">
+                            <div class="col-md-12 col-xxl-12" id="btn_enrg">
                                 <div class="card card-bordered card-preview">
                                     <div class="card-inner row g-gs">
                                         <div class="col-12">
@@ -377,7 +301,7 @@
                     <div class="modal-body modal-body-lg">
                         <form class="nk-block" >
                             <div class="row g-gs">
-                                <div class="col-md-12 col-xxl-4" id="groupesContainer">
+                                <div class="col-md-12 col-xxl-12" id="groupesContainer">
                                     <div class="card card-bordered">
                                         <div class="card-inner">
                                                 <div class="row g-4">
@@ -482,7 +406,7 @@
                                     </div>
                                 </div>
                                 @foreach ($causesData[$caus2->risque_id] as $causesDatas)
-                                <div class="col-md-12 col-xxl-4" id="groupesContainer">
+                                <div class="col-md-12 col-xxl-12" id="groupesContainer">
                                     <div class="card card-bordered">
                                         <div class="card-inner">
                                                 <div class="row g-4">
@@ -594,7 +518,7 @@
                                 @foreach ($actionsData[$Suivi_action2->risque_id] as $actionsDatas)
 
                                 @if ($actionsDatas['type'] === 'preventive')
-                                <div class="col-md-12 col-xxl-4" id="groupesAction">
+                                <div class="col-md-12 col-xxl-12" id="groupesAction">
                                     <div class="card card-bordered">
                                         <div class="card-inner">
                                                 <div class="row g-4">
@@ -699,7 +623,7 @@
                                 @endif
 
                                 @if ($actionsDatas['type'] === 'corrective')
-                                <div class="col-md-12 col-xxl-4" id="groupesAction">
+                                <div class="col-md-12 col-xxl-12" id="groupesAction">
                                     <div class="card card-bordered">
                                         <div class="card-inner">
                                                 <div class="row g-4">
@@ -732,7 +656,7 @@
                                 @endif
 
                                 @endforeach
-                                <div class="col-md-12 col-xxl-4">
+                                <div class="col-md-12 col-xxl-12">
                                     <div class="card card-bordered card-preview">
                                         <div class="card-inner row g-gs">
                                             <div class="col-lg-12">
@@ -770,7 +694,7 @@
                     <div class="modal-body modal-body-lg">
                         <form class="nk-block" >
                             <div class="row g-gs">
-                                <div class="col-md-12 col-xxl-4" id="groupesContainer">
+                                <div class="col-md-12 col-xxl-12" id="groupesContainer">
                                     <div class="card card-bordered">
                                         <div class="card-inner">
                                                 <div class="row g-4">
@@ -875,7 +799,7 @@
                                     </div>
                                 </div>
                                 @foreach ($causesData2[$causes_select->risque_id] as $causeData2)
-                                        <div class="col-md-12 col-xxl-4" id="groupesContainer">
+                                        <div class="col-md-12 col-xxl-12" id="groupesContainer">
                                             <div class="card card-bordered">
                                                 <div class="card-inner">
                                                     <div class="row g-4">
@@ -987,7 +911,7 @@
                                 @foreach ($actionsData2[$causes_select->risque_id] as $actionData2)
 
                                 @if ($actionData2['type'] === 'preventive')
-                                <div class="col-md-12 col-xxl-4" id="groupesAction">
+                                <div class="col-md-12 col-xxl-12" id="groupesAction">
                                     <div class="card card-bordered">
                                         <div class="card-inner">
                                                 <div class="row g-4">
@@ -1092,7 +1016,7 @@
                                 @endif
 
                                 @if ($actionData2['type'] === 'corrective')
-                                <div class="col-md-12 col-xxl-4" id="groupesAction">
+                                <div class="col-md-12 col-xxl-12" id="groupesAction">
                                     <div class="card card-bordered">
                                         <div class="card-inner">
                                                 <div class="row g-4">
@@ -1125,7 +1049,7 @@
                                 @endif
 
                                 @endforeach
-                                <div class="col-md-12 col-xxl-4">
+                                <div class="col-md-12 col-xxl-12">
                                     <div class="card card-bordered card-preview">
                                         <div class="card-inner row g-gs">
                                             <div class="col-lg-12">
@@ -1206,6 +1130,8 @@
             while (dynamicFields.firstChild) {
                 dynamicFields.removeChild(dynamicFields.firstChild);
             }
+
+            document.getElementById("btn_enrg").style.display = "block";
 
             var groupe = document.createElement("div");
             groupe.className = "card card-bordered";
@@ -1314,6 +1240,7 @@
             groupe.querySelector("#suppr_nouvelle_action").addEventListener("click", function(event) {
                 event.preventDefault();
                 groupe.remove();
+                document.getElementById("btn_enrg").style.display = "none";
             });
 
             document.getElementById("dynamic-fields").appendChild(groupe);
@@ -1379,6 +1306,8 @@
                 dynamicFields.removeChild(dynamicFields.firstChild);
             }
 
+            document.getElementById("btn_enrg").style.display = "block";
+
             data.actions.forEach(function(action) {
                 var groupe = document.createElement("div");
                 groupe.className = "card card-bordered";
@@ -1412,7 +1341,8 @@
                                                                             Risque
                                                                         </label>
                                                                         <div class="form-control-wrap">
-                                                                            <input required name="risque[]" value="${action.risque}" type="text" class="form-control" readonly>
+                                                                            <input value="${action.risque}" type="text" class="form-control" readonly>
+                                                                            <input style="display:none;" required name="risque[]" value="${action.risque_id}" type="text" class="form-control" readonly>
                                                                         </div>
                                                                     </div>
                                                                 </div>
@@ -1423,7 +1353,8 @@
                                                                             Action Corrective
                                                                         </label>
                                                                         <div class="form-control-wrap">
-                                                                            <input required name="action[]" value="${action.action}" type="text" class="form-control" readonly>
+                                                                            <input required placeholder="Saisie obligatoire" value="${action.action}" type="text" class="form-control" >
+                                                                            <input style="display:none;" placeholder="Saisie obligatoire" name="action[]" value="${action.id}" type="text" class="form-control" >
                                                                         </div>
                                                                     </div>
                                                                 </div>
@@ -1472,6 +1403,7 @@
                 groupe.querySelector("#suppr_action").addEventListener("click", function(event) {
                     event.preventDefault();
                     groupe.remove();
+                    document.getElementById("btn_enrg").style.display = "none";
                 });
 
                 document.getElementById("dynamic-fields").appendChild(groupe);
@@ -1537,6 +1469,8 @@
                 dynamicFields.removeChild(dynamicFields.firstChild);
             }
 
+            document.getElementById("btn_enrg").style.display = "block";
+
             data.actions.forEach(function(action) {
                 var groupe = document.createElement("div");
                 groupe.className = "card card-bordered";
@@ -1570,7 +1504,8 @@
                                                                             Risque
                                                                         </label>
                                                                         <div class="form-control-wrap">
-                                                                            <input required name="risque[]" value="${action.risque}" type="text" class="form-control" readonly>
+                                                                            <input value="${action.risque}" type="text" class="form-control" readonly>
+                                                                            <input style="display:none;" required name="risque[]" value="${action.risque_id}" type="text" class="form-control" readonly>
                                                                         </div>
                                                                     </div>
                                                                 </div>
@@ -1581,7 +1516,8 @@
                                                                             Action Corrective
                                                                         </label>
                                                                         <div class="form-control-wrap">
-                                                                            <input required placeholder="Saisie obligatoire" name="action[]" value="${action.action}" type="text" class="form-control" >
+                                                                            <input placeholder="Saisie obligatoire" name="action[]" value="${action.action}" type="text" class="form-control" >
+                                                                            <input style="display:none;" name="action_id[]" value="${action.id}" type="text" class="form-control" >
                                                                         </div>
                                                                     </div>
                                                                 </div>
@@ -1634,6 +1570,7 @@
                 groupe.querySelector("#suppr_action").addEventListener("click", function(event) {
                     event.preventDefault();
                     groupe.remove();
+                    document.getElementById("btn_enrg").style.display = "none";
                 });
 
                 document.getElementById("dynamic-fields").appendChild(groupe);
@@ -1783,6 +1720,8 @@
             // Initial setup
             document.getElementById("groupesContainer_btn_trouve").style.display = "none";
             document.getElementById("groupesContainer_btn_new").style.display = "none";
+            document.getElementById("btn_enrg").style.display = "none";
+
 
             var selectedCause = $("#causeSelect").val();
             var selectedRisque = $("#risqueSelect").val();
@@ -1793,6 +1732,7 @@
                     if (selectedValue === "cause") {
                         document.getElementById("groupesContainer_btn_trouve").style.display = "block";
                         document.getElementById("groupesContainer_btn_new").style.display = "none";
+                        document.getElementById("btn_enrg").style.display = "none";
 
                         var dynamicFields = document.getElementById("dynamic-fields");
                         // Supprimer le contenu existant
@@ -1803,6 +1743,7 @@
                     } else if (selectedValue === "risque") {
                         document.getElementById("groupesContainer_btn_trouve").style.display = "block";
                         document.getElementById("groupesContainer_btn_new").style.display = "none";
+                        document.getElementById("btn_enrg").style.display = "none";
 
                         var dynamicFields = document.getElementById("dynamic-fields");
                         // Supprimer le contenu existant
@@ -1813,6 +1754,7 @@
                     } else if (selectedValue === "cause_risque_nt") {
                         document.getElementById("groupesContainer_btn_trouve").style.display = "none";
                         document.getElementById("groupesContainer_btn_new").style.display = "block";
+                        document.getElementById("btn_enrg").style.display = "none";
 
                         var dynamicFields = document.getElementById("dynamic-fields");
                         // Supprimer le contenu existant

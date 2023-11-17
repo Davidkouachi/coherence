@@ -1,6 +1,18 @@
 @extends('app')
 
-@section('titre', 'Nouveau Processus')
+@section('titre', 'Tableau evaluation')
+
+@section('option_btn')
+
+    <li class="dropdown chats-dropdown">
+        <a href="{{ route('index_accueil') }}" class="dropdown-toggle nk-quick-nav-icon">
+            <div class="icon-status icon-status-na">
+                <em class="icon ni ni-home"></em>
+            </div>
+        </a>
+    </li>
+
+@endsection
 
 @section('content')
 
@@ -10,24 +22,17 @@
                 <div class="nk-content-body">
                     <div class="nk-block-head nk-block-head-sm">
                         <div class="nk-block-between">
-                            <div class="nk-block-head-content">
-                                <h3 class="text-center">
-                                    Evaluation
-                                </h3>
-                            </div>
-                            <div class="nk-block-head-content">
-                                <div class="toggle-wrap nk-block-tools-toggle">
-                                    <a class="btn btn-white btn-dim btn-outline-primary" href="{{ route('index_accueil') }}">
-                                        <em class="icon ni ni-home"></em>
-                                        <span>Accueil</span>
-                                    </a>
+                                    <div class="nk-block-head-content" style="margin:0px auto;">
+                                        <h3 class="text-center">
+                                            <span>Tableau d'evaluation</span>
+                                            <em class="icon ni ni-list-index"></em>
+                                        </h3>
+                                    </div>
                                 </div>
-                            </div>
-                        </div>
                     </div>
                     <div class="nk-block">
                         <div class="row g-gs">
-                            <div class="col-md-12 col-xxl-4">
+                            <div class="col-md-12 col-xxl-12">
                                 <div class="card card-bordered card-preview">
                                     <div class="card-inner">
                                         <table class="datatable-init table">
@@ -95,7 +100,7 @@
                     <div class="modal-body">
                         <form class="nk-block" >
                             <div class="row g-gs">
-                                <div class="col-md-12 col-xxl-4" id="groupesContainer">
+                                <div class="col-md-12 col-xxl-12" id="groupesContainer">
                                     <div class="card card-bordered">
                                         <div class="card-inner">
                                                 <div class="card-head">
@@ -131,7 +136,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-md-12 col-xxl-4" id="groupesContainer">
+                                <div class="col-md-12 col-xxl-12" id="groupesContainer">
                                     <div class="card card-bordered">
                                         <div class="card-inner">
                                                 <div class="row g-4">

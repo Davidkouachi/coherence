@@ -44,7 +44,9 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/add_user', [AuthController::class, 'add_user'])->name('add_user');
 
     Route::get('/Suivi_action', [SuiviactionController::class, 'index_suiviaction'])->name('index_suiviaction');
+    Route::get('/Suivi_actionc', [SuiviactionController::class, 'index_suiviactionc'])->name('index_suiviactionc');
     Route::post('/Suivi_action/{id}', [SuiviactionController::class, 'add_suivi_action'])->name('add_suivi_action');
+    Route::post('/Suivi_actionc/{id}', [SuiviactionController::class, 'add_suivi_actionc'])->name('add_suivi_actionc');
 
     Route::get('/Eva_proces', [EvaluationController::class, 'index'])->name('index_evaluation');
 

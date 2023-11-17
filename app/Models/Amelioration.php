@@ -20,22 +20,12 @@ class Amelioration extends Model
         'cause',
         'choix_select',
         'nature',
-        'processus_id',
-        'risque',
-        'resume',
-        'action',
-        'poste_id',
-        'date_action',
         'commentaire',
+        'action_id',
     ];
 
-    public function poste() 
+    public function action()
     {
-        return $this->belongsTo(Poste::class, 'poste_id');
-    }
-
-    public function processus()
-    {
-        return $this->belongsTo(Processus::class, 'processus_id');
+        return $this->belongsTo(Action::class, 'action_id');
     }
 }

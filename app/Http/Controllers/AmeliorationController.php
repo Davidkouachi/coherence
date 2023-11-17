@@ -163,6 +163,7 @@ class AmeliorationController extends Controller
         foreach ($actions as $action) {
 
             $action->risque = $risque->nom;
+            $action->risque_id = $risque->id;
 
             $processus = Processuse::find($risque->processus_id);
             $action->processus = $processus->nom;
@@ -190,6 +191,7 @@ class AmeliorationController extends Controller
         foreach ($actions as $action) {
 
             $action->risque = $risque->nom;
+            $action->risque_id = $risque->id;
 
             $processus = Processuse::find($risque->processus_id);
             $action->processus = $processus->nom;
@@ -207,7 +209,11 @@ class AmeliorationController extends Controller
     public function index_add(Request $request) 
     {
         $type = $request->input('type');
-        $date_fiche = $request->input('date_fiche');
+
+        $date_fichee = $request->input('date_fiche');
+        $dateCarbon = Carbon::createFromFormat('Y-m-d', $date_fichee);
+        $date_fiche = $dateCarbon->format('Y-m-d');
+
         $lieu = $request->input('lieu');
         $detecteur = $request->input('detecteur');
         $non_conformite = $request->input('non_conformite');
@@ -220,14 +226,20 @@ class AmeliorationController extends Controller
         $risque = $request->input('risque');
         $resume = $request->input('resume');
         $action = $request->input('action');
+        $action_id = $request->input('action_id');
         $poste_id = $request->input('poste_id');
         $date_action = $request->input('date_action');
-        $commentaire = $request->input('commentaire');
+        $commentaire = $request->input('commentaire');;
 
         foreach ($nature as $index => $valeur) {
 
-            if ($nature[$index] !== '0') {
-                $hasNonZeroNature = true;
+            $risque_id = $risque[$index];
+
+            if ($nature[$index] === 'accepte') {
+
+                $action = Action::find($action[$index]);
+                $action->delai = $date_action[$index];
+                $action->update();
 
                 $am = new Amelioration();
                 $am->type = $type;
@@ -239,27 +251,92 @@ class AmeliorationController extends Controller
                 $am->cause = $cause;
                 $am->choix_select = $choix_select;
                 $am->nature = $nature[$index];
-                $am->risque = $risque[$index];
-                $am->resume = $resume[$index];
-                $am->action = $action[$index];
-                $am->date_action = $date_action[$index];
                 $am->commentaire = $commentaire[$index];
-                $am->processus_id = $processus_id[$index];
-                $am->poste_id = $poste_id[$index];
+                $am->action_id = $action->id;
+                $am->save();
+
+            }
+
+            if ($nature[$index] === 'non-accepte') {
+
+                $actionn = Action::find($action_id[$index]);
+                $actionn->delai = $date_action[$index];
+                $actionn->action = $action[$index];
+                $actionn->update();
+
+                $am = new Amelioration();
+                $am->type = $type;
+                $am->date_fiche = $date_fiche;
+                $am->lieu =$lieu;
+                $am->detecteur = $detecteur;
+                $am->non_conformite = $non_conformite;
+                $am->consequence = $consequence;
+                $am->cause = $cause;
+                $am->choix_select = $choix_select;
+                $am->nature = $nature[$index];
+                $am->commentaire = $commentaire[$index];
+                $am->action_id = $actionn->id;
+                $am->save();
+
+
+
+            }
+
+            if ($nature[$index] === 'new') {
+
+                $risquee = new Risque();
+                $risquee->nom = $risque[$index];
+                $risquee->processus_id = $processus_id[$index];
+                $risquee->poste_id = $poste_id[$index];
+                $risquee->save();
+
+                $cause = new Cause();
+                $cause->nom = $action[$index];
+                $cause->risque_id = $risquee->id;
+                $cause->save();
+
+                $actionn = new Action();
+                $actionn->action = $resume[$index];
+                $actionn->delai = $date_action[$index];
+                $actionn->statut = 'non-realiser';
+                $actionn->type = 'corrective';
+                $actionn->poste_id = $poste_id[$index];
+                $actionn->risque_id = $risquee->id;
+                $actionn->save();
+
+                $suivic = new Suivi_action();
+                $suivic->risque_id = $risquee->id;
+                $suivic->action_id = $actionn->id;
+                $suivic->processus_id = $processus_id[$index];
+                $suivic->save();
+
+                $am = new Amelioration();
+                $am->type = $type;
+                $am->date_fiche = $date_fiche;
+                $am->lieu =$lieu;
+                $am->detecteur = $detecteur;
+                $am->non_conformite = $non_conformite;
+                $am->consequence = $consequence;
+                $am->cause = $cause;
+                $am->choix_select = $choix_select;
+                $am->nature = $nature[$index];
+                $am->commentaire = $commentaire[$index];
+                $am->action_id = $actionn->id;
                 $am->save();
             }
-            
+
         }
 
-        if (!$hasNonZeroNature) {
+        if ($am) {
             return redirect()
                 ->back()
-                ->with('am_choisir', 'Aucune action identifiée.');
+                ->with('ajouter', 'Enregistrement éffectuée.');
+        } else {
+            return redirect()
+                ->back()
+                ->with('error', 'Enregistrement non éffectuée.');
         }
 
-        return redirect()
-            ->back()
-            ->with('ajouter', 'Enregistrement éffectuée.');
 
     }
 

@@ -16,7 +16,7 @@ class CreateCausesTable extends Migration
         Schema::create('causes', function (Blueprint $table) {
             $table->id();
             $table->string('nom');
-            $table->string('dispositif');
+            $table->string('dispositif')->nullable();
             $table->unsignedBigInteger('risque_id');
             $table->foreign('risque_id')->references('id')->on('risques');
             $table->timestamps();
