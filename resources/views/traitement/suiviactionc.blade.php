@@ -24,7 +24,7 @@
                         <div class="nk-block-between">
                                     <div class="nk-block-head-content" style="margin:0px auto;">
                                         <h3 class="text-center">
-                                            <span>Tableau de suivi dea actions correctives</span>
+                                            <span>Tableau de suivi des actions correctives</span>
                                             <em class="icon ni ni-list-index "></em>
                                         </h3>
                                     </div>
@@ -39,34 +39,34 @@
                                             <thead>
                                                 <tr class="text-center">
                                                     <th></th>
-                                                    <th>Processus</th>
-                                                    <th>Risque</th>
-                                                    <th>Action</th>
                                                     <th>Type</th>
+                                                    <th>Non Conformité</th>
+                                                    <th>Action</th>
+                                                    <th>Délai</th>
                                                     <th></th>
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                @foreach ($actions as $key => $action)
+                                                @foreach ($ams as $key => $am)
                                                     <tr class="text-center">
                                                         <td>{{ $key+1 }}</td>
-                                                        <td>{{ $action->processus }}</td>
-                                                        <td>{{ $action->risque }}</td>
-                                                        <td>{{ $action->action }}</td>
                                                         <td>
-                                                            @php
-                                                                if($action->type === 'preventive')
-                                                                {
-                                                                    echo 'Action Préventive';
-                                                                }else
-                                                                {
-                                                                    echo 'Action Corrective';
-                                                                }
-                                                            @endphp
+                                                            @if ($am->type === 'contentieux')
+                                                                Contentieux
+                                                            @endif
+                                                            @if ($am->type === 'reclamation')
+                                                                Réclamation
+                                                            @endif
+                                                            @if ($am->type === 'non_conformite_interne')
+                                                                Non conformité
+                                                            @endif
                                                         </td>
+                                                        <td>{{ $am->non_conformite }}</td>
+                                                        <td>{{ $am->action }}</td>
+                                                        <td>{{ \Carbon\Carbon::parse($am->delai)->format('d-m-Y') }}</td>
                                                         <td>
                                                             <a data-bs-toggle="modal"
-                                                                data-bs-target="#modalDetail{{ $action->id }}"
+                                                                data-bs-target="#modalDetail{{ $am->id }}"
                                                                 href="#" class="btn btn-primary btn-sm">
                                                                 <em class="icon ni ni-eye"></em>
                                                             </a>
@@ -85,8 +85,8 @@
         </div>
     </div>
 
-    @foreach ($actions as $action)
-        <div class="modal fade zoom" tabindex="-1" id="modalDetail{{ $action->id }}">
+    @foreach ($ams as $am)
+        <div class="modal fade zoom" tabindex="-1" id="modalDetail{{ $am->id }}">
             <div class="modal-dialog modal-lg" role="document" style="width: 100%;">
                 <div class="modal-content">
                     <div class="modal-header">
@@ -96,7 +96,7 @@
                     </div>
                     <div class="modal-body">
                         <div class="nk-block">
-                            <form class="row g-gs" method="post" action="/Suivi_action/{{ $action->id }}">
+                            <form class="row g-gs" method="post" action="/Suivi_actionc/{{ $am->id }}">
                                 @csrf
                                 <div class="col-lg-12 col-xxl-12" >
                                     <div class="card">
@@ -108,7 +108,7 @@
                                                                 Processus
                                                             </label>
                                                             <div class="form-control-wrap">
-                                                                <input value="{{ $action->processus }}" type="text" class="form-control" disabled>
+                                                                <input value="{{ $am->processus }}" type="text" class="form-control" readonly>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -118,66 +118,17 @@
                                                                 Risque
                                                             </label>
                                                             <div class="form-control-wrap">
-                                                                <input value="{{ $action->risque }}" type="text" class="form-control" disabled>
+                                                                <input value="{{ $am->risque }}" type="text" class="form-control" readonly>
                                                             </div>
                                                         </div>
                                                     </div>
-                                                </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                @if ($action->type === 'preventive')
-                                <div class="col-lg-12 col-xxl-12" >
-                                    <div class="card">
-                                        <div class="card-inner">
-                                                <div class="row g-4">
-                                                    <div class="col-lg-12">
-                                                        <div class="form-group">
-                                                            <label class="form-label" for="controle">
-                                                                Action Préventive
-                                                            </label>
-                                                            <div class="form-control-wrap">
-                                                                <input value="{{ $action->action }}" type="text" class="form-control" disabled>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-lg-6">
-                                                        <div class="form-group">
-                                                            <label class="form-label" for="corectif">
-                                                                Délai
-                                                            </label>
-                                                            <div class="form-control-wrap">
-                                                                <input value="{{ $action->delai }}" type="date" class="form-control" disabled>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-lg-6">
-                                                        <div class="form-group">
-                                                            <label class="form-label" for="Coût">
-                                                                Responsable
-                                                            </label>
-                                                            <div class="form-control-wrap">
-                                                                <input value="{{ $action->responsable }}" type="text" class="form-control" disabled>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                @endif
-                                @if ($action->type === 'corrective')
-                                <div class="col-lg-12 col-xxl-12" >
-                                    <div class="card">
-                                        <div class="card-inner">
-                                                <div class="row g-4">
                                                     <div class="col-lg-12">
                                                         <div class="form-group">
                                                             <label class="form-label" for="controle">
                                                                 Action Corrective
                                                             </label>
                                                             <div class="form-control-wrap">
-                                                                <input value="{{ $action->action }}" type="text" class="form-control" disabled>
+                                                                <input value="{{ $am->action }}" type="text" class="form-control" readonly>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -187,19 +138,10 @@
                                                                 Responsable
                                                             </label>
                                                             <div class="form-control-wrap">
-                                                                <input value="{{ $action->responsable }}" type="text" class="form-control" disabled>
+                                                                <input value="{{ $am->responsable }}" type="text" class="form-control" readonly>
                                                             </div>
                                                         </div>
                                                     </div>
-                                                </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                @endif
-                                <div class="col-lg-12 col-xxl-12" >
-                                    <div class="card">
-                                        <div class="card-inner">
-                                                <div class="row g-4">
                                                     <div class="col-lg-4">
                                                         <div class="form-group">
                                                             <label class="form-label" for="email-address-1">
@@ -219,7 +161,7 @@
                                                         </div>
                                                         <div class="form-group">
                                                             <label class="form-label" for="Coût">
-                                                                Date d'action éffectuée
+                                                                Date de réalisation
                                                             </label>
                                                             <div class="form-control-wrap">
                                                                 <input name="date_action" type="date" class="form-control" >

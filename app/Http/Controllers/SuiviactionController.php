@@ -13,6 +13,7 @@ use App\Models\Cause;
 use App\Models\Rejet;
 use App\Models\Action;
 use App\Models\Suivi_action;
+use App\Models\Suivi_amelioration;
 use App\Models\User;
 use App\Models\Historique_action;
 use App\Models\Amelioration;
@@ -38,15 +39,30 @@ class SuiviactionController extends Controller
 
     public function index_suiviactionc()
     {
-        $actions = Action::join('postes', 'actions.poste_id', '=', 'postes.id')
+        $ams = Amelioration::join('actions', 'ameliorations.action_id', 'actions.id')
+                            ->where('ameliorations.statut', 'non-realiser')
+                            ->select('ameliorations.*','ameliorations.action_id as action_id')
+                            ->get();
+        foreach ($ams as $am) {
+
+            $actions = Action::join('postes', 'actions.poste_id', '=', 'postes.id')
                 ->join('risques', 'actions.risque_id', '=', 'risques.id')
                 ->join('processuses', 'risques.processus_id', '=', 'processuses.id')
-                ->where('actions.statut', 'non-realiser')
-                ->where('actions.type', 'corrective')
+                ->where('actions.id', $am->action_id)
                 ->select('actions.*','postes.nom as responsable','risques.nom as risque','processuses.nom as processus')
-                ->get();
+                ->first();
 
-        return view('traitement.suiviactionc',  ['actions' => $actions]);
+            if ($actions) {
+                $am->responsable = $actions->responsable;
+                $am->risque = $actions->risque;
+                $am->processus = $actions->processus;
+                $am->action = $actions->action;
+                $am->delai = $actions->delai;
+            }
+
+        }
+
+        return view('traitement.suiviactionc',  ['ams' => $ams]);
     }
 
     public function add_suivi_action(Request $request, $id)
@@ -61,6 +77,44 @@ class SuiviactionController extends Controller
             $suivi->update();
 
             $action = Action::where('id', $id)->first();
+            if($action)
+            {
+                $action->statut = 'realiser';
+                $action->update();
+
+                if ($action || $suivi)
+                {
+                    $his = new Historique_action();
+                    $his->nom_formulaire = 'Tableau du suivi des actions';
+                    $his->nom_action = 'Suivi';
+                    $his->user_id = Auth::user()->id;
+                    $his->save();
+                }
+            }
+
+        }
+
+        return redirect()
+            ->back()
+            ->with('valider', 'Suivi éffectué.');
+    }
+
+    public function add_suivi_actionc(Request $request, $id)
+    {
+        $suivi = Suivi_amelioration::where('amelioration_id', $id)->first();
+        if ($suivi)
+        {
+            $suivi->efficacite = $request->input('efficacite');
+            $suivi->commentaire = $request->input('commentaire');
+            $suivi->date_action = $request->input('date_action');
+            $suivi->date_suivi = now()->format('Y-m-d\TH:i');
+            $suivi->update();
+
+            $am = Amelioration::where('id', $id)->first();
+            $am->statut = 'realiser';
+            $am->update();
+            
+            $action = Action::where('id', $am->action_id)->first();
             if($action)
             {
                 $action->statut = 'realiser';

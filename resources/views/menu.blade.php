@@ -52,9 +52,25 @@
                                                 </a>
                                             </div>
                                         </div>
-                                        <div class="col-lg-3">
+                                        <div class="col-lg-3 ">
                                             <div class="form-group text-center">
-                                                <a style="width:230px;" class="btn btn-lg btn-outline-primary w-80-auto text-center" href="{{ route('index_validation_processus') }}" >
+                                                <a style="width:230px;" class="btn btn-lg btn-outline-primary" href="{{ route('index_listeprocessus') }}" >
+                                                    <em class="ni ni-list-index me-2"></em>
+                                                    <em>Liste des processus </em>
+                                                </a>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-3 ">
+                                            <div class="form-group text-center">
+                                                <a style="width:230px;" class="btn btn-lg btn-outline-primary" href="{{ route('index_liste_risque') }}" >
+                                                    <em class="ni ni-list-index me-2"></em>
+                                                    <em>Liste des risques </em>
+                                                </a>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-3 ">
+                                            <div class="form-group text-center">
+                                                <a style="width:230px;" class="btn btn-lg btn-outline-primary" href="{{ route('index_validation_processus') }}" >
                                                     <em class="ni ni-list-index me-2"></em>
                                                     <em>Tableau de validation</em>
                                                 </a>

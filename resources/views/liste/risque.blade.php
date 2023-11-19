@@ -1,6 +1,6 @@
 @extends('app')
 
-@section('titre', 'Tableau de validation')
+@section('titre', 'Liste des Risques')
 
 @section('option_btn')
 
@@ -24,7 +24,7 @@
                         <div class="nk-block-between">
                                     <div class="nk-block-head-content" style="margin:0px auto;">
                                         <h3 class="text-center">
-                                            <span>Tableau de Validation</span>
+                                            <span>Liste des Risques</span>
                                             <em class="icon ni ni-list-index"></em>
                                         </h3>
                                     </div>
@@ -39,11 +39,11 @@
                                             <thead>
                                                 <tr class="text-center">
                                                     <th></th>
-                                                    <th>Processus</th>
                                                     <th>Risque</th>
-                                                    <th>Nombre de cause</th>
+                                                    <th>Processus</th>
+                                                    <!--<th>Nombre de cause</th>
                                                     <th>Nombre d'action Préventive</th>
-                                                    <th>Nombre d'action Corrective</th>
+                                                    <th>Nombre d'action Corrective</th>-->
                                                     <th>Evaluation</th>
                                                     <th>Coût</th>
                                                     <th></th>
@@ -53,11 +53,11 @@
                                                 @foreach ($risques as $key => $risque)
                                                     <tr class="text-center">
                                                         <td>{{ $key+1 }}</td>
-                                                        <td>{{ $risque->nom_processus }}</td>
                                                         <td>{{ $risque->nom }}</td>
-                                                        <td>{{ $risque->nbre_cause }}</td>
+                                                        <td>{{ $risque->nom_processus }}</td>
+                                                        <!--<td>{{ $risque->nbre_cause }}</td>
                                                         <td>{{ $risque->nbre_actionp }}</td>
-                                                        <td>{{ $risque->nbre_actionc }}</td>
+                                                        <td>{{ $risque->nbre_actionc }}</td>-->
                                                         <!--<td>{{ $risque->vraisemblence_residuel }}</td>
                                                         <td>{{ $risque->gravite_residuel }}</td>-->
                                                         @if ($risque->evaluation_residuel >= 1 && $risque->evaluation_residuel <= 2 )
@@ -80,11 +80,11 @@
                                                             {{ $formatcommande }} Fcfa
                                                         </td>
                                                         <td>
-                                                            <a data-bs-toggle="modal"
+                                                            <!--<a data-bs-toggle="modal"
                                                                 data-bs-target="#modalConfirme{{ $risque->id }}"
                                                                 href="#" class="btn btn-success btn-sm">
                                                                 <em class="icon ni ni-check"></em>
-                                                            </a>
+                                                            </a>-->
                                                             <a data-bs-toggle="modal"
                                                                 data-bs-target="#modalDetail{{ $risque->id }}"
                                                                 href="#" class="btn btn-warning btn-sm">
@@ -95,11 +95,11 @@
                                                                 href="#" class="btn btn-info btn-sm">
                                                                 <em class="icon ni ni-file"></em>
                                                             </a>
-                                                            <a data-bs-toggle="modal"
+                                                            <!--<a data-bs-toggle="modal"
                                                                 data-bs-target="#modalRejet{{ $risque->id }}"
                                                                 href="#" class="btn btn-danger btn-sm">
                                                                 <em class="icon ni ni-cross-circle"></em>
-                                                            </a>
+                                                            </a>-->
                                                         </td>
                                                     </tr>
                                                 @endforeach
@@ -163,6 +163,9 @@
                                                                 Risque
                                                                 @if ($risque->statut === 'soumis')
                                                                     <span class="text-danger"> ( Non validé )</span>
+                                                                @endif
+                                                                @if ($risque->statut === 'valider')
+                                                                    <span class="text-success"> ( Validé )</span>
                                                                 @endif
                                                             </label>
                                                             <div class="form-control-wrap">
@@ -251,7 +254,7 @@
                                     <div class="card card-bordered">
                                         <div class="card-inner">
                                                 <div class="row g-4">
-                                                    <div class="col-lg-6">
+                                                    <div class="col-lg-12">
                                                         <div class="form-group text-center">
                                                             <label class="form-label" for="Cause">
                                                                 Cause
@@ -261,7 +264,7 @@
                                                             </div>
                                                         </div>
                                                     </div>
-                                                    <div class="col-lg-6">
+                                                    <div class="col-lg-12">
                                                         <div class="form-group text-center">
                                                             <label class="form-label" for="controle">
                                                                 Dispositif de Contrôle
@@ -359,40 +362,146 @@
                                     </div>
                                 </div>
                                 @foreach ($actionsDatap[$risque->id] as $actionsDatas)
+                                @if ($actionsDatas['type'] === 'preventive')
                                 <div class="col-md-12 col-xxl-12" id="groupesAction">
                                     <div class="card card-bordered">
                                         <div class="card-inner">
                                                 <div class="row g-4">
                                                     <div class="col-lg-12">
-                                                        <div class="form-group text-center">
+                                                        <div class="form-group">
                                                             <label class="form-label" for="preventif">
                                                                 Action préventive
                                                             </label>
                                                             <div class="form-control-wrap">
-                                                                <input value="{{ $actionsDatas['action'] }}" readonly type="text" class="form-control text-center" id="preventif">
+                                                                <input value="{{ $actionsDatas['action'] }}" readonly type="text" class="form-control" id="preventif">
                                                             </div>
                                                         </div>
                                                     </div>
                                                     <div class="col-lg-6">
-                                                        <div class="form-group text-center">
+                                                        <div class="form-group">
                                                             <label class="form-label" for="email-address-1">
                                                                 Délai
                                                             </label>
                                                             <div class="form-group">
                                                                 <div class="form-control-wrap">
-                                                                    <input value="{{ $actionsDatas['delai'] }}" readonly type="date" class="form-control text-center">
+                                                                    <input value="{{ $actionsDatas['delai'] }}" readonly type="date" class="form-control">
                                                                 </div>
                                                             </div>
                                                         </div>
                                                     </div>
                                                     <div class="col-lg-6">
-                                                        <div class="form-group text-center">
+                                                        <div class="form-group">
                                                             <label class="form-label" for="email-address-1">
                                                                 Responsabilité
                                                             </label>
                                                             <div class="form-group">
                                                                 <div class="form-control-wrap">
-                                                                    <input value="{{ $actionsDatas['responsable'] }}" readonly type="text" class="form-control text-center">
+                                                                    <input value="{{ $actionsDatas['responsable'] }}" readonly type="text" class="form-control">
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-lg-12">
+                                                        <div class="form-group">
+                                                            <label class="form-label" for="email-address-1">
+                                                                Statut
+                                                            </label>
+                                                            <div class="form-group">
+                                                                <div class="form-control-wrap">
+                                                                    <input value="{{ $actionsDatas['statut'] }}" readonly type="text" class="form-control text-white text-center 
+                                                                    @php
+                                                                        if ($actionsDatas['statut'] ==='non-realiser') {
+                                                                            echo 'bg-danger';
+                                                                        } elseif ($actionsDatas['statut'] ==='realiser') {
+                                                                            echo 'bg-success';
+                                                                        }
+                                                                    @endphp
+                                                                    ">
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    @if ($actionsDatas['statut'] ==='realiser')
+
+                                                            <div class="col-lg-4">
+                                                                <div class="form-group">
+                                                                    <label class="form-label" for="email-address-1">
+                                                                        Réaliser le 
+                                                                    </label>
+                                                                    <div class="form-group">
+                                                                        <div class="form-control-wrap">
+                                                                            <input value="{{ $actionsDatas['date_action'] }}" readonly type="date" class="form-control">
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-lg-4">
+                                                                <div class="form-group">
+                                                                    <label class="form-label" for="email-address-1">
+                                                                        Suivi éffectué le 
+                                                                    </label>
+                                                                    <div class="form-group">
+                                                                        <div class="form-control-wrap">
+                                                                            <input value="{{ $actionsDatas['date_suivi'] }}" readonly type="datetime" class="form-control">
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-lg-4">
+                                                                <div class="form-group">
+                                                                    <label class="form-label" for="email-address-1">
+                                                                        Efficacité 
+                                                                    </label>
+                                                                    <div class="form-group">
+                                                                        <div class="form-control-wrap">
+                                                                            <input value="{{ $actionsDatas['efficacite'] }}" readonly type="text" class="form-control">
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-lg-12">
+                                                                <div class="form-group">
+                                                                    <label class="form-label" for="email-address-1">
+                                                                        Efficacité 
+                                                                    </label>
+                                                                    <div class="form-group">
+                                                                        <div class="form-control-wrap">
+                                                                            <textarea required name="consequence" class="form-control no-resize" id="default-textarea">{{ $actionsDatas['commentaire'] }}</textarea>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                    @endif
+                                                </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                @endif
+
+                                @if ($actionsDatas['type'] === 'corrective')
+                                <div class="col-md-12 col-xxl-12" id="groupesAction">
+                                    <div class="card card-bordered">
+                                        <div class="card-inner">
+                                                <div class="row g-4">
+                                                    <div class="col-lg-12">
+                                                        <div class="form-group">
+                                                            <label class="form-label" for="corectif">
+                                                                Action corrective
+                                                            </label>
+                                                            <div class="form-control-wrap">
+                                                                <input value="{{ $actionsDatas['action'] }}" readonly type="text" class="form-control" id="corectif">
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-lg-12">
+                                                        <div class="form-group">
+                                                            <label class="form-label" for="email-address-1">
+                                                                Responsabilité
+                                                            </label>
+                                                            <div class="form-group">
+                                                                <div class="form-control-wrap">
+                                                                    <input value="{{ $actionsDatas['responsable'] }}" readonly type="text" class="form-control">
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -401,6 +510,7 @@
                                         </div>
                                     </div>
                                 </div>
+                                @endif
                                 @endforeach
                                 @foreach ($actionsDatac[$risque->id] as $actionsDatas)
                                 <div class="col-md-12 col-xxl-12" id="groupesAction">

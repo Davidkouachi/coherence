@@ -13,6 +13,7 @@ use App\Models\Rejet;
 use App\Models\Action;
 use App\Models\Suivi_action;
 use App\Models\Pdf_file;
+use App\Models\Pdf_file_processus;
 use App\Models\User;
 use App\Models\Historique_action;
 use App\Models\Poste;
@@ -132,12 +133,6 @@ class ProcessusController extends Controller
             $nouvelleActionC->risque_id = $risque_id;
             $nouvelleActionC->type = 'corrective';
             $nouvelleActionC->save();
-
-            $suivic = new Suivi_action();
-            $suivic->risque_id = $risque_id;
-            $suivic->action_id = $nouvelleActionC->id;
-            $suivic->processus_id = $processus_id;
-            $suivic->save();
 
         }
 
@@ -285,6 +280,19 @@ class ProcessusController extends Controller
         $processus->description = $descriptionProcessus;
         $processus->finalite = $finalite;
         $processus->save();
+
+        if ($request->hasFile('pdfFile') && $request->file('pdfFile')->isValid()) {
+
+            $originalFileName = $request->file('pdfFile')->getClientOriginalName();
+            $pdfPathname = $request->file('pdfFile')->storeAs('public/pdf', $originalFileName);
+
+            // Enregistrez le fichier PDF dans la base de données
+            $pdfFile = new Pdf_file_processus();
+            $pdfFile->pdf_nom = $originalFileName;
+            $pdfFile->pdf_chemin = $pdfPathname;
+            $pdfFile->processus_id = $processus->id;
+            $pdfFile->save();
+        }
 
         foreach ($objectifs as $objectif) {
             $nouvelObjectif = new Objectif();

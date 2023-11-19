@@ -42,7 +42,6 @@
                                                     <th>Processus</th>
                                                     <th>Risque</th>
                                                     <th>Action</th>
-                                                    <th>Type</th>
                                                     <th></th>
                                                 </tr>
                                             </thead>
@@ -53,17 +52,6 @@
                                                         <td>{{ $action->processus }}</td>
                                                         <td>{{ $action->risque }}</td>
                                                         <td>{{ $action->action }}</td>
-                                                        <td>
-                                                            @php
-                                                                if($action->type === 'preventive')
-                                                                {
-                                                                    echo 'Action Préventive';
-                                                                }else
-                                                                {
-                                                                    echo 'Action Corrective';
-                                                                }
-                                                            @endphp
-                                                        </td>
                                                         <td>
                                                             <a data-bs-toggle="modal"
                                                                 data-bs-target="#modalDetail{{ $action->id }}"
@@ -108,7 +96,7 @@
                                                                 Processus
                                                             </label>
                                                             <div class="form-control-wrap">
-                                                                <input value="{{ $action->processus }}" type="text" class="form-control" disabled>
+                                                                <input value="{{ $action->processus }}" type="text" class="form-control" readonly>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -118,26 +106,17 @@
                                                                 Risque
                                                             </label>
                                                             <div class="form-control-wrap">
-                                                                <input value="{{ $action->risque }}" type="text" class="form-control" disabled>
+                                                                <input value="{{ $action->risque }}" type="text" class="form-control" readonly>
                                                             </div>
                                                         </div>
                                                     </div>
-                                                </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                @if ($action->type === 'preventive')
-                                <div class="col-lg-12 col-xxl-12" >
-                                    <div class="card">
-                                        <div class="card-inner">
-                                                <div class="row g-4">
                                                     <div class="col-lg-12">
                                                         <div class="form-group">
                                                             <label class="form-label" for="controle">
                                                                 Action Préventive
                                                             </label>
                                                             <div class="form-control-wrap">
-                                                                <input value="{{ $action->action }}" type="text" class="form-control" disabled>
+                                                                <input value="{{ $action->action }}" type="text" class="form-control" readonly>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -147,7 +126,7 @@
                                                                 Délai
                                                             </label>
                                                             <div class="form-control-wrap">
-                                                                <input value="{{ $action->delai }}" type="date" class="form-control" disabled>
+                                                                <input value="{{ $action->delai }}" type="date" class="form-control" readonly>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -157,49 +136,10 @@
                                                                 Responsable
                                                             </label>
                                                             <div class="form-control-wrap">
-                                                                <input value="{{ $action->responsable }}" type="text" class="form-control" disabled>
+                                                                <input value="{{ $action->responsable }}" type="text" class="form-control" readonly>
                                                             </div>
                                                         </div>
                                                     </div>
-                                                </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                @endif
-                                @if ($action->type === 'corrective')
-                                <div class="col-lg-12 col-xxl-12" >
-                                    <div class="card">
-                                        <div class="card-inner">
-                                                <div class="row g-4">
-                                                    <div class="col-lg-12">
-                                                        <div class="form-group">
-                                                            <label class="form-label" for="controle">
-                                                                Action Corrective
-                                                            </label>
-                                                            <div class="form-control-wrap">
-                                                                <input value="{{ $action->action }}" type="text" class="form-control" disabled>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-lg-12">
-                                                        <div class="form-group">
-                                                            <label class="form-label" for="Coût">
-                                                                Responsable
-                                                            </label>
-                                                            <div class="form-control-wrap">
-                                                                <input value="{{ $action->responsable }}" type="text" class="form-control" disabled>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                @endif
-                                <div class="col-lg-12 col-xxl-12" >
-                                    <div class="card">
-                                        <div class="card-inner">
-                                                <div class="row g-4">
                                                     <div class="col-lg-4">
                                                         <div class="form-group">
                                                             <label class="form-label" for="email-address-1">
@@ -207,7 +147,7 @@
                                                             </label>
                                                             <select required name="efficacite" class="form-select ">
                                                                 <option value="">
-
+                                                                    Choisir
                                                                 </option>
                                                                 <option value="efficace">
                                                                     efficace

@@ -12,6 +12,7 @@ use App\Models\Cause;
 use App\Models\Rejet;
 use App\Models\Action;
 use App\Models\Suivi_action;
+use App\Models\Suivi_amelioration;
 use App\Models\Poste;
 use App\Models\User;
 use App\Models\Amelioration;
@@ -44,17 +45,28 @@ class AmeliorationController extends Controller
             
             foreach($actions as $action)
             {
-               $Suivi_action = Suivi_action::where('action_id', $action->id)->first();
-               $actionsData[$risque->id][] = [
-                    'action' => $action->action,
-                    'delai' => $action->delai,
-                    'type' => $action->type,
-                    'responsable' => $action->responsable,
-                    'statut' => $action->statut,
-                    'date_action' => $Suivi_action->date_action,
-                    'date_suivi' => $Suivi_action->date_suivi,
-                    'efficacite' => $Suivi_action->efficacite,
-                ];
+                if ($action->type === 'preventive') {
+
+                    $Suivi_action = Suivi_action::where('action_id', $action->id)->first();
+                    $actionsData[$risque->id][] = [
+                        'action' => $action->action,
+                        'delai' => $action->delai,
+                        'type' => $action->type,
+                        'responsable' => $action->responsable,
+                        'statut' => $action->statut,
+                        'date_action' => $Suivi_action->date_action,
+                        'date_suivi' => $Suivi_action->date_suivi,
+                        'efficacite' => $Suivi_action->efficacite,
+                    ];
+                } else if($action->type === 'corrective') {
+
+                    $actionsData[$risque->id][] = [
+                        'action' => $action->action,
+                        'type' => $action->type,
+                        'responsable' => $action->responsable,
+                    ];
+                }
+               
             }
 
             $causes = Cause::where('causes.risque_id', $risque->id)->get();
@@ -127,17 +139,27 @@ class AmeliorationController extends Controller
                   
             foreach($actions2 as $action2)
             {
-               $Suivi_action2 = Suivi_action::where('action_id', $action2->id)->first();
-               $actionsData2[$Suivi_action2->risque_id][] = [
-                    'action' => $action2->action,
-                    'delai' => $action2->delai,
-                    'type' => $action2->type,
-                    'responsable' => $action2->responsable,
-                    'statut' => $action2->statut,
-                    'date_action' => $Suivi_action2->date_action,
-                    'date_suivi' => $Suivi_action2->date_suivi,
-                    'efficacite' => $Suivi_action2->efficacite,
-                ];
+                if ($action2->type === 'preventive') {
+
+                    $Suivi_action2 = Suivi_action::where('action_id', $action2->id)->first();
+                    $actionsData2[$Suivi_action2->risque_id][] = [
+                        'action' => $action2->action,
+                        'delai' => $action2->delai,
+                        'type' => $action2->type,
+                        'responsable' => $action2->responsable,
+                        'statut' => $action2->statut,
+                        'date_action' => $Suivi_action2->date_action,
+                        'date_suivi' => $Suivi_action2->date_suivi,
+                        'efficacite' => $Suivi_action2->efficacite,
+                    ];
+                } else if($action2->type === 'corrective') {
+
+                    $actionsData2[$Suivi_action2->risque_id][] = [
+                        'action' => $action2->action,
+                        'responsable' => $action2->responsable,
+                        'type' => $action2->type,
+                    ];
+                }
             }
               
         }
@@ -239,6 +261,7 @@ class AmeliorationController extends Controller
 
                 $action = Action::find($action[$index]);
                 $action->delai = $date_action[$index];
+                $action->statut = 'en attente';
                 $action->update();
 
                 $am = new Amelioration();
@@ -253,7 +276,12 @@ class AmeliorationController extends Controller
                 $am->nature = $nature[$index];
                 $am->commentaire = $commentaire[$index];
                 $am->action_id = $action->id;
+                $am->statut = 'non-realiser';
                 $am->save();
+
+                $suivic = new Suivi_amelioration();
+                $suivic->amelioration_id = $am->id;
+                $suivic->save();
 
             }
 
@@ -262,6 +290,7 @@ class AmeliorationController extends Controller
                 $actionn = Action::find($action_id[$index]);
                 $actionn->delai = $date_action[$index];
                 $actionn->action = $action[$index];
+                $actionn->statut = 'en attente';
                 $actionn->update();
 
                 $am = new Amelioration();
@@ -276,9 +305,12 @@ class AmeliorationController extends Controller
                 $am->nature = $nature[$index];
                 $am->commentaire = $commentaire[$index];
                 $am->action_id = $actionn->id;
+                $am->statut = 'non-realiser';
                 $am->save();
 
-
+                $suivic = new Suivi_amelioration();
+                $suivic->amelioration_id = $am->id;
+                $suivic->save();
 
             }
 
@@ -298,7 +330,7 @@ class AmeliorationController extends Controller
                 $actionn = new Action();
                 $actionn->action = $resume[$index];
                 $actionn->delai = $date_action[$index];
-                $actionn->statut = 'non-realiser';
+                $actionn->statut = 'en attente';
                 $actionn->type = 'corrective';
                 $actionn->poste_id = $poste_id[$index];
                 $actionn->risque_id = $risquee->id;
@@ -322,7 +354,12 @@ class AmeliorationController extends Controller
                 $am->nature = $nature[$index];
                 $am->commentaire = $commentaire[$index];
                 $am->action_id = $actionn->id;
+                $am->statut = 'non-realiser';
                 $am->save();
+
+                $suivic = new Suivi_amelioration();
+                $suivic->amelioration_id = $am->id;
+                $suivic->save();
             }
 
         }

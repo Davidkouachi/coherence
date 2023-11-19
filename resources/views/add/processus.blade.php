@@ -35,9 +35,17 @@
                                     <div class="col-md-10 col-xxl-10 "  >
                                         <div class="card card-bordered ">
                                             <div class="card-inner">
-                                                <form id="processus-form" method="post" action="{{ route('add_processus') }}">
+                                                <form id="processus-form" method="post" action="{{ route('add_processus') }}" enctype="multipart/form-data">
                                                     @csrf
                                                     <div class="row g-4 mb-4" id="objectifs-container">
+                                                        <div class="col-lg-12">
+                                                            <div class="form-group">
+                                                                <label class="form-label" for="cf-full-name">
+                                                                    Fichier ( .pdf )
+                                                                </label>
+                                                                <input autocomplete="off" id="fileInput" name="pdfFile" accept=".pdf" type="file" class="form-control" id="">
+                                                            </div>
+                                                        </div>
                                                         <div class="col-lg-6">
                                                             <div class="form-group text-center">
                                                                 <label class="form-label" for="Cause">
@@ -78,7 +86,7 @@
                                                         </div>
                                                     </div>
                                                     <div class="row g-gs">
-                                                        <div class="col-lg-6">
+                                                        <div class="col-lg-4">
                                                             <div class="form-group text-center">
                                                                 <button type="button" class="btn btn-lg btn-primary btn-dim" id="ajouter-objectif">
                                                                     <em class="ni ni-plus me-2"></em>
@@ -86,7 +94,15 @@
                                                                 </button>
                                                             </div>
                                                         </div>
-                                                        <div class="col-lg-6">
+                                                        <div class="col-lg-4">
+                                                            <div class="form-group text-center">
+                                                                <a data-bs-toggle="modal" data-bs-target="#modalDetail" class="btn btn-lg btn-warning btn-dim">
+                                                                    <em class="ni ni-eye me-2"></em>
+                                                                    <em>Voir le fichier</em>
+                                                                </a>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-lg-4">
                                                             <div class="form-group text-center">
                                                                 <button type="submit" class="btn btn-lg btn-success btn-dim">
                                                                     <em class="ni ni-check me-2"></em>
@@ -136,6 +152,77 @@
                 container.removeChild(div);
             });
         });
+    </script>
+
+    <div class="modal fade zoom" tabindex="-1" id="modalDetail">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content text-center" id="pdfPreviewmodal" data-simplebar>
+                Acucun fichier sélectionner
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const fileInput = document.getElementById('fileInput');
+
+        const pdfPreviewmodal = document.getElementById('pdfPreviewmodal');
+        const fileSizeElementmodal = document.getElementById('fileSizemodal');
+
+        fileInput.addEventListener('change', function() {
+            // Obtenez le fichier PDF sélectionné
+            const fichier = fileInput.files[0];
+
+            // Vérifiez si un fichier a été sélectionné
+            if (fichier) {
+                // Créez un élément d'incorporation pour le fichier PDF
+                const embedElementmodal = document.createElement('embed');
+                embedElementmodal.src = URL.createObjectURL(fichier);
+                embedElementmodal.type = 'application/pdf';
+                embedElementmodal.style.width = '100%';
+                embedElementmodal.style.height = '100%';
+                // Affichez l'élément d'incorporation dans la div de prévisualisation
+                pdfPreviewmodal.innerHTML = '';
+                pdfPreviewmodal.appendChild(embedElementmodal);
+                pdfPreviewmodal.style.height = '1000px';
+                // Affichez la taille du fichier
+                const fileSizemodal = fichier.size; // Taille du fichier en octets
+                const fileSizemodalInKB = fileSizemodal / 1024; // Taille du fichier en kilo-octets
+                fileSizeElementmodal.textContent = `Taille du fichier : ${fileSizemodalInKB.toFixed(2)} Ko`;
+            } else {
+                // Si aucun fichier n'est sélectionné, videz la div de prévisualisation et l'élément de la taille du fichier
+                pdfPreviewmodal.innerHTML = '';
+                fileSizeElementmodal.textContent = '';
+            }
+        });
+
+
+        //si l'on veut selectionner et afficher plusieurs fichiers
+        /*const fileInput = document.getElementById('fileInput');
+        const pdfPreviews = document.getElementById('pdfPreviews');
+
+        fileInput.addEventListener('change', function () {
+            // Réinitialisez la div des prévisualisations
+            pdfPreviews.innerHTML = '';
+
+            // Parcourez tous les fichiers sélectionnés
+            for (const fichier of fileInput.files) {
+                // Créez un élément d'incorporation pour chaque fichier PDF
+                const embedElement = document.createElement('embed');
+                embedElement.src = URL.createObjectURL(fichier);
+                embedElement.type = 'application/pdf';
+                embedElement.style.width = '100%';
+                embedElement.style.height = '100%';
+
+                // Créez un conteneur div pour chaque prévisualisation
+                const previewContainer = document.createElement('div');
+                previewContainer.style.width = '500px'; // Spécifiez la largeur de chaque prévisualisation
+                previewContainer.style.height = '500px'; // Spécifiez la hauteur de chaque prévisualisation
+                previewContainer.appendChild(embedElement);
+
+                // Ajoutez l'élément d'incorporation dans le conteneur des prévisualisations
+                pdfPreviews.appendChild(previewContainer);
+            }
+        });*/
     </script>
 
 

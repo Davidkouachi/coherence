@@ -21,6 +21,7 @@ class Amelioration extends Model
         'choix_select',
         'nature',
         'commentaire',
+        'statut',
         'action_id',
     ];
 
