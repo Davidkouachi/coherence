@@ -31,7 +31,7 @@ class Risque extends Model
 
     public function processus()
     {
-        return $this->belongsTo(Processus::class, 'processus_id');
+        return $this->belongsTo(Processuse::class, 'processus_id');
     }
 
     public function poste()

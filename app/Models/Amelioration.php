@@ -23,10 +23,15 @@ class Amelioration extends Model
         'commentaire',
         'statut',
         'action_id',
+        'processus_id',
     ];
 
     public function action()
     {
         return $this->belongsTo(Action::class, 'action_id');
+    }
+    public function processus()
+    {
+        return $this->belongsTo(Processuse::class, 'processus_id');
     }
 }

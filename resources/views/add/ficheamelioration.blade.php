@@ -239,13 +239,6 @@
                                                     </a>
                                                 </div>
                                             </div>
-                                            <!--<div class="col-lg-4" id="btn-risque-trouve">
-                                                <div class="form-group text-center">
-                                                    <a class="btn btn-outline-primary btn-dim action-accepte-new" data-type="nouvelle-action">
-                                                        Ajouter un action corrective
-                                                    </a>
-                                                </div>
-                                            </div>-->
                                         </div>
                                     </div>
                                 </div>
@@ -1323,6 +1316,10 @@
                                                             </span>
                                                         </div>
                                                             <div class="row g-4">
+
+                                                            <input required style="display:none;" name="trouve[]" value="${action.trouve}" type="text">
+                                                            <input required style="display:none;" name="trouve_id[]" value="${action.trouve_id}" type="int">
+
                                                                 <div class="col-lg-6">
                                                                     <div class="form-group">
                                                                         <label class="form-label" for="Cause">
@@ -1330,7 +1327,7 @@
                                                                         </label>
                                                                         <input required style="display:none;" name="nature[]" value="accepte" type="text" >
                                                                         <div class="form-control-wrap">
-                                                                            <input style="display:none;" name="processus_id[]" value="${action.processus_id}" type="text" class="form-control">
+                                                                            <input style="display:none;" name="processus_id[]" value="${action.processus_id}" type="int" class="form-control">
                                                                             <input value="${action.processus}" type="text" class="form-control" disabled>
                                                                         </div>
                                                                     </div>
@@ -1342,7 +1339,7 @@
                                                                         </label>
                                                                         <div class="form-control-wrap">
                                                                             <input value="${action.risque}" type="text" class="form-control" readonly>
-                                                                            <input style="display:none;" required name="risque[]" value="${action.risque_id}" type="text" class="form-control" readonly>
+                                                                            <input style="display:none;" required name="risque[]" value="${action.risque_id}" type="int" class="form-control" readonly>
                                                                         </div>
                                                                     </div>
                                                                 </div>
@@ -1353,8 +1350,8 @@
                                                                             Action Corrective
                                                                         </label>
                                                                         <div class="form-control-wrap">
-                                                                            <input required placeholder="Saisie obligatoire" value="${action.action}" type="text" class="form-control" >
-                                                                            <input style="display:none;" placeholder="Saisie obligatoire" name="action[]" value="${action.id}" type="text" class="form-control" >
+                                                                            <input placeholder="Saisie obligatoire" name="action[]" value="${action.action}" type="text" class="form-control" >
+                                                                            <input style="display:none;" name="action_id[]" value="${action.id}" type="int" class="form-control" >
                                                                         </div>
                                                                     </div>
                                                                 </div>
@@ -1363,7 +1360,7 @@
                                                                                 <label class="form-label" for="Coût">
                                                                                     Responsable
                                                                                 </label>
-                                                                                <input style="display:none;" name="poste_id[]" value="${action.poste_id}" type="text" class="form-control">
+                                                                                <input style="display:none;" name="poste_id[]" value="${action.poste_id}" type="int" class="form-control">
                                                                                 <input value="${action.responsable}" type="text" class="form-control" disabled>
                                                                             </div>
                                                                             <div class="form-group">
@@ -1486,6 +1483,10 @@
                                                             </span>
                                                         </div>
                                                             <div class="row g-4">
+
+                                                                <input required style="display:none;" name="trouve[]" value="${action.trouve}" type="text">
+                                                                <input required style="display:none;" name="trouve_id[]" value="${action.trouve_id}" type="int">
+
                                                                 <div class="col-lg-6">
                                                                     <div class="form-group">
                                                                         <label class="form-label" for="Cause">
@@ -1493,7 +1494,7 @@
                                                                         </label>
                                                                         <input required style="display:none;" name="nature[]" value="non-accepte" type="text" >
                                                                         <div class="form-control-wrap">
-                                                                            <input style="display:none;" name="processus_id[]" value="${action.processus_id}" type="text" class="form-control">
+                                                                            <input style="display:none;" name="processus_id[]" value="${action.processus_id}" type="int" class="form-control">
                                                                             <input value="${action.processus}" type="text" class="form-control" disabled>
                                                                         </div>
                                                                     </div>
@@ -1505,7 +1506,7 @@
                                                                         </label>
                                                                         <div class="form-control-wrap">
                                                                             <input value="${action.risque}" type="text" class="form-control" readonly>
-                                                                            <input style="display:none;" required name="risque[]" value="${action.risque_id}" type="text" class="form-control" readonly>
+                                                                            <input style="display:none;" required name="risque[]" value="${action.risque_id}" type="int" class="form-control" readonly>
                                                                         </div>
                                                                     </div>
                                                                 </div>
@@ -1517,7 +1518,7 @@
                                                                         </label>
                                                                         <div class="form-control-wrap">
                                                                             <input placeholder="Saisie obligatoire" name="action[]" value="${action.action}" type="text" class="form-control" >
-                                                                            <input style="display:none;" name="action_id[]" value="${action.id}" type="text" class="form-control" >
+                                                                            <input style="display:none;" name="action_id[]" value="${action.id}" type="int" class="form-control" >
                                                                         </div>
                                                                     </div>
                                                                 </div>
@@ -1577,143 +1578,6 @@
             });
         }
     </script>
-
-    <!--<script>
-        document.addEventListener("DOMContentLoaded", function () {
-            document.querySelectorAll(".action-accepte-new").forEach(function (button) {
-                button.addEventListener("click", function () {
-                    var type = this.getAttribute("data-type");
-                    var selectedCause = $("#causeSelect").val();
-                    var selectedRisque = $("#risqueSelect").val();
-                    var choixSelect = $("input[name='choix_select']:checked").val();
-
-                    if (choixSelect !== undefined) {
-                        // Faites quelque chose avec la valeur sélectionnée
-                        if (choixSelect === "cause") {
-                            if (selectedCause !== '') {
-                                addGroup(type_new);
-                            }else{
-                                toastr.warning("Veuillez sélectionner une cause.");
-                            }
-                        } else if (choixSelect === "risque") {
-                            if (selectedRisque !== '') {
-                                addGroup(type_new);
-                            }else{
-                                toastr.warning("Veuillez sélectionner un risque.");
-                            }
-                        }
-                    } else {
-                        toastr.error("Veuillez préciser le choix de sélection.");
-                    }
-                });
-            });
-        });
-
-        function addGroup(type_new) {
-
-            var groupe = document.createElement("div");
-            groupe.className = "card card-bordered";
-            groupe.innerHTML = `
-                                    <div class="card-inner">
-                                        <div class="row g-4">
-                                            <div class="col-lg-12 col-xxl-12" >
-                                                <div class="card">
-                                                    <div class="card-inner">
-                                                        <div class="card-head">
-                                                            <span class="badge badge-dot bg-primary">
-                                                                Nouveau
-                                                            </span>
-                                                        </div>
-                                                            <div class="row g-4">
-                                                                <div class="col-lg-6">
-                                                                    <div class="form-group">
-                                                                        <label class="form-label" for="Cause">
-                                                                            Processus
-                                                                        </label>
-                                                                        <input style="display:none;" name="nature[]" value="action-new" type="text" >
-                                                                        <input style="display:none;" name="resume[]" value="" type="text" >
-                                                                        <select id="responsable_idc" required name="processus[]" class="form-select">
-                                                                            <option selected value="">
-                                                                                Choisir un responsable
-                                                                            </option>
-                                                                            ${processuss.map(processus => `<option value="${processus.id}">${processus.nom}</option>`).join('')}
-                                                                        </select>
-                                                                    </div>
-                                                                </div>
-                                                                <div class="col-lg-6">
-                                                                    <div class="form-group">
-                                                                        <label class="form-label" for="controle">
-                                                                            Risque
-                                                                        </label>
-                                                                        <div class="form-control-wrap">
-                                                                            <input placeholder="Saisie obligatoire" name="risque[]" value="" type="text" class="form-control" >
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                                <div class="col-lg-12">
-                                                                    <div class="form-group">
-                                                                        <label class="form-label" for="controle">
-                                                                            Action Corrective
-                                                                        </label>
-                                                                        <div class="form-control-wrap">
-                                                                            <input placeholder="Saisie obligatoire" name="action[]" value="" type="text" class="form-control" >
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                                <div class="col-lg-4">
-                                                                            <div class="form-group">
-                                                                                <label class="form-label" for="Coût">
-                                                                                    Responsable
-                                                                                </label>
-                                                                                <select id="responsable_idc" required name="poste_id[]" class="form-select">
-                                                                                    <option selected value="">
-                                                                                        Choisir un responsable
-                                                                                    </option>
-                                                                                    ${postes.map(poste => `<option value="${poste.id}">${poste.nom}</option>`).join('')}
-                                                                                </select>
-                                                                            </div>
-                                                                            <div class="form-group">
-                                                                                <label class="form-label" for="Coût">
-                                                                                    Date prévisionnelle de réalisation
-                                                                                </label>
-                                                                                <div class="form-control-wrap">
-                                                                                    <input name="date_action[]" type="date" class="form-control" >
-                                                                                </div>
-                                                                            </div>
-                                                                </div>
-                                                                <div class="col-lg-8">
-                                                                    <div class="form-group text-center">
-                                                                        <label class="form-label" for="description">
-                                                                            Commentaire
-                                                                        </label>
-                                                                        <div class="form-control-wrap">
-                                                                            <textarea name="commentaire[]" class="form-control no-resize" id="default-textarea"></textarea>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                                <div class="col-lg-12">
-                                                                    <div class="form-group text-center">
-                                                                        <a class="btn btn-outline-danger btn-dim " id="suppr_nouvelle_action" >
-                                                                            Supprimer
-                                                                        </a>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-            `;
-
-            groupe.querySelector("#suppr_nouvelle_action").addEventListener("click", function(event) {
-                event.preventDefault();
-                groupe.remove();
-            });
-
-            document.getElementById("dynamic-fields").appendChild(groupe);
-        }
-    </script>-->
 
     <script>
         document.addEventListener("DOMContentLoaded", function () {

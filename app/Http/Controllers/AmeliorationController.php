@@ -16,6 +16,8 @@ use App\Models\Suivi_amelioration;
 use App\Models\Poste;
 use App\Models\User;
 use App\Models\Amelioration;
+use App\Models\Causetrouver;
+use App\Models\Risquetrouver;
 
 use Illuminate\Support\Facades\Validator;
 use Carbon\Carbon;
@@ -171,7 +173,7 @@ class AmeliorationController extends Controller
             ['risques' => $risques, 'causesData' => $causesData, 'actionsData' => $actionsData, 
             'causes_selects' => $causes_selects, 'Suivi_action2' => $Suivi_action2, 'caus2' => $caus2, 'causesData2' => $causesData2, 'actionsData2' => $actionsData2, 'postes' => $postes, 'processuss' => $processuss]);
    }
-    
+
     public function get_cause_info($id)
     {
         $cause = Cause::find($id);
@@ -191,13 +193,13 @@ class AmeliorationController extends Controller
             $action->processus = $processus->nom;
             $action->processus_id = $processus->id;
 
-            $action->nature="cause";
-
+            $action->trouve="cause";
+            $action->trouve_id=$cause->id;
 
         }
 
         return response()->json([
-            'actions' => $actions,
+            'actions' => $actions
         ]);
     }
 
@@ -219,16 +221,17 @@ class AmeliorationController extends Controller
             $action->processus = $processus->nom;
             $action->processus_id = $processus->id;
 
-            $action->nature="risque";
+            $action->trouve="risque";
+            $action->trouve_id=$risque->id;
 
         }
 
         return response()->json([
-            'actions' => $actions,
+            'actions' => $actions
         ]);
     }
 
-    public function index_add(Request $request) 
+    public function index_add(Request $request)
     {
         $type = $request->input('type');
 
@@ -243,6 +246,9 @@ class AmeliorationController extends Controller
         $cause = $request->input('cause');
         $choix_select = $request->input('choix_select');
 
+        $trouve = $request->input('trouve');
+        $trouve_id = $request->input('trouve_id');
+
         $nature = $request->input('nature');
         $processus_id = $request->input('processus_id');
         $risque = $request->input('risque');
@@ -251,7 +257,7 @@ class AmeliorationController extends Controller
         $action_id = $request->input('action_id');
         $poste_id = $request->input('poste_id');
         $date_action = $request->input('date_action');
-        $commentaire = $request->input('commentaire');;
+        $commentaire = $request->input('commentaire');
 
         foreach ($nature as $index => $valeur) {
 
@@ -259,7 +265,7 @@ class AmeliorationController extends Controller
 
             if ($nature[$index] === 'accepte') {
 
-                $action = Action::find($action[$index]);
+                $action = Action::find($action_id[$index]);
                 $action->delai = $date_action[$index];
                 $action->statut = 'en attente';
                 $action->update();
@@ -276,12 +282,29 @@ class AmeliorationController extends Controller
                 $am->nature = $nature[$index];
                 $am->commentaire = $commentaire[$index];
                 $am->action_id = $action->id;
+                $am->processus_id = $processus_id[$index];
                 $am->statut = 'non-realiser';
                 $am->save();
 
                 $suivic = new Suivi_amelioration();
                 $suivic->amelioration_id = $am->id;
                 $suivic->save();
+
+                if ($trouve[$index] === 'cause') {
+
+                    $cause = new Causetrouver();
+                    $cause->amelioration_id = $am->id;
+                    $cause->cause_id = $trouve_id[$index];
+                    $cause->save();
+
+                } else if ($trouve[$index] === 'risque') {
+
+                    $risque = new Risquetrouver();
+                    $risque->amelioration_id = $am->id;
+                    $risque->risque_id = $trouve_id[$index];
+                    $risque->save();
+
+                }
 
             }
 
@@ -305,12 +328,29 @@ class AmeliorationController extends Controller
                 $am->nature = $nature[$index];
                 $am->commentaire = $commentaire[$index];
                 $am->action_id = $actionn->id;
+                $am->processus_id = $processus_id[$index];
                 $am->statut = 'non-realiser';
                 $am->save();
 
                 $suivic = new Suivi_amelioration();
                 $suivic->amelioration_id = $am->id;
                 $suivic->save();
+
+                if ($trouve[$index] === 'cause') {
+
+                    $cause = new Causetrouver();
+                    $cause->amelioration_id = $am->id;
+                    $cause->cause_id = $trouve_id[$index];
+                    $cause->save();
+
+                } else if ($trouve[$index] === 'risque') {
+
+                    $risque = new Risquetrouver();
+                    $risque->amelioration_id = $am->id;
+                    $risque->risque_id = $trouve_id[$index];
+                    $risque->save();
+
+                }
 
             }
 
@@ -354,6 +394,7 @@ class AmeliorationController extends Controller
                 $am->nature = $nature[$index];
                 $am->commentaire = $commentaire[$index];
                 $am->action_id = $actionn->id;
+                $am->processus_id = $processus_id[$index];
                 $am->statut = 'non-realiser';
                 $am->save();
 

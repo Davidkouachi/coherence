@@ -19,7 +19,7 @@
                         <div class="icon d-flex align-items-center justify-content-center ">
                             <span class="fa fa-user-o"></span>
                         </div>
-                        <h3 class="text-center mb-4">Utilisateur</h3>
+                        <h3 class="text-center mb-4">Connexion</h3>
                         <form action="/auth_user" method="post" class="login-form">
                             @csrf
                             <div class="form-group">
