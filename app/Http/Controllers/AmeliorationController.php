@@ -52,13 +52,8 @@ class AmeliorationController extends Controller
                     $Suivi_action = Suivi_action::where('action_id', $action->id)->first();
                     $actionsData[$risque->id][] = [
                         'action' => $action->action,
-                        'delai' => $action->delai,
                         'type' => $action->type,
                         'responsable' => $action->responsable,
-                        'statut' => $action->statut,
-                        'date_action' => $Suivi_action->date_action,
-                        'date_suivi' => $Suivi_action->date_suivi,
-                        'efficacite' => $Suivi_action->efficacite,
                     ];
                 } else if($action->type === 'corrective') {
 
@@ -146,13 +141,8 @@ class AmeliorationController extends Controller
                     $Suivi_action2 = Suivi_action::where('action_id', $action2->id)->first();
                     $actionsData2[$Suivi_action2->risque_id][] = [
                         'action' => $action2->action,
-                        'delai' => $action2->delai,
                         'type' => $action2->type,
                         'responsable' => $action2->responsable,
-                        'statut' => $action2->statut,
-                        'date_action' => $Suivi_action2->date_action,
-                        'date_suivi' => $Suivi_action2->date_suivi,
-                        'efficacite' => $Suivi_action2->efficacite,
                     ];
                 } else if($action2->type === 'corrective') {
 
@@ -265,11 +255,6 @@ class AmeliorationController extends Controller
 
             if ($nature[$index] === 'accepte') {
 
-                $action = Action::find($action_id[$index]);
-                $action->delai = $date_action[$index];
-                $action->statut = 'en attente';
-                $action->update();
-
                 $am = new Amelioration();
                 $am->type = $type;
                 $am->date_fiche = $date_fiche;
@@ -281,12 +266,14 @@ class AmeliorationController extends Controller
                 $am->choix_select = $choix_select;
                 $am->nature = $nature[$index];
                 $am->commentaire = $commentaire[$index];
-                $am->action_id = $action->id;
+                $am->action_id = $action_id[$index];
                 $am->processus_id = $processus_id[$index];
                 $am->statut = 'non-realiser';
                 $am->save();
 
                 $suivic = new Suivi_amelioration();
+                $suivic->delai = $date_action[$index];
+                $suivic->statut = 'non-realiser';
                 $suivic->amelioration_id = $am->id;
                 $suivic->save();
 
@@ -310,11 +297,12 @@ class AmeliorationController extends Controller
 
             if ($nature[$index] === 'non-accepte') {
 
-                $actionn = Action::find($action_id[$index]);
-                $actionn->delai = $date_action[$index];
+                $actionn = new Action();
                 $actionn->action = $action[$index];
-                $actionn->statut = 'en attente';
-                $actionn->update();
+                $actionn->type = 'corrective';
+                $actionn->poste_id = $poste_id[$index];
+                $actionn->risque_id = $risque[$index];
+                $actionn->save();
 
                 $am = new Amelioration();
                 $am->type = $type;
@@ -333,6 +321,8 @@ class AmeliorationController extends Controller
                 $am->save();
 
                 $suivic = new Suivi_amelioration();
+                $suivic->delai = $date_action[$index];
+                $suivic->statut = 'non-realiser';
                 $suivic->amelioration_id = $am->id;
                 $suivic->save();
 
@@ -369,18 +359,10 @@ class AmeliorationController extends Controller
 
                 $actionn = new Action();
                 $actionn->action = $resume[$index];
-                $actionn->delai = $date_action[$index];
-                $actionn->statut = 'en attente';
                 $actionn->type = 'corrective';
                 $actionn->poste_id = $poste_id[$index];
                 $actionn->risque_id = $risquee->id;
                 $actionn->save();
-
-                $suivic = new Suivi_action();
-                $suivic->risque_id = $risquee->id;
-                $suivic->action_id = $actionn->id;
-                $suivic->processus_id = $processus_id[$index];
-                $suivic->save();
 
                 $am = new Amelioration();
                 $am->type = $type;
@@ -399,6 +381,8 @@ class AmeliorationController extends Controller
                 $am->save();
 
                 $suivic = new Suivi_amelioration();
+                $suivic->delai = $date_action[$index];
+                $suivic->statut = 'non-realiser';
                 $suivic->amelioration_id = $am->id;
                 $suivic->save();
             }

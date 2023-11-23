@@ -243,7 +243,7 @@
                             <div class="card card-bordered">
                                 <div class="card-inner">
                                     <div class="row g-4">
-                                        <div class="col-lg-6">
+                                        <div class="col-lg-7">
                                             <div class="form-group">
                                                 <label class="form-label" for="Cause">
                                                     Cause
@@ -253,7 +253,7 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="col-lg-6">
+                                        <div class="col-lg-5">
                                             <div class="form-group">
                                                 <label class="form-label" for="controle">
                                                     Dispositif de Contrôle
@@ -378,7 +378,7 @@
                             <div class="card card-bordered">
                                 <div class="card-inner">
                                     <div class="row g-4">
-                                        <div class="col-lg-8">
+                                        <div class="col-lg-7">
                                             <div class="form-group">
                                                 <label class="form-label" for="preventif">
                                                     Action préventive
@@ -400,7 +400,7 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="col-lg-2">
+                                        <div class="col-lg-3">
                                             <div class="form-group">
                                                 <label class="form-label" for="Responsabilité">
                                                     Responsabilité
@@ -480,7 +480,7 @@
                             </div>
                         </div>
                         <div class="col-md-12 col-xxl-12">
-                            <div class="card card-bordered card-preview">
+                            <div class="card card-preview">
                                 <div class="card-inner row g-gs">
                                     <div class="col-12">
                                         <div class="form-group text-center">
@@ -612,6 +612,8 @@
 
         if (nom_cause.value === '' || dispositif.value === '') {
 
+            toastr.info("Veuillez saisir une cause.");
+
         } else {
 
             const groupe = document.createElement("div");
@@ -619,23 +621,23 @@
             groupe.innerHTML = `
                                             <div class="card-inner">
                                                     <div class="row g-4">
-                                                        <div class="col-lg-6">
+                                                        <div class="col-lg-7">
                                                             <div class="form-group">
                                                                 <label class="form-label" for="Cause">
                                                                     Cause
                                                                 </label>
                                                                 <div class="form-control-wrap">
-                                                                    <input placeholder="Saisie obligatoire" autocomplete="off" required name="nom_cause[]" type="text" class="form-control" id="Cause">
+                                                                    <input id="nom_cause" placeholder="Saisie obligatoire" autocomplete="off" required name="nom_cause[]" type="text" class="form-control" id="Cause">
                                                                 </div>
                                                             </div>
                                                         </div>
-                                                        <div class="col-lg-6">
+                                                        <div class="col-lg-5">
                                                             <div class="form-group">
                                                                 <label class="form-label" for="controle">
                                                                     Dispositif de Contrôle
                                                                 </label>
                                                                 <div class="form-control-wrap">
-                                                                    <input value="neant" placeholder="Saisie obligatoire" autocomplete="off" required name="dispositif[]" type="text" class="form-control" id="controle">
+                                                                    <input id="dispositif" value="neant" placeholder="Saisie obligatoire" autocomplete="off" required name="dispositif[]" type="text" class="form-control" id="controle">
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -671,6 +673,8 @@
 
         if (actionp.value === '' || delai.value === '' || responsable_idp.value === '') {
 
+            toastr.info("Veuillez saisir une action preventive.");
+
         } else {
 
             const groupe = document.createElement("div");
@@ -678,7 +682,7 @@
             groupe.innerHTML = `
                                             <div class="card-inner">
                                                     <div class="row g-4">
-                                                        <div class="col-lg-8">
+                                                        <div class="col-lg-7">
                                                             <div class="form-group">
                                                                 <label class="form-label" for="preventif">
                                                                     Action préventive
@@ -700,7 +704,7 @@
                                                                 </div>
                                                             </div>
                                                         </div>
-                                                        <div class="col-lg-2">
+                                                        <div class="col-lg-3">
                                                             <div class="form-group">
                                                                 <label class="form-label" for="Responsabilité">
                                                                     Responsabilité
@@ -747,6 +751,8 @@
         const responsable_idc = document.getElementById("responsable_idc");
 
         if (actionc.value === '' || responsable_idc.value === '') {
+
+            toastr.info("Veuillez saisir une action corrective.");
 
         } else {
 

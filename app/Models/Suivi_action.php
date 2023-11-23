@@ -15,6 +15,8 @@ class Suivi_action extends Model
         'commentaire',
         'date_action',
         'date_suivi',
+        'delai',
+        'statut',
         'processus_id',
         'risque_id',
         'action_id',

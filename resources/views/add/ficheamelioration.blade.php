@@ -525,19 +525,7 @@
                                                             </div>
                                                         </div>
                                                     </div>
-                                                    <div class="col-lg-6">
-                                                        <div class="form-group">
-                                                            <label class="form-label" for="email-address-1">
-                                                                Délai
-                                                            </label>
-                                                            <div class="form-group">
-                                                                <div class="form-control-wrap">
-                                                                    <input value="{{ $actionsDatas['delai'] }}" readonly type="date" class="form-control">
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-lg-6">
+                                                    <div class="col-lg-12">
                                                         <div class="form-group">
                                                             <label class="form-label" for="email-address-1">
                                                                 Responsabilité
@@ -549,66 +537,6 @@
                                                             </div>
                                                         </div>
                                                     </div>
-                                                    <div class="col-lg-12">
-                                                        <div class="form-group">
-                                                            <label class="form-label" for="email-address-1">
-                                                                Statut
-                                                            </label>
-                                                            <div class="form-group">
-                                                                <div class="form-control-wrap">
-                                                                    <input value="{{ $actionsDatas['statut'] }}" readonly type="text" class="form-control text-white text-center 
-                                                                    @php
-                                                                        if ($actionsDatas['statut'] ==='non-realiser') {
-                                                                            echo 'bg-danger';
-                                                                        } elseif ($actionsDatas['statut'] ==='realiser') {
-                                                                            echo 'bg-success';
-                                                                        }
-                                                                    @endphp
-                                                                    ">
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-
-                                                    @if ($actionsDatas['statut'] ==='realiser')
-
-                                                            <div class="col-lg-4">
-                                                                <div class="form-group">
-                                                                    <label class="form-label" for="email-address-1">
-                                                                        Réaliser le 
-                                                                    </label>
-                                                                    <div class="form-group">
-                                                                        <div class="form-control-wrap">
-                                                                            <input value="{{ $actionsDatas['date_action'] }}" readonly type="date" class="form-control">
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                            <div class="col-lg-4">
-                                                                <div class="form-group">
-                                                                    <label class="form-label" for="email-address-1">
-                                                                        Suivi éffectué le 
-                                                                    </label>
-                                                                    <div class="form-group">
-                                                                        <div class="form-control-wrap">
-                                                                            <input value="{{ $actionsDatas['date_suivi'] }}" readonly type="datetime" class="form-control">
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                            <div class="col-lg-4">
-                                                                <div class="form-group">
-                                                                    <label class="form-label" for="email-address-1">
-                                                                        Efficacité 
-                                                                    </label>
-                                                                    <div class="form-group">
-                                                                        <div class="form-control-wrap">
-                                                                            <input value="{{ $actionsDatas['efficacite'] }}" readonly type="text" class="form-control">
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                    @endif
                                                 </div>
                                         </div>
                                     </div>
@@ -918,19 +846,7 @@
                                                             </div>
                                                         </div>
                                                     </div>
-                                                    <div class="col-lg-6">
-                                                        <div class="form-group">
-                                                            <label class="form-label" for="email-address-1">
-                                                                Délai
-                                                            </label>
-                                                            <div class="form-group">
-                                                                <div class="form-control-wrap">
-                                                                    <input value="{{ $actionData2['delai'] }}" readonly type="date" class="form-control">
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-lg-6">
+                                                    <div class="col-lg-12">
                                                         <div class="form-group">
                                                             <label class="form-label" for="email-address-1">
                                                                 Responsabilité
@@ -942,66 +858,6 @@
                                                             </div>
                                                         </div>
                                                     </div>
-                                                    <div class="col-lg-12">
-                                                        <div class="form-group">
-                                                            <label class="form-label" for="email-address-1">
-                                                                Statut
-                                                            </label>
-                                                            <div class="form-group">
-                                                                <div class="form-control-wrap">
-                                                                    <input value="{{ $actionData2['statut'] }}" readonly type="text" class="form-control text-white text-center 
-                                                                    @php
-                                                                        if ($actionData2['statut'] ==='non-realiser') {
-                                                                            echo 'bg-danger';
-                                                                        } elseif ($actionData2['statut'] ==='realiser') {
-                                                                            echo 'bg-success';
-                                                                        }
-                                                                    @endphp
-                                                                    ">
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-
-                                                    @if ($actionData2['statut'] ==='realiser')
-
-                                                            <div class="col-lg-4">
-                                                                <div class="form-group">
-                                                                    <label class="form-label" for="email-address-1">
-                                                                        Réaliser le 
-                                                                    </label>
-                                                                    <div class="form-group">
-                                                                        <div class="form-control-wrap">
-                                                                            <input value="{{ $actionData2['date_action'] }}" readonly type="date" class="form-control">
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                            <div class="col-lg-4">
-                                                                <div class="form-group">
-                                                                    <label class="form-label" for="email-address-1">
-                                                                        Suivi éffectué le 
-                                                                    </label>
-                                                                    <div class="form-group">
-                                                                        <div class="form-control-wrap">
-                                                                            <input value="{{ $actionData2['date_suivi'] }}" readonly type="datetime" class="form-control">
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                            <div class="col-lg-4">
-                                                                <div class="form-group">
-                                                                    <label class="form-label" for="email-address-1">
-                                                                        Efficacité 
-                                                                    </label>
-                                                                    <div class="form-group">
-                                                                        <div class="form-control-wrap">
-                                                                            <input value="{{ $actionData2['efficacite'] }}" readonly type="text" class="form-control">
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                    @endif
                                                 </div>
                                         </div>
                                     </div>
@@ -1116,13 +972,6 @@
         });
 
         function addGroup(type_new) {
-
-            var dynamicFields = document.getElementById("dynamic-fields");
-
-            // Supprimer le contenu existant
-            while (dynamicFields.firstChild) {
-                dynamicFields.removeChild(dynamicFields.firstChild);
-            }
 
             document.getElementById("btn_enrg").style.display = "block";
 
@@ -1517,7 +1366,7 @@
                                                                             Action Corrective
                                                                         </label>
                                                                         <div class="form-control-wrap">
-                                                                            <input placeholder="Saisie obligatoire" name="action[]" value="${action.action}" type="text" class="form-control" >
+                                                                            <input placeholder="Saisie obligatoire" name="action[]"  type="text" class="form-control" >
                                                                             <input style="display:none;" name="action_id[]" value="${action.id}" type="int" class="form-control" >
                                                                         </div>
                                                                     </div>

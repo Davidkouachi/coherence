@@ -109,14 +109,14 @@ class ProcessusController extends Controller
                 
                 $nouvelleActionP = new Action();
                 $nouvelleActionP->action = $actionp[$index];
-                $nouvelleActionP->delai = $delai[$index];
-                $nouvelleActionP->statut = 'non-realiser';
                 $nouvelleActionP->poste_id = $responsable_idp[$index];
                 $nouvelleActionP->risque_id = $risque_id;
                 $nouvelleActionP->type = 'preventive';
                 $nouvelleActionP->save();
 
                 $suivip = new Suivi_action();
+                $suivip->delai = $delai[$index];
+                $suivip->statut = 'non-realiser';
                 $suivip->risque_id = $risque_id;
                 $suivip->action_id = $nouvelleActionP->id;
                 $suivip->processus_id = $processus_id;
@@ -128,7 +128,6 @@ class ProcessusController extends Controller
 
             $nouvelleActionC = new Action();
             $nouvelleActionC->action = $actionc[$index];
-            $nouvelleActionC->statut = 'non-realiser';
             $nouvelleActionC->poste_id = $responsable_idc[$index];
             $nouvelleActionC->risque_id = $risque_id;
             $nouvelleActionC->type = 'corrective';
@@ -207,7 +206,6 @@ class ProcessusController extends Controller
             {
                 $actionsDatap[$risque->id][] = [
                     'action' => $actionp->action,
-                    'delai' => $actionp->delai,
                     'responsable' => $actionp->responsable,
                 ];
             }

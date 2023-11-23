@@ -28,8 +28,9 @@ class SuiviactionController extends Controller
         $actions = Action::join('postes', 'actions.poste_id', '=', 'postes.id')
                 ->join('risques', 'actions.risque_id', '=', 'risques.id')
                 ->join('processuses', 'risques.processus_id', '=', 'processuses.id')
+                ->join('suivi_actions', 'actions.id', '=', 'suivi_actions.action_id')
                 ->where('risques.statut', 'valider')
-                ->where('actions.statut', 'non-realiser')
+                ->where('suivi_actions.statut', 'non-realiser')
                 ->where('actions.type', 'preventive')
                 ->select('actions.*','postes.nom as responsable','risques.nom as risque','processuses.nom as processus')
                 ->get();
@@ -40,8 +41,9 @@ class SuiviactionController extends Controller
     public function index_suiviactionc()
     {
         $ams = Amelioration::join('actions', 'ameliorations.action_id', 'actions.id')
+                            ->join('suivi_ameliorations', 'ameliorations.id', '=', 'suivi_ameliorations.amelioration_id')
                             ->where('ameliorations.statut', 'non-realiser')
-                            ->select('ameliorations.*','ameliorations.action_id as action_id')
+                            ->select('ameliorations.*','ameliorations.action_id as action_id', 'suivi_ameliorations.delai as delai')
                             ->get();
         foreach ($ams as $am) {
 
@@ -57,7 +59,6 @@ class SuiviactionController extends Controller
                 $am->risque = $actions->risque;
                 $am->processus = $actions->processus;
                 $am->action = $actions->action;
-                $am->delai = $actions->delai;
             }
 
         }
@@ -73,23 +74,17 @@ class SuiviactionController extends Controller
             $suivi->efficacite = $request->input('efficacite');
             $suivi->commentaire = $request->input('commentaire');
             $suivi->date_action = $request->input('date_action');
+            $suivi->statut = 'realiser';
             $suivi->date_suivi = now()->format('Y-m-d\TH:i');
             $suivi->update();
 
-            $action = Action::where('id', $id)->first();
-            if($action)
+            if ($suivi)
             {
-                $action->statut = 'realiser';
-                $action->update();
-
-                if ($action || $suivi)
-                {
-                    $his = new Historique_action();
-                    $his->nom_formulaire = 'Tableau du suivi des actions';
-                    $his->nom_action = 'Suivi';
-                    $his->user_id = Auth::user()->id;
-                    $his->save();
-                }
+                $his = new Historique_action();
+                $his->nom_formulaire = 'Tableau du suivi des actions';
+                $his->nom_action = 'Suivi';
+                $his->user_id = Auth::user()->id;
+                $his->save();
             }
 
         }
@@ -108,26 +103,21 @@ class SuiviactionController extends Controller
             $suivi->commentaire = $request->input('commentaire');
             $suivi->date_action = $request->input('date_action');
             $suivi->date_suivi = now()->format('Y-m-d\TH:i');
+            $suivi->statut = 'realiser';
             $suivi->update();
 
             $am = Amelioration::where('id', $id)->first();
             $am->statut = 'realiser';
             $am->update();
             
-            $action = Action::where('id', $am->action_id)->first();
-            if($action)
-            {
-                $action->statut = 'realiser';
-                $action->update();
 
-                if ($action || $suivi)
-                {
-                    $his = new Historique_action();
-                    $his->nom_formulaire = 'Tableau du suivi des actions';
-                    $his->nom_action = 'Suivi';
-                    $his->user_id = Auth::user()->id;
-                    $his->save();
-                }
+            if ($am || $suivi)
+            {
+                $his = new Historique_action();
+                $his->nom_formulaire = 'Tableau du suivi des actions';
+                $his->nom_action = 'Suivi';
+                $his->user_id = Auth::user()->id;
+                $his->save();
             }
 
         }

@@ -33,8 +33,83 @@
                 </div>
                 <div class="nk-block">
                     <div class="row g-gs">
+                        <div class="col-lg-4 col-xxl-4 ">
+                            <div class="card card-bordered  card-full">
+                                <div class="card-inner">
+                                    <div class="card-amount">
+                                        <span class="amount">Processus - Risques - Causes</span>
+                                    </div>
+                                    <div class="invest-data">
+                                        <div class="invest-data-amount g-2">
+                                            <div class="invest-data-history">
+                                                <div class="title text-center">Processus</div>
+                                                <div class="amount text-center">{{ $nbre_processus }}</div>
+                                            </div>
+                                            <div class="invest-data-history">
+                                                <div class="title text-center">Risques</div>
+                                                <div class="amount text-center">{{ $nbre_risque }}</div>
+                                            </div>
+                                            <div class="invest-data-history">
+                                                <div class="title text-center">Causes</div>
+                                                <div class="amount text-center">{{ $nbre_cause }}</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-4 col-xxl-4 ">
+                            <div class="card card-bordered  card-full">
+                                <div class="card-inner">
+                                    <div class="card-amount">
+                                        <span class="amount">Action Préventive ({{ $nbre_ap }})</span>
+                                    </div>
+                                    <div class="invest-data">
+                                        <div class="invest-data-amount g-2">
+                                            <div class="invest-data-history">
+                                                <div class="title text-center">Effectuée dans les délais</div>
+                                                <div class="amount text-center">{{ $nbre_ed_ap }}</div>
+                                            </div>
+                                            <div class="invest-data-history">
+                                                <div class="title text-center">Effectuée hors délais</div>
+                                                <div class="amount text-center">{{ $nbre_ehd_ap }}</div>
+                                            </div>
+                                            <div class="invest-data-history">
+                                                <div class="title text-center">Non Effectuée</div>
+                                                <div class="amount text-center">{{ $nbre_hd_ap }}</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-4 col-xxl-4 ">
+                            <div class="card card-bordered  card-full">
+                                <div class="card-inner">
+                                    <div class="card-amount">
+                                        <span class="amount">Action Corrective ({{ $nbre_ac }})</span>
+                                    </div>
+                                    <div class="invest-data">
+                                        <div class="invest-data-amount g-2">
+                                            <div class="invest-data-history">
+                                                <div class="title text-center">Effectuée dans les délais</div>
+                                                <div class="amount text-center">{{ $nbre_ed_ac }}</div>
+                                            </div>
+                                            <div class="invest-data-history">
+                                                <div class="title text-center">Effectuée hors délais</div>
+                                                <div class="amount text-center">{{ $nbre_ehd_ac }}</div>
+                                            </div>
+                                            <div class="invest-data-history">
+                                                <div class="title text-center">Non Effectuée</div>
+                                                <div class="amount text-center">{{ $nbre_hd_ac }}</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                         @foreach ($statistics as $type => $stat)
-                            <div class="col-md-4">
+                            <div class="col-lg-4">
                                 <div class="card card-bordered card-full">
                                     <div class="card-inner">
                                         <div class="card-amount">
@@ -131,7 +206,7 @@
                                 </div>
                             </div>
                         @endforeach
-                            <div class="col-md-6">
+                            <div class="col-lg-6">
                                 <div class="card card-bordered card-full">
                                     <div class="card-inner" >
                                         <div class="form-group text-center">
@@ -155,7 +230,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-md-6">
+                            <div class="col-lg-6">
                                 <div class="card card-bordered card-full">
                                     <div class="card-inner">
                                         <div class="form-group text-center">

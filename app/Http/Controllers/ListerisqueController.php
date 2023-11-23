@@ -72,17 +72,10 @@ class ListerisqueController extends Controller
             
             foreach($actionsp as $actionp)
             {
-                $Suivi_action = Suivi_action::where('action_id', $actionp->id)->first();
                 $actionsDatap[$risque->id][] = [
                     'action' => $actionp->action,
-                    'delai' => $actionp->delai,
                     'type' => $actionp->type,
                     'responsable' => $actionp->responsable,
-                    'statut' => $actionp->statut,
-                    'date_action' => $Suivi_action->date_action,
-                    'date_suivi' => $Suivi_action->date_suivi,
-                    'efficacite' => $Suivi_action->efficacite,
-                    'commentaire' => $Suivi_action->commentaire,
                 ];
             }
 

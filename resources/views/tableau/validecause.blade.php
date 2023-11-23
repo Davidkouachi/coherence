@@ -373,19 +373,7 @@
                                                             </div>
                                                         </div>
                                                     </div>
-                                                    <div class="col-lg-6">
-                                                        <div class="form-group text-center">
-                                                            <label class="form-label" for="email-address-1">
-                                                                Délai
-                                                            </label>
-                                                            <div class="form-group">
-                                                                <div class="form-control-wrap">
-                                                                    <input value="{{ $actionsDatas['delai'] }}" readonly type="date" class="form-control text-center">
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-lg-6">
+                                                    <div class="col-lg-12">
                                                         <div class="form-group text-center">
                                                             <label class="form-label" for="email-address-1">
                                                                 Responsabilité
@@ -402,6 +390,7 @@
                                     </div>
                                 </div>
                                 @endforeach
+
                                 @foreach ($actionsDatac[$risque->id] as $actionsDatas)
                                 <div class="col-md-12 col-xxl-12" id="groupesAction">
                                     <div class="card card-bordered">

@@ -19,6 +19,8 @@ class CreateSuiviAmeliorationsTable extends Migration
             $table->text('commentaire')->nullable();
             $table->date('date_action')->nullable();
             $table->dateTime('date_suivi')->nullable();
+            $table->date('delai')->nullable();
+            $table->string('statut')->nullable();
             $table->unsignedBigInteger('amelioration_id');
             $table->foreign('amelioration_id')->references('id')->on('ameliorations');
             $table->timestamps();

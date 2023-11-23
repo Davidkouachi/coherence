@@ -34,7 +34,7 @@
                     </div>
                     <div class="nk-block">
                         <div class="row g-gs">
-                            <div class="col-md-12 col-xxl-4">
+                            <div class="col-md-12 col-xxl-12">
                                 <div class="card card-bordered card-preview">
                                     <div class="card-inner">
                                         <table class="datatable-init table">
@@ -97,8 +97,8 @@
                     <div class="modal-body">
                         <form class="nk-block" >
                             <div class="row g-gs">
-                                <div class="col-md-12 col-xxl-4" id="groupesContainer">
-                                    <div class="card card-bordered">
+                                <div class="col-md-12 col-xxl-12" id="groupesContainer">
+                                    <div class="">
                                         <div class="card-inner">
                                                 <div class="row g-4">
                                                     <div class="col-lg-12">
@@ -107,7 +107,7 @@
                                                                 Processus
                                                             </label>
                                                             <div class="form-control-wrap">
-                                                                <input value="{{ $processu->nom }}" disabled type="text" class="form-control" id="Cause">
+                                                                <input value="{{ $processu->nom }}" readonly type="text" class="form-control" id="Cause">
                                                             </div>
                                                         </div>
                                                     </div>
@@ -117,7 +117,7 @@
                                                                 Finalité
                                                             </label>
                                                             <div class="form-control-wrap">
-                                                                <input value="{{ $processu->finalite }}" disabled type="text" class="form-control" id="Cause">
+                                                                <input value="{{ $processu->finalite }}" readonly type="text" class="form-control" id="Cause">
                                                             </div>
                                                         </div>
                                                     </div>
@@ -128,7 +128,7 @@
                                                                 Objectif {{ $key+1 }}
                                                             </label>
                                                             <div class="form-control-wrap">
-                                                                <input value="{{ $objectifDat['objectif'] }}" disabled type="text" class="form-control" id="Cause">
+                                                                <input value="{{ $objectifDat['objectif'] }}" readonly type="text" class="form-control" id="Cause">
                                                             </div>
                                                         </div>
                                                     </div>
@@ -139,7 +139,7 @@
                                                                 Description
                                                             </label>
                                                             <div class="form-control-wrap" >
-                                                                <textarea required name="causes" class="form-control no-resize" id="default-textarea">{{ $processu->description }}</textarea>
+                                                                <textarea readonly required name="causes" class="form-control no-resize" id="default-textarea">{{ $processu->description }}</textarea>
                                                             </div>
                                                         </div>
                                                     </div>

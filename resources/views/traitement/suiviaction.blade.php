@@ -120,17 +120,7 @@
                                                             </div>
                                                         </div>
                                                     </div>
-                                                    <div class="col-lg-6">
-                                                        <div class="form-group">
-                                                            <label class="form-label" for="corectif">
-                                                                Délai
-                                                            </label>
-                                                            <div class="form-control-wrap">
-                                                                <input value="{{ $action->delai }}" type="date" class="form-control" readonly>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-lg-6">
+                                                    <div class="col-lg-12">
                                                         <div class="form-group">
                                                             <label class="form-label" for="Coût">
                                                                 Responsable

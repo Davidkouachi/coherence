@@ -15,9 +15,7 @@ class Action extends Model
     protected $fillable = [
         'id',
         'action',
-        'delai',
         'type',
-        'statut',
         'poste_id',
         'risque_id',
     ];

@@ -18,49 +18,13 @@ use App\Models\User;
 use App\Models\Historique_action;
 use App\Models\Poste;
 use App\Models\Amelioration;
+use App\Models\Suivi_amelioration;
 
 use Illuminate\Support\Facades\Validator;
 use Carbon\Carbon;
 
 class StatistiqueController extends Controller
 {
-    /*public function index_stat()
-    {
-        $nbre_nci = Amelioration::where('type', 'non-conformite-interne')->count();
-        $nbre_nci_c = Amelioration::where('type', 'non-conformite-interne')
-                ->where('choix_select', 'cause')
-                ->count();
-        $nbre_nci_r = Amelioration::where('type', 'non-conformite-interne')
-                ->where('choix_select', 'risque')
-                ->count();
-        $nbre_nci_n = Amelioration::where('type', 'non-conformite-interne')
-                ->where('choix_select', 'cause_risque_nt')
-                ->count();
-
-        $nbre_r = Amelioration::where('type', 'reclamation')->count();
-        $nbre_r_c = Amelioration::where('type', 'reclamation')
-                ->where('choix_select', 'cause')
-                ->count();
-        $nbre_r_r = Amelioration::where('type', 'reclamation')
-                ->where('choix_select', 'risque')
-                ->count();
-        $nbre_r_n = Amelioration::where('type', 'reclamation')
-                ->where('choix_select', 'cause_risque_nt')
-                ->count();
-
-        $nbre_c = Amelioration::where('type', 'contentieux')->count();
-        $nbre_c_c = Amelioration::where('type', 'contentieux')
-                ->where('choix_select', 'cause')
-                ->count();
-        $nbre_c_r = Amelioration::where('type', 'contentieux')
-                ->where('choix_select', 'risque')
-                ->count();
-        $nbre_c_n = Amelioration::where('type', 'contentieux')
-                ->where('choix_select', 'cause_risque_nt')
-                ->count();
-
-        return view('statistique.index', ['nbre_nci' => $nbre_nci, 'nbre_r' => $nbre_r, 'nbre_c' => $nbre_c, 'nbre_nci_c' => $nbre_nci_c,'nbre_nci_r' => $nbre_nci_r,'nbre_nci_n' => $nbre_nci_n, 'nbre_r_c' => $nbre_r_c,'nbre_r_r' => $nbre_r_r,'nbre_r_n' => $nbre_r_n, 'nbre_c_c' => $nbre_c_c,'nbre_c_r' => $nbre_c_r,'nbre_c_n' => $nbre_c_n]);
-    }*/
 
     public function index_stat()
     {
@@ -82,8 +46,33 @@ class StatistiqueController extends Controller
 
 
         $processus = Processuse::all();
+        $nbre_processus = $processus->count();
+        $nbre_risque = Risque::all()->count();
+        $nbre_cause = Cause::all()->count();
 
-        return view('statistique.index', ['statistics' => $statistics, 'processus' => $processus]);
+        
+        $nbre_ap = Action::where('type', 'preventive')->count();
+        $nbre_ed_ap = Suivi_action::where('delai', '>=', 'date_action')
+                                    ->where('statut', '=', 'realiser')
+                                    ->count();
+        $nbre_ehd_ap = Suivi_action::where('delai', '<', 'date_action')
+                                    ->where('statut', '=', 'realiser')
+                                    ->count();
+        $nbre_hd_ap = Suivi_action::where('statut', '=', 'non-realiser')->count();
+
+
+        $nbre_ac = Action::where('type', 'corrective')->count();
+        $nbre_ed_ac = Suivi_amelioration::where('delai', '>=', 'date_action')
+                                        ->where('statut', '=', 'realiser')
+                                        ->count();
+        $nbre_ehd_ac = Suivi_amelioration::where('delai', '<', 'date_action')
+                                        ->where('statut', '=', 'realiser')
+                                        ->count();
+        $nbre_hd_ac = Suivi_amelioration::where('statut', '=', 'non-realiser')->count();
+
+
+
+        return view('statistique.index', ['statistics' => $statistics, 'processus' => $processus, 'nbre_processus' => $nbre_processus, 'nbre_risque' => $nbre_risque, 'nbre_cause' => $nbre_cause, 'nbre_ap' => $nbre_ap, 'nbre_ac' => $nbre_ac, 'nbre_ed_ap' => $nbre_ed_ap,'nbre_ehd_ap' => $nbre_ehd_ap,'nbre_hd_ap' => $nbre_hd_ap , 'nbre_ed_ac' => $nbre_ed_ac,'nbre_ehd_ac' => $nbre_ehd_ac,'nbre_hd_ac' => $nbre_hd_ac]);
     }
 
     public function get_processus($id)

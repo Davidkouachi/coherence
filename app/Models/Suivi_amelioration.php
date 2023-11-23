@@ -15,6 +15,8 @@ class Suivi_amelioration extends Model
         'commentaire',
         'date_action',
         'date_suivi',
+        'delai',
+        'statut',
         'amelioration_id',
     ];
 
