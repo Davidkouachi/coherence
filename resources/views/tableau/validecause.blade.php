@@ -251,7 +251,7 @@
                                     <div class="card card-bordered">
                                         <div class="card-inner">
                                                 <div class="row g-4">
-                                                    <div class="col-lg-6">
+                                                    <div class="col-lg-12">
                                                         <div class="form-group text-center">
                                                             <label class="form-label" for="Cause">
                                                                 Cause
@@ -261,7 +261,7 @@
                                                             </div>
                                                         </div>
                                                     </div>
-                                                    <div class="col-lg-6">
+                                                    <div class="col-lg-12">
                                                         <div class="form-group text-center">
                                                             <label class="form-label" for="controle">
                                                                 Dispositif de Contrôle

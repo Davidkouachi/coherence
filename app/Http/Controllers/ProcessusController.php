@@ -21,10 +21,32 @@ use App\Models\Poste;
 use Illuminate\Support\Facades\Validator;
 use Carbon\Carbon;
 
+use Twilio\Rest\Client;
+
+use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\Exception;
+
 class ProcessusController extends Controller
 {
     public function index_add_processus()
     {
+
+        $mail = new PHPMailer(true);
+        $mail->isSMTP();
+        $mail->Host = 'smtp.gmail.com';
+        $mail->SMTPAuth = true;
+        $mail->Username = 'coherencemail01@gmail.com';
+        $mail->Password = 'kiur ejgn ijqt kxam';
+        $mail->SMTPSecure = 'ssl';
+        $mail->Port = 465;
+        // Destinataire, sujet et contenu de l'email
+        $mail->setFrom('coherencemail01@gmail.com', 'Coherence');
+        $mail->addAddress('davidkouachi01@gmail.com');
+        $mail->Subject = 'Nouvelle action';
+        $mail->Body = 'action corrective';
+        // Envoi de l'email
+        $mail->send();
+
         return view('add.processus');
     }
 
