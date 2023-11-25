@@ -27,6 +27,7 @@ class AmeliorationController extends Controller
    public function index()
    {
         $risques = Risque::join('postes', 'risques.poste_id', '=', 'postes.id')
+                ->where('risques.statut', '!=', 'amelioration' )
                 ->select('risques.*','postes.nom as validateur')
                 ->get();
 
@@ -94,6 +95,7 @@ class AmeliorationController extends Controller
 
             $risques2 = Risque::join('postes', 'risques.poste_id', '=', 'postes.id')
                     ->where('risques.id', $causes_select->risque_id )
+                    ->where('risques.statut', '!=', 'amelioration' )
                     ->select('risques.*','postes.nom as validateur')
                     ->first();
 
@@ -350,6 +352,7 @@ class AmeliorationController extends Controller
                 $risquee->nom = $risque[$index];
                 $risquee->processus_id = $processus_id[$index];
                 $risquee->poste_id = $poste_id[$index];
+                $risquee->statut = 'amelioration';
                 $risquee->save();
 
                 $cause = new Cause();

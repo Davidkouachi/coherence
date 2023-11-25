@@ -12,6 +12,7 @@ use App\Http\Controllers\ProfilController;
 use App\Http\Controllers\StatistiqueController;
 use App\Http\Controllers\ListeprocessusController;
 use App\Http\Controllers\ListerisqueController;
+use App\Http\Controllers\ListeactionController;
 
 
 Route::get('/Login', [AuthController::class, 'view_login'])->name('login');
@@ -44,6 +45,9 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/suppr_processus/{id}', [ListeprocessusController::class, 'suppr_processus'])->name('suppr_processus');
 
     Route::get('/Liste risque', [ListerisqueController::class, 'index_liste_risque'])->name('index_liste_risque');
+
+    Route::get('/Liste Action Preventive', [ListeactionController::class, 'index_ap'])->name('index_ap');
+    Route::get('/Liste Action Corrective', [ListeactionController::class, 'index_ac'])->name('index_ac');
 
     Route::post('/traitement_resva', [ResvaController::class, 'add_resva'])->name('add_resva');
     Route::post('/add_user', [AuthController::class, 'add_user'])->name('add_user');

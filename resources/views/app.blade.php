@@ -31,11 +31,11 @@
             <div class="nk-header is-light nk-header-fixed">
                 <div class="container-fluid">
                     <div class="nk-header-wrap">
-                        <!--<div class="nk-menu-trigger me-sm-2 d-lg-none">
+                        <div class="nk-menu-trigger me-sm-2 d-lg-none">
                             <a class="nk-nav-toggle nk-quick-nav-icon" data-target="headerNav" href="#">
                                 <em class="icon ni ni-menu"></em>
                             </a>
-                        </div>-->
+                        </div>
                         <div class="nk-header-brand">
                             <a class="logo-link" href="{{ route('index_accueil') }}">
                                 <img alt="logo-dark" class="logo-dark logo-img" src="images/logo.png"
@@ -44,7 +44,7 @@
                             </a>
                         </div>
                         <div class="nk-header-menu ms-auto" data-content="headerNav">
-                            <!--<div class="nk-header-mobile">
+                            <div class="nk-header-mobile">
                                 <div class="nk-header-brand">
                                     <a class="logo-link" href="index-2.html">
                                         <img alt="logo-dark" class="logo-dark logo-img" src="images/logo.png"
@@ -58,7 +58,7 @@
                                         <em class="icon ni ni-arrow-left"></em>
                                     </a>
                                 </div>
-                            </div>-->
+                            </div>
                             <ul class="nk-menu nk-menu-main ui-s2">
                                 <!--<li >
                                     <a class="nk-menu-link" href="{{ route('index_accueil') }}">
@@ -66,38 +66,186 @@
                                             Accueil
                                         </span>
                                     </a>
-                                </li>
+                                </li>-->
                                 <li class="nk-menu-item has-sub">
-                                    <a class="nk-menu-link nk-menu-toggle">
-                                        <span class="nk-menu-text">
-                                            Nouvelle Enregistrement
+                                    <a class="nk-menu-toggle btn " >
+                                        <em class="ni ni-building me-2"></em>
+                                        <span class="nk-menu-text text-dark">
+                                            Administration
                                         </span>
                                     </a>
                                     <ul class="nk-menu-sub">
                                         <li >
-                                            <a class="nk-menu-link" href="{{ route('index_add_processus') }}">
-                                                <span class="nk-menu-text">
-                                                    Fiche Processus
+                                            <a class="nk-menu-link" href="{{ route('index_add_resva') }}">
+                                                <em class="icon ni ni-user-add me-1"></em>
+                                                <span class="nk-menu-text ">
+                                                    Nouveau utilisateur
                                                 </span>
                                             </a>
                                         </li>
                                         <li >
-                                            <a class="nk-menu-link" href="{{ route('index_add_processuseva') }}">
-                                                <span class="nk-menu-text">
-                                                    Fiche Risque
+                                            <a class="nk-menu-link" href="{{ route('index_add_poste') }}">
+                                                <em class="ni ni-reports-alt me-1"></em>
+                                                <span class="nk-menu-text ">
+                                                    Nouveau poste
                                                 </span>
                                             </a>
                                         </li>
-                                        <li >
-                                            <a class="nk-menu-link" href="{{ route('index_amelioration') }}">
-                                                <span class="nk-menu-text">
-                                                    Fiche d'amélioration
+                                        <li>
+                                            <a class="nk-menu-link" href="{{ route('index_historique') }}">
+                                                <em class="icon ni ni-property me-1"></em>
+                                                <span class="nk-menu-text " >
+                                                    historique
                                                 </span>
                                             </a>
                                         </li>
                                     </ul>
                                 </li>
                                 <li class="nk-menu-item has-sub">
+                                    <a class="nk-menu-toggle btn " >
+                                        <em class="ni ni-share-alt me-2"></em>
+                                        <span class="nk-menu-text text-dark">
+                                            Processus
+                                        </span>
+                                    </a>
+                                    <ul class="nk-menu-sub">
+                                        <li >
+                                            <a class="nk-menu-link" href="{{ route('index_add_processus') }}">
+                                                <em class="icon ni ni-property-add me-1"></em>
+                                                <span class="nk-menu-text ">
+                                                    Nouveau processus
+                                                </span>
+                                            </a>
+                                        </li>
+                                        <li >
+                                            <a class="nk-menu-link" href="{{ route('index_listeprocessus') }}">
+                                                <em class="ni ni-list-index me-1"></em>
+                                                <span class="nk-menu-text ">
+                                                    Liste des processus
+                                                </span>
+                                            </a>
+                                        </li>
+                                        <li >
+                                            <a class="nk-menu-link" href="{{ route('index_evaluation') }}">
+                                                <em class="icon ni ni-view-list-sq me-1"></em>
+                                                <span class="nk-menu-text ">
+                                                    Tableau d'évaluation
+                                                </span>
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </li>
+                                <li class="nk-menu-item has-sub">
+                                    <a class="nk-menu-toggle btn " >
+                                        <em class="ni ni-hot-fill me-2"></em>
+                                        <span class="nk-menu-text text-dark">
+                                            Risques
+                                        </span>
+                                    </a>
+                                    <ul class="nk-menu-sub">
+                                        <li >
+                                            <a class="nk-menu-link" href="{{ route('index_add_processuseva') }}">
+                                                <em class="icon ni ni-property-add me-1"></em>
+                                                <span class="nk-menu-text">
+                                                    Nouveau risque
+                                                </span>
+                                            </a>
+                                        </li>
+                                        <li >
+                                            <a class="nk-menu-link" href="{{ route('index_liste_risque') }}">
+                                                <em class="ni ni-list-index me-1"></em>
+                                                <span class="nk-menu-text">
+                                                    Liste des risque
+                                                </span>
+                                            </a>
+                                        </li>
+                                        <li >
+                                            <a class="nk-menu-link" href="{{ route('index_validation_processus') }}">
+                                                <em class="icon ni ni-view-list-sq me-1"></em>
+                                                <span class="nk-menu-text">
+                                                    Tableau de validation
+                                                </span>
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </li>
+                                <li class="nk-menu-item has-sub">
+                                    <a class="nk-menu-toggle btn " >
+                                        <em class="ni ni-box-view-fill me-2"></em>
+                                        <span class="nk-menu-text text-dark">
+                                            Actions
+                                        </span>
+                                    </a>
+                                    <ul class="nk-menu-sub">
+                                        <li class="nk-menu-item has-sub">
+                                            <a class="nk-menu-link nk-menu-toggle" href="#">
+                                                <span class="nk-menu-text">
+                                                    Action Préventive
+                                                </span>
+                                            </a>
+                                            <ul class="nk-menu-sub">
+                                                <li class="nk-menu-item">
+                                                    <a class="nk-menu-link" href="{{ route('index_suiviaction') }}">
+                                                        <em class="icon ni ni-view-list-sq me-1"></em>
+                                                        <span class="nk-menu-text">
+                                                            tableau de suivi
+                                                        </span>
+                                                    </a>
+                                                </li>
+                                                <li class="nk-menu-item">
+                                                    <a class="nk-menu-link" href="{{ route('index_ap') }}">
+                                                        <em class="ni ni-list-index me-1"></em>
+                                                        <span class="nk-menu-text">
+                                                            Liste des actions
+                                                        </span>
+                                                    </a>
+                                                </li>
+                                            </ul>
+                                        </li>
+                                        <li class="nk-menu-item has-sub">
+                                            <a class="nk-menu-link nk-menu-toggle" href="#">
+                                                <span class="nk-menu-text">
+                                                    Action Corrective
+                                                </span>
+                                            </a>
+                                            <ul class="nk-menu-sub">
+                                                <li class="nk-menu-item">
+                                                    <a class="nk-menu-link" href="{{ route('index_suiviactionc') }}">
+                                                        <em class="icon ni ni-view-list-sq me-1"></em>
+                                                        <span class="nk-menu-text">
+                                                            tableau de suivi
+                                                        </span>
+                                                    </a>
+                                                </li>
+                                                <li class="nk-menu-item">
+                                                    <a class="nk-menu-link" href="{{ route('index_ac') }}">
+                                                        <em class="ni ni-list-index me-1"></em>
+                                                        <span class="nk-menu-text">
+                                                            Liste des actions
+                                                        </span>
+                                                    </a>
+                                                </li>
+                                            </ul>
+                                        </li>
+                                    </ul>
+                                </li>
+                                <li class="nk-menu-item ">
+                                    <a class="btn " href="{{ route('index_amelioration') }}" >
+                                        <em class="ni ni-trend-up me-2"></em>
+                                        <span class="nk-menu-text text-dark">
+                                            Fiche
+                                        </span>
+                                    </a>
+                                </li>
+                                <li class="nk-menu-item has-sub">
+                                    <a class="btn " href="{{ route('index_stat') }}" >
+                                        <em class="ni ni-bar-chart-alt me-2"></em>
+                                        <span class="nk-menu-text text-dark">
+                                            statistique
+                                        </span>
+                                    </a>
+                                </li>
+                                <!--<li class="nk-menu-item has-sub">
                                     <a class="nk-menu-link nk-menu-toggle">
                                         <span class="nk-menu-text">
                                             Tableau

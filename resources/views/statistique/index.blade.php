@@ -67,15 +67,15 @@
                                     <div class="invest-data">
                                         <div class="invest-data-amount g-2">
                                             <div class="invest-data-history">
-                                                <div class="title text-center">Effectuée dans les délais</div>
+                                                <div class="title text-center">Dans les délais</div>
                                                 <div class="amount text-center">{{ $nbre_ed_ap }}</div>
                                             </div>
                                             <div class="invest-data-history">
-                                                <div class="title text-center">Effectuée hors délais</div>
+                                                <div class="title text-center">Hors délais</div>
                                                 <div class="amount text-center">{{ $nbre_ehd_ap }}</div>
                                             </div>
                                             <div class="invest-data-history">
-                                                <div class="title text-center">Non Effectuée</div>
+                                                <div class="title text-center">Non Valider</div>
                                                 <div class="amount text-center">{{ $nbre_hd_ap }}</div>
                                             </div>
                                         </div>
@@ -92,15 +92,15 @@
                                     <div class="invest-data">
                                         <div class="invest-data-amount g-2">
                                             <div class="invest-data-history">
-                                                <div class="title text-center">Effectuée dans les délais</div>
+                                                <div class="title text-center">Dans les délais</div>
                                                 <div class="amount text-center">{{ $nbre_ed_ac }}</div>
                                             </div>
                                             <div class="invest-data-history">
-                                                <div class="title text-center">Effectuée hors délais</div>
+                                                <div class="title text-center">Hors délais</div>
                                                 <div class="amount text-center">{{ $nbre_ehd_ac }}</div>
                                             </div>
                                             <div class="invest-data-history">
-                                                <div class="title text-center">Non Effectuée</div>
+                                                <div class="title text-center">Non Valider</div>
                                                 <div class="amount text-center">{{ $nbre_hd_ac }}</div>
                                             </div>
                                         </div>
@@ -264,6 +264,7 @@
 
 <script>
     document.addEventListener('DOMContentLoaded', function() {
+
         // Écouteur pour le changement de sélection
         document.getElementById('selectProcessus').addEventListener('change', function() {
             var selectedProcessus = this.value;
@@ -360,6 +361,7 @@
 </script>
 
 <script>
+
     document.addEventListener('DOMContentLoaded', function() {
         // Écouteur pour le changement de sélection
         document.getElementById('btn_rech').addEventListener('click', function() {
