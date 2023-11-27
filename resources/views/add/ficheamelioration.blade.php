@@ -508,7 +508,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                @foreach ($actionsData[$Suivi_action2->risque_id] as $actionsDatas)
+                                @foreach ($actionsData[$causes_select->risque_id] as $actionsDatas)
 
                                 @if ($actionsDatas['type'] === 'preventive')
                                 <div class="col-md-12 col-xxl-12" id="groupesAction">

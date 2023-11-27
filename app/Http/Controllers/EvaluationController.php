@@ -24,29 +24,36 @@ class EvaluationController extends Controller
 
         foreach ($processus as $processu) {
             $risques = Risque::where('processus_id', $processu->id)->get();
-            $processu->nbre_risque = $risques->count();
 
-            $totalEvaluation = 0;
-            $risquesData[$processu->id] = [];
+            if ($risques) {
+                $processu->nbre_risque = $risques->count();
 
-            foreach ($risques as $risque) 
-            {
-                $totalEvaluation += $risque->evaluation_residuel;
-                
-                $risquesData[$processu->id][] = [
-                    'nom' => $risque->nom,
-                    'evaluation_residuel' => $risque->evaluation_residuel,
-                ];
-            }
+                $totalEvaluation = 0;
+                $risquesData[$processu->id] = [];
 
-            if ($risques->count() > 0) {
-                $evagg = $totalEvaluation / $risques->count();
-                $evag = number_format($evagg, 1);
+                foreach ($risques as $risque)
+                {
+                    $totalEvaluation += $risque->evaluation_residuel;
+
+                    $risquesData[$processu->id][] = [
+                        'nom' => $risque->nom,
+                        'evaluation_residuel' => $risque->evaluation_residuel,
+                    ];
+                }
+
+                if ($risques->count() > 0) {
+                    $evagg = $totalEvaluation / $risques->count();
+                    $evag = number_format($evagg, 1);
+                } else {
+                    $evag = 0;
+                }
+
+                $processu->evag = $evag;
             } else {
-                $evag = 0;
+                $processu->nbre_risque = 0;
+                $processu->evag = 0;
             }
 
-            $processu->evag = $evag;
         }
 
         return view('tableau.evaproces',['processus' => $processus, 'risquesData' => $risquesData]);

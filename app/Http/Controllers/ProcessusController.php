@@ -31,7 +31,7 @@ class ProcessusController extends Controller
     public function index_add_processus()
     {
 
-        $mail = new PHPMailer(true);
+        /*$mail = new PHPMailer(true);
         $mail->isSMTP();
         $mail->Host = 'smtp.gmail.com';
         $mail->SMTPAuth = true;
@@ -45,7 +45,7 @@ class ProcessusController extends Controller
         $mail->Subject = 'Nouvelle action';
         $mail->Body = 'action corrective';
         // Envoi de l'email
-        $mail->send();
+        $mail->send();*/
 
         return view('add.processus');
     }

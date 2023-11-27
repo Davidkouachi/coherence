@@ -129,18 +129,9 @@
                                             </div>
                                         </div>
                                     </div>
-
                                     <div class="col-md-12">
                                         <div class="card card-bordered card-preview">
                                             <div class="card-inner row g-gs">
-                                                <!--<div class="col-md-6">
-                                                    <div class="form-group text-center">
-                                                        <a class="btn btn-lg btn-primary btn-dim" id="ajouterGroupe">
-                                                            <em class="ni ni-plus me-2"></em>
-                                                            <em>Nouveau</em>
-                                                        </a>
-                                                    </div>
-                                                </div>-->
                                                 <div class="col-md-12">
                                                     <div class="form-group text-center">
                                                         <button type="submit" class="btn btn-lg btn-success btn-dim">

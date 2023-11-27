@@ -37,7 +37,7 @@ class ListeactionController extends Controller
                                     ->join('processuses', 'risques.processus_id', 'processuses.id')
                                     ->where('actions.type', '=', 'preventive')
                                     ->where('Suivi_actions.statut', '=', 'realiser')
-                                    ->select('Suivi_actions.*','actions.action as action', 'processuses.nom as processus', 'risques.nom as risque' )
+                                    ->select('Suivi_actions.*','actions.action as action', 'processuses.nom as processus', 'risques.nom as risque','postes.nom as poste', 'risques.nom as risque' )
                                     ->get();
 
         return view('liste.actionpreventive', ['actions' => $actions]);
@@ -52,7 +52,7 @@ class ListeactionController extends Controller
                                     ->join('processuses', 'risques.processus_id', 'processuses.id')
                                     ->where('actions.type', '=', 'corrective')
                                     ->where('suivi_ameliorations.statut', '=', 'realiser')
-                                    ->select('Suivi_ameliorations.*','actions.action as action', 'ameliorations.type as type', 'processuses.nom as processus', 'risques.nom as risque' )
+                                    ->select('Suivi_ameliorations.*','actions.action as action', 'ameliorations.type as type', 'processuses.nom as processus', 'risques.nom as risque','postes.nom as poste' )
                                     ->get();
 
         return view('liste.actioncorrective', ['actions' => $actions]);

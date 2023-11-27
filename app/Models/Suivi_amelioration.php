@@ -12,17 +12,44 @@ class Suivi_amelioration extends Model
     protected $fillable = [
         'id',
         'efficacite',
+        'nature',
+        'type',
         'commentaire',
+        'commentaire_am',
         'date_action',
         'date_suivi',
         'delai',
         'statut',
         'amelioration_id',
+        'action_id',
+        'processus_id',
+        'risque_id',
+        'risque_id_am',
     ];
 
     public function amelioration()
     {
         return $this->belongsTo(Amelioration::class, 'amelioration_id');
+    }
+
+    public function action()
+    {
+        return $this->belongsTo(Action::class, 'action_id');
+    }
+
+    public function processus()
+    {
+        return $this->belongsTo(Processus::class, 'processus_id');
+    }
+
+    public function risque()
+    {
+        return $this->belongsTo(Risque::class, 'risque_id');
+    }
+
+    public function risque_am()
+    {
+        return $this->belongsTo(Risque_am::class, 'risque_id_am');
     }
 
 }

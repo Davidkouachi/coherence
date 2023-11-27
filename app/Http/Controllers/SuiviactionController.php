@@ -9,9 +9,12 @@ use App\Models\Processuse;
 use App\Models\Objectif;
 use App\Models\Resva;
 use App\Models\Risque;
+use App\Models\Risque_am;
 use App\Models\Cause;
+use App\Models\Cause_am;
 use App\Models\Rejet;
 use App\Models\Action;
+use App\Models\Action_am;
 use App\Models\Suivi_action;
 use App\Models\Suivi_amelioration;
 use App\Models\User;
@@ -40,25 +43,59 @@ class SuiviactionController extends Controller
 
     public function index_suiviactionc()
     {
-        $ams = Amelioration::join('actions', 'ameliorations.action_id', 'actions.id')
-                            ->join('suivi_ameliorations', 'ameliorations.id', '=', 'suivi_ameliorations.amelioration_id')
-                            ->where('ameliorations.statut', 'non-realiser')
-                            ->select('ameliorations.*','ameliorations.action_id as action_id', 'suivi_ameliorations.delai as delai')
+        $ams = Amelioration::join('suivi_ameliorations', 'ameliorations.id', '=', 'suivi_ameliorations.amelioration_id')
+                            ->where('suivi_ameliorations.statut', 'non-realiser')
+                            ->select('ameliorations.*','suivi_ameliorations.delai as delai', 'suivi_ameliorations.date_action as date_ation', 'suivi_ameliorations.nature as nature', 'suivi_ameliorations.action_id as action_id')
                             ->get();
         foreach ($ams as $am) {
 
-            $actions = Action::join('postes', 'actions.poste_id', '=', 'postes.id')
+            if ($am->nature === 'new') {
+
+                $actions = Action_am::join('postes', 'action_ams.poste_id', '=', 'postes.id')
+                ->join('risque_ams', 'action_ams.risque_id_am', '=', 'risque_ams.id')
+                ->join('processuses', 'risque_ams.processus_id', '=', 'processuses.id')
+                ->where('action_ams.id', $am->action_id)
+                ->select('action_ams.*','postes.nom as responsable','risque_ams.nom as risque','processuses.nom as processus')
+                ->first();
+
+                if ($actions) {
+                    $am->responsable = $actions->responsable;
+                    $am->risque = $actions->risque;
+                    $am->processus = $actions->processus;
+                    $am->action = $actions->action;
+                }
+
+            } else if ($am->nature === 'accepte') {
+
+                $actions = Action::join('postes', 'actions.poste_id', '=', 'postes.id')
                 ->join('risques', 'actions.risque_id', '=', 'risques.id')
                 ->join('processuses', 'risques.processus_id', '=', 'processuses.id')
                 ->where('actions.id', $am->action_id)
                 ->select('actions.*','postes.nom as responsable','risques.nom as risque','processuses.nom as processus')
                 ->first();
 
-            if ($actions) {
-                $am->responsable = $actions->responsable;
-                $am->risque = $actions->risque;
-                $am->processus = $actions->processus;
-                $am->action = $actions->action;
+                if ($actions) {
+                    $am->responsable = $actions->responsable;
+                    $am->risque = $actions->risque;
+                    $am->processus = $actions->processus;
+                    $am->action = $actions->action;
+                }
+            } else if ($am->nature === 'non-accepte') {
+
+                $actions = Action_am::join('postes', 'action_ams.poste_id', '=', 'postes.id')
+                ->join('risques', 'action_ams.risque_id', '=', 'risques.id')
+                ->join('processuses', 'risques.processus_id', '=', 'processuses.id')
+                ->where('action_ams.id', $am->action_id)
+                ->select('action_ams.*','postes.nom as responsable','risques.nom as risque','processuses.nom as processus')
+                ->first();
+
+                if ($actions) {
+                    $am->responsable = $actions->responsable;
+                    $am->risque = $actions->risque;
+                    $am->processus = $actions->processus;
+                    $am->action = $actions->action;
+                }
+
             }
 
         }
@@ -105,11 +142,6 @@ class SuiviactionController extends Controller
             $suivi->date_suivi = now()->format('Y-m-d\TH:i');
             $suivi->statut = 'realiser';
             $suivi->update();
-
-            $am = Amelioration::where('id', $id)->first();
-            $am->statut = 'realiser';
-            $am->update();
-            
 
             if ($am || $suivi)
             {

@@ -55,6 +55,9 @@
                                                         <td>
                                                             {{ $processu->evag }}
                                                         </td>
+                                                        @if ($processu->evag < 1  )
+                                                            <td class="border-white" style="background-color:#8e8e8e;" ></td>
+                                                        @endif
                                                         @if ($processu->evag >= 1 && $processu->evag <= 2 )
                                                             <td class="border-white" style="background-color:#5eccbf;" ></td>
                                                         @endif
@@ -113,6 +116,10 @@
                                                                 Processus : {{$processu->nom}}
                                                             </label>
                                                             <div class="form-control-wrap">
+                                                                @if ($processu->evag < 1 )
+                                                                    <input value="{{ $processu->evag }}" disabled type="text" 
+                                                                    class="form-control border-white text-center " id="Cause" style="background-color:#8e8e8e;" >
+                                                                @endif
                                                                 @if ($processu->evag >= 1 && $processu->evag <= 2 )
                                                                     <input value="{{ $processu->evag }}" disabled type="text" 
                                                                     class="form-control border-white text-center " id="Cause" style="background-color:#5eccbf;" >
@@ -139,34 +146,48 @@
                                 <div class="col-md-12 col-xxl-12" id="groupesContainer">
                                     <div class="card card-bordered">
                                         <div class="card-inner">
+                                                <div class="card-head">
+                                                    <h5 class="card-title">Evaluation des Risques</h5>
+                                                </div>
                                                 <div class="row g-4">
-                                                    @foreach ($risquesData[$processu->id] as $risqueData)
-                                                    <div class="col-lg-12">
-                                                        <div class="form-group text-center">
-                                                            <label class="form-label" for="Cause">
-                                                                Risque : {{ $risqueData['nom'] }}
-                                                            </label>
-                                                            <div class="form-control-wrap">
-                                                                @if ($risqueData['evaluation_residuel'] >= 1 && $risqueData['evaluation_residuel'] <= 2 )
-                                                                    <input value="{{ $risqueData['evaluation_residuel'] }}" disabled type="text" 
-                                                                    class="form-control border-white text-center " id="Cause" style="background-color:#5eccbf;" >
-                                                                @endif
-                                                                @if ($risqueData['evaluation_residuel'] >= 3 && $risqueData['evaluation_residuel'] <= 9)
-                                                                    <input value="{{ $risqueData['evaluation_residuel'] }}" disabled type="text" 
-                                                                    class="form-control border-white text-center " id="Cause"style="background-color:#f7f880;">
-                                                                @endif
-                                                                @if ($risqueData['evaluation_residuel'] >= 10 && $risqueData['evaluation_residuel'] <= 16)
-                                                                    <input value="{{ $risqueData['evaluation_residuel'] }}" disabled type="text" 
-                                                                    class="form-control border-white text-center " id="Cause"style="background-color:#f2b171;">
-                                                                @endif
-                                                                @if ($risqueData['evaluation_residuel'] > 16)
-                                                                    <input value="{{ $risqueData['evaluation_residuel'] }}" disabled type="text" 
-                                                                    class="form-control border-white text-center " id="Cause"style="background-color:#ea6072;">
-                                                                @endif
+                                                    @if ($processu->evag > 0 )
+                                                        @foreach ($risquesData[$processu->id] as $risqueData)
+                                                        <div class="col-lg-12">
+                                                            <div class="form-group text-center">
+                                                                <label class="form-label" for="Cause">
+                                                                    Risque : {{ $risqueData['nom'] }}
+                                                                </label>
+                                                                <div class="form-control-wrap">
+                                                                    @if ($risqueData['evaluation_residuel'] >= 1 && $risqueData['evaluation_residuel'] <= 2 )
+                                                                        <input value="{{ $risqueData['evaluation_residuel'] }}" disabled type="text" 
+                                                                        class="form-control border-white text-center " id="Cause" style="background-color:#5eccbf;" >
+                                                                    @endif
+                                                                    @if ($risqueData['evaluation_residuel'] >= 3 && $risqueData['evaluation_residuel'] <= 9)
+                                                                        <input value="{{ $risqueData['evaluation_residuel'] }}" disabled type="text" 
+                                                                        class="form-control border-white text-center " id="Cause"style="background-color:#f7f880;">
+                                                                    @endif
+                                                                    @if ($risqueData['evaluation_residuel'] >= 10 && $risqueData['evaluation_residuel'] <= 16)
+                                                                        <input value="{{ $risqueData['evaluation_residuel'] }}" disabled type="text" 
+                                                                        class="form-control border-white text-center " id="Cause"style="background-color:#f2b171;">
+                                                                    @endif
+                                                                    @if ($risqueData['evaluation_residuel'] > 16)
+                                                                        <input value="{{ $risqueData['evaluation_residuel'] }}" disabled type="text" 
+                                                                        class="form-control border-white text-center " id="Cause"style="background-color:#ea6072;">
+                                                                    @endif
+                                                                </div>
                                                             </div>
                                                         </div>
-                                                    </div>
-                                                    @endforeach
+                                                        @endforeach
+                                                    @endif
+                                                    @if ($processu->evag === 0 )
+                                                        <div class="col-lg-12">
+                                                            <div class="form-group text-center">
+                                                                <label class="form-label" for="Cause">
+                                                                    Aucun risque
+                                                                </label>
+                                                            </div>
+                                                        </div>
+                                                    @endif
                                                 </div>
                                         </div>
                                     </div>

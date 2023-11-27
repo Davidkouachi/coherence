@@ -20,7 +20,6 @@ Route::post('/auth_user', [AuthController::class, 'auth_user']);
 
 Route::get('/Registre', [AuthController::class, 'view_registre'])->name('registre');
 
-
 Route::middleware(['auth'])->group(function () {
     Route::get('/', [Controller::class, 'index_accueil'])->name('index_accueil');
 
@@ -30,6 +29,7 @@ Route::middleware(['auth'])->group(function () {
 
     Route::get('/Nouveau Poste', [Controller::class, 'index_add_poste'])->name('index_add_poste');
     Route::post('/Nouveau Poste', [Controller::class, 'index_add_poste_traitement'])->name('index_add_poste_traitement');
+    Route::get('/get-post-user', [Controller::class, '/get_post_user'])->name('get_post_user');
 
     Route::post('/traitement_processus', [ProcessusController::class, 'add_processus'])->name('add_processus');
 
@@ -63,6 +63,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/get-cause-info/{id}', [AmeliorationController::class, 'get_cause_info']);
     Route::get('/get-risque-info/{id}', [AmeliorationController::class, 'get_risque_info']);
     Route::post('/add_amelioration', [AmeliorationController::class, 'index_add'])->name('index_add');
+    Route::get('/liste_amelioration', [AmeliorationController::class, 'index_liste'])->name('index_amelioration_liste');
 
     Route::get('/Profil', [ProfilController::class, 'index_profil'])->name('index_profil');
 
@@ -74,14 +75,14 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/Statistique', [StatistiqueController::class, 'index_stat'])->name('index_stat');
     Route::get('/get_processus/{id}', [StatistiqueController::class, 'get_processus'])->name('get_processus');
     Route::get('/get_date', [StatistiqueController::class, 'get_date'])->name('get_date');
+
+    Route::get('/Res-va', [ResvaController::class, 'index_add_resva'])->name('index_add_resva');
+    Route::post('/traitement_resva', [ResvaController::class, 'add_resva'])->name('add_resva');
+    Route::post('/add_user', [AuthController::class, 'add_user'])->name('add_user');
+
+    Route::get('/Nouveau Poste', [Controller::class, 'index_add_poste'])->name('index_add_poste');
+    Route::post('/Nouveau Poste', [Controller::class, 'index_add_poste_traitement'])->name('index_add_poste_traitement');
 });
-
-Route::get('/Res-va', [ResvaController::class, 'index_add_resva'])->name('index_add_resva');
-Route::post('/traitement_resva', [ResvaController::class, 'add_resva'])->name('add_resva');
-Route::post('/add_user', [AuthController::class, 'add_user'])->name('add_user');
-
-Route::get('/Nouveau Poste', [Controller::class, 'index_add_poste'])->name('index_add_poste');
-Route::post('/Nouveau Poste', [Controller::class, 'index_add_poste_traitement'])->name('index_add_poste_traitement');
 
 
 /*--------------------------------------------------------------------------------------------------------------*/

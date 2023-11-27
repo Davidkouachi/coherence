@@ -43,7 +43,8 @@
                                                     <th></th>
                                                     <th>Action</th>
                                                     <th>Délai</th>
-                                                    <th></th>
+                                                    <th>Date d'action</th>
+                                                    <th>Statut</th>
                                                     <th></th>
                                                 </tr>
                                             </thead>
@@ -53,13 +54,14 @@
                                                         <td>{{ $key+1}}</td>
                                                         <td>{{ $action->action}}</td>
                                                         <td>{{ $action->delai}}</td>
+                                                        <td>{{ $action->date_action}}</td>
                                                         @if ($action->delai >= $action->date_action)
-                                                            <td class="text-center" style="color: white; background-color: green;" >
+                                                            <td class="text-center text-success" >
                                                                 Realiser dans le delai
                                                             </td>
                                                         @endif
                                                         @if ($action->delai < $action->date_action)
-                                                            <td class="text-center" style="color: white; background-color: red;" >
+                                                            <td class="text-center text-danger" >
                                                                 Realiser hors delai
                                                             </td>
                                                         @endif
@@ -179,6 +181,16 @@
                                                             </label>
                                                             <div class="form-control-wrap" >
                                                                 <textarea readonly required name="causes" class="form-control no-resize" id="default-textarea">{{ $action->commentaire }}</textarea>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-lg-12">
+                                                        <div class="form-group">
+                                                            <label class="form-label" for="Cause">
+                                                                Contrôleur
+                                                            </label>
+                                                            <div class="form-control-wrap">
+                                                                <input value="{{ $action->poste }}" readonly type="text" class="form-control" id="Cause">
                                                             </div>
                                                         </div>
                                                     </div>

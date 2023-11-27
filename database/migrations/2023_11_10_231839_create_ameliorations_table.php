@@ -23,13 +23,6 @@ class CreateAmeliorationsTable extends Migration
             $table->text('consequence');
             $table->text('cause');
             $table->string('choix_select');
-            $table->string('nature');
-            $table->text('commentaire');
-            $table->text('statut')->nullable();
-            $table->unsignedBigInteger('action_id');
-            $table->foreign('action_id')->references('id')->on('actions');
-            $table->unsignedBigInteger('processus_id');
-            $table->foreign('processus_id')->references('id')->on('processuses');
             $table->timestamps();
         });
     }

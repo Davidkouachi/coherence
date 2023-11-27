@@ -46,6 +46,7 @@
                                                     <th>Nombre d'action Corrective</th>-->
                                                     <th>Evaluation</th>
                                                     <th>Coût</th>
+                                                    <th>Statut</th>
                                                     <th></th>
                                                 </tr>
                                             </thead>
@@ -82,6 +83,16 @@
                                                             @endphp
                                                             {{ $formatcommande }} Fcfa
                                                         </td>
+                                                        @if ($risque->statut === 'soumis')
+                                                            <td class=" text-danger">
+                                                                Non validé
+                                                            </td>
+                                                        @endif
+                                                        @if ($risque->statut === 'valider')
+                                                            <td class=" text-success">
+                                                                Validé
+                                                            </td>
+                                                        @endif
                                                         <td>
                                                             <a data-bs-toggle="modal"
                                                                 data-bs-target="#modalDetail{{ $risque->id }}"
@@ -242,7 +253,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                @foreach ($causesData[$risque->id] as $causesDatas)
+                                @foreach ($causesData[$risque->id] as $key => $causesDatas)
                                 <div class="col-md-12 col-xxl-122" id="groupesContainer">
                                     <div class="card card-bordered">
                                         <div class="card-inner">
@@ -250,7 +261,7 @@
                                                     <div class="col-lg-12">
                                                         <div class="form-group text-center">
                                                             <label class="form-label" for="Cause">
-                                                                Cause
+                                                                Cause {{ $key+1 }}
                                                             </label>
                                                             <div class="form-control-wrap">
                                                                 <input value="{{ $causesDatas['cause'] }}" readonly type="text" class="form-control text-center" id="Cause">
@@ -354,7 +365,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                @foreach ($actionsDatap[$risque->id] as $actionsDatas)
+                                @foreach ($actionsDatap[$risque->id] as $key => $actionsDatas)
                                 <div class="col-md-12 col-xxl-12" id="groupesAction">
                                     <div class="card card-bordered">
                                         <div class="card-inner">
@@ -362,7 +373,7 @@
                                                     <div class="col-lg-12">
                                                         <div class="form-group text-center">
                                                             <label class="form-label" for="preventif">
-                                                                Action préventive
+                                                                Action préventive {{ $key+1 }}
                                                             </label>
                                                             <div class="form-control-wrap">
                                                                 <input value="{{ $actionsDatas['action'] }}" readonly type="text" class="form-control text-center" id="preventif">
@@ -387,7 +398,7 @@
                                 </div>
                                 @endforeach
 
-                                @foreach ($actionsDatac[$risque->id] as $actionsDatas)
+                                @foreach ($actionsDatac[$risque->id] as $key => $actionsDatas)
                                 <div class="col-md-12 col-xxl-12" id="groupesAction">
                                     <div class="card card-bordered">
                                         <div class="card-inner">
@@ -395,7 +406,7 @@
                                                     <div class="col-lg-12">
                                                         <div class="form-group text-center">
                                                             <label class="form-label" for="preventif">
-                                                                Action corrective
+                                                                Action corrective {{ $key+1 }}
                                                             </label>
                                                             <div class="form-control-wrap">
                                                                 <input value="{{ $actionsDatas['action'] }}" readonly type="text" class="form-control text-center" id="preventif">

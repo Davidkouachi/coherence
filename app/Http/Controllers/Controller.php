@@ -37,8 +37,13 @@ class Controller extends BaseController
         }
         
 
-        return redirect()
-            ->route('index_add_poste')
+        return back()
             ->with('ajouter', 'Enregistrement éffectuée.');
+    }
+
+    public function get_post_user() 
+    {
+        $postes = Poste::all(); // Récupération de tous les postes depuis la base de données
+        return response()->json(['postes' => $postes]);
     }
 }
