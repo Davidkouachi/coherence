@@ -21,6 +21,8 @@ use App\Models\User;
 use App\Models\Historique_action;
 use App\Models\Amelioration;
 
+use App\Events\NotificationApreventive;
+
 use Illuminate\Support\Facades\Validator;
 use Carbon\Carbon;
 
@@ -117,6 +119,50 @@ class SuiviactionController extends Controller
 
             if ($suivi)
             {
+
+                $choix_alert_alert = $request->input('choix_alert_alert');
+                $choix_alert_email = $request->input('choix_alert_email');
+                $choix_alert_sms = $request->input('choix_alert_sms');
+
+                if ($choix_alert_alert === 'alert') {
+
+                    event(new NotificationApreventive());
+
+                }
+
+                if ($choix_alert_email === 'email') {
+
+                    $user = User::join('postes', 'users.poste_id', 'postes.id')
+                                ->where('postes.id', $validateur)
+                                ->select('users.*')
+                                ->first();
+                    if ($user) {
+
+                        $mail = new PHPMailer(true);
+                        $mail->isHTML(true);
+                        $mail->isSMTP();
+                        $mail->Host = 'smtp.gmail.com';
+                        $mail->SMTPAuth = true;
+                        $mail->Username = 'coherencemail01@gmail.com';
+                        $mail->Password = 'kiur ejgn ijqt kxam';
+                        $mail->SMTPSecure = 'ssl';
+                        $mail->Port = 465;
+                        // Destinataire, sujet et contenu de l'email
+                        $mail->setFrom('coherencemail01@gmail.com', 'Coherence');
+                        $mail->addAddress($user->email);
+                        $mail->Subject = 'Nouveau Action';
+                        $mail->Body = 'ALERT ! <br><br>'.'<br>'
+                            . 'Nouvelle Action Préventive à réaliser';
+                        // Envoi de l'email
+                        $mail->send();
+                    }
+
+                }
+
+                if ($choix_alert_sms === 'sms') {
+
+                }
+
                 $his = new Historique_action();
                 $his->nom_formulaire = 'Tableau du suivi des actions';
                 $his->nom_action = 'Suivi';
@@ -143,8 +189,9 @@ class SuiviactionController extends Controller
             $suivi->statut = 'realiser';
             $suivi->update();
 
-            if ($am || $suivi)
+            if ($suivi)
             {
+
                 $his = new Historique_action();
                 $his->nom_formulaire = 'Tableau du suivi des actions';
                 $his->nom_action = 'Suivi';

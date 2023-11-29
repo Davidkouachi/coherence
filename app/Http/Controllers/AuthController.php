@@ -12,6 +12,9 @@ use App\Models\Poste;
 use Illuminate\Support\Facades\Validator;
 use Carbon\Carbon;
 
+use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\Exception;
+
 class AuthController extends Controller
 {
     public function dashboard()
@@ -46,18 +49,53 @@ class AuthController extends Controller
 
     public function add_user(Request $request)
     {
-        $user = User::create([
-            'name' => $request->np,
-            'email' => $request->email,
-            'password' => bcrypt($request->mdp),
-            'matricule' => $request->matricule,
-            'tel' => $request->tel,
-            'poste_id' => $request->poste_id,
-        ]);
+        $user_vrf = User::where('email', $request->email)
+                        ->orWhere('tel', $request->tel)
+                        ->first();
+        if ($user_vrf) {
+            if ($user_vrf->email === $request->email) {
+                return back()->with('error', 'Email existe déjà.');
+            } else {
+                return back()->with('error', 'Contact existe déjà.');
+            }
+        } else {
 
-        
+            $user = User::create([
+                'name' => $request->np,
+                'email' => $request->email,
+                'password' => bcrypt($request->mdp),
+                'matricule' => $request->matricule,
+                'tel' => $request->tel,
+                'poste_id' => $request->poste_id,
+            ]);
 
-        return back()->with('ajouter', 'Enregistrement éffectuée.');
+            if ($user) {
+
+                $mail = new PHPMailer(true);
+                $mail->isHTML(true);
+                $mail->isSMTP();
+                $mail->Host = 'smtp.gmail.com';
+                $mail->SMTPAuth = true;
+                $mail->Username = 'coherencemail01@gmail.com';
+                $mail->Password = 'kiur ejgn ijqt kxam';
+                $mail->SMTPSecure = 'ssl';
+                $mail->Port = 465;
+                // Destinataire, sujet et contenu de l'email
+                $mail->setFrom('coherencemail01@gmail.com', 'Coherence');
+                $mail->addAddress($user->email);
+                $mail->Subject = 'Coordonnées utilisateur';
+                $mail->Body = 'Bienvenue à Cohérence ! <br><br>'.'<br>'
+                        . 'Voici vos informations pour vous connecter :<br>'
+                        . 'Matricule : ' . $request->matricule.'<br>'
+                        . 'Email : ' . $user->email . '<br>'
+                        . 'Mot de passe : ' . $request->mdp.'<br>'
+                        . 'NB : Vous pouvez modifier le mot de passe selon votre choix.';
+                // Envoi de l'email
+                $mail->send();
+            }
+
+            return back()->with('ajouter', 'Enregistrement éffectuée.');
+        }
     }
 
     public function auth_user(Request $request)

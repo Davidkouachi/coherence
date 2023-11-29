@@ -42,6 +42,7 @@
                                                 <tr class="text-center">
                                                     <th></th>
                                                     <th>Type</th>
+                                                    <th>Nature</th>
                                                     <th>Action</th>
                                                     <th>Délai</th>
                                                     <th></th>
@@ -52,16 +53,27 @@
                                                 @foreach ($actions as $key => $action)
                                                     <tr class="text-center">
                                                         <td>{{ $key+1}}</td>
-                                                        <td>{{ $action->type}}</td>
+                                                        <td>
+                                                            @if ($action->type_am === 'non_conformite_interne')
+                                                                Non Conformité
+                                                            @endif
+                                                            @if ($action->type_am === 'contentieux')
+                                                                Contentieux
+                                                            @endif
+                                                            @if ($action->type_am === 'reclamation')
+                                                                Réclamation
+                                                            @endif
+                                                        </td>
+                                                        <td>{{ $action->nature}}</td>
                                                         <td>{{ $action->action}}</td>
                                                         <td>{{ $action->delai}}</td>
                                                         @if ($action->delai >= $action->date_action)
-                                                            <td class="text-center" style="color: white; background-color: green;" >
+                                                            <td class="text-center text-success">
                                                                 Realiser dans le delai
                                                             </td>
                                                         @endif
                                                         @if ($action->delai < $action->date_action)
-                                                            <td class="text-center" style="color: white; background-color: red;" >
+                                                            <td class="text-center text-danger">
                                                                 Realiser hors delai
                                                             </td>
                                                         @endif

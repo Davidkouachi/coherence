@@ -5,6 +5,11 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
+use App\Events\NotificationAcorrective;
+use App\Events\NotificationApreventive;
+use App\Events\NotificationProcessus;
+use App\Events\NotificationRisque;
+
 use App\Models\Processuse;
 use App\Models\Objectif;
 use App\Models\Risque;
@@ -31,29 +36,18 @@ class ProcessusController extends Controller
     public function index_add_processus()
     {
 
-        /*$mail = new PHPMailer(true);
-        $mail->isSMTP();
-        $mail->Host = 'smtp.gmail.com';
-        $mail->SMTPAuth = true;
-        $mail->Username = 'coherencemail01@gmail.com';
-        $mail->Password = 'kiur ejgn ijqt kxam';
-        $mail->SMTPSecure = 'ssl';
-        $mail->Port = 465;
-        // Destinataire, sujet et contenu de l'email
-        $mail->setFrom('coherencemail01@gmail.com', 'Coherence');
-        $mail->addAddress('davidkouachi01@gmail.com');
-        $mail->Subject = 'Nouvelle action';
-        $mail->Body = 'action corrective';
-        // Envoi de l'email
-        $mail->send();*/
-
         return view('add.processus');
     }
 
     public function index_add_processuseva()
     {
+
         $processuses = Processuse::all();
-        $postes = Poste::all();
+        $postes = Poste::join('users', 'users.poste_id', 'postes.id')
+                        ->select('postes.*') // Sélectionne les colonnes de la table 'postes'
+                        ->distinct() // Rend les résultats uniques
+                        ->get();
+
         return view('add.processuseva', ['processuses' => $processuses, 'postes' => $postes]);
     }
 
@@ -89,6 +83,7 @@ class ProcessusController extends Controller
         $risque->poste_id = $validateur;
         $risque->statut = 'soumis';
         $risque->save();
+
 
         if ($request->hasFile('pdfFile') && $request->file('pdfFile')->isValid()) {
 
@@ -159,11 +154,55 @@ class ProcessusController extends Controller
 
         if ($risque || $cause || $nouvelleActionP || $suivip || $nouvelleActionC || $suivic)
         {
+            $choix_alert_alert = $request->input('choix_alert_alert');
+            $choix_alert_email = $request->input('choix_alert_email');
+            $choix_alert_sms = $request->input('choix_alert_sms');
+
+            if ($choix_alert_alert === 'alert') {
+
+                event(new NotificationRisque());
+
+            }
+
+            if ($choix_alert_email === 'email') {
+
+                $user = User::join('postes', 'users.poste_id', 'postes.id')
+                            ->where('postes.id', $validateur)
+                            ->select('users.*')
+                            ->first();
+                if ($user) {
+
+                    $mail = new PHPMailer(true);
+                    $mail->isHTML(true);
+                    $mail->isSMTP();
+                    $mail->Host = 'smtp.gmail.com';
+                    $mail->SMTPAuth = true;
+                    $mail->Username = 'coherencemail01@gmail.com';
+                    $mail->Password = 'kiur ejgn ijqt kxam';
+                    $mail->SMTPSecure = 'ssl';
+                    $mail->Port = 465;
+                    // Destinataire, sujet et contenu de l'email
+                    $mail->setFrom('coherencemail01@gmail.com', 'Coherence');
+                    $mail->addAddress($user->email);
+                    $mail->Subject = 'Nouveau Risque';
+                    $mail->Body = 'ALERT ! <br><br>'.'<br>'
+                        . 'Nouveau Risque a Valider';
+                    // Envoi de l'email
+                    $mail->send();
+                }
+
+            }
+
+            if ($choix_alert_sms === 'sms') {
+
+            }
+
             $his = new Historique_action();
             $his->nom_formulaire = 'Nouveau Risque';
             $his->nom_action = 'Ajouter';
             $his->user_id = Auth::user()->id;
             $his->save();
+
         }
 
         return redirect()
@@ -328,6 +367,8 @@ class ProcessusController extends Controller
             $his->nom_action = 'Ajouter';
             $his->user_id = Auth::user()->id;
             $his->save();
+
+            event(new NotificationProcessus());
         }
 
         return redirect()
@@ -350,6 +391,31 @@ class ProcessusController extends Controller
             $his->nom_action = 'Validation';
             $his->user_id = Auth::user()->id;
             $his->save();
+
+            $user = User::join('postes', 'users.poste_id', 'postes.id')
+                        ->where('postes.id', $valide->poste_id)
+                        ->select('users.*')
+                        ->first();
+
+            $mail = new PHPMailer(true);
+            $mail->isHTML(true);
+            $mail->isSMTP();
+            $mail->Host = 'smtp.gmail.com';
+            $mail->SMTPAuth = true;
+            $mail->Username = 'coherencemail01@gmail.com';
+            $mail->Password = 'kiur ejgn ijqt kxam';
+            $mail->SMTPSecure = 'ssl';
+            $mail->Port = 465;
+            // Destinataire, sujet et contenu de l'email
+            $mail->setFrom('coherencemail01@gmail.com', 'Coherence');
+            $mail->addAddress($user->email);
+            $mail->Subject = 'Nouveau Risque';
+            $mail->Body = 'ALERT ! <br><br>'.'<br>'
+                . 'Nouveau Risque a Valider';
+            // Envoi de l'email
+            $mail->send();
+
+            event(new NotificationApreventive());
         }
 
         return redirect()

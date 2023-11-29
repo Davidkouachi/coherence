@@ -27,7 +27,7 @@
                             <div class="col-lg-12 col-xxl-12" >
                                 <div class="card card-bordered card-preview">
                                     <div class="card-inner row g-gs">
-                                        
+
                                     </div>
                                 </div>
                             </div>

@@ -14,5 +14,6 @@ class PosteSeeder extends Seeder
         Poste::create(['nom' => 'OPÉRATEUR DE SAISIE']);
         Poste::create(['nom' => 'ADMINISTRATEUR']);
         Poste::create(['nom' => 'PRODUCTION']);
+        Poste::create(['nom' => 'VALIDATEUR']);
     }
 }

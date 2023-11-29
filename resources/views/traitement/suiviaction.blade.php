@@ -166,6 +166,37 @@
                                                             </div>
                                                         </div>
                                                     </div>
+                                                    <div class="col-LG-12 col-xxl-12">
+                                                        <div class="card card-bordered card-preview">
+                                                            <div class="card-inner">
+                                                                <div class="card-head">
+                                                                    <h5 class="card-title">
+                                                                        Notification
+                                                                    </h5>
+                                                                </div>
+                                                                <div class="row g-gs">
+                                                                    <div class="col-lg-4 text-left">
+                                                                        <div class="custom-control custom-checkbox">
+                                                                            <input name="choix_alert_alert" value="alert" required type="checkbox" checked class="custom-control-input" id="customCheck1">
+                                                                            <label class="custom-control-label" for="customCheck1">Alert à l'écran</label>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="col-lg-4 text-left">
+                                                                        <div class="custom-control custom-checkbox">
+                                                                            <input name="choix_alert_email" value="email" required type="checkbox" class="custom-control-input" id="customCheck2">
+                                                                            <label class="custom-control-label" for="customCheck2">Par Email</label>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="col-lg-4 text-left">
+                                                                        <div class="custom-control custom-checkbox">
+                                                                            <input name="choix_alert_sms" value="sms" required disabled type="checkbox" class="custom-control-input" id="customCheck3">
+                                                                            <label class="custom-control-label" for="customCheck3">Par Sms</label>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
                                                     <div class="col-md-12">
                                                         <div class="form-group text-center">
                                                             <button type="submit" class="btn btn-lg btn-success btn-dim">
@@ -185,6 +216,30 @@
             </div>
         </div>
     @endforeach
+
+    <script>
+        Pusher.logToConsole = true;
+
+        var pusher = new Pusher('9f9514edd43b1637ff61', {
+          cluster: 'eu'
+        });
+
+        var channel = pusher.subscribe('my-channel-ap');
+        channel.bind('my-event-ap', function(data) {
+            Swal.fire({
+                        title: "Alert!",
+                        text: "Nouvelle(s) action(s) préventive(s)",
+                        icon: "info",
+                        confirmButtonColor: "#00d819",
+                        confirmButtonText: "OK",
+                        allowOutsideClick: false,
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            location.reload();
+                        }
+                    });
+        });
+    </script>
 
 
 @endsection

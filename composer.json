@@ -12,6 +12,7 @@
         "laravel/sanctum": "^2.11",
         "laravel/tinker": "^2.5",
         "phpmailer/phpmailer": "^6.8",
+        "pusher/pusher-php-server": "^7.2",
         "smsfactor/smsfactor-laravel": "^1.1",
         "stichoza/google-translate-php": "^4.1",
         "twilio/sdk": "^7.12"

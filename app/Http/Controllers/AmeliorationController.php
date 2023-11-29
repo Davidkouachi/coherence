@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
+use App\Events\NotificationAcorrective;
+
 use App\Models\Processuse;
 use App\Models\Objectif;
 use App\Models\Resva;
@@ -24,6 +26,9 @@ use App\Models\Risquetrouver;
 
 use Illuminate\Support\Facades\Validator;
 use Carbon\Carbon;
+
+use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\Exception;
 
 class AmeliorationController extends Controller
 {
@@ -159,7 +164,10 @@ class AmeliorationController extends Controller
               
         }
 
-        $postes = Poste::all();
+        $postes = Poste::join('users', 'users.poste_id', 'postes.id')
+                        ->select('postes.*') // Sélectionne les colonnes de la table 'postes'
+                        ->distinct() // Rend les résultats uniques
+                        ->get();
         $processuss = Processuse::all();
 
         return view('add.ficheamelioration', 
@@ -252,6 +260,10 @@ class AmeliorationController extends Controller
         $date_action = $request->input('date_action');
         $commentaire = $request->input('commentaire');
 
+        $choix_alert_alert = $request->input('choix_alert_alert');
+        $choix_alert_email = $request->input('choix_alert_email');
+        $choix_alert_sms = $request->input('choix_alert_sms');
+
         foreach ($nature as $index => $valeur) {
 
             $risque_id = $risque[$index];
@@ -298,6 +310,39 @@ class AmeliorationController extends Controller
 
                 }
 
+                if ($choix_alert_email === 'email') {
+
+                    $user = User::join('postes', 'users.poste_id', 'postes.id')
+                                ->where('postes.id', $poste_id[$index])
+                                ->select('users.*')
+                                ->first();
+                    if ($user) {
+
+                        $mail = new PHPMailer(true);
+                        $mail->isHTML(true);
+                        $mail->isSMTP();
+                        $mail->Host = 'smtp.gmail.com';
+                        $mail->SMTPAuth = true;
+                        $mail->Username = 'coherencemail01@gmail.com';
+                        $mail->Password = 'kiur ejgn ijqt kxam';
+                        $mail->SMTPSecure = 'ssl';
+                        $mail->Port = 465;
+                        // Destinataire, sujet et contenu de l'email
+                        $mail->setFrom('coherencemail01@gmail.com', 'Coherence');
+                        $mail->addAddress($user->email);
+                        $mail->Subject = 'Nouveau Action';
+                        $mail->Body = 'ALERT ! <br><br>'.'<br>'
+                            . 'Nouvelle Action Corrective à réaliser';
+                        // Envoi de l'email
+                        $mail->send();
+                    }
+
+                }
+
+                if ($choix_alert_sms === 'sms') {
+
+                }
+
             }
 
             if ($nature[$index] === 'non-accepte') {
@@ -336,6 +381,39 @@ class AmeliorationController extends Controller
 
                 }
 
+                if ($choix_alert_email === 'email') {
+
+                    $user = User::join('postes', 'users.poste_id', 'postes.id')
+                                ->where('postes.id', $poste_id[$index])
+                                ->select('users.*')
+                                ->first();
+                    if ($user) {
+
+                        $mail = new PHPMailer(true);
+                        $mail->isHTML(true);
+                        $mail->isSMTP();
+                        $mail->Host = 'smtp.gmail.com';
+                        $mail->SMTPAuth = true;
+                        $mail->Username = 'coherencemail01@gmail.com';
+                        $mail->Password = 'kiur ejgn ijqt kxam';
+                        $mail->SMTPSecure = 'ssl';
+                        $mail->Port = 465;
+                        // Destinataire, sujet et contenu de l'email
+                        $mail->setFrom('coherencemail01@gmail.com', 'Coherence');
+                        $mail->addAddress($user->email);
+                        $mail->Subject = 'Nouveau Action';
+                        $mail->Body = 'ALERT ! <br><br>'.'<br>'
+                            . 'Nouvelle Action Corrective à réaliser';
+                        // Envoi de l'email
+                        $mail->send();
+                    }
+
+                }
+
+                if ($choix_alert_sms === 'sms') {
+
+                }
+
             }
 
             if ($nature[$index] === 'new') {
@@ -370,9 +448,49 @@ class AmeliorationController extends Controller
                 $suivic->save();
             }
 
+            if ($choix_alert_email === 'email') {
+
+                    $user = User::join('postes', 'users.poste_id', 'postes.id')
+                                ->where('postes.id', $poste_id[$index])
+                                ->select('users.*')
+                                ->first();
+                    if ($user) {
+
+                        $mail = new PHPMailer(true);
+                        $mail->isHTML(true);
+                        $mail->isSMTP();
+                        $mail->Host = 'smtp.gmail.com';
+                        $mail->SMTPAuth = true;
+                        $mail->Username = 'coherencemail01@gmail.com';
+                        $mail->Password = 'kiur ejgn ijqt kxam';
+                        $mail->SMTPSecure = 'ssl';
+                        $mail->Port = 465;
+                        // Destinataire, sujet et contenu de l'email
+                        $mail->setFrom('coherencemail01@gmail.com', 'Coherence');
+                        $mail->addAddress($user->email);
+                        $mail->Subject = 'Nouveau Action';
+                        $mail->Body = 'ALERT ! <br><br>'.'<br>'
+                            . 'Nouvelle Action Corrective à réaliser';
+                        // Envoi de l'email
+                        $mail->send();
+                    }
+
+                }
+
+                if ($choix_alert_sms === 'sms') {
+
+                }
+
         }
 
         if ($am) {
+
+                if ($choix_alert_alert === 'alert') {
+
+                    event(new NotificationAcorrective());
+
+                }
+
             return redirect()
                 ->back()
                 ->with('ajouter', 'Enregistrement éffectuée.');
