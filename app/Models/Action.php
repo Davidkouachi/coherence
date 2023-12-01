@@ -16,6 +16,8 @@ class Action extends Model
         'id',
         'action',
         'type',
+        'accepte',
+        'commentaire',
         'poste_id',
         'risque_id',
     ];

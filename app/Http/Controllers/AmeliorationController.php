@@ -35,7 +35,7 @@ class AmeliorationController extends Controller
    public function index()
    {
         $risques = Risque::join('postes', 'risques.poste_id', '=', 'postes.id')
-                ->where('risques.statut', '!=', 'amelioration' )
+                ->where('risques.statut', '=', 'valider' )
                 ->select('risques.*','postes.nom as validateur')
                 ->get();
 
@@ -102,7 +102,7 @@ class AmeliorationController extends Controller
 
             $risques2 = Risque::join('postes', 'risques.poste_id', '=', 'postes.id')
                     ->where('risques.id', $causes_select->risque_id )
-                    ->where('risques.statut', '!=', 'amelioration' )
+                    ->where('risques.statut', '=', 'valider' )
                     ->select('risques.*','postes.nom as validateur')
                     ->first();
 
@@ -264,21 +264,20 @@ class AmeliorationController extends Controller
         $choix_alert_email = $request->input('choix_alert_email');
         $choix_alert_sms = $request->input('choix_alert_sms');
 
+        $am = new Amelioration();
+        $am->type = $type;
+        $am->date_fiche = $date_fiche;
+        $am->lieu =$lieu;
+        $am->detecteur = $detecteur;
+        $am->non_conformite = $non_conformite;
+        $am->consequence = $consequence;
+        $am->cause = $cause;
+        $am->choix_select = $choix_select;
+        $am->save();
+
         foreach ($nature as $index => $valeur) {
 
             $risque_id = $risque[$index];
-
-            $am = new Amelioration();
-            $am->type = $type;
-            $am->date_fiche = $date_fiche;
-            $am->lieu =$lieu;
-            $am->detecteur = $detecteur;
-            $am->non_conformite = $non_conformite;
-            $am->consequence = $consequence;
-            $am->cause = $cause;
-            $am->choix_select = $choix_select;
-            //$am->nature = $nature[$index];
-            $am->save();
 
             if ($nature[$index] === 'accepte') {
 
@@ -307,39 +306,6 @@ class AmeliorationController extends Controller
                     $risque->amelioration_id = $am->id;
                     $risque->risque_id = $trouve_id[$index];
                     $risque->save();
-
-                }
-
-                if ($choix_alert_email === 'email') {
-
-                    $user = User::join('postes', 'users.poste_id', 'postes.id')
-                                ->where('postes.id', $poste_id[$index])
-                                ->select('users.*')
-                                ->first();
-                    if ($user) {
-
-                        $mail = new PHPMailer(true);
-                        $mail->isHTML(true);
-                        $mail->isSMTP();
-                        $mail->Host = 'smtp.gmail.com';
-                        $mail->SMTPAuth = true;
-                        $mail->Username = 'coherencemail01@gmail.com';
-                        $mail->Password = 'kiur ejgn ijqt kxam';
-                        $mail->SMTPSecure = 'ssl';
-                        $mail->Port = 465;
-                        // Destinataire, sujet et contenu de l'email
-                        $mail->setFrom('coherencemail01@gmail.com', 'Coherence');
-                        $mail->addAddress($user->email);
-                        $mail->Subject = 'Nouveau Action';
-                        $mail->Body = 'ALERT ! <br><br>'.'<br>'
-                            . 'Nouvelle Action Corrective à réaliser';
-                        // Envoi de l'email
-                        $mail->send();
-                    }
-
-                }
-
-                if ($choix_alert_sms === 'sms') {
 
                 }
 
@@ -381,39 +347,6 @@ class AmeliorationController extends Controller
 
                 }
 
-                if ($choix_alert_email === 'email') {
-
-                    $user = User::join('postes', 'users.poste_id', 'postes.id')
-                                ->where('postes.id', $poste_id[$index])
-                                ->select('users.*')
-                                ->first();
-                    if ($user) {
-
-                        $mail = new PHPMailer(true);
-                        $mail->isHTML(true);
-                        $mail->isSMTP();
-                        $mail->Host = 'smtp.gmail.com';
-                        $mail->SMTPAuth = true;
-                        $mail->Username = 'coherencemail01@gmail.com';
-                        $mail->Password = 'kiur ejgn ijqt kxam';
-                        $mail->SMTPSecure = 'ssl';
-                        $mail->Port = 465;
-                        // Destinataire, sujet et contenu de l'email
-                        $mail->setFrom('coherencemail01@gmail.com', 'Coherence');
-                        $mail->addAddress($user->email);
-                        $mail->Subject = 'Nouveau Action';
-                        $mail->Body = 'ALERT ! <br><br>'.'<br>'
-                            . 'Nouvelle Action Corrective à réaliser';
-                        // Envoi de l'email
-                        $mail->send();
-                    }
-
-                }
-
-                if ($choix_alert_sms === 'sms') {
-
-                }
-
             }
 
             if ($nature[$index] === 'new') {
@@ -450,36 +383,31 @@ class AmeliorationController extends Controller
 
             if ($choix_alert_email === 'email') {
 
-                    $user = User::join('postes', 'users.poste_id', 'postes.id')
-                                ->where('postes.id', $poste_id[$index])
-                                ->select('users.*')
-                                ->first();
-                    if ($user) {
+                $user = User::join('postes', 'users.poste_id', 'postes.id')
+                            ->where('postes.id', $poste_id[$index])
+                            ->select('users.*')
+                            ->first();
+                if ($user) {
 
-                        $mail = new PHPMailer(true);
-                        $mail->isHTML(true);
-                        $mail->isSMTP();
-                        $mail->Host = 'smtp.gmail.com';
-                        $mail->SMTPAuth = true;
-                        $mail->Username = 'coherencemail01@gmail.com';
-                        $mail->Password = 'kiur ejgn ijqt kxam';
-                        $mail->SMTPSecure = 'ssl';
-                        $mail->Port = 465;
-                        // Destinataire, sujet et contenu de l'email
-                        $mail->setFrom('coherencemail01@gmail.com', 'Coherence');
-                        $mail->addAddress($user->email);
-                        $mail->Subject = 'Nouveau Action';
-                        $mail->Body = 'ALERT ! <br><br>'.'<br>'
-                            . 'Nouvelle Action Corrective à réaliser';
-                        // Envoi de l'email
-                        $mail->send();
-                    }
+                    $mail = new PHPMailer(true);
+                    $mail->isHTML(true);
+                    $mail->isSMTP();
+                    $mail->Host = 'smtp.gmail.com';
+                    $mail->SMTPAuth = true;
+                    $mail->Username = 'coherencemail01@gmail.com';
+                    $mail->Password = 'kiur ejgn ijqt kxam';
+                    $mail->SMTPSecure = 'ssl';
+                    $mail->Port = 465;
+                    // Destinataire, sujet et contenu de l'email
+                    $mail->setFrom('coherencemail01@gmail.com', 'Coherence');
+                    $mail->addAddress($user->email);
+                    $mail->Subject = 'ALERT !';
+                    $mail->Body = 'Nouvelle(s) Action(s) Corrective(s)';
+                    // Envoi de l'email
+                    $mail->send();
+                 }
 
-                }
-
-                if ($choix_alert_sms === 'sms') {
-
-                }
+            }
 
         }
 
@@ -505,8 +433,14 @@ class AmeliorationController extends Controller
 
     public function index_liste()
     {
+        $ams = Amelioration::all();
 
-        return view('liste.amelioration');
+        foreach ($ams as $am) {
+            $am->nbre_action = Suivi_amelioration::where('amelioration_id', '=', $am->id)->count();
+        }
+
+        return view('liste.amelioration', ['ams' => $ams]);
     }
+
 
 }

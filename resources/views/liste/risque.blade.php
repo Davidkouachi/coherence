@@ -392,6 +392,20 @@
                                                             </div>
                                                         </div>
                                                     </div>
+                                                    <div class="col-lg-12">
+                                                        <div class="form-group text-center">
+                                                            <div class="form-group">
+                                                                <div class="form-control-wrap">
+                                                                    @if ($actionsDatas['accepte'] === 'oui')
+                                                                    <input value="Valider" readonly type="text" class="form-control text-center bg-success text-white">
+                                                                    @endif
+                                                                    @if ($actionsDatas['accepte'] !== 'oui')
+                                                                    <input value="Non Valider" readonly type="text" class="form-control text-center bg-danger text-white">
+                                                                    @endif
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
                                                 </div>
                                         </div>
                                     </div>
@@ -421,6 +435,20 @@
                                                             <div class="form-group">
                                                                 <div class="form-control-wrap">
                                                                     <input value="{{ $actionsDatas['responsable'] }}" readonly type="text" class="form-control text-center">
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-lg-12">
+                                                        <div class="form-group text-center">
+                                                            <div class="form-group">
+                                                                <div class="form-control-wrap">
+                                                                    @if ($actionsDatas['accepte'] === 'oui')
+                                                                    <input value="Valider" readonly type="text" class="form-control text-center bg-success text-white">
+                                                                    @endif
+                                                                    @if ($actionsDatas['accepte'] !== 'oui')
+                                                                    <input value="Non Valider" readonly type="text" class="form-control text-center bg-danger text-white">
+                                                                    @endif
                                                                 </div>
                                                             </div>
                                                         </div>

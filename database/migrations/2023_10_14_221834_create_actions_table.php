@@ -15,11 +15,13 @@ class CreateActionsTable extends Migration
     {
         Schema::create('actions', function (Blueprint $table) {
             $table->id();
-            $table->string('action')->nullable();
-            $table->string('type')->nullable();
-            $table->unsignedBigInteger('poste_id')->nullable();
+            $table->string('action');
+            $table->string('type');
+            $table->string('accepte');
+            $table->string('commentaire')->nullable();
+            $table->unsignedBigInteger('poste_id');
             $table->foreign('poste_id')->references('id')->on('postes');
-            $table->unsignedBigInteger('risque_id')->nullable();
+            $table->unsignedBigInteger('risque_id');
             $table->foreign('risque_id')->references('id')->on('risques');
             $table->timestamps();
         });

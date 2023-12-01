@@ -141,10 +141,10 @@
                                 class="icon ni ni-cross"></em></a>
                     </div>
                     <div class="modal-body">
-                        <form class="nk-block" >
+                        <form class="nk-block" method="post" action="/cause_valider" >
                             <div class="row g-gs">
                                 <div class="col-md-12 col-xxl-122" id="groupesContainer">
-                                    <div class="card card-bordered">
+                                    <div class="card ">
                                         <div class="card-inner">
                                                 <div class="row g-4">
                                                     <div class="col-lg-6">
@@ -154,6 +154,7 @@
                                                             </label>
                                                             <div class="form-control-wrap">
                                                                 <input value="{{ $risque->nom_processus }}" readonly type="text" class="form-control" id="Cause">
+                                                                <input style="display: none" value="{{ $risque->id }}" readonly name="risque_id" type="text">
                                                             </div>
                                                         </div>
                                                     </div>
@@ -370,10 +371,27 @@
                                                             </label>
                                                             <div class="form-control-wrap">
                                                                 <input value="{{ $actionsDatas['action'] }}" readonly type="text" class="form-control text-center" id="preventif">
+                                                                <input style="display: none" value="{{ $actionsDatas['action_idp'] }}" readonly name="action_idp[]" type="text">
                                                             </div>
                                                         </div>
                                                     </div>
-                                                    <div class="col-lg-12">
+                                                    <div class="col-lg-4">
+                                                        <div class="form-group">
+                                                            <label class="form-label" for="email-address-1">
+                                                                Validé
+                                                            </label>
+                                                            <select required name="acceptep[]" name="efficacite" class="form-select ">
+                                                                <option value="">
+                                                                    Choisir
+                                                                </option>
+                                                                <option value="oui">
+                                                                    Oui
+                                                                </option>
+                                                                <option value="non">
+                                                                    Non
+                                                                </option>
+                                                            </select>
+                                                        </div>
                                                         <div class="form-group text-center">
                                                             <label class="form-label" for="email-address-1">
                                                                 Responsabilité
@@ -381,7 +399,18 @@
                                                             <div class="form-group">
                                                                 <div class="form-control-wrap">
                                                                     <input value="{{ $actionsDatas['responsable'] }}" readonly type="text" class="form-control text-center">
+                                                                    <input style="display: none" value="{{ $actionsDatas['poste_idp'] }}" readonly name="poste_idp[]" type="text">
                                                                 </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-lg-8">
+                                                        <div class="form-group text-center">
+                                                            <label class="form-label" for="description">
+                                                                Commentaire
+                                                            </label>
+                                                            <div class="form-control-wrap">
+                                                                <textarea name="commentairep[]" class="form-control no-resize" id="default-textarea"></textarea>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -402,11 +431,28 @@
                                                                 Action corrective {{ $key+1 }}
                                                             </label>
                                                             <div class="form-control-wrap">
-                                                                <input value="{{ $actionsDatas['action'] }}" readonly type="text" class="form-control text-center" id="preventif">
+                                                                <input value="{{ $actionsDatas['action'] }}" readonly name="actionc" type="text" class="form-control text-center" id="preventif">
+                                                                <input style="display: none" value="{{ $actionsDatas['action_idc'] }}" readonly name="action_idc[]" type="text">
                                                             </div>
                                                         </div>
                                                     </div>
-                                                    <div class="col-lg-12">
+                                                    <div class="col-lg-4">
+                                                        <div class="form-group">
+                                                            <label class="form-label" for="email-address-1">
+                                                                Validé
+                                                            </label>
+                                                            <select required name="acceptec[]" class="form-select ">
+                                                                <option value="">
+                                                                    Choisir
+                                                                </option>
+                                                                <option value="oui">
+                                                                    Oui
+                                                                </option>
+                                                                <option value="non">
+                                                                    Non
+                                                                </option>
+                                                            </select>
+                                                        </div>
                                                         <div class="form-group text-center">
                                                             <label class="form-label" for="email-address-1">
                                                                 Responsabilité
@@ -414,7 +460,18 @@
                                                             <div class="form-group">
                                                                 <div class="form-control-wrap">
                                                                     <input value="{{ $actionsDatas['responsable'] }}" readonly type="text" class="form-control text-center">
+                                                                    <input style="display: none" value="{{ $actionsDatas['poste_idc'] }}" readonly name="poste_idc[]" type="text">
                                                                 </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-lg-8">
+                                                        <div class="form-group text-center">
+                                                            <label class="form-label" for="description">
+                                                                Commentaire
+                                                            </label>
+                                                            <div class="form-control-wrap">
+                                                                <textarea name="commentairec[]" class="form-control no-resize" id="default-textarea"></textarea>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -424,7 +481,7 @@
                                 </div>
                                 @endforeach
                                 <div class="col-md-12 col-xxl-12">
-                                    <div class="card card-bordered card-preview">
+                                    <div class="card card-preview">
                                         <div class="card-inner row g-gs">
                                             <div class="col-lg-12">
                                                 <div class="form-group text-center">
@@ -436,6 +493,20 @@
                                                             <input value="{{ $risque->validateur }}" readonly type="text" class="form-control text-center">
                                                         </div>
                                                     </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-12 col-xxl-12">
+                                    <div class="card card-preview">
+                                        <div class="card-inner row g-gs">
+                                            <div class="col-12">
+                                                <div class="form-group text-center">
+                                                    <button type="submit" class="btn btn-lg btn-success btn-dim ">
+                                                        <em class="ni ni-check me-2"></em>
+                                                        <em>Enregistrer</em>
+                                                    </button >
                                                 </div>
                                             </div>
                                         </div>

@@ -129,6 +129,7 @@ class ProcessusController extends Controller
                 $nouvelleActionP->poste_id = $responsable_idp[$index];
                 $nouvelleActionP->risque_id = $risque_id;
                 $nouvelleActionP->type = 'preventive';
+                $nouvelleActionP->accepte = 'non_valider';
                 $nouvelleActionP->save();
 
                 $suivip = new Suivi_action();
@@ -148,6 +149,7 @@ class ProcessusController extends Controller
             $nouvelleActionC->poste_id = $responsable_idc[$index];
             $nouvelleActionC->risque_id = $risque_id;
             $nouvelleActionC->type = 'corrective';
+            $nouvelleActionC->accepte = 'non_valider';
             $nouvelleActionC->save();
 
         }
@@ -184,9 +186,8 @@ class ProcessusController extends Controller
                     // Destinataire, sujet et contenu de l'email
                     $mail->setFrom('coherencemail01@gmail.com', 'Coherence');
                     $mail->addAddress($user->email);
-                    $mail->Subject = 'Nouveau Risque';
-                    $mail->Body = 'ALERT ! <br><br>'.'<br>'
-                        . 'Nouveau Risque a Valider';
+                    $mail->Subject = 'ALERT !';
+                    $mail->Body = 'Nouveau Risque';
                     // Envoi de l'email
                     $mail->send();
                 }
@@ -258,7 +259,7 @@ class ProcessusController extends Controller
             $actionsp = Action::join('postes', 'actions.poste_id', '=', 'postes.id')
                 ->where('actions.risque_id', $risque->id)
                 ->where('actions.type', 'preventive')
-                ->select('actions.*','postes.nom as responsable')
+                ->select('actions.*','postes.nom as responsable', 'postes.id as poste_id')
                 ->get();
 
             $actionsDatap[$risque->id] = [];
@@ -266,15 +267,18 @@ class ProcessusController extends Controller
             foreach($actionsp as $actionp)
             {
                 $actionsDatap[$risque->id][] = [
+                    'action_idp' => $actionp->id,
                     'action' => $actionp->action,
+                    'accepte' => $actionp->accepte,
                     'responsable' => $actionp->responsable,
+                    'poste_idp' => $actionp->poste_id,
                 ];
             }
 
             $actionsc = Action::join('postes', 'actions.poste_id', '=', 'postes.id')
                 ->where('actions.risque_id', $risque->id)
                 ->where('actions.type', 'corrective')
-                ->select('actions.*','postes.nom as responsable')
+                ->select('actions.*','postes.nom as responsable', 'postes.id as poste_id')
                 ->get();
 
             $actionsDatac[$risque->id] = [];
@@ -282,8 +286,11 @@ class ProcessusController extends Controller
             foreach($actionsc as $actionc)
             {
                 $actionsDatac[$risque->id][] = [
+                    'action_idc' => $actionc->id,
                     'action' => $actionc->action,
+                    'accepte' => $actionc->accepte,
                     'responsable' => $actionc->responsable,
+                    'poste_idc' => $actionp->poste_id,
                 ];
             }
 
@@ -377,9 +384,68 @@ class ProcessusController extends Controller
 
     }
 
-    public function cause_valider($id)
+    public function cause_valider(Request $request)
     {
-        $valide = Risque::where('id', $id)->first();
+        $risque_id = $request->input('risque_id');
+
+        $action_idp = $request->input('action_idp');
+        $poste_idp = $request->input('poste_idp');
+        $acceptep = $request->input('acceptep');
+        $commentairep = $request->input('commentairep');
+
+        $action_idc = $request->input('action_idc');
+        $poste_idc = $request->input('poste_idc');
+        $acceptec = $request->input('acceptec');
+        $commentairec = $request->input('commentairec');
+
+        foreach ($action_idp as $index => $valeur) {
+            $action = Action::where('id', $action_idp[$index])->first();
+            $action->accepte = $acceptep;
+            $action->commentaire = $commentairep;
+            $action->update();
+        }
+
+        foreach ($action_idc as $index => $valeur) {
+            $action = Action::where('id', $action_idc[$index])->first();
+            $action->accepte = $acceptec;
+            $action->commentaire = $commentairec;
+            $action->update();
+        }
+
+        $actions = Action::where('risque_id', $risque_id)->first();
+
+        foreach ($actions as $action) {
+            if ($action->accepte !== 'oui') {
+                
+                $user = User::join('postes', 'users.poste_id', 'postes.id')
+                        ->where('postes.nom', 'OPÉRATEUR DE SAISIE')
+                        ->select('users.*')
+                        ->first();
+
+                $mail = new PHPMailer(true);
+                $mail->isHTML(true);
+                $mail->isSMTP();
+                $mail->Host = 'smtp.gmail.com';
+                $mail->SMTPAuth = true;
+                $mail->Username = 'coherencemail01@gmail.com';
+                $mail->Password = 'kiur ejgn ijqt kxam';
+                $mail->SMTPSecure = 'ssl';
+                $mail->Port = 465;
+                // Destinataire, sujet et contenu de l'email
+                $mail->setFrom('coherencemail01@gmail.com', 'Coherence');
+                $mail->addAddress($user->email);
+                $mail->Subject = 'ALERT !';
+                $mail->Body = 'Action non accepté';
+                // Envoi de l'email
+                $mail->send();
+
+                return redirect()
+                    ->back()
+                    ->with('ajouter', 'Modification éffectuée.');
+            }
+        }
+
+        $valide = Risque::where('id', $risque_id)->first();
         $valide->date_validation = now()->format('Y-m-d\TH:i');
         $valide->statut = 'valider';
         $valide->update();
@@ -409,9 +475,8 @@ class ProcessusController extends Controller
             // Destinataire, sujet et contenu de l'email
             $mail->setFrom('coherencemail01@gmail.com', 'Coherence');
             $mail->addAddress($user->email);
-            $mail->Subject = 'Nouveau Risque';
-            $mail->Body = 'ALERT ! <br><br>'.'<br>'
-                . 'Nouveau Risque a Valider';
+            $mail->Subject = 'ALERT !';
+            $mail->Body = 'Nouvelle Action Préventive';
             // Envoi de l'email
             $mail->send();
 

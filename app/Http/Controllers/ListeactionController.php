@@ -39,6 +39,7 @@ class ListeactionController extends Controller
                                     ->join('risques', 'actions.risque_id', 'risques.id')
                                     ->join('processuses', 'risques.processus_id', 'processuses.id')
                                     ->where('actions.type', '=', 'preventive')
+                                    ->where('actions.accepte', '=', 'oui')
                                     ->where('Suivi_actions.statut', '=', 'realiser')
                                     ->select('Suivi_actions.*','actions.action as action', 'processuses.nom as processus', 'risques.nom as risque','postes.nom as poste', 'risques.nom as risque' )
                                     ->get();
@@ -85,6 +86,7 @@ class ListeactionController extends Controller
                 $ac = Action::join('risques', 'actions.risque_id', 'risques.id')
                             ->join('postes', 'actions.poste_id', 'postes.id')
                             ->where('actions.id', $action->action_id)
+                            ->where('actions.accepte', '=', 'oui')
                             ->select('actions.*', 'risques.nom as risque', 'postes.nom as poste')
                             ->first();
 

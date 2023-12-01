@@ -74,6 +74,7 @@ class ListerisqueController extends Controller
             {
                 $actionsDatap[$risque->id][] = [
                     'action' => $actionp->action,
+                    'accepte' => $actionp->accepte,
                     'type' => $actionp->type,
                     'responsable' => $actionp->responsable,
                 ];
@@ -91,6 +92,7 @@ class ListerisqueController extends Controller
             {
                 $actionsDatac[$risque->id][] = [
                     'action' => $actionc->action,
+                    'accepte' => $actionc->accepte,
                     'responsable' => $actionc->responsable,
                 ];
             }

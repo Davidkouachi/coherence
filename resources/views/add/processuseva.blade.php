@@ -496,13 +496,13 @@
                                         </div>
                                         <div class="col-lg-4 text-left">
                                             <div class="custom-control custom-checkbox">
-                                                <input name="choix_alert_email" value="email" required type="checkbox" class="custom-control-input" id="customCheck2">
+                                                <input name="choix_alert_email" value="email" type="checkbox" class="custom-control-input" id="customCheck2">
                                                 <label class="custom-control-label" for="customCheck2">Par Email</label>
                                             </div>
                                         </div>
                                         <div class="col-lg-4 text-left">
                                             <div class="custom-control custom-checkbox">
-                                                <input name="choix_alert_sms" value="sms" required disabled type="checkbox" class="custom-control-input" id="customCheck3">
+                                                <input name="choix_alert_sms" value="sms" disabled type="checkbox" class="custom-control-input" id="customCheck3">
                                                 <label class="custom-control-label" for="customCheck3">Par Sms</label>
                                             </div>
                                         </div>

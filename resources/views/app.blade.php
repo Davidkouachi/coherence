@@ -572,6 +572,16 @@
         {{ session()->forget('error') }}
     @endif
 
+    @if (session('info'))
+        <script>
+            toastr.info("{{ session('info') }}"," ",
+            {positionClass:"toast-top-left",timeOut:5e3,debug:!1,newestOnTop:!0,
+            preventDuplicates:!0,showDuration:"300",hideDuration:"1000",extendedTimeOut:"1000",
+            showEasing:"swing",showMethod:"fadeIn",hideMethod:"fadeOut"})
+        </script>
+        {{ session()->forget('info') }}
+    @endif
+
 </body>
 <!-- Mirrored from dashlite.net/demo8/ by HTTrack Website Copier/3.x [XR&CO'2014], Tue, 14 Mar 2023 15:17:24 GMT -->
 
