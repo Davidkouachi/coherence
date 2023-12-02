@@ -38,7 +38,7 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/traitement_prc', [ProcessusController::class, 'add_prc'])->name('add_prc');
 
     Route::get('/Validation', [ProcessusController::class, 'index_validation_processus'])->name('index_validation_processus');
-    Route::get('/cause_valider/{id}', [ProcessusController::class, 'cause_valider'])->name('cause_valider');
+    Route::post('/cause_valider', [ProcessusController::class, 'cause_valider'])->name('cause_valider');
     Route::get('/rejet/{id}', [ProcessusController::class, 'cause_rejet'])->name('cause_rejet');
 
     Route::get('/Liste processus', [ListeprocessusController::class, 'index_listeprocessus'])->name('index_listeprocessus');

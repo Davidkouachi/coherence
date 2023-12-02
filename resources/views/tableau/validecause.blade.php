@@ -141,7 +141,8 @@
                                 class="icon ni ni-cross"></em></a>
                     </div>
                     <div class="modal-body">
-                        <form class="nk-block" method="post" action="/cause_valider" >
+                        <form class="nk-block" method="post" action="{{ route('cause_valider') }}" >
+                            @csrf
                             <div class="row g-gs">
                                 <div class="col-md-12 col-xxl-122" id="groupesContainer">
                                     <div class="card ">

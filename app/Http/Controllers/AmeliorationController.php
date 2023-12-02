@@ -89,7 +89,10 @@ class AmeliorationController extends Controller
         }
 
 
-        $causes_selects = Cause::all();
+        $causes_selects = Cause::join('risques', 'causes.risque_id', '=', 'risques.id')
+                                ->where('risques.statut', '=', 'valider' )
+                                ->select('causes.*')
+                                ->get();
 
         $causesData2 = [];
         $actionsData2 = [];
@@ -105,34 +108,40 @@ class AmeliorationController extends Controller
                     ->where('risques.statut', '=', 'valider' )
                     ->select('risques.*','postes.nom as validateur')
                     ->first();
+            if($risques2) {
 
-            $causes_select->nom_risque = $risques2->nom;
-            $causes_select->vraisemblence = $risques2->vraisemblence;
-            $causes_select->gravite = $risques2->gravite;
-            $causes_select->evaluation = $risques2->evaluation;
-            $causes_select->cout = $risques2->cout;
-            $causes_select->vraisemblence_residuel = $risques2->vraisemblence_residuel;
-            $causes_select->gravite_residuel = $risques2->gravite_residuel;
-            $causes_select->evaluation_residuel = $risques2->evaluation_residuel;
-            $causes_select->cout_residuel = $risques2->cout_residuel;
-            $causes_select->statut = $risques2->statut;
-            $causes_select->date_validation = $risques2->date_validation;
-            $causes_select->traitement = $risques2->traitement;
-            $causes_select->validateur = $risques2->validateur;
+                $causes_select->nom_risque = $risques2->nom;
+                $causes_select->vraisemblence = $risques2->vraisemblence;
+                $causes_select->gravite = $risques2->gravite;
+                $causes_select->evaluation = $risques2->evaluation;
+                $causes_select->cout = $risques2->cout;
+                $causes_select->vraisemblence_residuel = $risques2->vraisemblence_residuel;
+                $causes_select->gravite_residuel = $risques2->gravite_residuel;
+                $causes_select->evaluation_residuel = $risques2->evaluation_residuel;
+                $causes_select->cout_residuel = $risques2->cout_residuel;
+                $causes_select->statut = $risques2->statut;
+                $causes_select->date_validation = $risques2->date_validation;
+                $causes_select->traitement = $risques2->traitement;
+                $causes_select->validateur = $risques2->validateur;
 
-            $processus2 = Processuse::where('id', $risques2->processus_id)->first();
-            $causes_select->nom_processus = $processus2->nom;
+                $processus2 = Processuse::where('id', $risques2->processus_id)->first();
+                if($processus2) {
+                    $causes_select->nom_processus = $processus2->nom;
+                }
+            }
 
             $causes2 = Cause::where('causes.risque_id', $causes_select->risque_id)->get();
+            if($causes2) {
 
-            $causesData2[$causes_select->risque_id] = [];
+                $causesData2[$causes_select->risque_id] = [];
 
-            foreach($causes2 as $caus2)
-            {
-               $causesData2[$caus2->risque_id][] = [
-                    'cause' => $caus2->nom,
-                    'dispositif' => $caus2->dispositif,
-                ];
+                foreach($causes2 as $caus2)
+                {
+                   $causesData2[$caus2->risque_id][] = [
+                        'cause' => $caus2->nom,
+                        'dispositif' => $caus2->dispositif,
+                    ];
+                }
             }
 
             $actions2 = Action::join('postes', 'actions.poste_id', '=', 'postes.id')
@@ -140,28 +149,30 @@ class AmeliorationController extends Controller
                   ->select('actions.*','postes.nom as responsable')
                   ->get();
 
-            $actionsData2[$causes_select->risque_id] = [];
+            if($actions2) {
 
-                  
-            foreach($actions2 as $action2)
-            {
-                if ($action2->type === 'preventive') {
+                $actionsData2[$causes_select->risque_id] = [];
 
-                    $actionsData2[$causes_select->risque_id][] = [
-                        'action' => $action2->action,
-                        'type' => $action2->type,
-                        'responsable' => $action2->responsable,
-                    ];
-                } else if($action2->type === 'corrective') {
+                foreach($actions2 as $action2)
+                {
+                    if ($action2->type === 'preventive') {
 
-                    $actionsData2[$causes_select->risque_id][] = [
-                        'action' => $action2->action,
-                        'responsable' => $action2->responsable,
-                        'type' => $action2->type,
-                    ];
+                        $actionsData2[$causes_select->risque_id][] = [
+                            'action' => $action2->action,
+                            'type' => $action2->type,
+                            'responsable' => $action2->responsable,
+                        ];
+                    } else if($action2->type === 'corrective') {
+
+                        $actionsData2[$causes_select->risque_id][] = [
+                            'action' => $action2->action,
+                            'responsable' => $action2->responsable,
+                            'type' => $action2->type,
+                        ];
+                    }
                 }
             }
-              
+
         }
 
         $postes = Poste::join('users', 'users.poste_id', 'postes.id')
