@@ -148,7 +148,7 @@
                         <form class="nk-block" >
                             <div class="row g-gs">
                                 <div class="col-md-12 col-xxl-122" id="groupesContainer">
-                                    <div class="card card-bordered">
+                                    <div class="card ">
                                         <div class="card-inner">
                                                 <div class="row g-4">
                                                     <div class="col-lg-6">
@@ -397,10 +397,10 @@
                                                             <div class="form-group">
                                                                 <div class="form-control-wrap">
                                                                     @if ($actionsDatas['accepte'] === 'oui')
-                                                                    <input value="Valider" readonly type="text" class="form-control text-center bg-success text-white">
+                                                                    <input value="Accepté" readonly type="text" class="form-control text-center bg-success text-white">
                                                                     @endif
                                                                     @if ($actionsDatas['accepte'] !== 'oui')
-                                                                    <input value="Non Valider" readonly type="text" class="form-control text-center bg-danger text-white">
+                                                                    <input value="Non Accepté" readonly type="text" class="form-control text-center bg-danger text-white">
                                                                     @endif
                                                                 </div>
                                                             </div>
@@ -444,10 +444,10 @@
                                                             <div class="form-group">
                                                                 <div class="form-control-wrap">
                                                                     @if ($actionsDatas['accepte'] === 'oui')
-                                                                    <input value="Valider" readonly type="text" class="form-control text-center bg-success text-white">
+                                                                    <input value="Accepté" readonly type="text" class="form-control text-center bg-success text-white">
                                                                     @endif
                                                                     @if ($actionsDatas['accepte'] !== 'oui')
-                                                                    <input value="Non Valider" readonly type="text" class="form-control text-center bg-danger text-white">
+                                                                    <input value="Non Accepté" readonly type="text" class="form-control text-center bg-danger text-white">
                                                                     @endif
                                                                 </div>
                                                             </div>

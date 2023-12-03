@@ -242,25 +242,12 @@ class ProcessusController extends Controller
             $processus = Processuse::where('id', $risque->processus_id)->first();
             $risque->nom_processus = $processus->nom;
 
-            $actionsc = Action::join('postes', 'actions.poste_id', '=', 'postes.id')
-                ->where('actions.risque_id', $risque->id)
-                ->where('actions.type', 'corrective')
-                ->select('actions.*','postes.nom as responsable_name')
-                ->get();
-            $risque->nbre_actionc = count($actionsc);
-
-            $actionsp = Action::join('postes', 'actions.poste_id', '=', 'postes.id')
-                ->where('actions.risque_id', $risque->id)
-                ->where('actions.type', 'preventive')
-                ->select('actions.*','postes.nom as responsable_name')
-                ->get();
-            $risque->nbre_actionp = count($actionsp);
-
             $actionsp = Action::join('postes', 'actions.poste_id', '=', 'postes.id')
                 ->where('actions.risque_id', $risque->id)
                 ->where('actions.type', 'preventive')
                 ->select('actions.*','postes.nom as responsable', 'postes.id as poste_id')
                 ->get();
+            $risque->nbre_actionp = count($actionsp);
 
             $actionsDatap[$risque->id] = [];
             
@@ -280,6 +267,7 @@ class ProcessusController extends Controller
                 ->where('actions.type', 'corrective')
                 ->select('actions.*','postes.nom as responsable', 'postes.id as poste_id')
                 ->get();
+            $risque->nbre_actionc = count($actionsc);
 
             $actionsDatac[$risque->id] = [];
             
@@ -290,7 +278,7 @@ class ProcessusController extends Controller
                     'action' => $actionc->action,
                     'accepte' => $actionc->accepte,
                     'responsable' => $actionc->responsable,
-                    'poste_idc' => $actionp->poste_id,
+                    'poste_idc' => $actionc->poste_id,
                 ];
             }
 
@@ -393,11 +381,14 @@ class ProcessusController extends Controller
         $acceptep = $request->input('acceptep');
         $commentairep = $request->input('commentairep');
 
-        foreach ($action_idp as $index => $valeur) {
-            $action = Action::where('id', $action_idp[$index])->first();
-            $action->accepte = $acceptep[$index];
-            $action->commentaire = $commentairep[$index];
-            $action->update();
+        if ($action_idp) {
+
+            foreach ($action_idp as $index => $valeur) {
+                $action = Action::where('id', $action_idp[$index])->first();
+                $action->accepte = $acceptep[$index];
+                $action->commentaire = $commentairep[$index];
+                $action->update();
+            }
         }
 
         $action_idc = $request->input('action_idc');
@@ -405,11 +396,14 @@ class ProcessusController extends Controller
         $acceptec = $request->input('acceptec');
         $commentairec = $request->input('commentairec');
 
-        foreach ($action_idc as $index => $valeur) {
-            $action = Action::where('id', $action_idc[$index])->first();
-            $action->accepte = $acceptec[$index];
-            $action->commentaire = $commentairec[$index];
-            $action->update();
+        if ($action_idc) {
+
+            foreach ($action_idc as $index => $valeur) {
+                $action = Action::where('id', $action_idc[$index])->first();
+                $action->accepte = $acceptec[$index];
+                $action->commentaire = $commentairec[$index];
+                $action->update();
+            }
         }
 
         $actions = Action::where('risque_id', $risque_id)->where('accepte', '!=' ,'oui')->count();

@@ -39,12 +39,13 @@ Route::middleware(['auth'])->group(function () {
 
     Route::get('/Validation', [ProcessusController::class, 'index_validation_processus'])->name('index_validation_processus');
     Route::post('/cause_valider', [ProcessusController::class, 'cause_valider'])->name('cause_valider');
-    Route::get('/rejet/{id}', [ProcessusController::class, 'cause_rejet'])->name('cause_rejet');
+    Route::post('/Action_update', [ListerisqueController::class, 'action_update'])->name('action_update');
 
     Route::get('/Liste processus', [ListeprocessusController::class, 'index_listeprocessus'])->name('index_listeprocessus');
     Route::get('/suppr_processus/{id}', [ListeprocessusController::class, 'suppr_processus'])->name('suppr_processus');
 
     Route::get('/Liste risque', [ListerisqueController::class, 'index_liste_risque'])->name('index_liste_risque');
+    Route::get('/Mise a jour', [ListerisqueController::class, 'index_risque_actionup'])->name('index_risque_actionup');
 
     Route::get('/Liste Action Preventive', [ListeactionController::class, 'index_ap'])->name('index_ap');
     Route::get('/Liste Action Corrective', [ListeactionController::class, 'index_ac'])->name('index_ac');

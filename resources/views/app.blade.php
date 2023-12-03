@@ -176,6 +176,14 @@
                                                 </span>
                                             </a>
                                         </li>
+                                        <li >
+                                            <a class="nk-menu-link" href="{{ route('index_risque_actionup') }}">
+                                                <em class="ni ni-box-view-fill me-1"></em>
+                                                <span class="nk-menu-text">
+                                                    Action non validé
+                                                </span>
+                                            </a>
+                                        </li>
                                     </ul>
                                 </li>
                                 <li class="nk-menu-item has-sub">
