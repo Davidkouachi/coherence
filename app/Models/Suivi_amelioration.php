@@ -15,6 +15,7 @@ class Suivi_amelioration extends Model
         'nature',
         'type',
         'commentaire',
+        'trouve',
         'commentaire_am',
         'date_action',
         'date_suivi',
@@ -24,6 +25,7 @@ class Suivi_amelioration extends Model
         'action_id',
         'processus_id',
         'risque_id',
+        'cause_id',
         'risque_id_am',
     ];
 
@@ -45,6 +47,11 @@ class Suivi_amelioration extends Model
     public function risque()
     {
         return $this->belongsTo(Risque::class, 'risque_id');
+    }
+
+    public function cause()
+    {
+        return $this->belongsTo(Cause::class, 'cause_id');
     }
 
     public function risque_am()

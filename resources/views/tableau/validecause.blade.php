@@ -469,7 +469,7 @@
                                                             </div>
                                                         </div>
                                                     </div>
-                                                    @if ( $actionsDatas['accepte'] === 'modif' || $actionsDatas['accepte'] === 'non-valider' )
+                                                    @if ( $actionsDatas['accepte'] === 'modif' || $actionsDatas['accepte'] === 'non_valider' )
                                                     <div class="col-lg-4">
                                                         <div class="form-group">
                                                             <label class="form-label" for="email-address-1">

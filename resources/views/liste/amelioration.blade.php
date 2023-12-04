@@ -65,7 +65,7 @@
                                                                 Non conformité
                                                             @endif
                                                         </td>
-                                                        <td>{{ $am->date_fiche }}</td>
+                                                        <td>{{ \Carbon\Carbon::parse($am->date_fiche)->format('d/m/Y') }}</td>
                                                         <td>{{ $am->lieu }}</td>
                                                         <td>{{ $am->detecteur }}</td>
                                                         <td>{{ $am->non_conformite }}</td>
@@ -75,6 +75,11 @@
                                                                 data-bs-target="#modalDetail{{ $am->id }}"
                                                                 href="#" class="btn btn-warning btn-sm">
                                                                 <em class="icon ni ni-eye"></em>
+                                                            </a>
+                                                            <a data-bs-toggle="modal"
+                                                                data-bs-target="#modalAction{{ $am->id }}"
+                                                                href="#" class="btn btn-info btn-sm">
+                                                                <em class="icon ni ni-box-view-fill"></em>
                                                             </a>
                                                         </td>
                                                     </tr>
@@ -186,13 +191,39 @@
                                                     </div>
                                                 </div>
                                             </div>
-
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    @endforeach
+    @foreach($ams as $am)
+    <div class="modal fade zoom" tabindex="-1" id="modalAction{{ $am->id }}">
+        <div class="modal-dialog modal-lg" role="document" style="width: 100%;">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Actions</h5>
+                    <a href="#" class="close" data-bs-dismiss="modal" aria-label="Close"><em class="icon ni ni-cross"></em></a>
+                </div>
+                <div class="modal-body">
+                    <form class="nk-block">
+                        <div class="row g-gs">
+                            <div class="col-md-12 col-xxl-12" id="groupesContainer">
+                                <div class="">
+                                    <div class="card-inner">
+                                        <div class="row g-4">
+                                            @foreach($actionsData[$am->id] as $key => $actions)
                                             <div class="col-md-12 col-xxl-122" id="groupesContainer">
                                                 <div class="card card-bordered">
                                                     <div class="card-inner">
                                                         <div class="card-head">
                                                             <h5 class="card-title">
-                                                                Action Corrective
+                                                                Action Corrective {{ $key+1 }}
                                                             </h5>
                                                         </div>
                                                             <div class="row g-4">
@@ -202,17 +233,17 @@
                                                                             Processus 
                                                                         </label>
                                                                         <div class="form-control-wrap">
-                                                                            <input value="" readonly type="text" class="form-control text-center" id="Cause">
+                                                                            <input value="{{ $actions['processus'] }}" readonly type="text" class="form-control text-center" id="Cause">
                                                                         </div>
                                                                     </div>
                                                                 </div>
                                                                 <div class="col-lg-12">
                                                                     <div class="form-group text-center">
                                                                         <label class="form-label" for="Cause">
-                                                                            risque 
+                                                                            risque
                                                                         </label>
                                                                         <div class="form-control-wrap">
-                                                                            <input value="" readonly type="text" class="form-control text-center" id="Cause">
+                                                                            <input value="{{ $actions['risque'] }}" readonly type="text" class="form-control text-center" id="Cause">
                                                                         </div>
                                                                     </div>
                                                                 </div>
@@ -222,17 +253,18 @@
                                                                             Action 
                                                                         </label>
                                                                         <div class="form-control-wrap">
-                                                                            <input value="" readonly type="text" class="form-control text-center" id="Cause">
+                                                                            <input value="{{ $actions['action'] }}" readonly type="text" class="form-control text-center" id="Cause">
                                                                         </div>
                                                                     </div>
                                                                 </div>
+                                                                @if ($actions['statut'] === 'realiser')
                                                                 <div class="col-lg-4">
                                                                     <div class="form-group text-center">
                                                                         <label class="form-label" for="Cause">
                                                                             Délai 
                                                                         </label>
                                                                         <div class="form-control-wrap">
-                                                                            <input value="" readonly type="text" class="form-control text-center" id="Cause">
+                                                                            <input value="{{ \Carbon\Carbon::parse($actions['delai'])->format('d/m/Y') }}" readonly type="text" class="form-control text-center" id="Cause">
                                                                         </div>
                                                                     </div>
                                                                 </div>
@@ -242,7 +274,7 @@
                                                                             Date de realisation 
                                                                         </label>
                                                                         <div class="form-control-wrap">
-                                                                            <input value="" readonly type="text" class="form-control text-center" id="Cause">
+                                                                            <input value="{{ \Carbon\Carbon::parse($actions['date_action'])->format('d/m/Y') }}" readonly type="text" class="form-control text-center" id="Cause">
                                                                         </div>
                                                                     </div>
                                                                 </div>
@@ -252,32 +284,45 @@
                                                                             Date du Suivi 
                                                                         </label>
                                                                         <div class="form-control-wrap">
-                                                                            <input value="" readonly type="text" class="form-control text-center" id="Cause">
+                                                                            <input value="{{ \Carbon\Carbon::parse($actions['date_suivi'])->format('d/m/Y H:i:s') }}" readonly type="text" class="form-control text-center" id="Cause">
                                                                         </div>
                                                                     </div>
                                                                 </div>
                                                                 <div class="col-lg-12">
                                                                     <div class="form-group text-center">
                                                                         <div class="form-control-wrap">
-                                                                            <input value="Réaliser / Non Réaliser" readonly type="text" class="form-control text-center" id="Cause">
+                                                                            <input value="Action Réaliser" readonly type="text" class="form-control text-center bg-success" id="Cause">
                                                                         </div>
                                                                     </div>
                                                                 </div>
+                                                                @endif
+
+                                                                @if ($actions['statut'] !== 'realiser')
+                                                                <div class="col-lg-12">
+                                                                    <div class="form-group text-center">
+                                                                        <div class="form-control-wrap">
+                                                                            <input value="Action Non Réaliser" readonly type="text" class="form-control text-center bg-danger" id="Cause">
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                @endif
+
                                                                 <div class="col-lg-12">
                                                                     <div class="form-group">
-                                                                        <label class="form-label">
+                                                                        <label class="form-label" >
                                                                             Commentaire
                                                                         </label>
-                                                                        <div class="form-control-wrap">
-                                                                            <textarea readonly required name="causes" class="form-control no-resize" id="default-textarea"></textarea>
+                                                                        <div class="form-control-wrap" >
+                                                                            <textarea readonly required name="causes" class="form-control no-resize" id="default-textarea">{{ $actions['commentaire'] }}</textarea>
                                                                         </div>
                                                                     </div>
                                                                 </div>
+
                                                             </div>
                                                     </div>
                                                 </div>
                                             </div>
-
+                                            @endforeach
                                         </div>
                                     </div>
                                 </div>

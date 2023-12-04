@@ -1208,7 +1208,7 @@
                                                                         <input required style="display:none;" name="nature[]" value="accepte" type="text" >
                                                                         <div class="form-control-wrap">
                                                                             <input style="display:none;" name="processus_id[]" value="${action.processus_id}" type="int" class="form-control">
-                                                                            <input value="${action.processus}" type="text" class="form-control" disabled>
+                                                                            <input value="${action.processus}" type="text" class="form-control" readonly>
                                                                         </div>
                                                                     </div>
                                                                 </div>
@@ -1230,7 +1230,7 @@
                                                                             Action Corrective
                                                                         </label>
                                                                         <div class="form-control-wrap">
-                                                                            <input placeholder="Saisie obligatoire" name="action[]" value="${action.action}" type="text" class="form-control" >
+                                                                            <input placeholder="Saisie obligatoire" name="action[]" value="${action.action}" type="text" readonly class="form-control" >
                                                                             <input style="display:none;" name="action_id[]" value="${action.id}" type="int" class="form-control" >
                                                                         </div>
                                                                     </div>
@@ -1241,7 +1241,7 @@
                                                                                     Responsable
                                                                                 </label>
                                                                                 <input style="display:none;" name="poste_id[]" value="${action.poste_id}" type="int" class="form-control">
-                                                                                <input value="${action.responsable}" type="text" class="form-control" disabled>
+                                                                                <input value="${action.responsable}" type="text" class="form-control" readonly>
                                                                             </div>
                                                                             <div class="form-group">
                                                                                 <label class="form-label" for="Coût">
@@ -1375,7 +1375,7 @@
                                                                         <input required style="display:none;" name="nature[]" value="non-accepte" type="text" >
                                                                         <div class="form-control-wrap">
                                                                             <input style="display:none;" name="processus_id[]" value="${action.processus_id}" type="int" class="form-control">
-                                                                            <input value="${action.processus}" type="text" class="form-control" disabled>
+                                                                            <input value="${action.processus}" type="text" class="form-control" readonly>
                                                                         </div>
                                                                     </div>
                                                                 </div>

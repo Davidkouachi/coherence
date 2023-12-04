@@ -96,10 +96,6 @@ class ProcessusController extends Controller
             $pdfFile->pdf_chemin = $pdfPathname;
             $pdfFile->risque_id = $risque->id;
             $pdfFile->save();
-
-            $risque_update = Risque::where('id', $risque->id)->first();
-            $risque_update->statut = 'valider';
-            $risque_update->save();
         }
 
         $nom_cause = $request->input('nom_cause');
