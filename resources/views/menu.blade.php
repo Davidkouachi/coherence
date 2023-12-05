@@ -27,7 +27,21 @@
                             <div class="col-lg-12 col-xxl-12" >
                                 <div class="card card-bordered card-preview">
                                     <div class="card-inner row g-gs">
-
+                                        <div id="carouselExFade" class="carousel slide carousel-fade" data-bs-ride="carousel">
+                                            <div class="carousel-inner">
+                                                <div class="carousel-item active align-items-center justify-content-center"> 
+                                                    <img src="images/logo.png" class="d-block w-50" alt="carousel"> 
+                                                </div>
+                                            </div> 
+                                            <a class="carousel-control-prev" href="#carouselExFade" role="button" data-bs-slide="prev"> 
+                                                <span class="carousel-control-prev-icon" aria-hidden="true"></span> 
+                                                <span class="visually-hidden">Previous</span> 
+                                            </a> 
+                                            <a class="carousel-control-next" href="#carouselExFade" role="button" data-bs-slide="next"> 
+                                                <span class="carousel-control-next-icon" aria-hidden="true"></span> 
+                                                <span class="visually-hidden">Next</span> 
+                                            </a>
+                                        </div>
                                     </div>
                                 </div>
                             </div>

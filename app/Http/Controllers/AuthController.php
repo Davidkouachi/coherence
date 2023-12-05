@@ -92,6 +92,12 @@ class AuthController extends Controller
                         . 'NB : Vous pouvez modifier le mot de passe selon votre choix.';
                 // Envoi de l'email
                 $mail->send();
+
+                $his = new Historique_action();
+                $his->nom_formulaire = 'Nouveau Utilisateur';
+                $his->nom_action = 'Ajouter';
+                $his->user_id = Auth::user()->id;
+                $his->save();
             }
 
             return back()->with('ajouter', 'Enregistrement éffectuée.');

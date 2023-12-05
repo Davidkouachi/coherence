@@ -55,7 +55,7 @@
                                                         <td>
                                                             <a data-bs-toggle="modal"
                                                                 data-bs-target="#modalDetail{{ $risque->id }}"
-                                                                href="#" class="btn btn-info btn-sm">
+                                                                href="#" class="btn btn-icon btn-white btn-dim btn-sm btn-info border border-1 border-white rounded">
                                                                 <em class="icon ni ni-pen"></em>
                                                             </a>
                                                         </td>
@@ -186,6 +186,30 @@
             </div>
         </div>
     @endforeach
+
+    <script>
+        Pusher.logToConsole = true;
+
+        var pusher = new Pusher('9f9514edd43b1637ff61', {
+          cluster: 'eu'
+        });
+
+        var channel = pusher.subscribe('my-channel-action-non-valider');
+        channel.bind('my-event-action-non-valider', function(data) {
+            Swal.fire({
+                        title: "Alert!",
+                        text: "Nouvelle(s) Action(s) à Modifier",
+                        icon: "info",
+                        confirmButtonColor: "#00d819",
+                        confirmButtonText: "OK",
+                        allowOutsideClick: false,
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            location.reload();
+                        }
+                    });
+        });
+    </script>
 
 
 @endsection

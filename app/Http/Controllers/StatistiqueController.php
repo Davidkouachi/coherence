@@ -35,12 +35,15 @@ class StatistiqueController extends Controller
         foreach ($types as $type) {
             $statistics[$type] = [];
 
-            $statistics[$type]['total'] = Amelioration::where('type', $type)->count();
-            $statistics[$type]['causes'] = Amelioration::where('type', $type)
+            $statistics[$type]['total'] = Suivi_amelioration::join('ameliorations', 'suivi_ameliorations.amelioration_id', 'ameliorations.id')->where('ameliorations.type', $type)->count();
+
+            $statistics[$type]['causes'] = Suivi_amelioration::join('ameliorations', 'suivi_ameliorations.amelioration_id', 'ameliorations.id')->where('ameliorations.type', $type)
                 ->where('choix_select', 'cause')->count();
-            $statistics[$type]['risques'] = Amelioration::where('type', $type)
+
+            $statistics[$type]['risques'] = Suivi_amelioration::join('ameliorations', 'suivi_ameliorations.amelioration_id', 'ameliorations.id')->where('ameliorations.type', $type)
                 ->where('choix_select', 'risque')->count();
-            $statistics[$type]['causes_risques_nt'] = Amelioration::where('type', $type)
+                
+            $statistics[$type]['causes_risques_nt'] = Suivi_amelioration::join('ameliorations', 'suivi_ameliorations.amelioration_id', 'ameliorations.id')->where('ameliorations.type', $type)
                 ->where('choix_select', 'cause_risque_nt')->count();
         }
 
@@ -52,22 +55,22 @@ class StatistiqueController extends Controller
 
         
         $nbre_ap = Action::where('type', 'preventive')->count();
-        $nbre_ed_ap = Suivi_action::where('delai', '>=', 'date_action')
-                                    ->where('statut', '=', 'realiser')
+        $nbre_ed_ap = Suivi_action::whereNotNull('date_action')
+                                    ->whereColumn('delai', '<=', 'date_action')
                                     ->count();
-        $nbre_ehd_ap = Suivi_action::where('delai', '<', 'date_action')
-                                    ->where('statut', '=', 'realiser')
+        $nbre_ehd_ap = Suivi_action::whereNotNull('date_action')
+                                    ->whereColumn('delai', '>', 'date_action')
                                     ->count();
         $nbre_hd_ap = Suivi_action::where('statut', '=', 'non-realiser')->count();
 
 
         $nbre_ac = Action::where('type', 'corrective')->count();
-        $nbre_ed_ac = Suivi_amelioration::where('delai', '>=', 'date_action')
-                                        ->where('statut', '=', 'realiser')
-                                        ->count();
-        $nbre_ehd_ac = Suivi_amelioration::where('delai', '<', 'date_action')
-                                        ->where('statut', '=', 'realiser')
-                                        ->count();
+        $nbre_ed_ac = Suivi_amelioration::whereNotNull('date_action')
+                                    ->whereColumn('delai', '<=', 'date_action')
+                                    ->count();
+        $nbre_ehd_ac = Suivi_amelioration::whereNotNull('date_action')
+                                    ->whereColumn('delai', '>', 'date_action')
+                                    ->count();
         $nbre_hd_ac = Suivi_amelioration::where('statut', '=', 'non-realiser')->count();
 
 
@@ -83,8 +86,10 @@ class StatistiqueController extends Controller
         $nbres = [];
 
         foreach ($types as $type) {
-            $nbres[$type] = Amelioration::where('type', $type)
-                ->where('processus_id', $id)->count();
+            $nbres[$type] = Suivi_amelioration::join('ameliorations', 'suivi_ameliorations.amelioration_id', 'ameliorations.id')
+                                            ->where('ameliorations.type', $type)
+                                            ->where('suivi_ameliorations.processus_id', $id)
+                                            ->count();
         }
 
         return response()->json([
@@ -101,9 +106,11 @@ class StatistiqueController extends Controller
         $nbres = [];
 
         foreach ($types as $type) {
-            $nbres[$type] = Amelioration::where('date_fiche', '>=', $date1)
-                ->where('date_fiche', '<=', $date2)
-                ->where('type', $type)->count();
+            $nbres[$type] = Suivi_amelioration::join('ameliorations', 'suivi_ameliorations.amelioration_id', 'ameliorations.id')
+                                            ->where('suivi_ameliorations.date_action', '>=', $date1)
+                                            ->where('suivi_ameliorations.date_action', '<=', $date2)
+                                            ->where('ameliorations.type', $type)
+                                            ->count();
         }
 
         return response()->json([

@@ -40,7 +40,6 @@ class ListeactionController extends Controller
                                     ->join('processuses', 'risques.processus_id', 'processuses.id')
                                     ->where('actions.type', '=', 'preventive')
                                     ->where('actions.accepte', '=', 'oui')
-                                    ->where('Suivi_actions.statut', '=', 'realiser')
                                     ->select('Suivi_actions.*','actions.action as action', 'processuses.nom as processus', 'risques.nom as risque','postes.nom as poste', 'risques.nom as risque' )
                                     ->get();
 
@@ -51,7 +50,6 @@ class ListeactionController extends Controller
     {
         $actions = Suivi_amelioration::join('ameliorations', 'suivi_ameliorations.amelioration_id', 'ameliorations.id')
                         ->join('processuses', 'suivi_ameliorations.processus_id', 'processuses.id')
-                        ->where('suivi_ameliorations.statut', '=', 'realiser')
                         ->select('Suivi_ameliorations.*', 'processuses.nom as processus', 'ameliorations.type as type_am')
                         ->get();
 

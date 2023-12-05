@@ -73,7 +73,7 @@
                                                         <td>
                                                             <a data-bs-toggle="modal"
                                                                 data-bs-target="#modalDetail{{$processu->id}}"
-                                                                href="#" class="btn btn-primary btn-sm">
+                                                                href="#" class="btn btn-icon btn-white btn-dim btn-sm btn-warning border border-1 border-white rounded">
                                                                 <em class="icon ni ni-eye"></em>
                                                             </a>
                                                         </td>

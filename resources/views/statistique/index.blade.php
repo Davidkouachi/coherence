@@ -75,7 +75,7 @@
                                                 <div class="amount text-center">{{ $nbre_ehd_ap }}</div>
                                             </div>
                                             <div class="invest-data-history">
-                                                <div class="title text-center">Non Valider</div>
+                                                <div class="title text-center">Non Réaliser</div>
                                                 <div class="amount text-center">{{ $nbre_hd_ap }}</div>
                                             </div>
                                         </div>
@@ -100,7 +100,7 @@
                                                 <div class="amount text-center">{{ $nbre_ehd_ac }}</div>
                                             </div>
                                             <div class="invest-data-history">
-                                                <div class="title text-center">Non Valider</div>
+                                                <div class="title text-center">Non Réaliser</div>
                                                 <div class="amount text-center">{{ $nbre_hd_ac }}</div>
                                             </div>
                                         </div>

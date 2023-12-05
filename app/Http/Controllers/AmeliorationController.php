@@ -23,6 +23,7 @@ use App\Models\User;
 use App\Models\Amelioration;
 use App\Models\Causetrouver;
 use App\Models\Risquetrouver;
+use App\Models\Historique_action;
 
 use Illuminate\Support\Facades\Validator;
 use Carbon\Carbon;
@@ -402,6 +403,12 @@ class AmeliorationController extends Controller
                     event(new NotificationAcorrective());
 
                 }
+
+            $his = new Historique_action();
+            $his->nom_formulaire = "Nouvelle fiche d'amélioration";
+            $his->nom_action = 'Ajouter';
+            $his->user_id = Auth::user()->id;
+            $his->save();
 
             return redirect()
                 ->back()

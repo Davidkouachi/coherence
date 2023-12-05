@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Auth;
 
 use App\Events\NotificationAcorrective;
 use App\Events\NotificationApreventive;
+use App\Events\NotificationAnon;
 use App\Events\NotificationProcessus;
 use App\Events\NotificationRisque;
 
@@ -428,6 +429,14 @@ class ProcessusController extends Controller
                 // Envoi de l'email
                 $mail->send();
 
+                event(new NotificationAnon());
+
+                $his = new Historique_action();
+                $his->nom_formulaire = 'Tableau de validation';
+                $his->nom_action = 'Action non approuvé';
+                $his->user_id = Auth::user()->id;
+                $his->save();
+
                 return redirect()
                     ->back()
                     ->with('ajouter', 'Modification éffectuée.');
@@ -499,7 +508,7 @@ class ProcessusController extends Controller
             {
                 $his = new Historique_action();
                 $his->nom_formulaire = 'Tableau de validation';
-                $his->nom_action = 'Rejet - Modification';
+                $his->nom_action = 'Rejet -> Modification';
                 $his->user_id = Auth::user()->id;
                 $his->save();
             }
@@ -515,7 +524,7 @@ class ProcessusController extends Controller
             {
                 $his = new Historique_action();
                 $his->nom_formulaire = 'Tableau de validation';
-                $his->nom_action = 'Rejet - Supprimer';
+                $his->nom_action = 'Rejet -> Supprimer';
                 $his->user_id = Auth::user()->id;
                 $his->save();
             }

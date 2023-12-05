@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 
 use Illuminate\Support\Facades\Auth;
 
+use App\Events\NotificationAup;
+
 use App\Models\Processuse;
 use App\Models\Objectif;
 use App\Models\Risque;
@@ -216,6 +218,17 @@ class ListerisqueController extends Controller
                     }
                 }
             }
+        }
+
+        if ($action) {
+
+            event(new NotificationAup());
+
+            $his = new Historique_action();
+            $his->nom_formulaire = 'Action non validé';
+            $his->nom_action = 'Mise à jour';
+            $his->user_id = Auth::user()->id;
+            $his->save();
         }
 
         return back()->with('valider', 'Mise à jour effectuée.');

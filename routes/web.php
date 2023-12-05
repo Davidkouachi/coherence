@@ -13,6 +13,8 @@ use App\Http\Controllers\StatistiqueController;
 use App\Http\Controllers\ListeprocessusController;
 use App\Http\Controllers\ListerisqueController;
 use App\Http\Controllers\ListeactionController;
+use App\Http\Controllers\EtatController;
+use App\Http\Controllers\PDFController;
 
 
 Route::get('/Login', [AuthController::class, 'view_login'])->name('login');
@@ -83,6 +85,11 @@ Route::middleware(['auth'])->group(function () {
 
     Route::get('/Nouveau Poste', [Controller::class, 'index_add_poste'])->name('index_add_poste');
     Route::post('/Nouveau Poste', [Controller::class, 'index_add_poste_traitement'])->name('index_add_poste_traitement');
+
+    Route::get('/Etat_am', [EtatController::class, 'index_etat_am'])->name('index_etat_am');
+    Route::get('/Etat_am_imprimer', [EtatController::class, 'index_etat_am_imprimer'])->name('index_etat_am_imprimer');
+
+    Route::get('/etat_pdf', [PDFController::class, 'generatePDF'])->name('generatePDF');
 });
 
 

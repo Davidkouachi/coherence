@@ -6,9 +6,7 @@
     <meta charset="utf-8">
     <meta content="Softnio" name="author">
     <meta content="width=device-width, initial-scale=1, shrink-to-fit=no" name="viewport">
-    <meta
-        content="A powerful and conceptual apps base dashboard template that especially build for developers and programmers."
-        name="description">
+    <meta content="A powerful and conceptual apps base dashboard template that especially build for developers and programmers." name="description">
     <link href="images/logo.png" rel="shortcut icon">
     <title>@yield('titre')</title>
     <link href="assets/css/dashlite0226.css?" rel="stylesheet">
@@ -25,6 +23,7 @@
     </meta>
     </meta>
 </head>
+
 
 <body class="nk-body bg-lighter ">
     <div class="nk-app-root">
