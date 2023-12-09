@@ -41,11 +41,12 @@
                                                     <th></th>
                                                     <th>Processus</th>
                                                     <th>Risque</th>
-                                                    <th>Nombre de cause</th>
+                                                    <!--<th>Nombre de cause</th>
                                                     <th>Nombre d'action Préventive</th>
-                                                    <th>Nombre d'action Corrective</th>
+                                                    <th>Nombre d'action Corrective</th>-->
                                                     <th>Evaluation</th>
                                                     <th>Coût</th>
+                                                    <th>Statut</th>
                                                     <th></th>
                                                 </tr>
                                             </thead>
@@ -55,10 +56,10 @@
                                                         <td>{{ $key+1 }}</td>
                                                         <td>{{ $risque->nom_processus }}</td>
                                                         <td>{{ $risque->nom }}</td>
-                                                        <td>{{ $risque->nbre_cause }}</td>
+                                                        <!--<td>{{ $risque->nbre_cause }}</td>
                                                         <td>{{ $risque->nbre_actionp }}</td>
                                                         <td>{{ $risque->nbre_actionc }}</td>
-                                                        <!--<td>{{ $risque->vraisemblence_residuel }}</td>
+                                                        <td>{{ $risque->vraisemblence_residuel }}</td>
                                                         <td>{{ $risque->gravite_residuel }}</td>-->
                                                         @if ($risque->evaluation_residuel >= 1 && $risque->evaluation_residuel <= 2 )
                                                             <td class="border-white" style="background-color:#5eccbf;" ></td>
@@ -79,17 +80,39 @@
                                                             @endphp
                                                             {{ $formatcommande }} Fcfa
                                                         </td>
+                                                        @if ($risque->statut === 'soumis')
+                                                            <td class="text-warning" >
+                                                                En attente de Vérification
+                                                            </td>
+                                                        @endif
+                                                        @if ($risque->statut === 'non_valider')
+                                                            <td class="text-danger" >
+                                                                En attente de Modification
+                                                            </td>
+                                                        @endif
                                                         <td>
                                                             <a data-bs-toggle="modal"
                                                                 data-bs-target="#modalDetail{{ $risque->id }}"
-                                                                href="#" class="btn btn-icon btn-white btn-dim btn-sm btn-success border border-1 border-white rounded">
-                                                                <em class="icon ni ni-check"></em>
+                                                                href="#" class="btn btn-icon btn-white btn-dim btn-sm btn-warning border border-1 border-white rounded">
+                                                                <em class="icon ni ni-eye"></em>
                                                             </a>
                                                             <a data-bs-toggle="modal"
                                                                 data-bs-target="#modalFile{{ $risque->id }}"
                                                                 href="#" class="btn btn-icon btn-white btn-dim btn-sm btn-info border border-1 border-white rounded">
                                                                 <em class="icon ni ni-file"></em>
                                                             </a>
+                                                            @if ($risque->statut !== 'non_valider')
+                                                                <a data-bs-toggle="modal"
+                                                                    data-bs-target="#modalConfirme{{ $risque->id }}"
+                                                                    href="#" class="btn btn-icon btn-white btn-dim btn-sm btn-success border border-1 border-white rounded">
+                                                                    <em class="icon ni ni-check"></em>
+                                                                </a>
+                                                                <a data-bs-toggle="modal"
+                                                                    data-bs-target="#modalRejet{{ $risque->id }}"
+                                                                    href="#" class="btn btn-icon btn-white btn-dim btn-sm btn-danger border border-1 border-white rounded">
+                                                                    <em class="icon ni ni-cross"></em>
+                                                                </a>
+                                                            @endif
                                                         </td>
                                                     </tr>
                                                 @endforeach
@@ -131,7 +154,7 @@
                                 class="icon ni ni-cross"></em></a>
                     </div>
                     <div class="modal-body">
-                        <form class="nk-block" method="post" action="{{ route('cause_valider') }}" >
+                        <form class="nk-block"  >
                             @csrf
                             <div class="row g-gs">
                                 <div class="col-md-12 col-xxl-122" id="groupesContainer">
@@ -145,7 +168,7 @@
                                                             </label>
                                                             <div class="form-control-wrap">
                                                                 <input value="{{ $risque->nom_processus }}" readonly type="text" class="form-control" id="Cause">
-                                                                <input style="display: none" value="{{ $risque->id }}" readonly name="risque_id" type="text">
+                                                                <input style="display: none" value="{{ $risque->id }}" readonly type="text">
                                                             </div>
                                                         </div>
                                                     </div>
@@ -365,25 +388,19 @@
                                                             </div>
                                                         </div>
                                                     </div>
-                                                    @if ( $actionsDatas['accepte'] === 'modif' || $actionsDatas['accepte'] === 'non_valider' )
-                                                    <div class="col-lg-4">
-                                                        <div class="form-group">
+                                                    <div class="col-lg-6">
+                                                        <div class="form-group text-center">
                                                             <label class="form-label" for="email-address-1">
-                                                                Validé
+                                                                Date
                                                             </label>
-                                                            <input style="display: none" value="{{ $actionsDatas['action_idp'] }}" readonly name="action_idp[]" type="text">
-                                                            <select required name="acceptep[]" name="efficacite" class="form-select ">
-                                                                <option value="">
-                                                                    Choisir
-                                                                </option>
-                                                                <option value="oui">
-                                                                    Oui
-                                                                </option>
-                                                                <option value="non">
-                                                                    Non
-                                                                </option>
-                                                            </select>
+                                                            <div class="form-group">
+                                                                <div class="form-control-wrap">
+                                                                    <input value="{{ $actionsDatas['date_suivip'] }}" readonly type="text" class="form-control text-center">
+                                                                </div>
+                                                            </div>
                                                         </div>
+                                                    </div>
+                                                    <div class="col-lg-6">
                                                         <div class="form-group text-center">
                                                             <label class="form-label" for="email-address-1">
                                                                 Responsabilité
@@ -396,59 +413,6 @@
                                                             </div>
                                                         </div>
                                                     </div>
-                                                    <div class="col-lg-8">
-                                                        <div class="form-group text-center">
-                                                            <label class="form-label" for="description">
-                                                                Commentaire
-                                                            </label>
-                                                            <div class="form-control-wrap">
-                                                                <textarea required name="commentairep[]" class="form-control no-resize" id="default-textarea"></textarea>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    @endif
-                                                    @if ( $actionsDatas['accepte'] === 'oui' )
-                                                    <div class="col-lg-12">
-                                                        <div class="form-group text-center">
-                                                            <label class="form-label" for="email-address-1">
-                                                                Responsabilité
-                                                            </label>
-                                                            <div class="form-group">
-                                                                <div class="form-control-wrap">
-                                                                    <input value="{{ $actionsDatas['responsable'] }}" readonly type="text" class="form-control text-center">
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-lg-12">
-                                                        <div class="form-group text-center">
-                                                            <div class="form-control-wrap">
-                                                                <input value="Valider" readonly type="text" class="form-control text-center bg-success">
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    @endif
-                                                    @if ( $actionsDatas['accepte'] === 'non' )
-                                                    <div class="col-lg-12">
-                                                        <div class="form-group text-center">
-                                                            <label class="form-label" for="email-address-1">
-                                                                Responsabilité
-                                                            </label>
-                                                            <div class="form-group">
-                                                                <div class="form-control-wrap">
-                                                                    <input value="{{ $actionsDatas['responsable'] }}" readonly type="text" class="form-control text-center">
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-lg-12">
-                                                        <div class="form-group text-center">
-                                                            <div class="form-control-wrap">
-                                                                <input value="En attente pour modification" readonly type="text" class="form-control text-center bg-warning">
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    @endif
                                                 </div>
                                         </div>
                                     </div>
@@ -469,25 +433,7 @@
                                                             </div>
                                                         </div>
                                                     </div>
-                                                    @if ( $actionsDatas['accepte'] === 'modif' || $actionsDatas['accepte'] === 'non_valider' )
-                                                    <div class="col-lg-4">
-                                                        <div class="form-group">
-                                                            <label class="form-label" for="email-address-1">
-                                                                Validé
-                                                            </label>
-                                                            <input style="display: none" value="{{ $actionsDatas['action_idc'] }}" readonly name="action_idc[]" type="text">
-                                                            <select required name="acceptec[]" name="efficacite" class="form-select ">
-                                                                <option value="">
-                                                                    Choisir
-                                                                </option>
-                                                                <option value="oui">
-                                                                    Oui
-                                                                </option>
-                                                                <option value="non">
-                                                                    Non
-                                                                </option>
-                                                            </select>
-                                                        </div>
+                                                    <div class="col-lg-12">
                                                         <div class="form-group text-center">
                                                             <label class="form-label" for="email-address-1">
                                                                 Responsabilité
@@ -500,59 +446,6 @@
                                                             </div>
                                                         </div>
                                                     </div>
-                                                    <div class="col-lg-8">
-                                                        <div class="form-group text-center">
-                                                            <label class="form-label" for="description">
-                                                                Commentaire
-                                                            </label>
-                                                            <div class="form-control-wrap">
-                                                                <textarea required name="commentairec[]" class="form-control no-resize" id="default-textarea"></textarea>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    @endif
-                                                    @if ( $actionsDatas['accepte'] === 'oui' )
-                                                    <div class="col-lg-12">
-                                                        <div class="form-group text-center">
-                                                            <label class="form-label" for="email-address-1">
-                                                                Responsabilité
-                                                            </label>
-                                                            <div class="form-group">
-                                                                <div class="form-control-wrap">
-                                                                    <input value="{{ $actionsDatas['responsable'] }}" readonly type="text" class="form-control text-center">
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-lg-12">
-                                                        <div class="form-group text-center">
-                                                            <div class="form-control-wrap">
-                                                                <input value="Valider" readonly type="text" class="form-control text-center bg-success">
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    @endif
-                                                    @if ( $actionsDatas['accepte'] === 'non' )
-                                                    <div class="col-lg-12">
-                                                        <div class="form-group text-center">
-                                                            <label class="form-label" for="email-address-1">
-                                                                Responsabilité
-                                                            </label>
-                                                            <div class="form-group">
-                                                                <div class="form-control-wrap">
-                                                                    <input value="{{ $actionsDatas['responsable'] }}" readonly type="text" class="form-control text-center">
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-lg-12">
-                                                        <div class="form-group text-center">
-                                                            <div class="form-control-wrap">
-                                                                <input value="En attente pour modification" readonly type="text" class="form-control text-center bg-warning">
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    @endif
                                                 </div>
                                         </div>
                                     </div>
@@ -571,14 +464,6 @@
                                                             <input value="{{ $risque->validateur }}" readonly type="text" class="form-control text-center">
                                                         </div>
                                                     </div>
-                                                </div>
-                                            </div>
-                                            <div class="col-lg-12">
-                                                <div class="form-group text-center">
-                                                    <button type="submit" class="btn btn-lg btn-success btn-dim ">
-                                                        <em class="ni ni-check me-2"></em>
-                                                        <em>Enregistrer</em>
-                                                    </button >
                                                 </div>
                                             </div>
                                         </div>
@@ -619,29 +504,40 @@
             </div>
         </div>
     @endforeach
+
     @foreach ($risques as $risque)
         <div class="modal fade" id="modalRejet{{ $risque->id }}" aria-modal="true" role="dialog">
-            <div class="modal-dialog" role="document">
+            <div class="modal-dialog modal-lg" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
                         <h5 class="modal-title">Rejet</h5><a href="#" class="close" data-bs-dismiss="modal"
                             aria-label="Close"><em class="icon ni ni-cross"></em></a>
                     </div>
                     <div class="modal-body">
-                        <form action="/rejet/{{ $risque->id }}" class="form-validate is-alter" novalidate="novalidate">
-                            <div class="form-group"><label class="form-label" for="pay-amount">Motif</label>
+                        <form action="{{route('cause_rejet')}}" method="post" >
+                            @csrf
+                            <div class="form-group">
+                                <label class="form-label" for="pay-amount">Motif</label>
                                 <div class="form-control-wrap">
                                     <textarea required name="motif" class="form-control no-resize" id="default-textarea"></textarea>
+                                    <input type="text" value="{{ $risque->id }}" name="risque_id" style="display: none;">
                                 </div>
                             </div>
-                            <div class="form-group custom-control custom-radio me-2">
-                                <input required value="modifier" type="radio" id="customRadio1" name="radio" class="custom-control-input">
-                                <label class="custom-control-label" for="customRadio1">Modifier</label>
-                            </div>
-                            <div class="form-group custom-control custom-radio">
-                                <input required value="supprimer" type="radio" id="customRadio2" name="radio" class="custom-control-input">
-                                <label class="custom-control-label" for="customRadio2">Supprimer</label>
-                            </div>
+                            <!--<div class="form-group">
+                                <label class="form-label" for="Responsabilité">
+                                    Responsabilité
+                                </label>
+                                <select required name="poste_id" class="form-select">
+                                    <option selected value="">
+                                        Choisir un responsable
+                                    </option>
+                                    @foreach ($postes as $poste)
+                                    <option value="{{ $poste->id }}">
+                                        {{ $poste->nom }}
+                                    </option>
+                                    @endforeach
+                                </select>
+                            </div>-->
                             <div class="form-group text-center">
                                 <button type="submit" class="btn btn-lg btn-success">
                                     Sauvgarder
@@ -666,30 +562,6 @@
             Swal.fire({
                         title: "Alert!",
                         text: "Nouvelle(s) Fiche(s) risque à valider",
-                        icon: "info",
-                        confirmButtonColor: "#00d819",
-                        confirmButtonText: "OK",
-                        allowOutsideClick: false,
-                    }).then((result) => {
-                        if (result.isConfirmed) {
-                            location.reload();
-                        }
-                    });
-        });
-    </script>
-
-    <script>
-        Pusher.logToConsole = true;
-
-        var pusher = new Pusher('9f9514edd43b1637ff61', {
-          cluster: 'eu'
-        });
-
-        var channel = pusher.subscribe('my-channel-action-up');
-        channel.bind('my-event-action-up', function(data) {
-            Swal.fire({
-                        title: "Alert!",
-                    text: "Action(s) Mise à jour",
                         icon: "info",
                         confirmButtonColor: "#00d819",
                         confirmButtonText: "OK",

@@ -93,6 +93,11 @@
                                                                 Validé
                                                             </td>
                                                         @endif
+                                                        @if ($risque->statut === 'non_valider')
+                                                            <td class=" text-dans">
+                                                                Non Validé
+                                                            </td>
+                                                        @endif
                                                         <td>
                                                             <a data-bs-toggle="modal"
                                                                 data-bs-target="#modalDetail{{ $risque->id }}"
@@ -380,7 +385,17 @@
                                                             </div>
                                                         </div>
                                                     </div>
-                                                    <div class="col-lg-12">
+                                                    <div class="col-lg-6">
+                                                        <div class="form-group text-center">
+                                                            <label class="form-label" for="preventif">
+                                                                Délai
+                                                            </label>
+                                                            <div class="form-control-wrap">
+                                                                <input value="{{ $actionsDatas['date_suivip'] }}" readonly type="text" class="form-control text-center" id="preventif">
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-lg-6">
                                                         <div class="form-group text-center">
                                                             <label class="form-label" for="email-address-1">
                                                                 Responsabilité
@@ -388,20 +403,6 @@
                                                             <div class="form-group">
                                                                 <div class="form-control-wrap">
                                                                     <input value="{{ $actionsDatas['responsable'] }}" readonly type="text" class="form-control text-center">
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-lg-12">
-                                                        <div class="form-group text-center">
-                                                            <div class="form-group">
-                                                                <div class="form-control-wrap">
-                                                                    @if ($actionsDatas['accepte'] === 'oui')
-                                                                    <input value="Accepté" readonly type="text" class="form-control text-center bg-success text-white">
-                                                                    @endif
-                                                                    @if ($actionsDatas['accepte'] !== 'oui')
-                                                                    <input value="Non Accepté" readonly type="text" class="form-control text-center bg-danger text-white">
-                                                                    @endif
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -439,20 +440,6 @@
                                                             </div>
                                                         </div>
                                                     </div>
-                                                    <div class="col-lg-12">
-                                                        <div class="form-group text-center">
-                                                            <div class="form-group">
-                                                                <div class="form-control-wrap">
-                                                                    @if ($actionsDatas['accepte'] === 'oui')
-                                                                    <input value="Accepté" readonly type="text" class="form-control text-center bg-success text-white">
-                                                                    @endif
-                                                                    @if ($actionsDatas['accepte'] !== 'oui')
-                                                                    <input value="Non Accepté" readonly type="text" class="form-control text-center bg-danger text-white">
-                                                                    @endif
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
                                                 </div>
                                         </div>
                                     </div>
@@ -476,68 +463,6 @@
                                         </div>
                                     </div>
                                 </div>
-                            </div>
-                        </form>
-                    </div>
-                </div>
-            </div>
-        </div>
-    @endforeach
-    @foreach ($risques as $risque)
-        <div class="modal fade" tabindex="-1" id="modalConfirme{{ $risque->id }}" aria-modal="true" role="dialog">
-            <div class="modal-dialog" role="document">
-                <div class="modal-content"><a href="#" class="close" data-bs-dismiss="modal"><em
-                            class="icon ni ni-cross"></em></a>
-                    <div class="modal-body modal-body-lg text-center">
-                        <div class="nk-modal"><em
-                                class="nk-modal-icon icon icon-circle icon-circle-xxl ni ni-check bg-success"></em>
-                            <h4 class="nk-modal-title">Confirmation</h4>
-                            <div class="nk-modal-text">
-                                <div class="caption-text">
-                                    <span>Voulez-vous vraiment confirmer la validation ?</span>
-                                </div>
-                            </div>
-                            <div class="nk-modal-action">
-                                <a href="/cause_valider/{{ $risque->id }}" class="btn btn-lg btn-mw btn-success me-2">
-                                    oui
-                                </a>
-                                <a href="#" class="btn btn-lg btn-mw btn-danger"data-bs-dismiss="modal">
-                                    non
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    @endforeach
-    @foreach ($risques as $risque)
-        <div class="modal fade" id="modalRejet{{ $risque->id }}" aria-modal="true" role="dialog">
-            <div class="modal-dialog" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title">Rejet</h5><a href="#" class="close" data-bs-dismiss="modal"
-                            aria-label="Close"><em class="icon ni ni-cross"></em></a>
-                    </div>
-                    <div class="modal-body">
-                        <form action="/rejet/{{ $risque->id }}" class="form-validate is-alter" novalidate="novalidate">
-                            <div class="form-group"><label class="form-label" for="pay-amount">Motif</label>
-                                <div class="form-control-wrap">
-                                    <textarea required name="motif" class="form-control no-resize" id="default-textarea"></textarea>
-                                </div>
-                            </div>
-                            <div class="form-group custom-control custom-radio me-2">
-                                <input required value="modifier" type="radio" id="customRadio1" name="radio" class="custom-control-input">
-                                <label class="custom-control-label" for="customRadio1">Modifier</label>
-                            </div>
-                            <div class="form-group custom-control custom-radio">
-                                <input required value="supprimer" type="radio" id="customRadio2" name="radio" class="custom-control-input">
-                                <label class="custom-control-label" for="customRadio2">Supprimer</label>
-                            </div>
-                            <div class="form-group text-center">
-                                <button type="submit" class="btn btn-lg btn-success">
-                                    Sauvgarder
-                                </button>
                             </div>
                         </form>
                     </div>

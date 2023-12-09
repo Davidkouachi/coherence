@@ -53,11 +53,15 @@ class AuthController extends Controller
                         ->orWhere('tel', $request->tel)
                         ->first();
         if ($user_vrf) {
+
             if ($user_vrf->email === $request->email) {
-                return back()->with('error', 'Email existe déjà.');
+
+                return back()->with('erreur', 'Email existe déjà.');
             } else {
-                return back()->with('error', 'Contact existe déjà.');
+
+                return back()->with('erreur', 'Contact existe déjà.');
             }
+
         } else {
 
             $user = User::create([

@@ -29,8 +29,9 @@ Route::middleware(['auth'])->group(function () {
 
     Route::get('/Nouveau Processus', [ProcessusController::class, 'index_add_processus'])->name('index_add_processus');
 
-    Route::get('/Nouveau Poste', [Controller::class, 'index_add_poste'])->name('index_add_poste');
+    Route::get('/Liste Poste', [Controller::class, 'index_liste_poste'])->name('index_liste_poste');
     Route::post('/Nouveau Poste', [Controller::class, 'index_add_poste_traitement'])->name('index_add_poste_traitement');
+    Route::post('/Mise a jour Poste', [Controller::class, 'index_modif_poste_traitement'])->name('index_modif_poste_traitement');
     Route::get('/get-post-user', [Controller::class, '/get_post_user'])->name('get_post_user');
 
     Route::post('/traitement_processus', [ProcessusController::class, 'add_processus'])->name('add_processus');
@@ -40,14 +41,15 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/traitement_prc', [ProcessusController::class, 'add_prc'])->name('add_prc');
 
     Route::get('/Validation', [ProcessusController::class, 'index_validation_processus'])->name('index_validation_processus');
-    Route::post('/cause_valider', [ProcessusController::class, 'cause_valider'])->name('cause_valider');
-    Route::post('/Action_update', [ListerisqueController::class, 'action_update'])->name('action_update');
+    Route::get('/cause_valider/{id}', [ProcessusController::class, 'cause_valider'])->name('cause_valider');
+    Route::post('/rejet', [ProcessusController::class, 'cause_rejet'])->name('cause_rejet');
 
     Route::get('/Liste processus', [ListeprocessusController::class, 'index_listeprocessus'])->name('index_listeprocessus');
     Route::get('/suppr_processus/{id}', [ListeprocessusController::class, 'suppr_processus'])->name('suppr_processus');
 
     Route::get('/Liste risque', [ListerisqueController::class, 'index_liste_risque'])->name('index_liste_risque');
     Route::get('/Mise a jour', [ListerisqueController::class, 'index_risque_actionup'])->name('index_risque_actionup');
+    Route::get('/Mise a jour risque/{id}', [ListerisqueController::class, 'index_risque_actionup2'])->name('index_risque_actionup2');
 
     Route::get('/Liste Action Preventive', [ListeactionController::class, 'index_ap'])->name('index_ap');
     Route::get('/Liste Action Corrective', [ListeactionController::class, 'index_ac'])->name('index_ac');

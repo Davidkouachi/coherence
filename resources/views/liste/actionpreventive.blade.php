@@ -284,5 +284,29 @@
         </div>
     @endforeach
 
+    <script>
+        Pusher.logToConsole = true;
+
+        var pusher = new Pusher('9f9514edd43b1637ff61', {
+          cluster: 'eu'
+        });
+
+        var channel = pusher.subscribe('my-channel-ap');
+        channel.bind('my-event-ap', function(data) {
+            Swal.fire({
+                        title: "Alert!",
+                    text: "Nouvelle(s) Action(s)",
+                        icon: "info",
+                        confirmButtonColor: "#00d819",
+                        confirmButtonText: "OK",
+                        allowOutsideClick: false,
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            location.reload();
+                        }
+                    });
+        });
+    </script>
+
 
 @endsection

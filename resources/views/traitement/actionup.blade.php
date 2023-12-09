@@ -24,7 +24,7 @@
                         <div class="nk-block-between">
                                     <div class="nk-block-head-content" style="margin:0px auto;">
                                         <h3 class="text-center">
-                                            <span>Action(s) non Validé(es)</span>
+                                            <span>Risque(s) non Validé(es)</span>
                                             <em class="icon ni ni-list-index"></em>
                                         </h3>
                                     </div>
@@ -39,9 +39,10 @@
                                             <thead>
                                                 <tr class="text-center">
                                                     <th></th>
+                                                    <th>Processus</th>
                                                     <th>Risque</th>
-                                                    <th>Action Préventive</th>
-                                                    <th>Action Corrective</th>
+                                                    <th>Evaluation</th>
+                                                    <th>Motif</th>
                                                     <th></th>
                                                 </tr>
                                             </thead>
@@ -49,14 +50,26 @@
                                                 @foreach ($risques as $key => $risque)
                                                     <tr class="text-center">
                                                         <td>{{ $key+1 }}</td>
+                                                        <td>{{ $risque->nom_processus }}</td>
                                                         <td>{{ $risque->nom }}</td>
-                                                        <td>{{ $risque->nbre_actionp }}</td>
-                                                        <td>{{ $risque->nbre_actionc }}</td>
+                                                        @if ($risque->evaluation_residuel >= 1 && $risque->evaluation_residuel <= 2 )
+                                                            <td class="border-white" style="background-color:#5eccbf;" ></td>
+                                                        @endif
+                                                        @if ($risque->evaluation_residuel >= 3 && $risque->evaluation_residuel <= 9)
+                                                            <td class="border-white"style="background-color:#f7f880;"></td>
+                                                        @endif
+                                                        @if ($risque->evaluation_residuel >= 10 && $risque->evaluation_residuel <= 16)
+                                                            <td class="border-white"style="background-color:#f2b171;"></td>
+                                                        @endif
+                                                        @if ($risque->evaluation_residuel > 16)
+                                                            <td class="border-white" style="background-color:#ea6072;"></td>
+                                                        @endif
                                                         <td>
-                                                            <a data-bs-toggle="modal"
-                                                                data-bs-target="#modalDetail{{ $risque->id }}"
-                                                                href="#" class="btn btn-icon btn-white btn-dim btn-sm btn-info border border-1 border-white rounded">
-                                                                <em class="icon ni ni-pen"></em>
+                                                            {{ $risque->motif }}
+                                                        </td>
+                                                        <td>
+                                                            <a href="{{ route('index_risque_actionup2',[$risque->id]) }}" class="btn btn-icon btn-white btn-dim btn-sm btn-info border border-1 border-white rounded">
+                                                                <em class="icon ni ni-edit"></em>
                                                             </a>
                                                         </td>
                                                     </tr>
@@ -73,120 +86,6 @@
         </div>
     </div>
 
-    @foreach ($risques as $risque)
-        <div class="modal fade zoom" tabindex="-1" id="modalFile{{ $risque->id }}">
-            <div class="modal-dialog modal-lg" role="document" >
-                <div class="modal-content" data-simplebar>
-                    @if ($risque->pdf_nom != '')
-                        <embed src="{{ asset('storage/pdf/' . $risque->pdf_nom) }}" type="application/pdf" width="100%" height="1100px">
-                    @endif
-                    
-                    @if ($risque->pdf_nom == '')
-                        <p class="text-center mt-2"  >Aucun fichier </p>
-                    @endif
-                </div>
-            </div>
-        </div>
-    @endforeach
-
-    @foreach ($risques as $risque)
-        <div class="modal fade zoom" tabindex="-1" id="modalDetail{{ $risque->id }}">
-            <div class="modal-dialog modal-lg" role="document" style="width: 100%;">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title">Détails</h5>
-                        <a href="#" class="close" data-bs-dismiss="modal" aria-label="Close"><em
-                                class="icon ni ni-cross"></em></a>
-                    </div>
-                    <div class="modal-body">
-                        <form class="nk-block" method="post" action="{{ route('action_update') }}" >
-                            @csrf
-                            <div class="row g-gs">
-                                @foreach ($actionsDatap[$risque->id] as $key => $actionsDatas)
-                                <div class="col-md-12 col-xxl-12" id="groupesAction">
-                                    <div class="card card-bordered">
-                                        <div class="card-inner">
-                                                <div class="row g-4">
-                                                    <div class="col-lg-12">
-                                                        <div class="form-group text-center">
-                                                            <label class="form-label" for="preventif">
-                                                                Action préventive {{ $key+1 }}
-                                                            </label>
-                                                            <div class="form-control-wrap">
-                                                                <input value="{{ $actionsDatas['action'] }}" type="text" class="form-control text-center" id="preventif" name="actionp[]">
-                                                                <input value="{{ $actionsDatas['action_idp'] }}" type="text" name="action_idp[]" style="display: none;" >
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-lg-12">
-                                                        <div class="form-group text-center">
-                                                            <label class="form-label" for="description">
-                                                                Commentaire
-                                                            </label>
-                                                            <div class="form-control-wrap">
-                                                                <textarea readonly name="commentairep[]" class="form-control no-resize" id="default-textarea">{{ $actionsDatas['commentaire'] }}</textarea>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                @endforeach
-
-                                @foreach ($actionsDatac[$risque->id] as $key => $actionsDatas)
-                                <div class="col-md-12 col-xxl-12" id="groupesAction">
-                                    <div class="card card-bordered">
-                                        <div class="card-inner">
-                                                <div class="row g-4">
-                                                    <div class="col-lg-12">
-                                                        <div class="form-group text-center">
-                                                            <label class="form-label" for="preventif">
-                                                                Action corrective {{ $key+1 }}
-                                                            </label>
-                                                            <div class="form-control-wrap">
-                                                                <input value="{{ $actionsDatas['action'] }}" type="text" class="form-control text-center" id="preventif" name="actionc[]">
-                                                                <input value="{{ $actionsDatas['action_idc'] }}" type="text" name="action_idc[]" style="display: none;" >
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-lg-12">
-                                                        <div class="form-group text-center">
-                                                            <label class="form-label" for="description">
-                                                                Commentaire
-                                                            </label>
-                                                            <div class="form-control-wrap">
-                                                                <textarea readonly name="commentairep[]" class="form-control no-resize" id="default-textarea">{{ $actionsDatas['commentaire'] }}</textarea>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                @endforeach
-                                <div class="col-md-12 col-xxl-12">
-                                    <div class="card card-preview">
-                                        <div class="card-inner row g-gs">
-                                            <div class="col-12">
-                                                <div class="form-group text-center">
-                                                    <button type="submit" class="btn btn-lg btn-success btn-dim ">
-                                                        <em class="ni ni-check me-2"></em>
-                                                        <em>Enregistrer</em>
-                                                    </button >
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </form>
-                    </div>
-                </div>
-            </div>
-        </div>
-    @endforeach
-
     <script>
         Pusher.logToConsole = true;
 
@@ -198,7 +97,7 @@
         channel.bind('my-event-action-non-valider', function(data) {
             Swal.fire({
                         title: "Alert!",
-                        text: "Nouvelle(s) Action(s) à Modifier",
+                        text: "Nouveau(x) Risque(s) à Modifier",
                         icon: "info",
                         confirmButtonColor: "#00d819",
                         confirmButtonText: "OK",

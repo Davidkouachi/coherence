@@ -10,6 +10,7 @@ use App\Events\NotificationApreventive;
 use App\Events\NotificationAnon;
 use App\Events\NotificationProcessus;
 use App\Events\NotificationRisque;
+use App\Events\NotificationAup;
 
 use App\Models\Processuse;
 use App\Models\Objectif;
@@ -125,8 +126,8 @@ class ProcessusController extends Controller
                 $nouvelleActionP->action = $actionp[$index];
                 $nouvelleActionP->poste_id = $responsable_idp[$index];
                 $nouvelleActionP->risque_id = $risque_id;
+                $nouvelleActionP->date = $delai[$index];
                 $nouvelleActionP->type = 'preventive';
-                $nouvelleActionP->accepte = 'non_valider';
                 $nouvelleActionP->save();
 
                 $suivip = new Suivi_action();
@@ -146,12 +147,11 @@ class ProcessusController extends Controller
             $nouvelleActionC->poste_id = $responsable_idc[$index];
             $nouvelleActionC->risque_id = $risque_id;
             $nouvelleActionC->type = 'corrective';
-            $nouvelleActionC->accepte = 'non_valider';
             $nouvelleActionC->save();
 
         }
 
-        if ($risque || $cause || $nouvelleActionP || $suivip || $nouvelleActionC || $suivic)
+        if ($risque || $cause || $nouvelleActionP || $suivip || $nouvelleActionC )
         {
             $choix_alert_alert = $request->input('choix_alert_alert');
             $choix_alert_email = $request->input('choix_alert_email');
@@ -218,7 +218,7 @@ class ProcessusController extends Controller
     public function index_validation_processus()
     {
         $risques = Risque::join('postes', 'risques.poste_id', '=', 'postes.id')
-                ->where('statut' ,'soumis')
+                ->where('statut', '!=', 'valider')
                 ->select('risques.*','postes.nom as validateur')
                 ->get();
 
@@ -253,7 +253,7 @@ class ProcessusController extends Controller
                 $actionsDatap[$risque->id][] = [
                     'action_idp' => $actionp->id,
                     'action' => $actionp->action,
-                    'accepte' => $actionp->accepte,
+                    'date_suivip' => $actionp->date,
                     'responsable' => $actionp->responsable,
                     'poste_idp' => $actionp->poste_id,
                 ];
@@ -273,7 +273,6 @@ class ProcessusController extends Controller
                 $actionsDatac[$risque->id][] = [
                     'action_idc' => $actionc->id,
                     'action' => $actionc->action,
-                    'accepte' => $actionc->accepte,
                     'responsable' => $actionc->responsable,
                     'poste_idc' => $actionc->poste_id,
                 ];
@@ -294,7 +293,12 @@ class ProcessusController extends Controller
             }
         }
 
-        return view('tableau.validecause', ['risques' => $risques, 'causesData' => $causesData, 'actionsDatap' => $actionsDatap , 'actionsDatac' => $actionsDatac]);
+        $postes = Poste::join('users', 'users.poste_id', 'postes.id')
+                        ->select('postes.*') // Sélectionne les colonnes de la table 'postes'
+                        ->distinct() // Rend les résultats uniques
+                        ->get();
+
+        return view('tableau.validecause', ['risques' => $risques, 'causesData' => $causesData, 'actionsDatap' => $actionsDatap , 'actionsDatac' => $actionsDatac, 'postes' => $postes ]);
     }
 
 
@@ -369,48 +373,28 @@ class ProcessusController extends Controller
 
     }
 
-    public function cause_valider(Request $request)
+    public function cause_valider($id)
     {
-        $risque_id = $request->input('risque_id');
+        $valide = Risque::where('id', $id)->first();
+        $valide->date_validation = now()->format('Y-m-d\TH:i');
+        $valide->statut = 'valider';
+        $valide->update();
 
-        $action_idp = $request->input('action_idp');
-        $poste_idp = $request->input('poste_idp');
-        $acceptep = $request->input('acceptep');
-        $commentairep = $request->input('commentairep');
+        if ($valide)
+        {
+            $his = new Historique_action();
+            $his->nom_formulaire = 'Tableau de validation';
+            $his->nom_action = 'Validation';
+            $his->user_id = Auth::user()->id;
+            $his->save();
 
-        if ($action_idp) {
+            $users = Action::join('postes', 'actions.poste_id', 'postes.id')
+                        ->join('users', 'users.poste_id', 'postes.id')
+                        ->where('actions.risque_id', $id)
+                        ->select('users.email as email')
+                        ->get();
 
-            foreach ($action_idp as $index => $valeur) {
-                $action = Action::where('id', $action_idp[$index])->first();
-                $action->accepte = $acceptep[$index];
-                $action->commentaire = $commentairep[$index];
-                $action->update();
-            }
-        }
-
-        $action_idc = $request->input('action_idc');
-        $poste_idc = $request->input('poste_idc');
-        $acceptec = $request->input('acceptec');
-        $commentairec = $request->input('commentairec');
-
-        if ($action_idc) {
-
-            foreach ($action_idc as $index => $valeur) {
-                $action = Action::where('id', $action_idc[$index])->first();
-                $action->accepte = $acceptec[$index];
-                $action->commentaire = $commentairec[$index];
-                $action->update();
-            }
-        }
-
-        $actions = Action::where('risque_id', $risque_id)->where('accepte', '!=' ,'oui')->count();
-
-            if ($actions >= 1 ) {
-                
-                $user = User::join('postes', 'users.poste_id', 'postes.id')
-                        ->where('postes.nom', 'OPÉRATEUR DE SAISIE')
-                        ->select('users.*')
-                        ->first();
+            foreach ($users as $user) {
 
                 $mail = new PHPMailer(true);
                 $mail->isHTML(true);
@@ -425,114 +409,59 @@ class ProcessusController extends Controller
                 $mail->setFrom('coherencemail01@gmail.com', 'Coherence');
                 $mail->addAddress($user->email);
                 $mail->Subject = 'ALERT !';
-                $mail->Body = 'Action non accepté';
+                $mail->Body = 'Nouvelle Action Préventive';
                 // Envoi de l'email
                 $mail->send();
+            }
 
-                event(new NotificationAnon());
+            event(new NotificationApreventive());
 
-                $his = new Historique_action();
-                $his->nom_formulaire = 'Tableau de validation';
-                $his->nom_action = 'Action non approuvé';
-                $his->user_id = Auth::user()->id;
-                $his->save();
-
-                return redirect()
-                    ->back()
-                    ->with('ajouter', 'Modification éffectuée.');
-            } else {
-
-                $valide = Risque::where('id', $risque_id)->first();
-                $valide->date_validation = now()->format('Y-m-d\TH:i');
-                $valide->statut = 'valider';
-                $valide->update();
-
-                if ($valide)
-                {
-                    $his = new Historique_action();
-                    $his->nom_formulaire = 'Tableau de validation';
-                    $his->nom_action = 'Validation';
-                    $his->user_id = Auth::user()->id;
-                    $his->save();
-
-                    $user = User::join('postes', 'users.poste_id', 'postes.id')
-                                ->where('postes.id', $valide->poste_id)
-                                ->select('users.*')
-                                ->first();
-
-                    $mail = new PHPMailer(true);
-                    $mail->isHTML(true);
-                    $mail->isSMTP();
-                    $mail->Host = 'smtp.gmail.com';
-                    $mail->SMTPAuth = true;
-                    $mail->Username = 'coherencemail01@gmail.com';
-                    $mail->Password = 'kiur ejgn ijqt kxam';
-                    $mail->SMTPSecure = 'ssl';
-                    $mail->Port = 465;
-                    // Destinataire, sujet et contenu de l'email
-                    $mail->setFrom('coherencemail01@gmail.com', 'Coherence');
-                    $mail->addAddress($user->email);
-                    $mail->Subject = 'ALERT !';
-                    $mail->Body = 'Nouvelle Action Préventive';
-                    // Envoi de l'email
-                    $mail->send();
-
-                    event(new NotificationApreventive());
-                }
-
-                return redirect()
+            return redirect()
                     ->back()
                     ->with('valider', 'Validation éffectuée.');
-
-            }
-
-    }
-
-    public function cause_rejet(Request $request, $id)
-    {
-
-        $rejet = new Rejet();
-        $rejet->motif = $request->input('motif');
-        $rejet->risque_id = $id;
-        $rejet->save();
-
-        if ($request->input('radio') === 'modifier')
-        {
-
-            $valide = Risque::where('id', $id)->first();
-            $valide->statut = 'modifier';
-            $valide->date_validation = now()->format('Y-m-d\TH:i');
-            $valide->update();
-
-            if ($valide || $rejet)
-            {
-                $his = new Historique_action();
-                $his->nom_formulaire = 'Tableau de validation';
-                $his->nom_action = 'Rejet -> Modification';
-                $his->user_id = Auth::user()->id;
-                $his->save();
-            }
-            
-        } elseif ($request->input('radio') === 'supprimer') {
-            
-            $valide = Risque::where('id', $id)->first();
-            $valide->statut = 'supprimer';
-            $valide->date_validation = now()->format('Y-m-d\TH:i');
-            $valide->update();
-
-            if ($valide || $rejet)
-            {
-                $his = new Historique_action();
-                $his->nom_formulaire = 'Tableau de validation';
-                $his->nom_action = 'Rejet -> Supprimer';
-                $his->user_id = Auth::user()->id;
-                $his->save();
-            }
         }
 
         return redirect()
             ->back()
-            ->with('rejet', 'rejet éffectuée.');
+            ->with('erreur', 'Validation a échoué.');
+
+    }
+
+    public function cause_rejet(Request $request)
+    {
+
+        $rejet = new Rejet();
+        $rejet->motif = $request->input('motif');
+        $rejet->risque_id = $request->input('risque_id');
+        $rejet->save();
+
+        if ($rejet)
+        {
+            $valide = Risque::where('id', $request->input('risque_id'))->first();
+            $valide->statut = 'non_valider';
+            $valide->date_validation = now()->format('Y-m-d\TH:i');
+            $valide->update();
+
+            if ($valide || $rejet)
+            {
+                $his = new Historique_action();
+                $his->nom_formulaire = 'Tableau de validation';
+                $his->nom_action = 'Rejet';
+                $his->user_id = Auth::user()->id;
+                $his->save();
+
+                event(new NotificationAup());
+
+                return redirect()
+                        ->back()
+                        ->with('rejet', 'rejet éffectuée.');
+            }
+
+        }
+
+        return redirect()
+            ->back()
+            ->with('erreur', 'Rejet a échoué.');
         
     }
 

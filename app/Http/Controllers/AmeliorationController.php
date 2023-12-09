@@ -467,7 +467,6 @@ class AmeliorationController extends Controller
                         'statut' => $action->statut,
                         'processus' => $action->processus,
                         'risque' => $action->risque,
-                        'statut' => $action->statut,
                         'commentaire' => $action->commentaire_am,
                     ];
                 }

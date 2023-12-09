@@ -17,8 +17,7 @@ class CreateActionsTable extends Migration
             $table->id();
             $table->string('action');
             $table->string('type');
-            $table->string('accepte');
-            $table->string('commentaire')->nullable();
+            $table->date('date')->nullable();
             $table->unsignedBigInteger('poste_id');
             $table->foreign('poste_id')->references('id')->on('postes');
             $table->unsignedBigInteger('risque_id');

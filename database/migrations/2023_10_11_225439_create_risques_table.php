@@ -27,6 +27,7 @@ class CreateRisquesTable extends Migration
             $table->integer('evaluation_residuel')->nullable();
             $table->string('cout_residuel')->nullable();
             $table->datetime('date_validation')->nullable();
+            $table->text('commentaire')->nullable();
             $table->unsignedBigInteger('processus_id');
             $table->foreign('processus_id')->references('id')->on('processuses');
             $table->unsignedBigInteger('poste_id');

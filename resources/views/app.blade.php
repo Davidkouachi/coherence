@@ -92,6 +92,14 @@
                                             </a>
                                         </li>
                                         <li >
+                                            <a class="nk-menu-link" href="{{ route('index_liste_poste') }}" >
+                                                <em class="ni ni-list me-1"></em>
+                                                <span class="nk-menu-text ">
+                                                    Liste des postes
+                                                </span>
+                                            </a>
+                                        </li>
+                                        <li >
                                             <a class="nk-menu-link" href="{{ route('index_stat') }}">
                                                 <em class="ni ni-bar-chart-alt me-1"></em>
                                                 <span class="nk-menu-text ">
@@ -179,7 +187,7 @@
                                             <a class="nk-menu-link" href="{{ route('index_risque_actionup') }}">
                                                 <em class="ni ni-box-view-fill me-1"></em>
                                                 <span class="nk-menu-text">
-                                                    Action non validé
+                                                    Risque non validé
                                                 </span>
                                             </a>
                                         </li>
@@ -569,14 +577,14 @@
         {{ session()->forget('am_choisir') }}
     @endif
 
-    @if (session('error'))
+    @if (session('erreur'))
         <script>
-            toastr.danger("{{ session('error') }}"," ",
+            toastr.error("{{ session('erreur') }}"," ",
             {positionClass:"toast-top-left",timeOut:5e3,debug:!1,newestOnTop:!0,
             preventDuplicates:!0,showDuration:"300",hideDuration:"1000",extendedTimeOut:"1000",
             showEasing:"swing",showMethod:"fadeIn",hideMethod:"fadeOut"})
         </script>
-        {{ session()->forget('error') }}
+        {{ session()->forget('erreur') }}
     @endif
 
     @if (session('info'))
