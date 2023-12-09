@@ -50,7 +50,7 @@
                                                 @foreach ($risques as $key => $risque)
                                                     <tr class="text-center">
                                                         <td>{{ $key+1 }}</td>
-                                                        <td>{{ $risque->nom_processus }}</td>
+                                                        <td>{{ $risque->processus }}</td>
                                                         <td>{{ $risque->nom }}</td>
                                                         @if ($risque->evaluation_residuel >= 1 && $risque->evaluation_residuel <= 2 )
                                                             <td class="border-white" style="background-color:#5eccbf;" ></td>
@@ -68,9 +68,13 @@
                                                             {{ $risque->motif }}
                                                         </td>
                                                         <td>
-                                                            <a href="{{ route('index_risque_actionup2',[$risque->id]) }}" class="btn btn-icon btn-white btn-dim btn-sm btn-info border border-1 border-white rounded">
-                                                                <em class="icon ni ni-edit"></em>
-                                                            </a>
+                                                            <form method="post" action="{{ route('index_risque_actionup2') }}">
+                                                            @csrf
+                                                                <input type="text" name="id" value="{{ $risque->id }}" style="display: none;">
+                                                                <button type="submit" class="btn btn-icon btn-white btn-dim btn-sm btn-info border border-1 border-white rounded">
+                                                                    <em class="icon ni ni-edit"></em>
+                                                                </button>
+                                                            </form>
                                                         </td>
                                                     </tr>
                                                 @endforeach
