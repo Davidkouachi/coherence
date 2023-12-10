@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 use App\Events\NotificationAup;
+use App\Events\NotificationRisqueup;
 
 use App\Models\Processuse;
 use App\Models\Objectif;
@@ -23,6 +24,9 @@ use App\Models\Poste;
 
 use Illuminate\Support\Facades\Validator;
 use Carbon\Carbon;
+
+use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\Exception;
 
 
 class ListerisqueController extends Controller
@@ -166,61 +170,192 @@ class ListerisqueController extends Controller
 
     }
 
-    public function action_update(Request $request)
+    public function index_risque_actionup2_traitement(Request $request)
     {
-        $action_idp = $request->input('action_idp');
-        $actionp = $request->input('actionp');
-        $commentairep = $request->input('commentairep');
 
-        if($action_idp) {
+        $processus_id = $request->input('processus_id');
 
-            foreach ($action_idp as $index => $value) {
-                $action = Action::find($action_idp[$index]); // Récupère l'action par son ID
+        $risque_id = $request->input('risque_id');
+        $nom_risque = $request->input('risque');
+        $vrai = $request->input('vrai');
+        $gravite = $request->input('gravite');
+        $evaluation = $request->input('vrai') * $request->input('gravite');
+        $cout = $request->input('cout');
+        $vrai_residuel = $request->input('vrai_residuel');
+        $gravite_residuel = $request->input('gravite_residuel');
+        $evaluation_residuel = $request->input('vrai_residuel') * $request->input('gravite_residuel');
+        $cout_residuel = $request->input('cout_residuel');
+        $traitement = $request->input('traitement');
+        $validateur = $request->input('poste_id');
 
-                if ($action) {
-                    if ($action->action !== $actionp[$index]) {
+        $risque = Risque::where('id', $risque_id)->first();
 
-                        $action->action = $actionp[$index]; // Met à jour l'action
-                        $action->accepte = 'modif';
-                        $action->save(); // Enregistre les modifications
+        if ($risque) {
+
+            $risque->nom = $nom_risque;
+            $risque->vraisemblence = $vrai;
+            $risque->gravite = $gravite;
+            $risque->evaluation = $evaluation;
+            $risque->cout = $cout;
+            $risque->vraisemblence_residuel = $vrai_residuel;
+            $risque->gravite_residuel = $gravite_residuel;
+            $risque->evaluation_residuel = $evaluation_residuel;
+            $risque->cout_residuel = $cout_residuel;
+            $risque->processus_id = $processus_id;
+            $risque->traitement = $traitement;
+            $risque->poste_id = $validateur;
+            $risque->statut = 'update';
+            $risque->update();
+
+            if ($request->hasFile('pdfFile') && $request->file('pdfFile')->isValid()) {
+
+                $originalFileName = $request->file('pdfFile')->getClientOriginalName();
+                $pdfPathname = $request->file('pdfFile')->storeAs('public/pdf', $originalFileName);
+
+                // Enregistrez le fichier PDF dans la base de données
+                $pdfFile = Pdf_file::where('risque_id', $risque_id)->first();
+
+                if ($pdfFile) {
+
+                    $pdfFile->pdf_nom = $originalFileName;
+                    $pdfFile->pdf_chemin = $pdfPathname;
+                    $pdfFile->update();
+                } else {
+
+                    $pdfFile = new Pdf_file();
+                    $pdfFile->pdf_nom = $originalFileName;
+                    $pdfFile->pdf_chemin = $pdfPathname;
+                    $pdfFile->risque_id = $risque_id;
+                    $pdfFile->save();
+                }
+
+            }
+
+            $cause_id = $request->input('cause_id');
+            $nom_cause = $request->input('nom_cause');
+            $dispositif = $request->input('dispositif');
+
+            foreach ($cause_id as $index => $valeur) {
+
+                if ($cause_id[$index] !== '0') {
+
+                    $cause = Cause::where('id', $cause_id[$index])->first();
+
+                    if ($cause) {
+
+                        $cause->nom = $nom_cause[$index];
+                        $cause->dispositif = $dispositif[$index];
+                        $cause->update();
                     }
 
+
+                } else {
+
+                    $cause = new Cause();
+                    $cause->nom = $nom_cause[$index];
+                    $cause->dispositif = $dispositif[$index];
+                    $cause->risque_id = $risque_id;
+                    $cause->save();
                 }
+                
             }
-        }
 
-        $action_idc = $request->input('action_idc');
-        $actionc = $request->input('actionc');
-        $commentairec = $request->input('commentairec');
+            $action_idc = $request->input('action_idc');
+            $actionc = $request->input('actionc');
+            $responsable_idc = $request->input('poste_idc');
 
-        if($action_idc) {
+            foreach ($action_idc as $index => $valeur) {
 
-            foreach ($action_idc as $index => $value) {
-                $action = Action::find($action_idc[$index]); // Récupère l'action par son ID
+                if ($action_idc[$index] !== '0') {
+                    
+                    $nouvelleActionC = Action::where('id', $action_idc[$index])->first();
 
-                if ($action) {
-                    if ($action->action !== $actionc[$index]) {
+                    if ($nouvelleActionC) {
 
-                        $action->action = $actionc[$index]; // Met à jour l'action
-                        $action->accepte = 'modif';
-                        $action->save(); // Enregistre les modifications
+                        $nouvelleActionC->action = $actionc[$index];
+                        $nouvelleActionC->poste_id = $responsable_idc[$index];
+                        $nouvelleActionC->update();
                     }
+
+                } else {
+
+                    $nouvelleActionC = new Action();
+                    $nouvelleActionC->action = $actionc[$index];
+                    $nouvelleActionC->poste_id = $responsable_idc[$index];
+                    $nouvelleActionC->risque_id = $risque_id;
+                    $nouvelleActionC->type = 'corrective';
+                    $nouvelleActionC->save();
                 }
             }
+
+            $action_idp = $request->input('action_idp');
+            $actionp = $request->input('actionp');
+            $delai = $request->input('delai');
+            $responsable_idp = $request->input('poste_idp');
+
+            foreach ($action_idp as $index => $valeur) {
+
+                if ($action_idp[$index] !== '0') {
+                    
+                    $nouvelleActionP = Action::where('id', $action_idp[$index])->first();
+
+                    if ($nouvelleActionP) {
+
+                        $nouvelleActionP->action = $actionp[$index];
+                        $nouvelleActionP->poste_id = $responsable_idp[$index];
+                        $nouvelleActionP->date = $delai[$index];
+                        $nouvelleActionP->update();
+                    }
+
+                } else {
+
+                    $nouvelleActionP = new Action();
+                    $nouvelleActionP->action = $actionp[$index];
+                    $nouvelleActionP->poste_id = $responsable_idp[$index];
+                    $nouvelleActionP->risque_id = $risque_id;
+                    $nouvelleActionP->date = $delai[$index];
+                    $nouvelleActionP->type = 'preventive';
+                    $nouvelleActionP->save();
+
+                    $suivip = new Suivi_action();
+                    $suivip->delai = $delai[$index];
+                    $suivip->statut = 'non-realiser';
+                    $suivip->risque_id = $risque_id;
+                    $suivip->action_id = $nouvelleActionP->id;
+                    $suivip->processus_id = $processus_id;
+                    $suivip->save();
+                }
+            }
+
+            event(new NotificationRisqueup());
+
+            $user = User::join('postes', 'users.poste_id', 'postes.id')
+                            ->where('postes.id', $validateur)
+                            ->select('users.*')
+                            ->first();
+            if ($user) {
+
+                $mail = new PHPMailer(true);
+                $mail->isHTML(true);
+                $mail->isSMTP();
+                $mail->Host = 'smtp.gmail.com';
+                $mail->SMTPAuth = true;
+                $mail->Username = 'coherencemail01@gmail.com';
+                $mail->Password = 'kiur ejgn ijqt kxam';
+                $mail->SMTPSecure = 'ssl';
+                $mail->Port = 465;
+                // Destinataire, sujet et contenu de l'email
+                $mail->setFrom('coherencemail01@gmail.com', 'Coherence');
+                $mail->addAddress($user->email);
+                $mail->Subject = 'ALERT !';
+                $mail->Body = 'Mise à jour d´/une fiche risque Risque';
+                // Envoi de l'email
+                $mail->send();
+            }
+
+            return redirect()->route('index_risque_actionup')->with('success', 'Modification éffectuée.');
+
         }
 
-        if ($action) {
-
-            event(new NotificationAup());
-
-            $his = new Historique_action();
-            $his->nom_formulaire = 'Action non validé';
-            $his->nom_action = 'Mise à jour';
-            $his->user_id = Auth::user()->id;
-            $his->save();
-        }
-
-        return back()->with('valider', 'Mise à jour effectuée.');
     }
-
 }

@@ -39,7 +39,6 @@ class ListeactionController extends Controller
                                     ->join('risques', 'actions.risque_id', 'risques.id')
                                     ->join('processuses', 'risques.processus_id', 'processuses.id')
                                     ->where('actions.type', '=', 'preventive')
-                                    ->where('actions.accepte', '=', 'oui')
                                     ->select('Suivi_actions.*','actions.action as action', 'processuses.nom as processus', 'risques.nom as risque','postes.nom as poste', 'risques.nom as risque' )
                                     ->get();
 

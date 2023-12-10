@@ -410,12 +410,10 @@ class AmeliorationController extends Controller
             $his->user_id = Auth::user()->id;
             $his->save();
 
-            return redirect()
-                ->back()
-                ->with('ajouter', 'Enregistrement éffectuée.');
+            return back()
+                ->with('success', 'Enregistrement éffectuée.');
         } else {
-            return redirect()
-                ->back()
+            return back()
                 ->with('error', 'Enregistrement non éffectuée.');
         }
 

@@ -205,7 +205,7 @@ class ProcessusController extends Controller
 
         return redirect()
             ->back()
-            ->with('ajouter', 'Enregistrement éffectuée.');
+            ->with('success', 'Enregistrement éffectuée.');
 
     }
 
@@ -304,26 +304,6 @@ class ProcessusController extends Controller
 
     public function add_processus(Request $request)
     {
-        $validator = Validator::make($request->all(), [
-            'nprocessus' => 'required',
-            'objectifs' => 'required',
-            'description' => 'required',
-            'finalite' => 'required',
-        ]);
-
-        $validator->setCustomMessages([
-            'nprocessus.required' => 'Saisie obligatoire.',
-            'objectifs.required' => 'Saisie obligatoire.',
-            'description.required' => 'Saisie obligatoire.',
-            'finalite.required' => 'Saisie obligatoire.',
-        ]);
-
-        if ($validator->fails()) {
-            return redirect()
-                        ->route('index_add_processus')
-                        ->withErrors($validator)
-                        ->withInput();
-        }
 
         $nomProcessus = $request->input('nprocessus');
         $descriptionProcessus = $request->input('description');
@@ -369,7 +349,7 @@ class ProcessusController extends Controller
 
         return redirect()
             ->route('index_add_processus')
-            ->with('ajouter', 'Enregistrement éffectuée.');
+            ->with('success', 'Enregistrement éffectuée.');
 
     }
 
@@ -418,22 +398,33 @@ class ProcessusController extends Controller
 
             return redirect()
                     ->back()
-                    ->with('valider', 'Validation éffectuée.');
+                    ->with('success', 'Validation éffectuée.');
         }
 
         return redirect()
             ->back()
-            ->with('erreur', 'Validation a échoué.');
+            ->with('error', 'Validation a échoué.');
 
     }
 
     public function cause_rejet(Request $request)
     {
 
-        $rejet = new Rejet();
-        $rejet->motif = $request->input('motif');
-        $rejet->risque_id = $request->input('risque_id');
-        $rejet->save();
+        $rejet = Rejet::where('risque_id', $request->input('risque_id'))->first();
+
+        if ($rejet)
+        {
+            $rejet->motif = $request->input('motif');
+            $rejet->update();
+
+        } else {
+
+            $rejet = new Rejet();
+            $rejet->motif = $request->input('motif');
+            $rejet->risque_id = $request->input('risque_id');
+            $rejet->save();
+
+        }
 
         if ($rejet)
         {
@@ -442,26 +433,26 @@ class ProcessusController extends Controller
             $valide->date_validation = now()->format('Y-m-d\TH:i');
             $valide->update();
 
-            if ($valide || $rejet)
-            {
+            if ($valide) {
+
                 $his = new Historique_action();
                 $his->nom_formulaire = 'Tableau de validation';
                 $his->nom_action = 'Rejet';
                 $his->user_id = Auth::user()->id;
                 $his->save();
 
-                event(new NotificationAup());
+                event(new NotificationAnon());
 
                 return redirect()
                         ->back()
-                        ->with('rejet', 'rejet éffectuée.');
+                        ->with('success', 'rejet éffectuée.');
             }
-
+            
         }
 
         return redirect()
             ->back()
-            ->with('erreur', 'Rejet a échoué.');
+            ->with('error', 'Rejet a échoué.');
         
     }
 

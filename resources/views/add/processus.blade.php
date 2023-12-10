@@ -195,35 +195,44 @@
             }
         });
 
-
-        //si l'on veut selectionner et afficher plusieurs fichiers
-        /*const fileInput = document.getElementById('fileInput');
-        const pdfPreviews = document.getElementById('pdfPreviews');
-
-        fileInput.addEventListener('change', function () {
-            // Réinitialisez la div des prévisualisations
-            pdfPreviews.innerHTML = '';
-
-            // Parcourez tous les fichiers sélectionnés
-            for (const fichier of fileInput.files) {
-                // Créez un élément d'incorporation pour chaque fichier PDF
-                const embedElement = document.createElement('embed');
-                embedElement.src = URL.createObjectURL(fichier);
-                embedElement.type = 'application/pdf';
-                embedElement.style.width = '100%';
-                embedElement.style.height = '100%';
-
-                // Créez un conteneur div pour chaque prévisualisation
-                const previewContainer = document.createElement('div');
-                previewContainer.style.width = '500px'; // Spécifiez la largeur de chaque prévisualisation
-                previewContainer.style.height = '500px'; // Spécifiez la hauteur de chaque prévisualisation
-                previewContainer.appendChild(embedElement);
-
-                // Ajoutez l'élément d'incorporation dans le conteneur des prévisualisations
-                pdfPreviews.appendChild(previewContainer);
-            }
-        });*/
     </script>
+
+    @if (session('success'))
+        <script>
+            toastr.success("{{ session('success') }}"," ",
+            {positionClass:"toast-top-left",timeOut:5e3,debug:!1,newestOnTop:!0,
+            preventDuplicates:!0,showDuration:"300",hideDuration:"1000",extendedTimeOut:"1000",
+            showEasing:"swing",showMethod:"fadeIn",hideMethod:"fadeOut"})
+        </script>
+        {{ session()->forget('success') }}
+    @endif
+    @if (session('error'))
+        <script>
+            toastr.error("{{ session('error') }}"," ",
+            {positionClass:"toast-top-left",timeOut:5e3,debug:!1,newestOnTop:!0,
+            preventDuplicates:!0,showDuration:"300",hideDuration:"1000",extendedTimeOut:"1000",
+            showEasing:"swing",showMethod:"fadeIn",hideMethod:"fadeOut"})
+        </script>
+        {{ session()->forget('error') }}
+    @endif
+    @if (session('warning'))
+        <script>
+            toastr.warning("{{ session('warning') }}"," ",
+            {positionClass:"toast-top-left",timeOut:5e3,debug:!1,newestOnTop:!0,
+            preventDuplicates:!0,showDuration:"300",hideDuration:"1000",extendedTimeOut:"1000",
+            showEasing:"swing",showMethod:"fadeIn",hideMethod:"fadeOut"})
+        </script>
+        {{ session()->forget('warning') }}
+    @endif
+    @if (session('info'))
+        <script>
+            toastr.info("{{ session('info') }}"," ",
+            {positionClass:"toast-top-left",timeOut:5e3,debug:!1,newestOnTop:!0,
+            preventDuplicates:!0,showDuration:"300",hideDuration:"1000",extendedTimeOut:"1000",
+            showEasing:"swing",showMethod:"fadeIn",hideMethod:"fadeOut"})
+        </script>
+        {{ session()->forget('info') }}
+    @endif
 
 
 @endsection

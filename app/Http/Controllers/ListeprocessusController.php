@@ -60,7 +60,7 @@ class ListeprocessusController extends Controller
     {
         return redirect()
             ->back()
-            ->with('valider', 'Aucun code.');
+            ->with('info', 'Aucun code.');
 
         
     }

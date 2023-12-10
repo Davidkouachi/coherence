@@ -125,13 +125,15 @@ class SuiviactionController extends Controller
                 $his->nom_action = 'Suivi action preventive';
                 $his->user_id = Auth::user()->id;
                 $his->save();
+
+                return back()
+                        ->with('success', 'Suivi éffectué.');
             }
 
         }
 
-        return redirect()
-            ->back()
-            ->with('valider', 'Suivi éffectué.');
+        return back()
+            ->with('error', 'Suivi non éffectuée.');
     }
 
     public function add_suivi_actionc(Request $request, $id)
@@ -154,13 +156,15 @@ class SuiviactionController extends Controller
                 $his->nom_action = 'Suivi action corrective';
                 $his->user_id = Auth::user()->id;
                 $his->save();
+
+                return back()
+                        ->with('success', 'Suivi éffectué.');
             }
 
         }
 
-        return redirect()
-            ->back()
-            ->with('valider', 'Suivi éffectué.');
+        return back()
+            ->with('érror', 'Suivi non éffectuée.');
     }
 
     public function index_historique()

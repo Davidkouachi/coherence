@@ -3,60 +3,62 @@
 @section('titre', 'Modification Risque')
 
 @section('option_btn')
-    <li class="dropdown chats-dropdown">
-        <a href="{{ route('index_accueil') }}" class="dropdown-toggle nk-quick-nav-icon">
-            <div class="icon-status icon-status-na">
-                <em class="icon ni ni-home"></em>
-            </div>
-        </a>
-    </li>
-    <li class="dropdown user-dropdown">
-        <a class="dropdown-toggle" data-bs-toggle="dropdown" href="#">
-            <div class="user-toggle">
-                <div class="user-avatar">
-                    <em class="icon ni ni-plus"></em>
-                </div>
-            </div>
-        </a>
-        <div class="dropdown-menu dropdown-menu-md dropdown-menu-end dropdown-menu-s1 is-light">
-            <div class="dropdown-inner">
-                <ul class="link-list">
-                    <li class="mt-2" >
-                        <a id="ajouterGroupe" class="btn btn-md btn-primary text-white" >
-                            <em class="icon ni ni-plus"></em>
-                            <span>
-                                Cause
-                            </span>
-                        </a>
-                    </li>
-                    <li class="mt-2" >
-                        <a id="ajouterActionpr" class="btn btn-md btn-primary text-white">
-                            <em class="icon ni ni-plus"></em>
-                            <span>
-                                Action Préventive
-                            </span>
-                        </a>
-                    </li>
-                    <li class="mt-2" >
-                        <a id="ajouterActionco" class="btn btn-md btn-primary text-white">
-                            <em class="icon ni ni-plus"></em>
-                            <span>
-                                Action corrective
-                            </span>
-                        </a>
-                    </li>
-                    <li class="mt-2" >
-                        <a data-bs-toggle="modal" data-bs-target="#modalDetail" class="btn btn-md btn-primary text-white">
-                            <em class="icon ni ni-file"></em>
-                            <span>
-                                Voir le Ficher PDF
-                            </span>
-                        </a>
-                    </li>
-                </ul>
+
+<li class="dropdown chats-dropdown">
+    <a href="{{ route('index_accueil') }}" class="dropdown-toggle nk-quick-nav-icon">
+        <div class="icon-status icon-status-na">
+            <em class="icon ni ni-home"></em>
+        </div>
+    </a>
+</li>
+<li class="dropdown user-dropdown">
+    <a class="dropdown-toggle" data-bs-toggle="dropdown" href="#">
+        <div class="user-toggle">
+            <div class="user-avatar">
+                <em class="icon ni ni-plus"></em>
             </div>
         </div>
-    </li>
+    </a>
+    <div class="dropdown-menu dropdown-menu-md dropdown-menu-end dropdown-menu-s1 is-light">
+        <div class="dropdown-inner">
+            <ul class="link-list">
+                <li class="mt-2">
+                    <a id="ajouterGroupe" class="btn btn-md btn-primary text-white">
+                        <em class="icon ni ni-plus"></em>
+                        <span>
+                            Cause
+                        </span>
+                    </a>
+                </li>
+                <li class="mt-2">
+                    <a id="ajouterActionpr" class="btn btn-md btn-primary text-white">
+                        <em class="icon ni ni-plus"></em>
+                        <span>
+                            Action Préventive
+                        </span>
+                    </a>
+                </li>
+                <li class="mt-2">
+                    <a id="ajouterActionco" class="btn btn-md btn-primary text-white">
+                        <em class="icon ni ni-plus"></em>
+                        <span>
+                            Action corrective
+                        </span>
+                    </a>
+                </li>
+                <li class="mt-2">
+                    <a data-bs-toggle="modal" data-bs-target="#modalDetail" class="btn btn-md btn-primary text-white">
+                        <em class="icon ni ni-file"></em>
+                        <span>
+                            Voir le Ficher PDF
+                        </span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</li>
+
 
 @endsection
 
@@ -70,34 +72,54 @@
                     <div class="nk-block-between">
                         <div class="nk-block-head-content" style="margin:0px auto;">
                             <h3 class="text-center">
-                                <span>Mise à jour</span>
+                                <span>Modification</span>
                                 <em class="icon ni ni-edit "></em>
                             </h3>
                         </div>
+                        <div class="nk-block-head-content">
+                            <div class="toggle-wrap nk-block-tools-toggle">
+                                <a href="#" class="btn btn-icon btn-trigger toggle-expand me-n1" data-target="pageMenu">
+                                    <em class="icon ni ni-menu-alt-r"></em>
+                                </a>
+                                <div class="toggle-expand-content" data-content="pageMenu">
+                                    <ul class="nk-block-tools g-3">
+                                        <li>
+                                            <a href="#" class="btn btn-dim btn-white btn-outline-danger" onclick="goBack()">
+                                                <em class="icon ni ni-arrow-left"></em>
+                                                <span>Back</span>
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </div>
+                                <script>
+                                    function goBack() {
+                                        window.history.back();
+                                    }
+                                </script>
+                            </div>
+                        </div>
                     </div>
                 </div>
-                <form class="nk-block" method="" action="" enctype="multipart/form-data">
+                <form class="nk-block" method="post" action="{{ route('index_risque_actionup2_traitement') }}" enctype="multipart/form-data">
                     @csrf
                     <div class="row g-gs">
-
-                        <div class="col-md-4 col-xxl-4 row g-2" style="margin-left:1px;">
-                            <div class="form-group col-md-12">
+                        <div class="col-lg-4 col-xxl-4 row g-2" style="margin-left:1px;">
+                            <div class="form-group col-lg-12">
                                 <div class="card card-bordered h-100">
                                     <div class="card-inner">
                                         <span id="fileSize"> </span>
                                         <div class="card " id="pdfPreview" style="height: 500px; " data-simplebar>
                                             @if ($risque->pdf_nom != '')
-                                                <embed src="{{ asset('storage/pdf/' . $risque->pdf_nom) }}" type="application/pdf" width="100%" height="700px">
+                                            <embed src="{{ asset('storage/pdf/' . $risque->pdf_nom) }}" type="application/pdf" width="100%" height="700px">
                                             @endif
-                                                    
                                             @if ($risque->pdf_nom == '')
-                                                <p class="text-center mt-2"  >Aucun fichier </p>
+                                            <p class="text-center" style="margin-top: 250px ;">Aucun fichier </p>
                                             @endif
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                            <div class="form-group col-md-12" style="margin-top: -10px">
+                            <div class="form-group col-lg-12" style="margin-top: -10px">
                                 <div class="card card-bordered h-100">
                                     <div class="card-inner">
                                         <div class="form-group">
@@ -110,9 +132,8 @@
                                 </div>
                             </div>
                         </div>
-
-                        <div class="col-md-8 col-xxl-8 row g-2" style="margin-left:5px;">
-                            <div class="col-md-12 ">
+                        <div class="col-lg-8 col-xxl-8 row g-2" style="margin-left:5px;">
+                            <div class="col-lg-12 ">
                                 <div class="card card-bordered h-100">
                                     <div class="card-inner">
                                         <div>
@@ -132,12 +153,12 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-md-12 ">
+                            <div class="col-lg-12 ">
                                 <div class="card card-bordered h-100">
                                     <div class="card-inner">
                                         <div>
                                             <div class="row g-gs">
-                                                <div class=" form-group col-md-12">
+                                                <div class=" form-group col-lg-12">
                                                     <label class="form-label" for="cf-full-name">Processus</label>
                                                     <select name="processus_id" class="form-select">
                                                         @foreach($processuses as $processus)
@@ -147,89 +168,88 @@
                                                         @endforeach
                                                     </select>
                                                 </div>
-                                                <div class=" form-group col-md-12">
+                                                <div class=" form-group col-lg-12">
                                                     <label class="form-label" for="cf-full-name">Risque</label>
                                                     <input value="{{ $risque->nom }}" name="risque" type="text" class="form-control">
-                                                    <input style="display: none;" value="{{ $risque->id }}" name="risque_id"  type="text" class="form-control">
+                                                    <input style="display: none;" value="{{ $risque->id }}" name="risque_id" type="text" class="form-control">
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-md-12 row g-2" style="margin-left:1px;">
-                                <div class="col-md-12">
-                                    <div class="card card-bordered h-100 border-white" id="divToChange">
+                            <div class="col-lg-12 row g-2" style="margin-left:1px;">
+                                <div class="col-lg-12 ">
+                                    <div class="card h-100 " id="divToChange">
                                         <div class="card-inner">
                                             <div class="card-head">
                                                 <h5 class="card-title">
                                                     Evaluation risque sans dispositif de contrôle interne ou dispositif antérieur
                                                 </h5>
                                             </div>
-                                            <form action="#">
-                                                <div class="row g-4">
-                                                    <div class="col-lg-2 text-center">
-                                                        <div class="form-group text-center">
-                                                            <label class="form-label" for="Cause">
-                                                                Vraisemblence
-                                                            </label>
-                                                            <div class="form-control-wrap">
-                                                                <select required name="vrai" class="form-select " id="select1">
-                                                                    <option value="1" {{ strval($risque->vraisemblence) === '1' ? 'selected' : '' }}>
-                                                                        1
-                                                                    </option>
-                                                                    <option value="2" {{ strval($risque->vraisemblence) === '2' ? 'selected' : '' }}>
-                                                                        2
-                                                                    </option>
-                                                                    <option value="3" {{ strval($risque->vraisemblence) === '3' ? 'selected' : '' }}>
-                                                                        3
-                                                                    </option>
-                                                                    <option value="4" {{ strval($risque->vraisemblence) === '4' ? 'selected' : '' }}>
-                                                                        4
-                                                                    </option>
-                                                                    <option value="5" {{ strval($risque->vraisemblence) === '5' ? 'selected' : '' }}>
-                                                                        5
-                                                                    </option>
-                                                                </select>
-                                                            </div>
+                                            <div class="row g-4">
+                                                <div class="col-lg-2 text-center">
+                                                    <div class="form-group text-center">
+                                                        <label class="form-label" for="Cause">
+                                                            Vraisemblence
+                                                        </label>
+                                                        <div class="form-control-wrap">
+                                                            <select required name="vrai" class="form-select text-center" id="select1">
+                                                                <option value="1" {{ strval($risque->vraisemblence) === '1' ? 'selected' : '' }}>
+                                                                    1
+                                                                </option>
+                                                                <option value="2" {{ strval($risque->vraisemblence) === '2' ? 'selected' : '' }}>
+                                                                    2
+                                                                </option>
+                                                                <option value="3" {{ strval($risque->vraisemblence) === '3' ? 'selected' : '' }}>
+                                                                    3
+                                                                </option>
+                                                                <option value="4" {{ strval($risque->vraisemblence) === '4' ? 'selected' : '' }}>
+                                                                    4
+                                                                </option>
+                                                                <option value="5" {{ strval($risque->vraisemblence) === '5' ? 'selected' : '' }}>
+                                                                    5
+                                                                </option>
+                                                            </select>
                                                         </div>
                                                     </div>
-                                                    <div class="col-lg-2">
-                                                        <div class="form-group text-center">
-                                                            <label class="form-label" for="controle">
-                                                                gravite
-                                                            </label>
-                                                            <div class="form-control-wrap">
-                                                                <select required name="gravite" class="form-select" id="select2">
-                                                                    <option value="1" {{ strval($risque->gravite) === '1' ? 'selected' : '' }}>
-                                                                        1
-                                                                    </option>
-                                                                    <option value="2" {{ strval($risque->gravite) === '2' ? 'selected' : '' }}>
-                                                                        2
-                                                                    </option>
-                                                                    <option value="3" {{ strval($risque->gravite) === '3' ? 'selected' : '' }}>
-                                                                        3
-                                                                    </option>
-                                                                    <option value="4" {{ strval($risque->gravite) === '4' ? 'selected' : '' }}>
-                                                                        4
-                                                                    </option>
-                                                                    <option value="5" {{ strval($risque->gravite) === '5' ? 'selected' : '' }}>
-                                                                        5
-                                                                    </option>
-                                                                </select>
-                                                            </div>
+                                                </div>
+                                                <div class="col-lg-2">
+                                                    <div class="form-group text-center">
+                                                        <label class="form-label" for="controle">
+                                                            gravite
+                                                        </label>
+                                                        <div class="form-control-wrap">
+                                                            <select required name="gravite" class="form-select text-center" id="select2">
+                                                                <option value="1" {{ strval($risque->gravite) === '1' ? 'selected' : '' }}>
+                                                                    1
+                                                                </option>
+                                                                <option value="2" {{ strval($risque->gravite) === '2' ? 'selected' : '' }}>
+                                                                    2
+                                                                </option>
+                                                                <option value="3" {{ strval($risque->gravite) === '3' ? 'selected' : '' }}>
+                                                                    3
+                                                                </option>
+                                                                <option value="4" {{ strval($risque->gravite) === '4' ? 'selected' : '' }}>
+                                                                    4
+                                                                </option>
+                                                                <option value="5" {{ strval($risque->gravite) === '5' ? 'selected' : '' }}>
+                                                                    5
+                                                                </option>
+                                                            </select>
                                                         </div>
                                                     </div>
-                                                    <div class="col-lg-2">
-                                                        <div class="form-group text-center">
-                                                            <label class="form-label" for="controle">
-                                                                Evaluation
-                                                            </label>
-                                                            <div class="form-control-wrap">
-                                                                <input value="{{ $risque->evaluation }}" readonly type="text" class="form-control text-center" id="result">
-                                                            </div>
-                                                            <script>
-                                                                document.addEventListener("DOMContentLoaded", function() {
+                                                </div>
+                                                <div class="col-lg-2">
+                                                    <div class="form-group text-center">
+                                                        <label class="form-label" for="controle">
+                                                            Evaluation
+                                                        </label>
+                                                        <div class="form-control-wrap">
+                                                            <input value="{{ $risque->evaluation }}" readonly type="text" class="form-control text-center" id="result">
+                                                        </div>
+                                                        <script>
+                                                            document.addEventListener("DOMContentLoaded", function() {
                                                                         var evaluationValue = parseInt("{{ $risque->evaluation }}");
                                                                         var divToChange = document.getElementById("divToChange");
 
@@ -244,34 +264,32 @@
                                                                         }
                                                                     });
                                                                 </script>
-                                                        </div>
                                                     </div>
-                                                    <div class="col-lg-6">
-                                                        <div class="form-group text-center">
-                                                            <label class="form-label " for="controle">
-                                                                Coût
-                                                            </label>
-                                                            <div class="form-control-wrap ">
-                                                                <input value="{{ $risque->cout }}" type="text" class="form-control text-center" id="cout">
-                                                            </div>
-                                                            <script>
-                                                                var inputElement = document.getElementById('cout');
+                                                </div>
+                                                <div class="col-lg-6">
+                                                    <div class="form-group text-center">
+                                                        <label class="form-label " for="controle">
+                                                            Coût
+                                                        </label>
+                                                        <div class="form-control-wrap ">
+                                                            <input value="{{ $risque->cout }}" name="cout" type="tel" class="form-control text-center" id="cout">
+                                                        </div>
+                                                        <script>
+                                                            var inputElement = document.getElementById('cout');
                                                                     inputElement.addEventListener('input', function() {
                                                                         this.value = this.value.replace(/[^0-9]/g, '');
                                                                     });
                                                             </script>
-                                                        </div>
                                                     </div>
                                                 </div>
-                                            </form>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-
                         @foreach ($causes as $key => $cause)
-                        <div class="col-md-12 col-xxl-12" id="groupesContainer">
+                        <div class="col-lg-12 col-xxl-12" id="groupesContainer">
                             <div class="card card-bordered">
                                 <div class="card-inner">
                                     <div class="row g-4">
@@ -301,9 +319,8 @@
                             </div>
                         </div>
                         @endforeach
-
-                        <div class="col-md-12 row g-2" style="margin-left:1px;">
-                            <div class="col-md-12">
+                        <div class="col-lg-12 row g-2" style="margin-left:1px;">
+                            <div class="col-lg-12">
                                 <div class="card card-bordered h-100 border-white" id="divToChangee">
                                     <div class="card-inner">
                                         <div class="card-head">
@@ -311,70 +328,69 @@
                                                 Evaluation risque avec dispositif de contrôle interne actuel
                                             </h5>
                                         </div>
-                                        <form action="#">
-                                            <div class="row g-4">
-                                                <div class="col-lg-2">
-                                                    <div class="form-group text-center">
-                                                        <label class="form-label" for="Cause">
-                                                            Vraisemblence
-                                                        </label>
-                                                        <div class="form-control-wrap">
-                                                            <select required name="vrai_residuel" class="form-select " id="select11">
-                                                                <option value="1" {{ strval($risque->vraisemblence_residuel) === '1' ? 'selected' : '' }}>
-                                                                    1
-                                                                </option>
-                                                                <option value="2" {{ strval($risque->vraisemblence_residuel) === '2' ? 'selected' : '' }}>
-                                                                    2
-                                                                </option>
-                                                                <option value="3" {{ strval($risque->vraisemblence_residuel) === '3' ? 'selected' : '' }}>
-                                                                    3
-                                                                </option>
-                                                                <option value="4" {{ strval($risque->vraisemblence_residuel) === '4' ? 'selected' : '' }}>
-                                                                    4
-                                                                </option>
-                                                                <option value="5" {{ strval($risque->vraisemblence_residuel) === '5' ? 'selected' : '' }}>
-                                                                    5
-                                                                </option>
-                                                            </select>
-                                                        </div>
+                                        <div class="row g-4">
+                                            <div class="col-lg-2">
+                                                <div class="form-group text-center">
+                                                    <label class="form-label">
+                                                        Vraisemblence
+                                                    </label>
+                                                    <div class="form-control-wrap">
+                                                        <select required name="vrai_residuel" class="form-select text-center " id="select11">
+                                                            <option value="1" {{ strval($risque->vraisemblence_residuel) === '1' ? 'selected' : '' }}>
+                                                                1
+                                                            </option>
+                                                            <option value="2" {{ strval($risque->vraisemblence_residuel) === '2' ? 'selected' : '' }}>
+                                                                2
+                                                            </option>
+                                                            <option value="3" {{ strval($risque->vraisemblence_residuel) === '3' ? 'selected' : '' }}>
+                                                                3
+                                                            </option>
+                                                            <option value="4" {{ strval($risque->vraisemblence_residuel) === '4' ? 'selected' : '' }}>
+                                                                4
+                                                            </option>
+                                                            <option value="5" {{ strval($risque->vraisemblence_residuel) === '5' ? 'selected' : '' }}>
+                                                                5
+                                                            </option>
+                                                        </select>
                                                     </div>
                                                 </div>
-                                                <div class="col-lg-2">
-                                                    <div class="form-group text-center">
-                                                        <label class="form-label" for="controle">
-                                                            gravite
-                                                        </label>
-                                                        <div class="form-control-wrap">
-                                                            <select required name="gravite_residuel" class="form-select" id="select22">
-                                                                <option value="1" {{ strval($risque->gravite_residuel) === '1' ? 'selected' : '' }}>
-                                                                    1
-                                                                </option>
-                                                                <option value="2" {{ strval($risque->gravite_residuel) === '2' ? 'selected' : '' }}>
-                                                                    2
-                                                                </option>
-                                                                <option value="3" {{ strval($risque->gravite_residuel) === '3' ? 'selected' : '' }}>
-                                                                    3
-                                                                </option>
-                                                                <option value="4" {{ strval($risque->gravite_residuel) === '4' ? 'selected' : '' }}>
-                                                                    4
-                                                                </option>
-                                                                <option value="5" {{ strval($risque->gravite_residuel) === '5' ? 'selected' : '' }}>
-                                                                    5
-                                                                </option>
-                                                            </select>
-                                                        </div>
+                                            </div>
+                                            <div class="col-lg-2">
+                                                <div class="form-group text-center">
+                                                    <label class="form-label" for="controle">
+                                                        gravite
+                                                    </label>
+                                                    <div class="form-control-wrap">
+                                                        <select required name="gravite_residuel" class="form-select text-center" id="select22">
+                                                            <option value="1" {{ strval($risque->gravite_residuel) === '1' ? 'selected' : '' }}>
+                                                                1
+                                                            </option>
+                                                            <option value="2" {{ strval($risque->gravite_residuel) === '2' ? 'selected' : '' }}>
+                                                                2
+                                                            </option>
+                                                            <option value="3" {{ strval($risque->gravite_residuel) === '3' ? 'selected' : '' }}>
+                                                                3
+                                                            </option>
+                                                            <option value="4" {{ strval($risque->gravite_residuel) === '4' ? 'selected' : '' }}>
+                                                                4
+                                                            </option>
+                                                            <option value="5" {{ strval($risque->gravite_residuel) === '5' ? 'selected' : '' }}>
+                                                                5
+                                                            </option>
+                                                        </select>
                                                     </div>
                                                 </div>
-                                                <div class="col-lg-2">
-                                                    <div class="form-group text-center">
-                                                        <label class="form-label" for="controle">
-                                                            Evaluation
-                                                        </label>
-                                                        <div class="form-control-wrap">
-                                                            <input value="{{ $risque->evaluation_residuel }}" readonly type="text" class="form-control text-center" id="resultt">
-                                                        </div>
-                                                        <script>
-                                                            document.addEventListener("DOMContentLoaded", function() {
+                                            </div>
+                                            <div class="col-lg-2">
+                                                <div class="form-group text-center">
+                                                    <label class="form-label" for="controle">
+                                                        Evaluation
+                                                    </label>
+                                                    <div class="form-control-wrap">
+                                                        <input value="{{ $risque->evaluation_residuel }}" readonly type="text" class="form-control text-center" id="resultt">
+                                                    </div>
+                                                    <script>
+                                                        document.addEventListener("DOMContentLoaded", function() {
                                                                         var evaluation_residuel = parseInt("{{ $risque->evaluation_residuel }}");
                                                                         var divToChangee = document.getElementById("divToChangee");
 
@@ -389,56 +405,54 @@
                                                                         }
                                                                     });
                                                                 </script>
-                                                    </div>
                                                 </div>
-                                                <div class="col-lg-3">
-                                                    <div class="form-group text-center">
-                                                        <label class="form-label" for="controle">
-                                                            Coût
-                                                        </label>
-                                                        <div class="form-control-wrap">
-                                                            <input value="{{ $risque->cout_residuel }}" type="text" class="form-control text-center" id="cout_residuel">
-                                                        </div>
-                                                        <script>
-                                                            var inputElement = document.getElementById('cout_residuel');
+                                            </div>
+                                            <div class="col-lg-3">
+                                                <div class="form-group text-center">
+                                                    <label class="form-label" for="controle">
+                                                        Coût
+                                                    </label>
+                                                    <div class="form-control-wrap">
+                                                        <input value="{{ $risque->cout_residuel }}" name="cout_residuel" type="tel" class="form-control text-center" id="cout_residuel">
+                                                    </div>
+                                                    <script>
+                                                        var inputElement = document.getElementById('cout_residuel');
                                                                         inputElement.addEventListener('input', function() {
                                                                         this.value = this.value.replace(/[^0-9]/g, '');
                                                                     });
                                                                 </script>
-                                                    </div>
                                                 </div>
-                                                <div class="col-lg-3">
-                                                    <div class="form-group text-center">
-                                                        <label class="form-label" for="controle">
-                                                            Traitement
-                                                        </label>
-                                                        <div class="form-control-wrap">
-                                                            <select required name="traitement" class="form-select">
-                                                                <option value="reduire le risque" {{ $risque->traitement === 'reduire le risque' ? 'selected' : '' }}>
-                                                                    Réduire le risque
-                                                                </option>
-                                                                <option value="accepter le risque" {{ $risque->traitement === 'accepter le risque' ? 'selected' : '' }}>
-                                                                    Accepter le risque
-                                                                </option>
-                                                                <option value="partager le risque" {{ $risque->traitement === 'partager le risque' ? 'selected' : '' }}>
-                                                                    Partager le risque
-                                                                </option>
-                                                                <option value="eliminer le risque" {{ $risque->traitement === 'eliminer le risque' ? 'selected' : '' }}>
-                                                                    Éliminer le risque
-                                                                </option>
-                                                            </select>
-                                                        </div>
+                                            </div>
+                                            <div class="col-lg-3">
+                                                <div class="form-group text-center">
+                                                    <label class="form-label" for="controle">
+                                                        Traitement
+                                                    </label>
+                                                    <div class="form-control-wrap">
+                                                        <select required name="traitement" class="form-select text-center">
+                                                            <option value="reduire le risque" {{ $risque->traitement === 'reduire le risque' ? 'selected' : '' }}>
+                                                                Réduire le risque
+                                                            </option>
+                                                            <option value="accepter le risque" {{ $risque->traitement === 'accepter le risque' ? 'selected' : '' }}>
+                                                                Accepter le risque
+                                                            </option>
+                                                            <option value="partager le risque" {{ $risque->traitement === 'partager le risque' ? 'selected' : '' }}>
+                                                                Partager le risque
+                                                            </option>
+                                                            <option value="eliminer le risque" {{ $risque->traitement === 'eliminer le risque' ? 'selected' : '' }}>
+                                                                Éliminer le risque
+                                                            </option>
+                                                        </select>
                                                     </div>
                                                 </div>
                                             </div>
-                                        </form>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-
                         @foreach ($actionsp as $key => $action)
-                        <div class="col-md-12 col-xxl-12" id="groupesActionpr">
+                        <div class="col-lg-12 col-xxl-12" id="groupesActionpr">
                             <div class="card card-bordered">
                                 <div class="card-inner">
                                     <div class="row g-4">
@@ -460,7 +474,7 @@
                                                 </label>
                                                 <div class="form-group">
                                                     <div class="form-control-wrap">
-                                                        <input id="delai" value="{{ $action->date }}" autocomplete="off" name="delai[]" type="date" class="form-control">
+                                                        <input id="delai" value="{{ $action->date }}" autocomplete="off" name="delai[]" type="date" class="form-control text-center">
                                                     </div>
                                                 </div>
                                             </div>
@@ -470,7 +484,7 @@
                                                 <label class="form-label" for="Responsabilité">
                                                     Responsabilité
                                                 </label>
-                                                <select id="responsable_idp" name="poste_idp[]" class="form-select">
+                                                <select id="responsable_idp" name="poste_idp[]" class="form-select text-center">
                                                     @foreach($postes as $poste)
                                                     <option value="{{ $poste->id }}" {{ $action->poste_id == $poste->id ? 'selected' : '' }}>
                                                         {{ $poste->nom }}
@@ -484,9 +498,8 @@
                             </div>
                         </div>
                         @endforeach
-
                         @foreach ($actionsc as $key => $action)
-                        <div class="col-md-12 col-xxl-12" id="groupesActionco">
+                        <div class="col-lg-12 col-xxl-12" id="groupesActionco">
                             <div class="card card-bordered">
                                 <div class="card-inner">
                                     <div class="row g-4">
@@ -506,7 +519,7 @@
                                                 <label class="form-label" for="Responsabilité">
                                                     Responsabilité
                                                 </label>
-                                                <select id="responsable_idc" required name="poste_idc[]" class="form-select">
+                                                <select id="responsable_idc" required name="poste_idc[]" class="form-select text-center">
                                                     @foreach($postes as $poste)
                                                     <option value="{{ $poste->id }}" {{ $action->poste_id == $poste->id ? 'selected' : '' }}>
                                                         {{ $poste->nom }}
@@ -520,8 +533,7 @@
                             </div>
                         </div>
                         @endforeach
-
-                        <div class="col-md-12 col-xxl-12">
+                        <div class="col-lg-12 col-xxl-12">
                             <div class="card card-bordered card-preview">
                                 <div class="card-inner row g-gs">
                                     <div class="col-lg-12">
@@ -541,8 +553,7 @@
                                 </div>
                             </div>
                         </div>
-
-                        <div class="col-md-12 col-xxl-12">
+                        <div class="col-lg-12 col-xxl-12">
                             <div class="card card-preview">
                                 <div class="card-inner row g-gs">
                                     <div class="col-12">
@@ -556,14 +567,12 @@
                                 </div>
                             </div>
                         </div>
-
                     </div>
                 </form>
             </div>
         </div>
     </div>
 </div>
-
 
 <div class="modal fade zoom" tabindex="-1" id="modalDetail">
     <div class="modal-dialog modal-lg" role="document">
@@ -676,6 +685,7 @@
                                                                 </label>
                                                                 <div class="form-control-wrap">
                                                                     <input id="nom_cause" placeholder="Saisie obligatoire" autocomplete="off" required name="nom_cause[]" type="text" class="form-control" id="Cause">
+                                                                    <input value="0" autocomplete="off" name="cause_id[]" type="text" style="display: none;">
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -730,12 +740,13 @@
             groupe.innerHTML = `
                                             <div class="card-inner">
                                                     <div class="row g-4">
-                                                        <div class="col-lg-7">
+                                                        <div class="col-lg-8">
                                                             <div class="form-group">
                                                                 <label class="form-label" for="preventif">
                                                                     Action préventive
                                                                 </label>
                                                                 <div class="form-control-wrap">
+                                                                    <input value="0" autocomplete="off" name="action_idp[]" type="text" style="display: none;">
                                                                     <input placeholder="Saisie obligatoire" autocomplete="off" required name="actionp[]" type="text" class="form-control" id="preventif">
                                                                 </div>
                                                             </div>
@@ -752,7 +763,7 @@
                                                                 </div>
                                                             </div>
                                                         </div>
-                                                        <div class="col-lg-3">
+                                                        <div class="col-lg-2">
                                                             <div class="form-group">
                                                                 <label class="form-label" for="Responsabilité">
                                                                     Responsabilité
@@ -809,17 +820,18 @@
             groupe.innerHTML = `
                                             <div class="card-inner">
                                                     <div class="row g-4">
-                                                        <div class="col-lg-9">
+                                                        <div class="col-lg-10">
                                                             <div class="form-group">
                                                                 <label class="form-label" for="corectif">
                                                                     Action corrective
                                                                 </label>
                                                                 <div class="form-control-wrap">
+                                                                    <input value="0" autocomplete="off" name="action_idc[]" type="text" style="display: none;">
                                                                     <input placeholder="Saisie obligatoire" autocomplete="off" required name="actionc[]" type="text" class="form-control" id="corectif">
                                                                 </div>
                                                             </div>
                                                         </div>
-                                                        <div class="col-lg-3">
+                                                        <div class="col-lg-2">
                                                             <div class="form-group">
                                                                 <label class="form-label" for="Responsabilité">
                                                                     Responsabilité
@@ -910,8 +922,44 @@
             fileSizeElementmodal.textContent = '';
         }
     });
-
 </script>
+
+@if (session('success'))
+        <script>
+            toastr.success("{{ session('success') }}"," ",
+            {positionClass:"toast-top-left",timeOut:5e3,debug:!1,newestOnTop:!0,
+            preventDuplicates:!0,showDuration:"300",hideDuration:"1000",extendedTimeOut:"1000",
+            showEasing:"swing",showMethod:"fadeIn",hideMethod:"fadeOut"})
+        </script>
+        {{ session()->forget('success') }}
+    @endif
+    @if (session('error'))
+        <script>
+            toastr.error("{{ session('error') }}"," ",
+            {positionClass:"toast-top-left",timeOut:5e3,debug:!1,newestOnTop:!0,
+            preventDuplicates:!0,showDuration:"300",hideDuration:"1000",extendedTimeOut:"1000",
+            showEasing:"swing",showMethod:"fadeIn",hideMethod:"fadeOut"})
+        </script>
+        {{ session()->forget('error') }}
+    @endif
+    @if (session('warning'))
+        <script>
+            toastr.warning("{{ session('warning') }}"," ",
+            {positionClass:"toast-top-left",timeOut:5e3,debug:!1,newestOnTop:!0,
+            preventDuplicates:!0,showDuration:"300",hideDuration:"1000",extendedTimeOut:"1000",
+            showEasing:"swing",showMethod:"fadeIn",hideMethod:"fadeOut"})
+        </script>
+        {{ session()->forget('warning') }}
+    @endif
+    @if (session('info'))
+        <script>
+            toastr.info("{{ session('info') }}"," ",
+            {positionClass:"toast-top-left",timeOut:5e3,debug:!1,newestOnTop:!0,
+            preventDuplicates:!0,showDuration:"300",hideDuration:"1000",extendedTimeOut:"1000",
+            showEasing:"swing",showMethod:"fadeIn",hideMethod:"fadeOut"})
+        </script>
+        {{ session()->forget('info') }}
+    @endif
 
 
 @endsection

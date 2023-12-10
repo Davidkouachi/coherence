@@ -50,6 +50,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/Liste risque', [ListerisqueController::class, 'index_liste_risque'])->name('index_liste_risque');
     Route::get('/Mise a jour', [ListerisqueController::class, 'index_risque_actionup'])->name('index_risque_actionup');
     Route::post('/Mise a jour risque', [ListerisqueController::class, 'index_risque_actionup2'])->name('index_risque_actionup2');
+    Route::post('/Mise a jour risque traitement', [ListerisqueController::class, 'index_risque_actionup2_traitement'])->name('index_risque_actionup2_traitement');
 
     Route::get('/Liste Action Preventive', [ListeactionController::class, 'index_ap'])->name('index_ap');
     Route::get('/Liste Action Corrective', [ListeactionController::class, 'index_ac'])->name('index_ac');

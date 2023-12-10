@@ -40,6 +40,6 @@ class ResvaController extends Controller
 
         return redirect()
             ->route('index_add_resva')
-            ->with('ajouter', 'Enregistrement éffectuée.');
+            ->with('success', 'Enregistrement éffectuée.');
     }
 }

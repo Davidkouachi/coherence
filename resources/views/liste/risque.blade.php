@@ -84,8 +84,8 @@
                                                             {{ $formatcommande }} Fcfa
                                                         </td>
                                                         @if ($risque->statut === 'soumis')
-                                                            <td class=" text-danger">
-                                                                Non validé
+                                                            <td class=" text-warning">
+                                                                En attente de validation
                                                             </td>
                                                         @endif
                                                         @if ($risque->statut === 'valider')
@@ -94,8 +94,13 @@
                                                             </td>
                                                         @endif
                                                         @if ($risque->statut === 'non_valider')
-                                                            <td class=" text-dans">
+                                                            <td class=" text-danger">
                                                                 Non Validé
+                                                            </td>
+                                                        @endif
+                                                        @if ($risque->statut === 'update')
+                                                            <td class="text-info" >
+                                                                Modification éffectuée
                                                             </td>
                                                         @endif
                                                         <td>
@@ -470,6 +475,43 @@
             </div>
         </div>
     @endforeach
+
+    @if (session('success'))
+        <script>
+            toastr.success("{{ session('success') }}"," ",
+            {positionClass:"toast-top-left",timeOut:5e3,debug:!1,newestOnTop:!0,
+            preventDuplicates:!0,showDuration:"300",hideDuration:"1000",extendedTimeOut:"1000",
+            showEasing:"swing",showMethod:"fadeIn",hideMethod:"fadeOut"})
+        </script>
+        {{ session()->forget('success') }}
+    @endif
+    @if (session('error'))
+        <script>
+            toastr.error("{{ session('error') }}"," ",
+            {positionClass:"toast-top-left",timeOut:5e3,debug:!1,newestOnTop:!0,
+            preventDuplicates:!0,showDuration:"300",hideDuration:"1000",extendedTimeOut:"1000",
+            showEasing:"swing",showMethod:"fadeIn",hideMethod:"fadeOut"})
+        </script>
+        {{ session()->forget('error') }}
+    @endif
+    @if (session('warning'))
+        <script>
+            toastr.warning("{{ session('warning') }}"," ",
+            {positionClass:"toast-top-left",timeOut:5e3,debug:!1,newestOnTop:!0,
+            preventDuplicates:!0,showDuration:"300",hideDuration:"1000",extendedTimeOut:"1000",
+            showEasing:"swing",showMethod:"fadeIn",hideMethod:"fadeOut"})
+        </script>
+        {{ session()->forget('warning') }}
+    @endif
+    @if (session('info'))
+        <script>
+            toastr.info("{{ session('info') }}"," ",
+            {positionClass:"toast-top-left",timeOut:5e3,debug:!1,newestOnTop:!0,
+            preventDuplicates:!0,showDuration:"300",hideDuration:"1000",extendedTimeOut:"1000",
+            showEasing:"swing",showMethod:"fadeIn",hideMethod:"fadeOut"})
+        </script>
+        {{ session()->forget('info') }}
+    @endif
 
 
 @endsection

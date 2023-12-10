@@ -56,10 +56,10 @@ class AuthController extends Controller
 
             if ($user_vrf->email === $request->email) {
 
-                return back()->with('erreur', 'Email existe déjà.');
+                return back()->with('error', 'Email existe déjà.');
             } else {
 
-                return back()->with('erreur', 'Contact existe déjà.');
+                return back()->with('error', 'Contact existe déjà.');
             }
 
         } else {
@@ -104,7 +104,7 @@ class AuthController extends Controller
                 $his->save();
             }
 
-            return back()->with('ajouter', 'Enregistrement éffectuée.');
+            return back()->with('success', 'Enregistrement éffectuée.');
         }
     }
 

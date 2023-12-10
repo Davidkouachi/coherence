@@ -90,6 +90,11 @@
                                                                 En attente de Modification
                                                             </td>
                                                         @endif
+                                                        @if ($risque->statut === 'update')
+                                                            <td class="text-info" >
+                                                                Mise à jour détecter
+                                                            </td>
+                                                        @endif
                                                         <td>
                                                             <a data-bs-toggle="modal"
                                                                 data-bs-target="#modalDetail{{ $risque->id }}"
@@ -550,6 +555,43 @@
         </div>
     @endforeach
 
+    @if (session('success'))
+        <script>
+            toastr.success("{{ session('success') }}"," ",
+            {positionClass:"toast-top-left",timeOut:5e3,debug:!1,newestOnTop:!0,
+            preventDuplicates:!0,showDuration:"300",hideDuration:"1000",extendedTimeOut:"1000",
+            showEasing:"swing",showMethod:"fadeIn",hideMethod:"fadeOut"})
+        </script>
+        {{ session()->forget('success') }}
+    @endif
+    @if (session('error'))
+        <script>
+            toastr.error("{{ session('error') }}"," ",
+            {positionClass:"toast-top-left",timeOut:5e3,debug:!1,newestOnTop:!0,
+            preventDuplicates:!0,showDuration:"300",hideDuration:"1000",extendedTimeOut:"1000",
+            showEasing:"swing",showMethod:"fadeIn",hideMethod:"fadeOut"})
+        </script>
+        {{ session()->forget('error') }}
+    @endif
+    @if (session('warning'))
+        <script>
+            toastr.warning("{{ session('warning') }}"," ",
+            {positionClass:"toast-top-left",timeOut:5e3,debug:!1,newestOnTop:!0,
+            preventDuplicates:!0,showDuration:"300",hideDuration:"1000",extendedTimeOut:"1000",
+            showEasing:"swing",showMethod:"fadeIn",hideMethod:"fadeOut"})
+        </script>
+        {{ session()->forget('warning') }}
+    @endif
+    @if (session('info'))
+        <script>
+            toastr.info("{{ session('info') }}"," ",
+            {positionClass:"toast-top-left",timeOut:5e3,debug:!1,newestOnTop:!0,
+            preventDuplicates:!0,showDuration:"300",hideDuration:"1000",extendedTimeOut:"1000",
+            showEasing:"swing",showMethod:"fadeIn",hideMethod:"fadeOut"})
+        </script>
+        {{ session()->forget('info') }}
+    @endif
+
     <script>
         Pusher.logToConsole = true;
 
@@ -561,7 +603,7 @@
         channel.bind('my-event-risque', function(data) {
             Swal.fire({
                         title: "Alert!",
-                        text: "Nouvelle(s) Fiche(s) risque à valider",
+                        text: "Nouvelle(s) Fiche(s) risque détecter",
                         icon: "info",
                         confirmButtonColor: "#00d819",
                         confirmButtonText: "OK",
@@ -573,6 +615,31 @@
                     });
         });
     </script>
+
+    <script>
+        Pusher.logToConsole = true;
+
+        var pusher = new Pusher('9f9514edd43b1637ff61', {
+          cluster: 'eu'
+        });
+
+        var channel = pusher.subscribe('my-channel-risque-up');
+        channel.bind('my-event-risque-up', function(data) {
+            Swal.fire({
+                        title: "Alert!",
+                        text: "Mise à jour a étè détecter",
+                        icon: "info",
+                        confirmButtonColor: "#00d819",
+                        confirmButtonText: "OK",
+                        allowOutsideClick: false,
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            location.reload();
+                        }
+                    });
+        });
+    </script>
+
 
 
 @endsection

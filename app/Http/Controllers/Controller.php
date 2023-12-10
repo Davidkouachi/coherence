@@ -72,7 +72,7 @@ class Controller extends BaseController
             $his->save();
 
             return back()
-                ->with('ajouter', 'Enregistrement éffectuée.');
+                ->with('success', 'Enregistrement éffectuée.');
         }
     }
 
@@ -99,7 +99,7 @@ class Controller extends BaseController
 
             return redirect()
                 ->back()
-                ->with('valider', 'Mise à jour éffectuée.');
+                ->with('success', 'Mise à jour éffectuée.');
         }
     }
 }
