@@ -528,21 +528,6 @@
                                     <input type="text" value="{{ $risque->id }}" name="risque_id" style="display: none;">
                                 </div>
                             </div>
-                            <!--<div class="form-group">
-                                <label class="form-label" for="Responsabilité">
-                                    Responsabilité
-                                </label>
-                                <select required name="poste_id" class="form-select">
-                                    <option selected value="">
-                                        Choisir un responsable
-                                    </option>
-                                    @foreach ($postes as $poste)
-                                    <option value="{{ $poste->id }}">
-                                        {{ $poste->nom }}
-                                    </option>
-                                    @endforeach
-                                </select>
-                            </div>-->
                             <div class="form-group text-center">
                                 <button type="submit" class="btn btn-lg btn-success">
                                     Sauvgarder
@@ -554,43 +539,6 @@
             </div>
         </div>
     @endforeach
-
-    @if (session('success'))
-        <script>
-            toastr.success("{{ session('success') }}"," ",
-            {positionClass:"toast-top-left",timeOut:5e3,debug:!1,newestOnTop:!0,
-            preventDuplicates:!0,showDuration:"300",hideDuration:"1000",extendedTimeOut:"1000",
-            showEasing:"swing",showMethod:"fadeIn",hideMethod:"fadeOut"})
-        </script>
-        {{ session()->forget('success') }}
-    @endif
-    @if (session('error'))
-        <script>
-            toastr.error("{{ session('error') }}"," ",
-            {positionClass:"toast-top-left",timeOut:5e3,debug:!1,newestOnTop:!0,
-            preventDuplicates:!0,showDuration:"300",hideDuration:"1000",extendedTimeOut:"1000",
-            showEasing:"swing",showMethod:"fadeIn",hideMethod:"fadeOut"})
-        </script>
-        {{ session()->forget('error') }}
-    @endif
-    @if (session('warning'))
-        <script>
-            toastr.warning("{{ session('warning') }}"," ",
-            {positionClass:"toast-top-left",timeOut:5e3,debug:!1,newestOnTop:!0,
-            preventDuplicates:!0,showDuration:"300",hideDuration:"1000",extendedTimeOut:"1000",
-            showEasing:"swing",showMethod:"fadeIn",hideMethod:"fadeOut"})
-        </script>
-        {{ session()->forget('warning') }}
-    @endif
-    @if (session('info'))
-        <script>
-            toastr.info("{{ session('info') }}"," ",
-            {positionClass:"toast-top-left",timeOut:5e3,debug:!1,newestOnTop:!0,
-            preventDuplicates:!0,showDuration:"300",hideDuration:"1000",extendedTimeOut:"1000",
-            showEasing:"swing",showMethod:"fadeIn",hideMethod:"fadeOut"})
-        </script>
-        {{ session()->forget('info') }}
-    @endif
 
     <script>
         Pusher.logToConsole = true;

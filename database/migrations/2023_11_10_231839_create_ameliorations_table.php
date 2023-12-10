@@ -23,6 +23,8 @@ class CreateAmeliorationsTable extends Migration
             $table->text('consequence');
             $table->text('cause');
             $table->string('choix_select');
+            $table->string('statut');
+            $table->date('date_validation')->nullable();
             $table->timestamps();
         });
     }

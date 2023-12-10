@@ -103,6 +103,7 @@
                 <form class="nk-block" method="post" action="{{ route('index_risque_actionup2_traitement') }}" enctype="multipart/form-data">
                     @csrf
                     <div class="row g-gs">
+
                         <div class="col-lg-4 col-xxl-4 row g-2" style="margin-left:1px;">
                             <div class="form-group col-lg-12">
                                 <div class="card card-bordered h-100">
@@ -132,6 +133,7 @@
                                 </div>
                             </div>
                         </div>
+
                         <div class="col-lg-8 col-xxl-8 row g-2" style="margin-left:5px;">
                             <div class="col-lg-12 ">
                                 <div class="card card-bordered h-100">
@@ -288,6 +290,7 @@
                                 </div>
                             </div>
                         </div>
+
                         @foreach ($causes as $key => $cause)
                         <div class="col-lg-12 col-xxl-12" id="groupesContainer">
                             <div class="card card-bordered">
@@ -314,11 +317,38 @@
                                                 </div>
                                             </div>
                                         </div>
+                                        @if ( $key+1 >= '2' )
+                                            <div class="col-lg-2" style="margin: 20px auto;">
+                                                <div class="form-group align-items-center justify-content-center">
+                                                    <span class="preview-title overline-title">Supprimer</span>
+                                                    <div class="row gy-4">
+                                                        <input value="{{ $cause->id }}" name="cause_id_suppr[]" type="text" style="display: none;">
+                                                        <div class="col-md-3 col-sm-6">
+                                                            <div class="preview-block">
+                                                                <div class="custom-control custom-radio">
+                                                                    <input type="radio" id="customRadio1" name="suppr_cause[]" class="custom-control-input" value="oui">
+                                                                    <label class="custom-control-label" for="customRadio1">Oui</label>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-3 col-sm-6">
+                                                            <div class="preview-block">
+                                                                <div class="custom-control custom-radio">
+                                                                    <input type="radio" id="customRadio2" name="suppr_cause[]" checked class="custom-control-input" value="non">
+                                                                    <label class="custom-control-label" for="customRadio2">Non</label>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        @endif
                                     </div>
                                 </div>
                             </div>
                         </div>
                         @endforeach
+
                         <div class="col-lg-12 row g-2" style="margin-left:1px;">
                             <div class="col-lg-12">
                                 <div class="card card-bordered h-100 border-white" id="divToChangee">
@@ -451,6 +481,7 @@
                                 </div>
                             </div>
                         </div>
+
                         @foreach ($actionsp as $key => $action)
                         <div class="col-lg-12 col-xxl-12" id="groupesActionpr">
                             <div class="card card-bordered">
@@ -493,11 +524,38 @@
                                                 </select>
                                             </div>
                                         </div>
+                                        @if ( $key+1 >= '2' )
+                                            <div class="col-lg-2" style="margin: 20px auto;">
+                                                <div class="form-group align-items-center justify-content-center">
+                                                    <span class="preview-title overline-title">Supprimer</span>
+                                                    <div class="row gy-4">
+                                                        <input value="{{ $action->id }}" name="action_idp_suppr[]" type="text" style="display: none;">
+                                                        <div class="col-md-3 col-sm-6">
+                                                            <div class="preview-block">
+                                                                <div class="custom-control custom-radio">
+                                                                    <input type="radio" id="customRadio3" name="suppr_actionp[]" class="custom-control-input" value="oui">
+                                                                    <label class="custom-control-label" for="customRadio3">Oui</label>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-3 col-sm-6">
+                                                            <div class="preview-block">
+                                                                <div class="custom-control custom-radio">
+                                                                    <input type="radio" id="customRadio4" name="suppr_actionp[]" checked class="custom-control-input" value="non">
+                                                                    <label class="custom-control-label" for="customRadio4">Non</label>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        @endif
                                     </div>
                                 </div>
                             </div>
                         </div>
                         @endforeach
+
                         @foreach ($actionsc as $key => $action)
                         <div class="col-lg-12 col-xxl-12" id="groupesActionco">
                             <div class="card card-bordered">
@@ -528,11 +586,38 @@
                                                 </select>
                                             </div>
                                         </div>
+                                        @if ( $key+1 >= '2' )
+                                            <div class="col-lg-2" style="margin: 20px auto;">
+                                                <div class="form-group align-items-center justify-content-center">
+                                                    <span class="preview-title overline-title">Supprimer</span>
+                                                    <div class="row gy-4">
+                                                        <input value="{{ $action->id }}" name="action_idc_suppr[]" type="text" style="display: none;">
+                                                        <div class="col-md-3 col-sm-6">
+                                                            <div class="preview-block">
+                                                                <div class="custom-control custom-radio">
+                                                                    <input type="radio" id="customRadio5" name="suppr_actionc[]" class="custom-control-input" value="oui">
+                                                                    <label class="custom-control-label" for="customRadio5">Oui</label>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-3 col-sm-6">
+                                                            <div class="preview-block">
+                                                                <div class="custom-control custom-radio">
+                                                                    <input type="radio" id="customRadio6" name="suppr_actionc[]" checked class="custom-control-input" value="non">
+                                                                    <label class="custom-control-label" for="customRadio6">Non</label>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        @endif
                                     </div>
                                 </div>
                             </div>
                         </div>
                         @endforeach
+
                         <div class="col-lg-12 col-xxl-12">
                             <div class="card card-bordered card-preview">
                                 <div class="card-inner row g-gs">
@@ -553,6 +638,7 @@
                                 </div>
                             </div>
                         </div>
+
                         <div class="col-lg-12 col-xxl-12">
                             <div class="card card-preview">
                                 <div class="card-inner row g-gs">
@@ -567,6 +653,7 @@
                                 </div>
                             </div>
                         </div>
+
                     </div>
                 </form>
             </div>
@@ -924,42 +1011,6 @@
     });
 </script>
 
-@if (session('success'))
-        <script>
-            toastr.success("{{ session('success') }}"," ",
-            {positionClass:"toast-top-left",timeOut:5e3,debug:!1,newestOnTop:!0,
-            preventDuplicates:!0,showDuration:"300",hideDuration:"1000",extendedTimeOut:"1000",
-            showEasing:"swing",showMethod:"fadeIn",hideMethod:"fadeOut"})
-        </script>
-        {{ session()->forget('success') }}
-    @endif
-    @if (session('error'))
-        <script>
-            toastr.error("{{ session('error') }}"," ",
-            {positionClass:"toast-top-left",timeOut:5e3,debug:!1,newestOnTop:!0,
-            preventDuplicates:!0,showDuration:"300",hideDuration:"1000",extendedTimeOut:"1000",
-            showEasing:"swing",showMethod:"fadeIn",hideMethod:"fadeOut"})
-        </script>
-        {{ session()->forget('error') }}
-    @endif
-    @if (session('warning'))
-        <script>
-            toastr.warning("{{ session('warning') }}"," ",
-            {positionClass:"toast-top-left",timeOut:5e3,debug:!1,newestOnTop:!0,
-            preventDuplicates:!0,showDuration:"300",hideDuration:"1000",extendedTimeOut:"1000",
-            showEasing:"swing",showMethod:"fadeIn",hideMethod:"fadeOut"})
-        </script>
-        {{ session()->forget('warning') }}
-    @endif
-    @if (session('info'))
-        <script>
-            toastr.info("{{ session('info') }}"," ",
-            {positionClass:"toast-top-left",timeOut:5e3,debug:!1,newestOnTop:!0,
-            preventDuplicates:!0,showDuration:"300",hideDuration:"1000",extendedTimeOut:"1000",
-            showEasing:"swing",showMethod:"fadeIn",hideMethod:"fadeOut"})
-        </script>
-        {{ session()->forget('info') }}
-    @endif
 
 
 @endsection

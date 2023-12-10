@@ -1,6 +1,6 @@
 @extends('app')
 
-@section('titre', 'Liste des Processus')
+@section('titre', 'Tableau de validation')
 
 @section('option_btn')
 
@@ -25,7 +25,7 @@
                                 <div class="nk-block-between">
                                     <div class="nk-block-head-content" style="margin:0px auto;">
                                         <h3 class="text-center">
-                                            <span>Liste des Amélioration</span>
+                                            <span>Tableau de validation</span>
                                             <em class="icon ni ni-list-index"></em>
                                         </h3>
                                     </div>
@@ -44,7 +44,6 @@
                                                     <th>Type</th>
                                                     <th>Date</th>
                                                     <th>Non-conformité</th>
-                                                    <th>Nombre d'actions</th>
                                                     <th>Statut</th>
                                                     <th></th>
                                                 </tr>
@@ -66,15 +65,9 @@
                                                         </td>
                                                         <td>{{ \Carbon\Carbon::parse($am->date_fiche)->format('d/m/Y') }}</td>
                                                         <td>{{ $am->non_conformite }}</td>
-                                                        <td>{{ $am->nbre_action }}</td>
                                                         @if ($am->statut === 'soumis')
                                                             <td class=" text-warning">
                                                                 En attente de validation
-                                                            </td>
-                                                        @endif
-                                                        @if ($am->statut === 'valider')
-                                                            <td class=" text-success">
-                                                                Validé
                                                             </td>
                                                         @endif
                                                         @if ($am->statut === 'non_valider')
@@ -93,11 +86,17 @@
                                                                 class="btn btn-icon btn-white btn-dim btn-sm btn-warning">
                                                                 <em class="icon ni ni-eye"></em>
                                                             </a>
-                                                            @if ($am->statut === 'valider')
-                                                            <a href="{{ route('index_etat_am',['id' => $am->id ]) }}"
-                                                                class="btn btn-icon btn-white btn-dim btn-sm btn-primary">
-                                                                <em class="icon ni ni-printer-fill"></em>
-                                                            </a>
+                                                            @if ($am->statut !== 'non_valider')
+                                                                <a data-bs-toggle="modal"
+                                                                    data-bs-target="#modalConfirme{{ $am->id }}"
+                                                                    href="#" class="btn btn-icon btn-white btn-dim btn-sm btn-success border border-1 border-white rounded">
+                                                                    <em class="icon ni ni-check"></em>
+                                                                </a>
+                                                                <a data-bs-toggle="modal"
+                                                                    data-bs-target="#modalRejet{{ $am->id }}"
+                                                                    href="#" class="btn btn-icon btn-white btn-dim btn-sm btn-danger border border-1 border-white rounded">
+                                                                    <em class="icon ni ni-cross"></em>
+                                                                </a>
                                                             @endif
                                                         </td>
                                                     </tr>
@@ -119,22 +118,7 @@
             <div class="modal-dialog modal-lg" role="document" style="width: 100%;">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title">
-                            Détails 
-                            @if ($am->statut === 'soumis')
-                                <span class="text-warning"> ( En attente de validation )</span>
-                            @endif
-                            @if ($am->statut === 'valider')
-                                <span class="text-success"> ( Validé )</span>
-                            @endif
-                            @if ($am->statut === 'non_valider')
-                                <span class="text-danger"> (Non Validé )</span>
-                            @endif
-                            @if ($am->statut === 'update')
-                                <span class="text-info"> (Modification éffectuée )</span>
-                            @endif
-
-                        </h5>
+                        <h5 class="modal-title">Détails</h5>
                         <a href="#" class="close" data-bs-dismiss="modal" aria-label="Close"><em class="icon ni ni-cross"></em></a>
                     </div>
                     <div class="modal-body">
@@ -267,9 +251,7 @@
                                                         </div>
                                                     </div>
                                                 </div>
-                                                
-                                                @if ($actions['statut'] === 'realiser')
-                                                <div class="col-lg-4">
+                                                <div class="col-lg-12">
                                                     <div class="form-group text-center">
                                                         <label class="form-label" for="Cause">
                                                             Délai
@@ -279,44 +261,6 @@
                                                         </div>
                                                     </div>
                                                 </div>
-                                                <div class="col-lg-4">
-                                                    <div class="form-group text-center">
-                                                        <label class="form-label" for="Cause">
-                                                            Date de realisation
-                                                        </label>
-                                                        <div class="form-control-wrap">
-                                                            <input value="{{ \Carbon\Carbon::parse($actions['date_action'])->format('d/m/Y') }}" readonly type="text" class="form-control text-center" id="Cause">
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="col-lg-4">
-                                                    <div class="form-group text-center">
-                                                        <label class="form-label" for="Cause">
-                                                            Date du Suivi
-                                                        </label>
-                                                        <div class="form-control-wrap">
-                                                            <input value="{{ \Carbon\Carbon::parse($actions['date_suivi'])->format('d/m/Y H:i:s') }}" readonly type="text" class="form-control text-center" id="Cause">
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="col-lg-12">
-                                                    <div class="form-group text-center">
-                                                        <div class="form-control-wrap">
-                                                            <input value="Action Réaliser" readonly type="text" class="form-control text-center bg-success" id="Cause">
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                @endif
-                                                @if ($actions['statut'] !== 'realiser')
-                                                <div class="col-lg-12">
-                                                    <div class="form-group text-center">
-                                                        <div class="form-control-wrap">
-                                                            <input value="Action Non Réaliser" readonly type="text" class="form-control text-center bg-danger" id="Cause">
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                @endif
-                                                
                                                 <div class="col-lg-12">
                                                     <div class="form-group">
                                                         <label class="form-label">
@@ -332,6 +276,65 @@
                                     </div>
                                 </div>
                                 @endforeach
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    @endforeach
+
+    @foreach ($ams as $am)
+        <div class="modal fade" tabindex="-1" id="modalConfirme{{ $am->id }}" aria-modal="true" role="dialog">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content"><a href="#" class="close" data-bs-dismiss="modal"><em
+                            class="icon ni ni-cross"></em></a>
+                    <div class="modal-body modal-body-lg text-center">
+                        <div class="nk-modal"><em
+                                class="nk-modal-icon icon icon-circle icon-circle-xxl ni ni-check bg-success"></em>
+                            <h4 class="nk-modal-title">Confirmation</h4>
+                            <div class="nk-modal-text">
+                                <div class="caption-text">
+                                    <span>Voulez-vous vraiment valider cette fiche d'amélioration ?</span>
+                                </div>
+                            </div>
+                            <div class="nk-modal-action">
+                                <a href="/am_valider/{{ $am->id }}" class="btn btn-lg btn-mw btn-success me-2">
+                                    oui
+                                </a>
+                                <a href="#" class="btn btn-lg btn-mw btn-danger"data-bs-dismiss="modal">
+                                    non
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    @endforeach
+
+    @foreach ($ams as $am)
+        <div class="modal fade" id="modalRejet{{ $am->id }}" aria-modal="true" role="dialog">
+            <div class="modal-dialog modal-lg" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Rejet</h5><a href="#" class="close" data-bs-dismiss="modal"
+                            aria-label="Close"><em class="icon ni ni-cross"></em></a>
+                    </div>
+                    <div class="modal-body">
+                        <form action="" method="post" >
+                            @csrf
+                            <div class="form-group">
+                                <label class="form-label" for="pay-amount">Motif</label>
+                                <div class="form-control-wrap">
+                                    <textarea required name="motif" class="form-control no-resize" id="default-textarea"></textarea>
+                                    <input type="text" value="{{ $am->id }}" name="risque_id" style="display: none;">
+                                </div>
+                            </div>
+                            <div class="form-group text-center">
+                                <button type="submit" class="btn btn-lg btn-success">
+                                    Sauvgarder
+                                </button>
                             </div>
                         </form>
                     </div>

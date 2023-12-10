@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 use App\Events\NotificationAcorrective;
 
@@ -285,6 +286,7 @@ class AmeliorationController extends Controller
         $am->consequence = $consequence;
         $am->cause = $cause;
         $am->choix_select = $choix_select;
+        $am->statut = 'soumis';
         $am->save();
 
         foreach ($nature as $index => $valeur) {
@@ -303,7 +305,8 @@ class AmeliorationController extends Controller
                 $suivic->action_id = $action_id[$index];
                 $suivic->processus_id = $processus_id[$index];
                 $suivic->risque_id = $risque[$index];
-                if ($trouve[$index] === 'cause') {$suivic->cause_id = $trouve[$index];}
+                if ($trouve[$index] === 'cause') {$suivic->cause_id = $trouve_id[$index];}
+                if ($trouve[$index] === 'risque') {$suivic->risque_id = $trouve_id[$index];}
                 $suivic->commentaire_am = $commentaire[$index];
                 $suivic->save();
 
@@ -327,7 +330,8 @@ class AmeliorationController extends Controller
                 $suivic->action_id = $actionn->id;
                 $suivic->risque_id = $risque[$index];
                 $suivic->processus_id = $processus_id[$index];
-                if ($trouve[$index] === 'cause') {$suivic->cause_id = $trouve[$index];}
+                if ($trouve[$index] === 'cause') {$suivic->cause_id = $trouve_id[$index];}
+                if ($trouve[$index] === 'risque') {$suivic->risque_id = $trouve_id[$index];}
                 $suivic->commentaire_am = $commentaire[$index];
                 $suivic->save();
 
@@ -416,7 +420,6 @@ class AmeliorationController extends Controller
             return back()
                 ->with('error', 'Enregistrement non éffectuée.');
         }
-
 
     }
 

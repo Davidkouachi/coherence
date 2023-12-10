@@ -45,11 +45,12 @@ class ListeactionController extends Controller
         return view('liste.actionpreventive', ['actions' => $actions]);
     }
 
-    public function index_ac()
+    public function index_ac_eff()
     {
         $actions = Suivi_amelioration::join('ameliorations', 'suivi_ameliorations.amelioration_id', 'ameliorations.id')
+                        ->where('suivi_ameliorations.statut', 'realiser')
                         ->join('processuses', 'suivi_ameliorations.processus_id', 'processuses.id')
-                        ->select('Suivi_ameliorations.*', 'processuses.nom as processus', 'ameliorations.type as type_am')
+                        ->select('Suivi_ameliorations.*', 'processuses.nom as processus', 'ameliorations.type as type_am', 'ameliorations.statut as statut_am', 'ameliorations.date_validation as date_validation_am')
                         ->get();
 
         foreach ($actions as $action) {
@@ -83,7 +84,6 @@ class ListeactionController extends Controller
                 $ac = Action::join('risques', 'actions.risque_id', 'risques.id')
                             ->join('postes', 'actions.poste_id', 'postes.id')
                             ->where('actions.id', $action->action_id)
-                            ->where('actions.accepte', '=', 'oui')
                             ->select('actions.*', 'risques.nom as risque', 'postes.nom as poste')
                             ->first();
 
@@ -93,6 +93,18 @@ class ListeactionController extends Controller
 
             }
         }
+
+        return view('liste.actioncorrectiveeff', ['actions' => $actions]);
+    }
+
+    public function index_ac()
+    {
+        $actions = Action::join('risques', 'actions.risque_id', 'risques.id')
+                        ->join('processuses', 'risques.processus_id', 'processuses.id')
+                        ->where('actions.type', 'corrective')
+                        ->where('risques.statut', 'valider')
+                        ->select('actions.*', 'processuses.nom as processus', 'risques.nom as risque')
+                        ->get();
 
         return view('liste.actioncorrective', ['actions' => $actions]);
     }

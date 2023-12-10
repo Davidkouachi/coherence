@@ -130,13 +130,6 @@ class ProcessusController extends Controller
                 $nouvelleActionP->type = 'preventive';
                 $nouvelleActionP->save();
 
-                $suivip = new Suivi_action();
-                $suivip->delai = $delai[$index];
-                $suivip->statut = 'non-realiser';
-                $suivip->risque_id = $risque_id;
-                $suivip->action_id = $nouvelleActionP->id;
-                $suivip->processus_id = $processus_id;
-                $suivip->save();
             }
         }
 
@@ -301,7 +294,6 @@ class ProcessusController extends Controller
         return view('tableau.validecause', ['risques' => $risques, 'causesData' => $causesData, 'actionsDatap' => $actionsDatap , 'actionsDatac' => $actionsDatac, 'postes' => $postes ]);
     }
 
-
     public function add_processus(Request $request)
     {
 
@@ -344,12 +336,14 @@ class ProcessusController extends Controller
             $his->user_id = Auth::user()->id;
             $his->save();
 
+            return back()
+                    ->with('success', 'Enregistrement éffectuée.');
+
             event(new NotificationProcessus());
         }
 
-        return redirect()
-            ->route('index_add_processus')
-            ->with('success', 'Enregistrement éffectuée.');
+        return back()
+            ->with('error', 'Enregistrement a échoué.');
 
     }
 
@@ -362,6 +356,27 @@ class ProcessusController extends Controller
 
         if ($valide)
         {
+            $rechs = Action::join('risques', 'actions.risque_id', 'risques.id')
+                        ->join('processuses', 'risques.processus_id', 'processuses.id')
+                        ->where('risques.id', $id)
+                        ->where('actions.type', 'preventive')
+                        ->select('actions.*','processuses.id as processus_id')
+                        ->get();
+
+            if ($rechs) {
+
+                foreach ($rechs as $value) {
+
+                    $suivip = new Suivi_action();
+                    $suivip->delai = $value->date;
+                    $suivip->statut = 'non-realiser';
+                    $suivip->risque_id = $id;
+                    $suivip->action_id = $value->id;
+                    $suivip->processus_id = $value->processus_id;
+                    $suivip->save();
+                }
+            }
+
             $his = new Historique_action();
             $his->nom_formulaire = 'Tableau de validation';
             $his->nom_action = 'Validation';

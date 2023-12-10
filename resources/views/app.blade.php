@@ -242,6 +242,14 @@
                                                     </a>
                                                 </li>
                                                 <li class="nk-menu-item">
+                                                    <a class="nk-menu-link" href="{{ route('index_ac_eff') }}">
+                                                        <em class="ni ni-list-index me-1"></em>
+                                                        <span class="nk-menu-text">
+                                                            Actions éffectuées
+                                                        </span>
+                                                    </a>
+                                                </li>
+                                                <li class="nk-menu-item">
                                                     <a class="nk-menu-link" href="{{ route('index_ac') }}">
                                                         <em class="ni ni-list-index me-1"></em>
                                                         <span class="nk-menu-text">
@@ -277,38 +285,24 @@
                                                 </span>
                                             </a>
                                         </li>
+                                        <li >
+                                            <a class="nk-menu-link" href="{{ route('index_validation_amelioration') }}" >
+                                                <em class="ni ni-view-list-sq me-1"></em>
+                                                <span class="nk-menu-text ">
+                                                    Tableau de validation
+                                                </span>
+                                            </a>
+                                        </li>
+                                        <li >
+                                            <a class="nk-menu-link" href="{{ route('index_amelioration_up') }}" >
+                                                <em class="ni ni-list me-1"></em>
+                                                <span class="nk-menu-text ">
+                                                    Fiche(s) non validé(s)
+                                                </span>
+                                            </a>
+                                        </li>
                                     </ul>
                                 </li>
-                                <!--<li class="nk-menu-item has-sub">
-                                    <a class="nk-menu-link nk-menu-toggle">
-                                        <span class="nk-menu-text">
-                                            Tableau
-                                        </span>
-                                    </a>
-                                    <ul class="nk-menu-sub">
-                                        <li >
-                                            <a class="nk-menu-link" href="{{ route('index_validation_processus') }}">
-                                                <span class="nk-menu-text">
-                                                    Validation
-                                                </span>
-                                            </a>
-                                        </li>
-                                        <li >
-                                            <a class="nk-menu-link" href="{{ route('index_suiviaction') }}">
-                                                <span class="nk-menu-text">
-                                                    Suivi des actions
-                                                </span>
-                                            </a>
-                                        </li>
-                                        <li >
-                                            <a class="nk-menu-link" href="{{ route('index_evaluation') }}">
-                                                <span class="nk-menu-text">
-                                                    Evaluation Processus
-                                                </span>
-                                            </a>
-                                        </li>
-                                    </ul>
-                                </li>-->
                                 @yield('menu')
                             </ul>
                         </div>
@@ -539,6 +533,43 @@
 
     <link href="{{asset('notification/toastr.min.css')}}" rel="stylesheet">
     <script src="{{asset('notification/toastr.min.js')}}"></script>
+
+    @if (session('success'))
+        <script>
+            toastr.success("{{ session('success') }}"," ",
+            {positionClass:"toast-top-left",timeOut:5e3,debug:!1,newestOnTop:!0,
+            preventDuplicates:!0,showDuration:"300",hideDuration:"1000",extendedTimeOut:"1000",
+            showEasing:"swing",showMethod:"fadeIn",hideMethod:"fadeOut"})
+        </script>
+        {{ session()->forget('success') }}
+    @endif
+    @if (session('error'))
+        <script>
+            toastr.error("{{ session('error') }}"," ",
+            {positionClass:"toast-top-left",timeOut:5e3,debug:!1,newestOnTop:!0,
+            preventDuplicates:!0,showDuration:"300",hideDuration:"1000",extendedTimeOut:"1000",
+            showEasing:"swing",showMethod:"fadeIn",hideMethod:"fadeOut"})
+        </script>
+        {{ session()->forget('error') }}
+    @endif
+    @if (session('warning'))
+        <script>
+            toastr.warning("{{ session('warning') }}"," ",
+            {positionClass:"toast-top-left",timeOut:5e3,debug:!1,newestOnTop:!0,
+            preventDuplicates:!0,showDuration:"300",hideDuration:"1000",extendedTimeOut:"1000",
+            showEasing:"swing",showMethod:"fadeIn",hideMethod:"fadeOut"})
+        </script>
+        {{ session()->forget('warning') }}
+    @endif
+    @if (session('info'))
+        <script>
+            toastr.info("{{ session('info') }}"," ",
+            {positionClass:"toast-top-left",timeOut:5e3,debug:!1,newestOnTop:!0,
+            preventDuplicates:!0,showDuration:"300",hideDuration:"1000",extendedTimeOut:"1000",
+            showEasing:"swing",showMethod:"fadeIn",hideMethod:"fadeOut"})
+        </script>
+        {{ session()->forget('info') }}
+    @endif
 
 </body>
 <!-- Mirrored from dashlite.net/demo8/ by HTTrack Website Copier/3.x [XR&CO'2014], Tue, 14 Mar 2023 15:17:24 GMT -->

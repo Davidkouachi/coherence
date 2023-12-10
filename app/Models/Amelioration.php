@@ -19,6 +19,8 @@ class Amelioration extends Model
         'consequence',
         'cause',
         'choix_select',
+        'statut',
+        'date_validation',
     ];
 
 }

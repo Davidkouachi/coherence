@@ -41,11 +41,9 @@
                                             <thead>
                                                 <tr class="text-center">
                                                     <th></th>
-                                                    <th>Type</th>
-                                                    <th>Nature</th>
                                                     <th>Action</th>
-                                                    <th>Délai</th>
-                                                    <th></th>
+                                                    <th>Risque</th>
+                                                    <th>Processus</th>
                                                     <th></th>
                                                 </tr>
                                             </thead>
@@ -53,35 +51,9 @@
                                                 @foreach ($actions as $key => $action)
                                                     <tr class="text-center">
                                                         <td>{{ $key+1}}</td>
-                                                        <td>
-                                                            @if ($action->type_am === 'non_conformite_interne')
-                                                                Non Conformité
-                                                            @endif
-                                                            @if ($action->type_am === 'contentieux')
-                                                                Contentieux
-                                                            @endif
-                                                            @if ($action->type_am === 'reclamation')
-                                                                Réclamation
-                                                            @endif
-                                                        </td>
-                                                        <td>{{ $action->nature}}</td>
                                                         <td>{{ $action->action}}</td>
-                                                        <td>{{ $action->delai}}</td>
-                                                        @if ($action->date_action !== null && $action->delai >= $action->date_action)
-                                                            <td class="text-center text-success" >
-                                                                Realiser dans le delai
-                                                            </td>
-                                                        @endif
-                                                        @if ($action->date_action !== null && $action->delai < $action->date_action)
-                                                            <td class="text-center text-danger" >
-                                                                Realiser hors delai
-                                                            </td>
-                                                        @endif
-                                                        @if ($action->date_action === null)
-                                                            <td class="text-center text-warning" >
-                                                                Non réaliser
-                                                            </td>
-                                                        @endif
+                                                        <td>{{ $action->risque}}</td>
+                                                        <td>{{ $action->processus}}</td>
                                                         <td>
                                                             <a data-bs-toggle="modal"
                                                                 data-bs-target="#modalDetail{{$action->id}}"
@@ -149,144 +121,6 @@
                                                             </div>
                                                         </div>
                                                     </div>
-
-                                                    @if ($action->date_action !== null && $action->delai >= $action->date_action)
-                                                    <div class="col-lg-4">
-                                                        <div class="form-group">
-                                                            <label class="form-label" for="Cause">
-                                                                Délai
-                                                            </label>
-                                                            <div class="form-control-wrap">
-                                                                <input value="{{ $action->delai }}" readonly type="date" class="form-control" id="Cause">
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-lg-4">
-                                                        <div class="form-group">
-                                                            <label class="form-label" for="Cause">
-                                                                Date d'action
-                                                            </label>
-                                                            <div class="form-control-wrap">
-                                                                <input value="{{ $action->date_action }}" readonly type="date" class="form-control" id="Cause">
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-lg-4">
-                                                        <div class="form-group">
-                                                            <label class="form-label" for="Cause">
-                                                                Efficacitée
-                                                            </label>
-                                                            <div class="form-control-wrap">
-                                                                <input value="{{ $action->efficacite }}" readonly type="text" class="form-control" id="Cause">
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-lg-12">
-                                                        <div class="form-group">
-                                                            <div class="form-control-wrap">
-                                                                @if ($action->date_action !== null && $action->delai >= $action->date_action)
-                                                                    <input value="Realiser dans le delai" readonly type="text" class="form-control text-center bg-success" id="Cause">
-                                                                @endif
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-lg-12">
-                                                        <div class="form-group">
-                                                            <label class="form-label" >
-                                                                Commentaire
-                                                            </label>
-                                                            <div class="form-control-wrap" >
-                                                                <textarea readonly required name="causes" class="form-control no-resize" id="default-textarea">{{ $action->commentaire }}</textarea>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    @endif
-
-                                                    @if ($action->date_action !== null && $action->delai < $action->date_action)
-                                                    <div class="col-lg-4">
-                                                        <div class="form-group">
-                                                            <label class="form-label" for="Cause">
-                                                                Délai
-                                                            </label>
-                                                            <div class="form-control-wrap">
-                                                                <input value="{{ $action->delai }}" readonly type="date" class="form-control" id="Cause">
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-lg-4">
-                                                        <div class="form-group">
-                                                            <label class="form-label" for="Cause">
-                                                                Date d'action
-                                                            </label>
-                                                            <div class="form-control-wrap">
-                                                                <input value="{{ $action->date_action }}" readonly type="date" class="form-control" id="Cause">
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-lg-4">
-                                                        <div class="form-group">
-                                                            <label class="form-label" for="Cause">
-                                                                Efficacitée
-                                                            </label>
-                                                            <div class="form-control-wrap">
-                                                                <input value="{{ $action->efficacite }}" readonly type="text" class="form-control" id="Cause">
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-lg-12">
-                                                        <div class="form-group">
-                                                            <div class="form-control-wrap">
-                                                                @if ($action->date_action !== null && $action->delai < $action->date_action)
-                                                                    <input value="Realiser hors delai" readonly type="text" class="form-control text-center bg-danger" id="Cause">
-                                                                @endif
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-lg-12">
-                                                        <div class="form-group">
-                                                            <label class="form-label" >
-                                                                Commentaire
-                                                            </label>
-                                                            <div class="form-control-wrap" >
-                                                                <textarea readonly required name="causes" class="form-control no-resize" id="default-textarea">{{ $action->commentaire }}</textarea>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    @endif
-
-                                                    @if ($action->date_action === null)
-                                                    <div class="col-lg-12">
-                                                        <div class="form-group">
-                                                            <label class="form-label" for="Cause">
-                                                                Délai
-                                                            </label>
-                                                            <div class="form-control-wrap">
-                                                                <input value="{{ $action->delai }}" readonly type="date" class="form-control" id="Cause">
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-lg-12">
-                                                        <div class="form-group">
-                                                            <div class="form-control-wrap">
-                                                                @if ($action->date_action === null)
-                                                                    <input value="Non Realiser" readonly type="text" class="form-control text-center bg-warning" id="Cause">
-                                                                @endif
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    @endif
-
-                                                    <div class="col-lg-12">
-                                                        <div class="form-group">
-                                                            <label class="form-label" for="Cause">
-                                                                Contrôleur
-                                                            </label>
-                                                            <div class="form-control-wrap">
-                                                                <input value="{{ $action->poste }}" readonly type="text" class="form-control" id="Cause">
-                                                            </div>
-                                                        </div>
-                                                    </div>
-
                                                 </div>
                                         </div>
                                     </div>
@@ -298,43 +132,6 @@
             </div>
         </div>
     @endforeach
-
-    @if (session('success'))
-        <script>
-            toastr.success("{{ session('success') }}"," ",
-            {positionClass:"toast-top-left",timeOut:5e3,debug:!1,newestOnTop:!0,
-            preventDuplicates:!0,showDuration:"300",hideDuration:"1000",extendedTimeOut:"1000",
-            showEasing:"swing",showMethod:"fadeIn",hideMethod:"fadeOut"})
-        </script>
-        {{ session()->forget('success') }}
-    @endif
-    @if (session('error'))
-        <script>
-            toastr.error("{{ session('error') }}"," ",
-            {positionClass:"toast-top-left",timeOut:5e3,debug:!1,newestOnTop:!0,
-            preventDuplicates:!0,showDuration:"300",hideDuration:"1000",extendedTimeOut:"1000",
-            showEasing:"swing",showMethod:"fadeIn",hideMethod:"fadeOut"})
-        </script>
-        {{ session()->forget('error') }}
-    @endif
-    @if (session('warning'))
-        <script>
-            toastr.warning("{{ session('warning') }}"," ",
-            {positionClass:"toast-top-left",timeOut:5e3,debug:!1,newestOnTop:!0,
-            preventDuplicates:!0,showDuration:"300",hideDuration:"1000",extendedTimeOut:"1000",
-            showEasing:"swing",showMethod:"fadeIn",hideMethod:"fadeOut"})
-        </script>
-        {{ session()->forget('warning') }}
-    @endif
-    @if (session('info'))
-        <script>
-            toastr.info("{{ session('info') }}"," ",
-            {positionClass:"toast-top-left",timeOut:5e3,debug:!1,newestOnTop:!0,
-            preventDuplicates:!0,showDuration:"300",hideDuration:"1000",extendedTimeOut:"1000",
-            showEasing:"swing",showMethod:"fadeIn",hideMethod:"fadeOut"})
-        </script>
-        {{ session()->forget('info') }}
-    @endif
 
 
 @endsection

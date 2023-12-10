@@ -1,6 +1,6 @@
 @extends('app')
 
-@section('titre', 'Liste des actions preventives')
+@section('titre', 'Liste des actions corretives effectuée')
 
 @section('option_btn')
 
@@ -25,7 +25,7 @@
                                 <div class="nk-block-between">
                                     <div class="nk-block-head-content" style="margin:0px auto;">
                                         <h3 class="text-center">
-                                            <span>Liste des actions preventives</span>
+                                            <span>Liste des actions correctives éffectuées</span>
                                             <em class="icon ni ni-list-index"></em>
                                         </h3>
                                     </div>
@@ -41,6 +41,7 @@
                                             <thead>
                                                 <tr class="text-center">
                                                     <th></th>
+                                                    <th>Type</th>
                                                     <th>Action</th>
                                                     <th>Délai</th>
                                                     <th>Statut</th>
@@ -51,8 +52,19 @@
                                                 @foreach ($actions as $key => $action)
                                                     <tr class="text-center">
                                                         <td>{{ $key+1}}</td>
+                                                        <td>
+                                                            @if ($action->type_am === 'non_conformite_interne')
+                                                                Non Conformité
+                                                            @endif
+                                                            @if ($action->type_am === 'contentieux')
+                                                                Contentieux
+                                                            @endif
+                                                            @if ($action->type_am === 'reclamation')
+                                                                Réclamation
+                                                            @endif
+                                                        </td>
                                                         <td>{{ $action->action}}</td>
-                                                        <td>{{ \Carbon\Carbon::parse($action->delai)->format('d/m/Y') }}</td>
+                                                        <td>{{ $action->delai}}</td>
                                                         @if ($action->date_action !== null && $action->delai >= $action->date_action)
                                                             <td class="text-center text-success" >
                                                                 Realiser dans le delai
@@ -195,7 +207,7 @@
                                                                 Délai
                                                             </label>
                                                             <div class="form-control-wrap">
-                                                                <input value="{{ $action->date }}" readonly type="date" class="form-control" id="Cause">
+                                                                <input value="{{ $action->delai }}" readonly type="date" class="form-control" id="Cause">
                                                             </div>
                                                         </div>
                                                     </div>
@@ -272,6 +284,7 @@
                                                             </div>
                                                         </div>
                                                     </div>
+
                                                 </div>
                                         </div>
                                     </div>
@@ -283,30 +296,6 @@
             </div>
         </div>
     @endforeach
-
-    <script>
-        Pusher.logToConsole = true;
-
-        var pusher = new Pusher('9f9514edd43b1637ff61', {
-          cluster: 'eu'
-        });
-
-        var channel = pusher.subscribe('my-channel-ap');
-        channel.bind('my-event-ap', function(data) {
-            Swal.fire({
-                        title: "Alert!",
-                    text: "Nouvelle(s) Action(s)",
-                        icon: "info",
-                        confirmButtonColor: "#00d819",
-                        confirmButtonText: "OK",
-                        allowOutsideClick: false,
-                    }).then((result) => {
-                        if (result.isConfirmed) {
-                            location.reload();
-                        }
-                    });
-        });
-    </script>
 
 
 @endsection

@@ -1,6 +1,6 @@
 @extends('app')
 
-@section('titre', 'Liste des Processus')
+@section('titre', 'Tableau de validation')
 
 @section('option_btn')
 
@@ -25,7 +25,7 @@
                                 <div class="nk-block-between">
                                     <div class="nk-block-head-content" style="margin:0px auto;">
                                         <h3 class="text-center">
-                                            <span>Liste des Amélioration</span>
+                                            <span>Fiche d'amélioration non validé</span>
                                             <em class="icon ni ni-list-index"></em>
                                         </h3>
                                     </div>
@@ -43,9 +43,10 @@
                                                     <th></th>
                                                     <th>Type</th>
                                                     <th>Date</th>
+                                                    <th>Lieu</th>
+                                                    <th>Détecteur</th>
                                                     <th>Non-conformité</th>
                                                     <th>Nombre d'actions</th>
-                                                    <th>Statut</th>
                                                     <th></th>
                                                 </tr>
                                             </thead>
@@ -65,40 +66,20 @@
                                                             @endif
                                                         </td>
                                                         <td>{{ \Carbon\Carbon::parse($am->date_fiche)->format('d/m/Y') }}</td>
+                                                        <td>{{ $am->lieu }}</td>
+                                                        <td>{{ $am->detecteur }}</td>
                                                         <td>{{ $am->non_conformite }}</td>
                                                         <td>{{ $am->nbre_action }}</td>
-                                                        @if ($am->statut === 'soumis')
-                                                            <td class=" text-warning">
-                                                                En attente de validation
-                                                            </td>
-                                                        @endif
-                                                        @if ($am->statut === 'valider')
-                                                            <td class=" text-success">
-                                                                Validé
-                                                            </td>
-                                                        @endif
-                                                        @if ($am->statut === 'non_valider')
-                                                            <td class=" text-danger">
-                                                                Non Validé
-                                                            </td>
-                                                        @endif
-                                                        @if ($am->statut === 'update')
-                                                            <td class="text-info" >
-                                                                Modification éffectuée
-                                                            </td>
-                                                        @endif
                                                         <td>
                                                             <a data-bs-toggle="modal"
                                                                 data-bs-target="#modalDetail{{ $am->id }}"
                                                                 class="btn btn-icon btn-white btn-dim btn-sm btn-warning">
                                                                 <em class="icon ni ni-eye"></em>
                                                             </a>
-                                                            @if ($am->statut === 'valider')
                                                             <a href="{{ route('index_etat_am',['id' => $am->id ]) }}"
                                                                 class="btn btn-icon btn-white btn-dim btn-sm btn-primary">
                                                                 <em class="icon ni ni-printer-fill"></em>
                                                             </a>
-                                                            @endif
                                                         </td>
                                                     </tr>
                                                 @endforeach
@@ -119,22 +100,7 @@
             <div class="modal-dialog modal-lg" role="document" style="width: 100%;">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title">
-                            Détails 
-                            @if ($am->statut === 'soumis')
-                                <span class="text-warning"> ( En attente de validation )</span>
-                            @endif
-                            @if ($am->statut === 'valider')
-                                <span class="text-success"> ( Validé )</span>
-                            @endif
-                            @if ($am->statut === 'non_valider')
-                                <span class="text-danger"> (Non Validé )</span>
-                            @endif
-                            @if ($am->statut === 'update')
-                                <span class="text-info"> (Modification éffectuée )</span>
-                            @endif
-
-                        </h5>
+                        <h5 class="modal-title">Détails</h5>
                         <a href="#" class="close" data-bs-dismiss="modal" aria-label="Close"><em class="icon ni ni-cross"></em></a>
                     </div>
                     <div class="modal-body">
@@ -267,7 +233,6 @@
                                                         </div>
                                                     </div>
                                                 </div>
-                                                
                                                 @if ($actions['statut'] === 'realiser')
                                                 <div class="col-lg-4">
                                                     <div class="form-group text-center">
@@ -316,7 +281,6 @@
                                                     </div>
                                                 </div>
                                                 @endif
-                                                
                                                 <div class="col-lg-12">
                                                     <div class="form-group">
                                                         <label class="form-label">

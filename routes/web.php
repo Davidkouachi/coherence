@@ -15,6 +15,7 @@ use App\Http\Controllers\ListerisqueController;
 use App\Http\Controllers\ListeactionController;
 use App\Http\Controllers\EtatController;
 use App\Http\Controllers\PDFController;
+use App\Http\Controllers\ListeamController;
 
 
 Route::get('/Login', [AuthController::class, 'view_login'])->name('login');
@@ -53,6 +54,7 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/Mise a jour risque traitement', [ListerisqueController::class, 'index_risque_actionup2_traitement'])->name('index_risque_actionup2_traitement');
 
     Route::get('/Liste Action Preventive', [ListeactionController::class, 'index_ap'])->name('index_ap');
+    Route::get('/Liste Action Corrective effectuée', [ListeactionController::class, 'index_ac_eff'])->name('index_ac_eff');
     Route::get('/Liste Action Corrective', [ListeactionController::class, 'index_ac'])->name('index_ac');
 
     Route::post('/traitement_resva', [ResvaController::class, 'add_resva'])->name('add_resva');
@@ -70,6 +72,9 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/get-risque-info/{id}', [AmeliorationController::class, 'get_risque_info']);
     Route::post('/add_amelioration', [AmeliorationController::class, 'index_add'])->name('index_add');
     Route::get('/liste_amelioration', [AmeliorationController::class, 'index_liste'])->name('index_amelioration_liste');
+    Route::get('/validation_amelioration', [ListeamController::class, 'index_validation'])->name('index_validation_amelioration');
+    Route::get('/amelioration_up', [ListeamController::class, 'index_amup'])->name('index_amelioration_up');
+    Route::get('/am_valider/{id}', [ListeamController::class, 'am_valider'])->name('am_valider');
 
     Route::get('/Profil', [ProfilController::class, 'index_profil'])->name('index_profil');
 

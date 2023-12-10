@@ -47,6 +47,7 @@ class SuiviactionController extends Controller
     {
         $ams = Amelioration::join('suivi_ameliorations', 'ameliorations.id', '=', 'suivi_ameliorations.amelioration_id')
                             ->where('suivi_ameliorations.statut', 'non-realiser')
+                            ->where('ameliorations.statut', 'valider')
                             ->select('ameliorations.*','suivi_ameliorations.delai as delai', 'suivi_ameliorations.date_action as date_ation', 'suivi_ameliorations.nature as nature', 'suivi_ameliorations.action_id as action_id')
                             ->get();
         foreach ($ams as $am) {

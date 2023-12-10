@@ -176,10 +176,16 @@
                                                             <label class="form-label" for="controle">
                                                                 Risque
                                                                 @if ($risque->statut === 'soumis')
-                                                                    <span class="text-danger"> ( Non validé )</span>
+                                                                    <span class="text-warning"> ( En attente de validation )</span>
                                                                 @endif
                                                                 @if ($risque->statut === 'valider')
                                                                     <span class="text-success"> ( Validé )</span>
+                                                                @endif
+                                                                @if ($risque->statut === 'non_valider')
+                                                                    <span class="text-danger"> (Non Validé )</span>
+                                                                @endif
+                                                                @if ($risque->statut === 'update')
+                                                                    <span class="text-info"> (Modification éffectuée )</span>
                                                                 @endif
                                                             </label>
                                                             <div class="form-control-wrap">
@@ -475,43 +481,6 @@
             </div>
         </div>
     @endforeach
-
-    @if (session('success'))
-        <script>
-            toastr.success("{{ session('success') }}"," ",
-            {positionClass:"toast-top-left",timeOut:5e3,debug:!1,newestOnTop:!0,
-            preventDuplicates:!0,showDuration:"300",hideDuration:"1000",extendedTimeOut:"1000",
-            showEasing:"swing",showMethod:"fadeIn",hideMethod:"fadeOut"})
-        </script>
-        {{ session()->forget('success') }}
-    @endif
-    @if (session('error'))
-        <script>
-            toastr.error("{{ session('error') }}"," ",
-            {positionClass:"toast-top-left",timeOut:5e3,debug:!1,newestOnTop:!0,
-            preventDuplicates:!0,showDuration:"300",hideDuration:"1000",extendedTimeOut:"1000",
-            showEasing:"swing",showMethod:"fadeIn",hideMethod:"fadeOut"})
-        </script>
-        {{ session()->forget('error') }}
-    @endif
-    @if (session('warning'))
-        <script>
-            toastr.warning("{{ session('warning') }}"," ",
-            {positionClass:"toast-top-left",timeOut:5e3,debug:!1,newestOnTop:!0,
-            preventDuplicates:!0,showDuration:"300",hideDuration:"1000",extendedTimeOut:"1000",
-            showEasing:"swing",showMethod:"fadeIn",hideMethod:"fadeOut"})
-        </script>
-        {{ session()->forget('warning') }}
-    @endif
-    @if (session('info'))
-        <script>
-            toastr.info("{{ session('info') }}"," ",
-            {positionClass:"toast-top-left",timeOut:5e3,debug:!1,newestOnTop:!0,
-            preventDuplicates:!0,showDuration:"300",hideDuration:"1000",extendedTimeOut:"1000",
-            showEasing:"swing",showMethod:"fadeIn",hideMethod:"fadeOut"})
-        </script>
-        {{ session()->forget('info') }}
-    @endif
 
 
 @endsection

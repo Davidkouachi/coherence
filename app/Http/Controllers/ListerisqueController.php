@@ -234,6 +234,8 @@ class ListerisqueController extends Controller
             $cause_id = $request->input('cause_id');
             $nom_cause = $request->input('nom_cause');
             $dispositif = $request->input('dispositif');
+            $cause_id_suppr = $request->input('cause_id_suppr');
+            $suppr_cause = $request->input('suppr_cause');
 
             foreach ($cause_id as $index => $valeur) {
 
@@ -257,12 +259,27 @@ class ListerisqueController extends Controller
                     $cause->risque_id = $risque_id;
                     $cause->save();
                 }
-                
+
             }
+
+            if ($cause_id_suppr) {
+
+                foreach ($cause_id_suppr as $index => $valeur) {
+
+                    if ($suppr_cause[$index] === 'oui') {
+
+                        $cause = Cause::where('id', $cause_id_suppr[$index])->delete();
+
+                    }
+                }
+            }
+
 
             $action_idc = $request->input('action_idc');
             $actionc = $request->input('actionc');
             $responsable_idc = $request->input('poste_idc');
+            $action_idc_suppr = $request->input('action_idc_suppr');
+            $suppr_actionc = $request->input('suppr_actionc');
 
             foreach ($action_idc as $index => $valeur) {
 
@@ -288,10 +305,25 @@ class ListerisqueController extends Controller
                 }
             }
 
+            if ($action_idc_suppr) {
+
+                foreach ($action_idc_suppr as $index => $valeur) {
+
+                    if ($suppr_actionc[$index] === 'oui') {
+
+                        $action = Action::where('id', $action_idc_suppr[$index])->delete();
+
+                    }
+                }
+            }
+
+
             $action_idp = $request->input('action_idp');
             $actionp = $request->input('actionp');
             $delai = $request->input('delai');
             $responsable_idp = $request->input('poste_idp');
+            $action_idp_suppr = $request->input('action_idp_suppr');
+            $suppr_actionp = $request->input('suppr_actionp');
 
             foreach ($action_idp as $index => $valeur) {
 
@@ -317,15 +349,21 @@ class ListerisqueController extends Controller
                     $nouvelleActionP->type = 'preventive';
                     $nouvelleActionP->save();
 
-                    $suivip = new Suivi_action();
-                    $suivip->delai = $delai[$index];
-                    $suivip->statut = 'non-realiser';
-                    $suivip->risque_id = $risque_id;
-                    $suivip->action_id = $nouvelleActionP->id;
-                    $suivip->processus_id = $processus_id;
-                    $suivip->save();
                 }
             }
+
+            if ($action_idp_suppr) {
+
+                foreach ($action_idp_suppr as $index => $valeur) {
+
+                    if ($suppr_actionp[$index] === 'oui') {
+
+                        $action = Action::where('id', $action_idp_suppr[$index])->delete();
+
+                    }
+                }
+            }
+
 
             event(new NotificationRisqueup());
 
