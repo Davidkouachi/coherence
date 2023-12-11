@@ -161,8 +161,8 @@ class ListeamController extends Controller
             if ($valide) {
 
                 $his = new Historique_action();
-                $his->nom_formulaire = 'Tableau de validation';
-                $his->nom_action = 'Validation';
+                $his->nom_formulaire = 'Validation fiche amelioration';
+                $his->nom_action = 'Valider';
                 $his->user_id = Auth::user()->id;
                 $his->save();
 

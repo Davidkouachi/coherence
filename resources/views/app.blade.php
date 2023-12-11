@@ -436,7 +436,7 @@
 
         <script>
             let idleTimer;
-            const idleTime = 120000;
+            const idleTime = 1800000;
 
             function resetIdleTimer() {
                 clearTimeout(idleTimer);
@@ -454,7 +454,6 @@
         <script>
             document.getElementById('logoutBtn').addEventListener('click', function(event) {
                 event.preventDefault(); // Pour éviter le comportement par défaut du lien
-
                 window.location.reload();
             });
         </script>

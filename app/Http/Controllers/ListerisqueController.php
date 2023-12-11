@@ -364,6 +364,12 @@ class ListerisqueController extends Controller
                 }
             }
 
+            $his = new Historique_action();
+            $his->nom_formulaire = 'Risque non valider';
+            $his->nom_action = 'Modifier';
+            $his->user_id = Auth::user()->id;
+            $his->save();
+
 
             event(new NotificationRisqueup());
 

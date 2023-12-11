@@ -53,15 +53,11 @@ class AuthController extends Controller
                         ->orWhere('tel', $request->tel)
                         ->first();
         if ($user_vrf) {
-
             if ($user_vrf->email === $request->email) {
-
                 return back()->with('error', 'Email existe déjà.');
             } else {
-
                 return back()->with('error', 'Contact existe déjà.');
             }
-
         } else {
 
             $user = User::create([
@@ -74,6 +70,28 @@ class AuthController extends Controller
             ]);
 
             if ($user) {
+
+                $auto = new Autorisation();
+                $auto->new_user = $request->nouveau_user;
+                $auto->new_poste = $request->nouveau_poste;
+                $auto->historiq = $request->historique;
+                $auto->stat = $request->statistique;
+                $auto->new_proces = $request->nouveau_proces;
+                $auto->list_proces = $request->liste_proces;
+                $auto->new_recla = $request->nouvelle_recla;
+                $auto->list_recla = $request->liste_recla;
+                $auto->list_cause = $request->liste_cause;
+                $auto->suivi_act = $request->suivi;
+                $auto->act_eff = $request->action_e;
+                $auto->list_act = $request->liste_action;
+                $auto->user_id = $user->id;
+                $auto->save();
+
+                $his = new Historique_action();
+                $his->nom_formulaire = 'Nouveau Utilisateur';
+                $his->nom_action = 'Ajouter';
+                $his->user_id = Auth::user()->id;
+                $his->save();
 
                 $mail = new PHPMailer(true);
                 $mail->isHTML(true);
@@ -96,17 +114,12 @@ class AuthController extends Controller
                         . 'NB : Vous pouvez modifier le mot de passe selon votre choix.';
                 // Envoi de l'email
                 $mail->send();
-
-                $his = new Historique_action();
-                $his->nom_formulaire = 'Nouveau Utilisateur';
-                $his->nom_action = 'Ajouter';
-                $his->user_id = Auth::user()->id;
-                $his->save();
             }
 
-            return back()->with('success', 'Enregistrement éffectuée.');
+            return back()->with('ajouter', 'Enregistrement éffectuée.');
         }
     }
+
 
     public function auth_user(Request $request)
     {

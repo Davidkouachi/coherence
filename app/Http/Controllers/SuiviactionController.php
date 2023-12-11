@@ -122,8 +122,8 @@ class SuiviactionController extends Controller
             {
 
                 $his = new Historique_action();
-                $his->nom_formulaire = 'Tableau du suivi des actions';
-                $his->nom_action = 'Suivi action preventive';
+                $his->nom_formulaire = 'Suivi des actions preventive';
+                $his->nom_action = 'Suivi effectué';
                 $his->user_id = Auth::user()->id;
                 $his->save();
 
@@ -153,8 +153,8 @@ class SuiviactionController extends Controller
             {
 
                 $his = new Historique_action();
-                $his->nom_formulaire = 'Tableau du suivi des actions';
-                $his->nom_action = 'Suivi action corrective';
+                $his->nom_formulaire = 'Suivi des actions corrective';
+                $his->nom_action = 'Suivi éffectué';
                 $his->user_id = Auth::user()->id;
                 $his->save();
 

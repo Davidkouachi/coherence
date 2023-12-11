@@ -17,7 +17,7 @@ return [
     |            "memcached", "redis", "dynamodb", "array"
     |
     */
-   'lifetime' => env('SESSION_LIFETIME', 1440),
+   'lifetime' => env('SESSION_LIFETIME', 60),//duree de validation d'inactivite d'un formulaire en min
 
 
     'driver' => env('SESSION_DRIVER', 'database'),
@@ -33,7 +33,7 @@ return [
     |
     */
 
-    'lifetime' => env('SESSION_LIFETIME', 2),
+    'lifetime' => env('SESSION_LIFETIME', 30),//duree d'inactivite d'un user connecté en min
 
     'expire_on_close' => false,
 

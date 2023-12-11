@@ -109,7 +109,18 @@
                                                     Date
                                                 </label>
                                                 <div class="form-control-wrap">
-                                                    <input required name="date_fiche" type="date" class="form-control" id="Cause">
+                                                    <input required name="date_fiche" type="date" class="form-control" id="date" onchange="checkDate()">
+                                                    <script>
+                                                        function checkDate() {
+                                                            var inputDate = new Date(document.getElementById('date').value);
+                                                            var currentDate = new Date();
+
+                                                            if (inputDate > currentDate) {
+                                                                toastr.info("Vérifier la date.");
+                                                                document.getElementById('date').value = ''; // Vide l'input si la date est future
+                                                            }
+                                                        }
+                                                    </script>
                                                 </div>
                                             </div>
                                         </div>
@@ -1089,6 +1100,20 @@ function addGroup(type_new) {
 
     document.getElementById("dynamic-fields").appendChild(groupe);
 
+    const dateInput = groupe.querySelector('input[name="date_action[]"]');
+
+    // Ajoute un événement pour vérifier la date lorsqu'elle est modifiée
+    dateInput.addEventListener('change', function() {
+        const selectedDate = new Date(this.value); // Convertit la valeur de l'input en objet Date
+        const currentDate = new Date(); // Obtient la date actuelle
+
+        if (selectedDate < currentDate) {
+            // La date prévisionnelle est antérieure à la date actuelle
+            toastr.info("Vérifier la date saisie.");
+            this.value = ''; // Vide l'input de la date prévisionnelle
+        }
+    });
+
 }
 
 </script>
@@ -1109,6 +1134,8 @@ document.addEventListener("DOMContentLoaded", function() {
                             url: '/get-cause-info/' + selectedCause,
                             method: 'GET',
                             success: function(data) {
+                                var nbre = data.nbre;
+                                toastr.info(nbre + " Action(s) trouvée(s).");
                                 addGroups_accepte(type, data);
                             },
                             error: function() {
@@ -1124,6 +1151,8 @@ document.addEventListener("DOMContentLoaded", function() {
                             url: '/get-risque-info/' + selectedRisque,
                             method: 'GET',
                             success: function(data) {
+                                var nbre = data.nbre;
+                                toastr.info(nbre + " Action(s) trouvée(s).");
                                 addGroups_accepte(type, data);
                             },
                             error: function() {
@@ -1256,6 +1285,22 @@ function addGroups_accepte(type, data) {
 
         document.getElementById("dynamic-fields").appendChild(groupe);
     });
+
+    document.getElementById("dynamic-fields").appendChild(groupe);
+
+    const dateInput = groupe.querySelector('input[name="date_action[]"]');
+
+    // Ajoute un événement pour vérifier la date lorsqu'elle est modifiée
+    dateInput.addEventListener('change', function() {
+        const selectedDate = new Date(this.value); // Convertit la valeur de l'input en objet Date
+        const currentDate = new Date(); // Obtient la date actuelle
+
+        if (selectedDate < currentDate) {
+            // La date prévisionnelle est antérieure à la date actuelle
+            toastr.info("Vérifier la date saisie.");
+            this.value = ''; // Vide l'input de la date prévisionnelle
+        }
+    });
 }
 
 </script>
@@ -1276,6 +1321,8 @@ document.addEventListener("DOMContentLoaded", function() {
                             url: '/get-cause-info/' + selectedCause,
                             method: 'GET',
                             success: function(data) {
+                                var nbre = data.nbre;
+                                toastr.info(nbre + " Action(s) trouvée(s).");
                                 addGroups_non_accepte(type, data);
                             },
                             error: function() {
@@ -1291,6 +1338,8 @@ document.addEventListener("DOMContentLoaded", function() {
                             url: '/get-risque-info/' + selectedRisque,
                             method: 'GET',
                             success: function(data) {
+                                var nbre = data.nbre;
+                                toastr.info(nbre + " Action(s) trouvée(s).");
                                 addGroups_non_accepte(type, data);
                             },
                             error: function() {
@@ -1426,6 +1475,22 @@ function addGroups_non_accepte(type, data) {
         });
 
         document.getElementById("dynamic-fields").appendChild(groupe);
+    });
+
+    document.getElementById("dynamic-fields").appendChild(groupe);
+
+    const dateInput = groupe.querySelector('input[name="date_action[]"]');
+
+    // Ajoute un événement pour vérifier la date lorsqu'elle est modifiée
+    dateInput.addEventListener('change', function() {
+        const selectedDate = new Date(this.value); // Convertit la valeur de l'input en objet Date
+        const currentDate = new Date(); // Obtient la date actuelle
+
+        if (selectedDate < currentDate) {
+            // La date prévisionnelle est antérieure à la date actuelle
+            toastr.info("Vérifier la date saisie.");
+            this.value = ''; // Vide l'input de la date prévisionnelle
+        }
     });
 }
 

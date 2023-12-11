@@ -395,7 +395,18 @@
                                                 </label>
                                                 <div class="form-group">
                                                     <div class="form-control-wrap">
-                                                        <input id="delai" autocomplete="off" name="delai[]" type="date" class="form-control">
+                                                        <input id="delai" name="delai[]" type="date" class="form-control" onchange="checkDate()">
+                                                        <script>
+                                                            function checkDate() {
+                                                                var inputDate = new Date(document.getElementById('delai').value);
+                                                                var currentDate = new Date();
+
+                                                                if (inputDate < currentDate) {
+                                                                    toastr.info("Vérifier la date saisie.");
+                                                                    document.getElementById('delai').value = ''; // Vide l'input si la date est future
+                                                                }
+                                                            }
+                                                        </script>
                                                     </div>
                                                 </div>
                                             </div>
@@ -771,7 +782,22 @@
             });
 
             document.getElementById("groupesActionpr").appendChild(groupe);
+
+            const dateInput = groupe.querySelector('input[name="delai[]"]');
+
+            // Ajoute un événement pour vérifier la date lorsqu'elle est modifiée
+            dateInput.addEventListener('change', function() {
+                const selectedDate = new Date(this.value); // Convertit la valeur de l'input en objet Date
+                const currentDate = new Date(); // Obtient la date actuelle
+
+                if (selectedDate < currentDate) {
+                    // La date prévisionnelle est antérieure à la date actuelle
+                    toastr.info("Vérifier la date saisie.");
+                    this.value = ''; // Vide l'input de la date prévisionnelle
+                }
+            });
         }
+
     });
 </script>
 

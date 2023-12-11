@@ -32,10 +32,13 @@ class Autorisation extends Model
         'list_actp',
 
         'suivi_actc',
+        'list_actc_eff',
         'list_actc',
 
         'fiche_am',
         'list_am',
+        'val_am',
+        'am_n_val',
 
         'user_id',
     ];

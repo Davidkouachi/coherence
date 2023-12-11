@@ -198,6 +198,8 @@ class AmeliorationController extends Controller
                       ->select('actions.*', 'postes.nom as responsable')
                       ->get();
 
+        $nbre = count($actions);
+
         foreach ($actions as $action) {
 
             $action->risque = $risque->nom;
@@ -213,7 +215,7 @@ class AmeliorationController extends Controller
         }
 
         return response()->json([
-            'actions' => $actions
+            'actions' => $actions, 'nbre' => $nbre
         ]);
     }
 
@@ -225,6 +227,8 @@ class AmeliorationController extends Controller
                       ->where('actions.type', 'corrective')
                       ->select('actions.*', 'postes.nom as responsable')
                       ->get();
+
+        $nbre = count($actions);
 
         foreach ($actions as $action) {
 
@@ -241,7 +245,7 @@ class AmeliorationController extends Controller
         }
 
         return response()->json([
-            'actions' => $actions
+            'actions' => $actions, 'nbre' => $nbre
         ]);
     }
 

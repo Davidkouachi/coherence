@@ -378,8 +378,8 @@ class ProcessusController extends Controller
             }
 
             $his = new Historique_action();
-            $his->nom_formulaire = 'Tableau de validation';
-            $his->nom_action = 'Validation';
+            $his->nom_formulaire = 'Validation fiche risque';
+            $his->nom_action = 'Valider';
             $his->user_id = Auth::user()->id;
             $his->save();
 
@@ -451,7 +451,7 @@ class ProcessusController extends Controller
             if ($valide) {
 
                 $his = new Historique_action();
-                $his->nom_formulaire = 'Tableau de validation';
+                $his->nom_formulaire = 'Validation fiche risque';
                 $his->nom_action = 'Rejet';
                 $his->user_id = Auth::user()->id;
                 $his->save();
