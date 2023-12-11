@@ -157,7 +157,7 @@
                                                                     <div class="col-md-3 col-sm-6">
                                                                         <div class="preview-block">
                                                                             <div class="custom-control custom-radio">
-                                                                                <input type="radio" id="customRadio1" name="nouveau_user" class="custom-control-input" value="oui" >
+                                                                                <input type="radio" id="customRadio1" name="new_user" class="custom-control-input" value="oui" >
                                                                                 <label class="custom-control-label" for="customRadio1">Oui</label>
                                                                             </div>
                                                                         </div>
@@ -165,7 +165,7 @@
                                                                     <div class="col-md-3 col-sm-6">
                                                                         <div class="preview-block">
                                                                             <div class="custom-control custom-radio">
-                                                                                <input type="radio" id="customRadio2" name="nouveau_user" checked class="custom-control-input" value="non">
+                                                                                <input type="radio" id="customRadio2" name="new_user" checked class="custom-control-input" value="non">
                                                                                 <label class="custom-control-label" for="customRadio2">Non</label>
                                                                             </div>
                                                                         </div>
@@ -203,7 +203,7 @@
                                                                     <div class="col-md-3 col-sm-6">
                                                                         <div class="preview-block">
                                                                             <div class="custom-control custom-radio">
-                                                                                <input type="radio" id="customRadio3" name="nouveau_poste" class="custom-control-input" value="oui" >
+                                                                                <input type="radio" id="customRadio3" name="new_poste" class="custom-control-input" value="oui" >
                                                                                 <label class="custom-control-label" for="customRadio3">Oui</label>
                                                                             </div>
                                                                         </div>
@@ -211,7 +211,7 @@
                                                                     <div class="col-md-3 col-sm-6">
                                                                         <div class="preview-block">
                                                                             <div class="custom-control custom-radio">
-                                                                                <input type="radio" id="customRadio4" name="nouveau_poste" checked class="custom-control-input" value="non">
+                                                                                <input type="radio" id="customRadio4" name="new_poste" checked class="custom-control-input" value="non">
                                                                                 <label class="custom-control-label" for="customRadio4">Non</label>
                                                                             </div>
                                                                         </div>
@@ -249,7 +249,7 @@
                                                                     <div class="col-md-3 col-sm-6">
                                                                         <div class="preview-block">
                                                                             <div class="custom-control custom-radio">
-                                                                                <input type="radio" id="customRadio5" name="historique" class="custom-control-input" value="oui" >
+                                                                                <input type="radio" id="customRadio5" name="historiq" class="custom-control-input" value="oui" >
                                                                                 <label class="custom-control-label" for="customRadio5">Oui</label>
                                                                             </div>
                                                                         </div>
@@ -257,7 +257,7 @@
                                                                     <div class="col-md-3 col-sm-6">
                                                                         <div class="preview-block">
                                                                             <div class="custom-control custom-radio">
-                                                                                <input type="radio" id="customRadio6" name="historique" checked class="custom-control-input" value="non">
+                                                                                <input type="radio" id="customRadio6" name="historiq" checked class="custom-control-input" value="non">
                                                                                 <label class="custom-control-label" for="customRadio6">Non</label>
                                                                             </div>
                                                                         </div>
@@ -272,7 +272,7 @@
                                                                     <div class="col-md-3 col-sm-6">
                                                                         <div class="preview-block">
                                                                             <div class="custom-control custom-radio">
-                                                                                <input type="radio" id="customRadio7" name="statistique" class="custom-control-input" value="oui" >
+                                                                                <input type="radio" id="customRadio7" name="stat" class="custom-control-input" value="oui" >
                                                                                 <label class="custom-control-label" for="customRadio7">Oui</label>
                                                                             </div>
                                                                         </div>
@@ -280,7 +280,7 @@
                                                                     <div class="col-md-3 col-sm-6">
                                                                         <div class="preview-block">
                                                                             <div class="custom-control custom-radio">
-                                                                                <input type="radio" id="customRadio8" name="statistique" checked class="custom-control-input" value="non">
+                                                                                <input type="radio" id="customRadio8" name="stat" checked class="custom-control-input" value="non">
                                                                                 <label class="custom-control-label" for="customRadio8">Non</label>
                                                                             </div>
                                                                         </div>
@@ -303,7 +303,7 @@
                                                                     <div class="col-md-3 col-sm-6">
                                                                         <div class="preview-block">
                                                                             <div class="custom-control custom-radio">
-                                                                                <input type="radio" id="customRadio9" name="nouveau_proces" class="custom-control-input" value="oui" >
+                                                                                <input type="radio" id="customRadio9" name="new_proces" class="custom-control-input" value="oui" >
                                                                                 <label class="custom-control-label" for="customRadio9">Oui</label>
                                                                             </div>
                                                                         </div>
@@ -311,7 +311,7 @@
                                                                     <div class="col-md-3 col-sm-6">
                                                                         <div class="preview-block">
                                                                             <div class="custom-control custom-radio">
-                                                                                <input type="radio" id="customRadio10" name="nouveau_proces" checked class="custom-control-input" value="non">
+                                                                                <input type="radio" id="customRadio10" name="new_proces" checked class="custom-control-input" value="non">
                                                                                 <label class="custom-control-label" for="customRadio10">Non</label>
                                                                             </div>
                                                                         </div>
@@ -326,7 +326,7 @@
                                                                     <div class="col-md-3 col-sm-6">
                                                                         <div class="preview-block">
                                                                             <div class="custom-control custom-radio">
-                                                                                <input type="radio" id="customRadio11" name="liste_proces" class="custom-control-input" value="oui" >
+                                                                                <input type="radio" id="customRadio11" name="list_proces" class="custom-control-input" value="oui" >
                                                                                 <label class="custom-control-label" for="customRadio11">Oui</label>
                                                                             </div>
                                                                         </div>
@@ -334,7 +334,7 @@
                                                                     <div class="col-md-3 col-sm-6">
                                                                         <div class="preview-block">
                                                                             <div class="custom-control custom-radio">
-                                                                                <input type="radio" id="customRadio12" name="liste_proces" checked class="custom-control-input" value="non">
+                                                                                <input type="radio" id="customRadio12" name="list_proces" checked class="custom-control-input" value="non">
                                                                                 <label class="custom-control-label" for="customRadio12">Non</label>
                                                                             </div>
                                                                         </div>

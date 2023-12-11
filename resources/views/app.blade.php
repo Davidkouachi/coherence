@@ -59,14 +59,9 @@
                                     </a>
                                 </div>
                             </div>
+                            @if (Auth::check())
                             <ul class="nk-menu nk-menu-main ui-s2">
-                                <!--<li >
-                                    <a class="nk-menu-link" href="{{ route('index_accueil') }}">
-                                        <span class="nk-menu-text">
-                                            Accueil
-                                        </span>
-                                    </a>
-                                </li>-->
+                                @if (session('user_auto')->new_user === 'oui' || session('user_auto')->list_user === 'oui' || session('user_auto')->new_poste === 'oui' || session('user_auto')->list_poste === 'oui' || session('user_auto')->historiq === 'oui' || session('user_auto')->stat === 'oui')
                                 <li class="nk-menu-item has-sub">
                                     <a class="nk-menu-toggle btn " >
                                         <em class="ni ni-building me-2"></em>
@@ -75,6 +70,7 @@
                                         </span>
                                     </a>
                                     <ul class="nk-menu-sub">
+                                        @if (session('user_auto')->new_user === 'oui')
                                         <li >
                                             <a class="nk-menu-link" href="{{ route('index_add_resva') }}">
                                                 <em class="icon ni ni-user-add me-1"></em>
@@ -83,6 +79,18 @@
                                                 </span>
                                             </a>
                                         </li>
+                                        @endif
+                                        @if (session('user_auto')->list_user === 'oui')
+                                        <li >
+                                            <a class="nk-menu-link" href="">
+                                                <em class="icon ni ni-user-add me-1"></em>
+                                                <span class="nk-menu-text ">
+                                                    Liste des utilisateurs
+                                                </span>
+                                            </a>
+                                        </li>
+                                        @endif
+                                        @if (session('user_auto')->new_poste === 'oui')
                                         <li >
                                             <a class="nk-menu-link" data-bs-toggle="modal" data-bs-target="#modalPoste" >
                                                 <em class="ni ni-reports-alt me-1"></em>
@@ -91,6 +99,8 @@
                                                 </span>
                                             </a>
                                         </li>
+                                        @endif
+                                        @if (session('user_auto')->list_poste === 'oui')
                                         <li >
                                             <a class="nk-menu-link" href="{{ route('index_liste_poste') }}" >
                                                 <em class="ni ni-list me-1"></em>
@@ -99,6 +109,8 @@
                                                 </span>
                                             </a>
                                         </li>
+                                        @endif
+                                        @if (session('user_auto')->stat === 'oui')
                                         <li >
                                             <a class="nk-menu-link" href="{{ route('index_stat') }}">
                                                 <em class="ni ni-bar-chart-alt me-1"></em>
@@ -107,6 +119,8 @@
                                                 </span>
                                             </a>
                                         </li>
+                                        @endif
+                                        @if (session('user_auto')->historiq === 'oui')
                                         <li>
                                             <a class="nk-menu-link" href="{{ route('index_historique') }}">
                                                 <em class="icon ni ni-property me-1"></em>
@@ -115,8 +129,11 @@
                                                 </span>
                                             </a>
                                         </li>
+                                        @endif
                                     </ul>
                                 </li>
+                                @endif
+                                @if (session('user_auto')->new_proces === 'oui' || session('user_auto')->list_proces === 'oui' || session('user_auto')->eva_proces === 'oui')
                                 <li class="nk-menu-item has-sub">
                                     <a class="nk-menu-toggle btn " >
                                         <em class="ni ni-share-alt me-2"></em>
@@ -125,6 +142,7 @@
                                         </span>
                                     </a>
                                     <ul class="nk-menu-sub">
+                                        @if (session('user_auto')->new_proces === 'oui')
                                         <li >
                                             <a class="nk-menu-link" href="{{ route('index_add_processus') }}">
                                                 <em class="icon ni ni-property-add me-1"></em>
@@ -133,6 +151,8 @@
                                                 </span>
                                             </a>
                                         </li>
+                                        @endif
+                                        @if (session('user_auto')->list_proces === 'oui')
                                         <li >
                                             <a class="nk-menu-link" href="{{ route('index_listeprocessus') }}">
                                                 <em class="ni ni-list-index me-1"></em>
@@ -141,6 +161,8 @@
                                                 </span>
                                             </a>
                                         </li>
+                                        @endif
+                                        @if (session('user_auto')->eva_proces === 'oui')
                                         <li >
                                             <a class="nk-menu-link" href="{{ route('index_evaluation') }}">
                                                 <em class="icon ni ni-view-list-sq me-1"></em>
@@ -149,8 +171,11 @@
                                                 </span>
                                             </a>
                                         </li>
+                                        @endif
                                     </ul>
                                 </li>
+                                @endif
+                                @if (session('user_auto')->new_risk === 'oui' || session('user_auto')->list_risk === 'oui' || session('user_auto')->val_risk === 'oui' || session('user_auto')->act_n_val === 'oui')
                                 <li class="nk-menu-item has-sub">
                                     <a class="nk-menu-toggle btn " >
                                         <em class="ni ni-hot-fill me-2"></em>
@@ -159,6 +184,7 @@
                                         </span>
                                     </a>
                                     <ul class="nk-menu-sub">
+                                        @if (session('user_auto')->new_risk === 'oui')
                                         <li >
                                             <a class="nk-menu-link" href="{{ route('index_add_processuseva') }}">
                                                 <em class="icon ni ni-property-add me-1"></em>
@@ -167,6 +193,8 @@
                                                 </span>
                                             </a>
                                         </li>
+                                        @endif
+                                        @if (session('user_auto')->list_risk === 'oui')
                                         <li >
                                             <a class="nk-menu-link" href="{{ route('index_liste_risque') }}">
                                                 <em class="ni ni-list-index me-1"></em>
@@ -175,6 +203,8 @@
                                                 </span>
                                             </a>
                                         </li>
+                                        @endif
+                                        @if (session('user_auto')->val_risk === 'oui')
                                         <li >
                                             <a class="nk-menu-link" href="{{ route('index_validation_processus') }}">
                                                 <em class="icon ni ni-view-list-sq me-1"></em>
@@ -183,6 +213,8 @@
                                                 </span>
                                             </a>
                                         </li>
+                                        @endif
+                                        @if (session('user_auto')->act_n_val === 'oui')
                                         <li >
                                             <a class="nk-menu-link" href="{{ route('index_risque_actionup') }}">
                                                 <em class="ni ni-box-view-fill me-1"></em>
@@ -191,8 +223,10 @@
                                                 </span>
                                             </a>
                                         </li>
+                                        @endif
                                     </ul>
                                 </li>
+                                @endif
                                 <li class="nk-menu-item has-sub">
                                     <a class="nk-menu-toggle btn " >
                                         <em class="ni ni-box-view-fill me-2"></em>
@@ -305,6 +339,7 @@
                                 </li>
                                 @yield('menu')
                             </ul>
+                            @endif
                         </div>
                         <div class="nk-header-tools">
                             <ul class="nk-quick-nav">
