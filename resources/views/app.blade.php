@@ -418,17 +418,46 @@
                     <div class="modal-body modal-body-lg text-center">
                         <div class="nk-modal">
                             <em class="nk-modal-icon icon icon-circle icon-circle-xxl ni ni-cross bg-danger"></em>
-                            <h4 class="nk-modal-title">Session Expiré!</h4>
+                            <h4 class="nk-modal-title">Session a éxpiré !</h4>
                             <div class="nk-modal-action mt-5">
-                                <a href="{{ route('logout') }}" class="btn btn-lg btn-mw btn-light">
-                                    ok
-                                </a>
+                                <form class="login-form">
+                                    <div class="form-group">
+                                        <a class="btn btn-lg btn-mw btn-light" id="logoutBtn">
+                                            ok
+                                        </a>
+                                    </div>
+                                </form>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
+
+        <script>
+            let idleTimer;
+            const idleTime = 120000;
+
+            function resetIdleTimer() {
+                clearTimeout(idleTimer);
+                idleTimer = setTimeout(showLogoutModal, idleTime);
+            }
+
+            function showLogoutModal() {
+                $('#modalAlert2').modal('show');
+            }
+
+            document.addEventListener('mousemove', resetIdleTimer);
+            document.addEventListener('keypress', resetIdleTimer);
+        </script>
+
+        <script>
+            document.getElementById('logoutBtn').addEventListener('click', function(event) {
+                event.preventDefault(); // Pour éviter le comportement par défaut du lien
+
+                window.location.reload();
+            });
+        </script>
 
         <div class="modal fade zoom" tabindex="-1" id="modalPoste">
             <div class="modal-dialog modal-lg" role="document" style="width: 100%;">
@@ -508,23 +537,6 @@
                 });
             });
         </script>
-
-        <!--<script>
-            let idleTimer;
-            const idleTime = 60000; 
-
-            function resetIdleTimer() {
-                clearTimeout(idleTimer);
-                idleTimer = setTimeout(showLogoutModal, idleTime);
-            }
-
-            function showLogoutModal() {
-                $('#modalAlert2').modal('show');
-            }
-
-            document.addEventListener('mousemove', resetIdleTimer);
-            document.addEventListener('keypress', resetIdleTimer);
-        </script>-->
 
     <script src="{{asset('assets/js/bundle0226.js')}}"></script>
     <script src="{{asset('assets/js/scripts0226.js')}}"></script>

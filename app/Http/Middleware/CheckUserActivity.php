@@ -1,7 +1,5 @@
 <?php
 
-// CheckUserActivity.php
-
 namespace App\Http\Middleware;
 
 use Closure;
@@ -10,22 +8,18 @@ use Illuminate\Support\Facades\Session;
 
 class CheckUserActivity
 {
-    public function handle($request, Closure $next, $timeout = 60) // Timeout en secondes (10 minutes)
+    public function handle($request, Closure $next)
     {
-        if (Auth::check()) {
-            $user = Auth::user();
-            $lastActivity = Session::get('lastActivity');
+        $userLastActivity = Session::get('last_activity');
 
-            if (time() - $lastActivity > $timeout) {
-                Auth::logout();
-                Session::flush();
-                return redirect()->route('login')->with('inactive', 'Votre session a expiré en raison d\'inactivité.');
-            }
-
-            Session::put('lastActivity', time());
+        if ($userLastActivity && time() - $userLastActivity > 120) { // 120 seconds = 2 minutes
+            // L'utilisateur est inactif, rediriger vers la page de connexion
+            Auth::logout();
+            return redirect('/login')->with('message', 'Votre session a expiré en raison d\'une inactivité.');
         }
+
+        Session::put('last_activity', time());
 
         return $next($request);
     }
 }
-

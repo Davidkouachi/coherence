@@ -23,19 +23,11 @@
                         <form action="/auth_user" method="post" class="login-form">
                             @csrf
                             <div class="form-group">
-                                <input autocomplete="off" type="text" class="form-control rounded-left" placeholder="Email" required name="email">
+                                <input autocomplete="off" type="text" class="form-control rounded-left" placeholder="Email" required name="email" id="email">
                             </div>
                             <div class="form-group d-flex">
-                                <input autocomplete="off" type="password" class="form-control rounded-left" placeholder="Mot de passe" required name="password">
+                                <input autocomplete="off" type="password" class="form-control rounded-left" placeholder="Mot de passe" required name="password" id="password">
                             </div>
-                            <!--<div class="form-group d-md-flex">
-                                <div class="w-50">
-                                    <label class="checkbox-wrap checkbox-primary">Se souvenir de moi
-                                        <input type="checkbox" name="remember">
-                                        <span class="checkmark"></span>
-                                    </label>
-                                </div>
-                            </div>-->
                             <div class="form-group">
                                 <button type="submit" class="btn btn-primary rounded submit p-3 px-5">
                                     Se connecter
@@ -54,6 +46,24 @@
 
     <link href="{{asset('notification/toastr.min.css')}}" rel="stylesheet">
     <script src="{{asset('notification/toastr.min.js')}}"></script>
+
+    <!--<script>
+        let idleTimer;
+        const idleTime = 60000;
+
+        function resetIdleTimer() {
+            clearTimeout(idleTimer);
+            idleTimer = setTimeout(showLogoutModal, idleTime);
+        }
+
+        function showLogoutModal() {
+            location.reload();
+        }
+
+        document.addEventListener('mousemove', resetIdleTimer);
+        document.addEventListener('keypress', resetIdleTimer);
+
+    </script>-->
 
     @if (session('error_login'))
         <script>
