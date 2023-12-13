@@ -75,18 +75,34 @@ class ProfilController extends Controller
 
     public function mdp_update(Request $request)
     {
-        $mdp1 = $request->input('mdp1');
         $mdp2 = $request->input('mdp2');
-
-        if (!Hash::check($mdp1, Auth::user()->password)) {
-            return response()->json(['error' => true]);
-        }
 
         $user = User::find(Auth::user()->id);
         $user->password = bcrypt($mdp2);
+        $user->mdp_date = now()->format('Y-m-d\TH:i:s');
         $user->update();
 
         if ($user) {
+            return response()->json(['success' => true]);
+        }
+
+        return response()->json(['error' => true]);
+    }
+
+    public function info_update(Request $request)
+    {
+        $name = $request->input('name');
+        $tel = $request->input('tel');
+        $email = $request->input('email');
+
+        $user = User::find(Auth::user()->id);
+        $user->name = $name;
+        $user->tel = $tel;
+        $user->email = $email;
+        $user->update();
+
+        if ($user) {
+            
             return response()->json(['success' => true]);
         }
 

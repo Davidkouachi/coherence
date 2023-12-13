@@ -29,6 +29,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/suiviactiveoui', [ProfilController::class, 'suivi_oui']);
     Route::get('/suiviactivenon', [ProfilController::class, 'suivi_non']);
     Route::get('/mdp_update', [ProfilController::class, 'mdp_update']);
+    Route::get('/info_update', [ProfilController::class, 'info_update']);
 
     Route::get('/', [Controller::class, 'index_accueil'])->name('index_accueil');
 

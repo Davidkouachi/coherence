@@ -29,6 +29,7 @@ class DatabaseSeeder extends Seeder
             'tel' => '0585782723',
             'poste_id' => $poste1->id,
             'suivi_active' => 'non',
+            'fa' => 'non',
         ]);
 
         $auto = Autorisation::create([

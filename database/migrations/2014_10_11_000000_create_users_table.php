@@ -24,6 +24,8 @@ class CreateUsersTable extends Migration
             $table->string('tel');
             $table->string('matricule')->unique();
             $table->string('suivi_active');
+            $table->datetime('mdp_date')->nullable();
+            $table->string('fa');
             $table->rememberToken();
             $table->timestamps();
         });

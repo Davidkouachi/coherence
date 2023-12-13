@@ -221,7 +221,7 @@
                                                                                     </li>
                                                                                     <li>
                                                                                         <em class="text-soft text-date fs-12px">Derniére modification:
-                                                                                            <span>{{ Auth::user()->updated_at }}</span>
+                                                                                            <span>{{ Auth::user()->mdp_date }}</span>
                                                                                         </em>
                                                                                     </li>
                                                                                 </ul>
@@ -231,12 +231,28 @@
                                                                     <div class="card-inner">
                                                                         <div class="between-center flex-wrap flex-md-nowrap g-3">
                                                                             <div class="nk-block-text">
-                                                                                <h6>Authentification à 2 facteurs &nbsp; <span class="badge badge-success ms-0">Enabled</span></h6>
+                                                                                <h6>
+                                                                                    Authentification à 2 facteurs &nbsp;
+                                                                                    @if (Auth::user()->fa === 'non' ) 
+                                                                                    <span class="text-soft">
+                                                                                        (Fonctionnalité indisponible)
+                                                                                    </span>
+                                                                                    @endif
+                                                                                    @if (Auth::user()->fa === 'oui' )
+                                                                                    <span class="text-soft">
+                                                                                        (Fonctionnalité indisponible)
+                                                                                    </span>
+                                                                                    @endif
+                                                                                    <span class="badge badge-success ms-0">Enabled</span></h6>
                                                                                 <p>Sécurisez votre compte avec la sécurité 2FA. Lorsqu'il est activé, vous devrez saisir non seulement votre mot de passe, mais également saisir le code qui vous sera envoyé par email. </p>
                                                                             </div>
                                                                             <div class="nk-block-actions">
-                                                                                <a href="#" class="btn btn-success">Activé</a>
-                                                                                <a href="#" class="btn btn-danger">Désactivé</a>
+                                                                                @if (Auth::user()->fa === 'non' ) 
+                                                                                <a hidden href="#" class="btn btn-success">Activé</a>
+                                                                                @endif
+                                                                                @if (Auth::user()->fa === 'oui' )
+                                                                                <a hidden href="#" class="btn btn-danger">Désactivé</a>
+                                                                                @endif
                                                                             </div>
                                                                         </div>
                                                                     </div>
@@ -268,22 +284,22 @@
                     <li class="nav-item"><a class="nav-link active" data-bs-toggle="tab" href="#personal">Informations</a></li>
                     <!--<li class="nav-item"><a class="nav-link" data-bs-toggle="tab" href="#address">Address</a></li>-->
                 </ul>
-                <form class="tab-content">
+                <div class="tab-content">
                     <div class="tab-pane active" id="personal">
                         <div class="row gy-4">
                             <div class="col-lg-12">
-                                <div class="form-group"><label class="form-label" for="display-name">Nom et Prénoms</label><input type="text" class="form-control form-control-lg" value="{{ Auth::user()->name }}" placeholder="Saisie votre nom et prénoms"></div>
+                                <div class="form-group"><label class="form-label" for="display-name">Nom et Prénoms</label><input type="text" class="form-control form-control-lg" value="{{ Auth::user()->name }}" id="name" placeholder="Saisie votre nom et prénoms"></div>
                             </div>
                             <div class="col-lg-12">
                                 <div class="form-group"><label class="form-label" for="phone-no">Téléphone</label><input type="text" class="form-control form-control-lg" id="tel" value="{{ Auth::user()->tel }}" placeholder="Saisie votre numéro de téléphone"></div>
                             </div>
                             <div class="col-lg-12">
-                                <div class="form-group"><label class="form-label" for="birth-day">Email</label><input type="text" class="form-control form-control-lg" value="{{ Auth::user()->email }}" placeholder="Saisie Email"></div>
+                                <div class="form-group"><label class="form-label" for="birth-day">Email</label><input type="email" id="email" class="form-control form-control-lg" value="{{ Auth::user()->email }}" placeholder="Saisie Email"></div>
                             </div>
                             <div class="col-12">
                                 <ul class="align-center flex-wrap flex-sm-nowrap gx-4 gy-2">
                                     <li>
-                                        <button type="submit" class="btn btn-lg btn-success btn-dim">
+                                        <button id="btn_change_info" class="btn btn-lg btn-success btn-dim">
                                             <em class="ni ni-check me-2 "></em>
                                             <em >Enregistrer</em>
                                         </button>
@@ -321,7 +337,7 @@
                             </div>
                         </div>
                     </div>-->
-                </form>
+                </div>
             </div>
         </div>
     </div>
@@ -338,9 +354,6 @@
                 <div class="tab-content">
                     <div class="tab-pane active" id="personal">
                         <div class="row gy-4">
-                            <div class="col-lg-12">
-                                <div class="form-control-wrap"><a tabindex="-1" href="#" class="form-icon form-icon-right passcode-switch lg" data-target="password"></a><input autocomplete="off" type="password" class="form-control form-control-lg " id="password1" placeholder="Saisie l'ancien mot de passe" name="mdp_ancien"></div>
-                            </div>
                             <div class="col-lg-12">
                                 <div class="form-control-wrap"><a tabindex="-1" href="#" class="form-icon form-icon-right passcode-switch lg" data-target="password"></a><input autocomplete="off" type="password" class="form-control form-control-lg " id="password2" placeholder="Saisie le nouveau mot de passe" name="mdp_new"></div>
                             </div>
@@ -419,11 +432,10 @@
     btn.addEventListener('click', function(event) {
         event.preventDefault();
 
-        const mdp1 = document.getElementById('password1').value;
         const mdp2 = document.getElementById('password2').value;
         const mdp3 = document.getElementById('password3').value;
 
-        if ( mdp1 ==='' || mdp2 ==='' || mdp3 ==='') {
+        if (mdp2 ==='' || mdp3 ==='') {
 
             toastr.warning("Veuillez remplir tous les champs.");
 
@@ -433,8 +445,17 @@
                 $.ajax({
                     url: '/mdp_update',
                     method: 'GET',
-                    data: { mdp1: mdp1, mdp2: mdp2},
+                    data: {mdp2: mdp2},
                     success: function() {
+                        document.getElementById('password2').value='';
+                        document.getElementById('password3').value='';
+
+                        const modal = document.getElementById('profile-edit-mdp');
+                        const bootstrapModal = bootstrap.Modal.getInstance(modal); // Obtenez l'instance du modal
+                        if (bootstrapModal) {
+                            bootstrapModal.hide(); // Masquer le modal
+                        }
+
                         toastr.success("Mot de passe modifié.");
                     },
                     error: function() {
@@ -443,6 +464,61 @@
                 });
             } else {
                 toastr.info("Nouveau mot de passe incorrect.");
+            }
+        }
+    });
+</script>
+
+<script>
+    const btn0 = document.getElementById('btn_change_info');
+
+    btn0.addEventListener('click', function(event) {
+        event.preventDefault();
+
+        const name = document.getElementById('name');
+        const tel = document.getElementById('tel');
+        const email = document.getElementById('email');
+        const emailPattern = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
+
+        if (name.value ==='' || tel.value ==='' || email.value ==='') {
+
+            toastr.warning("Veuillez remplir tous les champs.");
+
+        } else {
+
+            if (tel.value.length !== 10) {
+
+                toastr.warning("Verifier le numéro de téléphone.");
+            } else {
+
+                if (!emailPattern.test(email.value)) {
+
+                    toastr.warning("Verifier l'email saisie.");
+                } else {
+
+                    $.ajax({
+                        url: '/info_update',
+                        method: 'GET',
+                        data: {name: name.value, tel: tel.value, email: email.value},
+                        success: function() {
+
+                            const modal = document.getElementById('profile-edit');
+                            const bootstrapModal = bootstrap.Modal.getInstance(modal); // Obtenez l'instance du modal
+                            if (bootstrapModal) {
+                                bootstrapModal.hide(); // Masquer le modal
+                            }
+
+                            toastr.success("Modification éffectuée.");
+
+                            setTimeout(function() {
+                                window.location.reload();
+                            }, 2000);
+                        },
+                        error: function() {
+                            toastr.error("La modification a échouée.");
+                        }
+                    });
+                }
             }
         }
     });

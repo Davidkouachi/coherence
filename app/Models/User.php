@@ -21,6 +21,8 @@ class User extends Authenticatable
         'matricule',
         'poste_id',
         'suivi_active',
+        'mdp_date',
+        'fa',
         'tel',
     ];
 
