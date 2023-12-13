@@ -82,8 +82,8 @@
                                         @endif
                                         @if (session('user_auto')->list_user === 'oui')
                                         <li >
-                                            <a class="nk-menu-link" href="">
-                                                <em class="icon ni ni-user-add me-1"></em>
+                                            <a class="nk-menu-link" href="{{ route('index_liste_resva') }} ">
+                                                <em class="icon ni ni-list me-1"></em>
                                                 <span class="nk-menu-text ">
                                                     Liste des utilisateurs
                                                 </span>
@@ -227,6 +227,7 @@
                                     </ul>
                                 </li>
                                 @endif
+                                @if (session('user_auto')->suivi_actp === 'oui' || session('user_auto')->list_actp === 'oui' || session('user_auto')->suivi_actc === 'oui' || session('user_auto')->list_actc_eff === 'oui' || session('user_auto')->list_actc === 'oui')
                                 <li class="nk-menu-item has-sub">
                                     <a class="nk-menu-toggle btn " >
                                         <em class="ni ni-box-view-fill me-2"></em>
@@ -235,6 +236,7 @@
                                         </span>
                                     </a>
                                     <ul class="nk-menu-sub">
+                                        @if (session('user_auto')->suivi_actp === 'oui' || session('user_auto')->list_actp === 'oui')
                                         <li class="nk-menu-item has-sub">
                                             <a class="nk-menu-link nk-menu-toggle" href="#">
                                                 <span class="nk-menu-text">
@@ -242,6 +244,7 @@
                                                 </span>
                                             </a>
                                             <ul class="nk-menu-sub">
+                                                @if (session('user_auto')->suivi_actp === 'oui')
                                                 <li class="nk-menu-item">
                                                     <a class="nk-menu-link" href="{{ route('index_suiviaction') }}">
                                                         <em class="icon ni ni-view-list-sq me-1"></em>
@@ -250,6 +253,8 @@
                                                         </span>
                                                     </a>
                                                 </li>
+                                                @endif
+                                                @if (session('user_auto')->list_actp === 'oui')
                                                 <li class="nk-menu-item">
                                                     <a class="nk-menu-link" href="{{ route('index_ap') }}">
                                                         <em class="ni ni-list-index me-1"></em>
@@ -258,8 +263,11 @@
                                                         </span>
                                                     </a>
                                                 </li>
+                                                @endif
                                             </ul>
                                         </li>
+                                        @endif
+                                        @if (session('user_auto')->suivi_actc === 'oui' || session('user_auto')->list_actc_eff === 'oui' || session('user_auto')->list_actc === 'oui')
                                         <li class="nk-menu-item has-sub">
                                             <a class="nk-menu-link nk-menu-toggle" href="#">
                                                 <span class="nk-menu-text">
@@ -267,6 +275,7 @@
                                                 </span>
                                             </a>
                                             <ul class="nk-menu-sub">
+                                                @if (session('user_auto')->suivi_actc === 'oui' )
                                                 <li class="nk-menu-item">
                                                     <a class="nk-menu-link" href="{{ route('index_suiviactionc') }}">
                                                         <em class="icon ni ni-view-list-sq me-1"></em>
@@ -275,6 +284,8 @@
                                                         </span>
                                                     </a>
                                                 </li>
+                                                @endif
+                                                @if (session('user_auto')->list_actc_eff === 'oui')
                                                 <li class="nk-menu-item">
                                                     <a class="nk-menu-link" href="{{ route('index_ac_eff') }}">
                                                         <em class="ni ni-list-index me-1"></em>
@@ -283,6 +294,8 @@
                                                         </span>
                                                     </a>
                                                 </li>
+                                                @endif
+                                                @if (session('user_auto')->list_actc === 'oui')
                                                 <li class="nk-menu-item">
                                                     <a class="nk-menu-link" href="{{ route('index_ac') }}">
                                                         <em class="ni ni-list-index me-1"></em>
@@ -291,10 +304,14 @@
                                                         </span>
                                                     </a>
                                                 </li>
+                                                @endif
                                             </ul>
                                         </li>
+                                        @endif
                                     </ul>
                                 </li>
+                                @endif
+                                @if (session('user_auto')->fiche_am === 'oui' || session('user_auto')->list_am === 'oui' || session('user_auto')->val_am === 'oui' || session('user_auto')->am_n_val === 'oui')
                                 <li class="nk-menu-item has-sub">
                                     <a class="nk-menu-toggle btn " >
                                         <em class="ni ni-share-alt me-2"></em>
@@ -303,6 +320,7 @@
                                         </span>
                                     </a>
                                     <ul class="nk-menu-sub">
+                                        @if (session('user_auto')->fiche_am === 'oui' )
                                         <li >
                                             <a class="nk-menu-link" href="{{ route('index_amelioration') }}">
                                                 <em class="icon ni ni-property-add me-1"></em>
@@ -311,6 +329,8 @@
                                                 </span>
                                             </a>
                                         </li>
+                                        @endif
+                                        @if (session('user_auto')->list_am === 'oui')
                                         <li >
                                             <a class="nk-menu-link" href="{{ route('index_amelioration_liste') }}" >
                                                 <em class="ni ni-list-index me-1"></em>
@@ -319,6 +339,8 @@
                                                 </span>
                                             </a>
                                         </li>
+                                        @endif
+                                        @if (session('user_auto')->val_am === 'oui')
                                         <li >
                                             <a class="nk-menu-link" href="{{ route('index_validation_amelioration') }}" >
                                                 <em class="ni ni-view-list-sq me-1"></em>
@@ -327,6 +349,8 @@
                                                 </span>
                                             </a>
                                         </li>
+                                        @endif
+                                        @if (session('user_auto')->am_n_val === 'oui')
                                         <li >
                                             <a class="nk-menu-link" href="{{ route('index_amelioration_up') }}" >
                                                 <em class="ni ni-list me-1"></em>
@@ -335,8 +359,10 @@
                                                 </span>
                                             </a>
                                         </li>
+                                        @endif
                                     </ul>
                                 </li>
+                                @endif
                                 @yield('menu')
                             </ul>
                             @endif
@@ -354,7 +380,7 @@
                                             <div class="user-info">
                                                 <div class="user-status text-primary"> </div>
                                                 <div class="user-name dropdown-indicator">
-                                                    {{ Auth::user()->name }}
+                                                    {{ session('user_poste')->nom }}
                                                 </div>
                                             </div>
                                         </div>
@@ -471,7 +497,7 @@
 
         <script>
             let idleTimer;
-            const idleTime = 1800000;
+            const idleTime = 600000;
 
             function resetIdleTimer() {
                 clearTimeout(idleTimer);

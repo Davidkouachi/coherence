@@ -667,7 +667,7 @@
                                                         </div>
                                                         <div class="col-lg-4">
                                                             <div class="form-group align-items-center justify-content-center">
-                                                                <span class="preview-title overline-title">Risques non validés</span>
+                                                                <span class="preview-title overline-title">Améliorations non validés</span>
                                                                 <div class="row gy-4">
                                                                     <div class="col-md-3 col-sm-6">
                                                                         <div class="preview-block">

@@ -33,7 +33,7 @@ return [
     |
     */
 
-    'lifetime' => env('SESSION_LIFETIME', 30),//duree d'inactivite d'un user connecté en min
+    'lifetime' => env('SESSION_LIFETIME', 10),//duree d'inactivite d'un user connecté en min
 
     'expire_on_close' => false,
 

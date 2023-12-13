@@ -16,6 +16,7 @@ use App\Http\Controllers\ListeactionController;
 use App\Http\Controllers\EtatController;
 use App\Http\Controllers\PDFController;
 use App\Http\Controllers\ListeamController;
+use App\Http\Controllers\ListeuserController;
 
 
 Route::get('/Login', [AuthController::class, 'view_login'])->name('login');
@@ -24,9 +25,17 @@ Route::post('/auth_user', [AuthController::class, 'auth_user']);
 Route::get('/Registre', [AuthController::class, 'view_registre'])->name('registre');
 
 Route::middleware(['auth'])->group(function () {
+
+    Route::get('/suiviactiveoui', [ProfilController::class, 'suivi_oui']);
+    Route::get('/suiviactivenon', [ProfilController::class, 'suivi_non']);
+    Route::get('/mdp_update', [ProfilController::class, 'mdp_update']);
+
     Route::get('/', [Controller::class, 'index_accueil'])->name('index_accueil');
 
     Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
+
+    Route::get('/Liste des utilisateurs', [ListeuserController::class, 'index'])->name('index_liste_resva');
+    Route::post('/Modif', [ListeuserController::class, 'index_modif'])->name('index_modif_auto');
 
     Route::get('/Nouveau Processus', [ProcessusController::class, 'index_add_processus'])->name('index_add_processus');
 
@@ -77,8 +86,6 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/am_valider/{id}', [ListeamController::class, 'am_valider'])->name('am_valider');
 
     Route::get('/Profil', [ProfilController::class, 'index_profil'])->name('index_profil');
-
-    Route::post('/verifi_session', [AuthController::class, 'verifi_session']);
 
     Route::get('/Historique', [SuiviactionController::class, 'index_historique'])->name('index_historique');
     Route::get('/Historique Profil', [SuiviactionController::class, 'index_historique_profil'])->name('index_historique_profil');

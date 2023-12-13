@@ -32,11 +32,11 @@
                                                 <div class="status dot dot-lg dot-success"></div>
                                             </div>
                                             <div class="user-info">
-                                                <h6>Abu Bin Ishtiyak</h6>
-                                                <span class="sub-text">@ishtiyak</span>
+                                                <h6>{{ Auth::user()->name }}</h6>
+                                                <span class="sub-text">{{ Auth::user()->email }}</span>
                                             </div>
                                         </div>
-                                        <ul class="team-statistics">
+                                        <!--<ul class="team-statistics">
                                             <li>
                                                 <span>213</span>
                                                 <span>Projects</span>
@@ -49,7 +49,7 @@
                                                 <span>587</span>
                                                 <span>Tasks</span>
                                             </li>
-                                        </ul>
+                                        </ul>-->
                                     </div>
                                 </div>
                             </div>
@@ -83,31 +83,66 @@
                                                                         Informations Personnelles
                                                                     </h4>
                                                                 </div>
-                                                                <div class="nk-block-head-content align-self-start d-lg-none">
+                                                                <!--<div class="nk-block-head-content align-self-start d-lg-none">
                                                                     <a href="#" class="toggle btn btn-icon btn-trigger mt-n1" data-target="userAside">
                                                                         <em class="icon ni ni-menu-alt-r"></em>
                                                                     </a>
-                                                                </div>
+                                                                </div>-->
                                                             </div>
                                                         </div>
                                                         <div class="nk-block">
                                                             <div class="nk-data data-list">
-                                                                <div class="data-head">
+                                                                <!--<div class="data-head">
                                                                     <h6 class="overline-title">Basics</h6>
-                                                                </div>
+                                                                </div>-->
                                                                 <div class="data-item">
                                                                     <div class="data-col">
-                                                                        <span class="data-label">Nom</span>
+                                                                        <span class="data-label">Poste</span>
                                                                         <span class="data-value">
-                                                                            Abu Bin Ishtiyak
+                                                                            {{ session('user_poste')->nom }}
                                                                         </span>
                                                                     </div>
                                                                 </div>
                                                                 <div class="data-item">
                                                                     <div class="data-col">
-                                                                        <span class="data-label">Prénoms</span>
+                                                                        <span class="data-label">Nom et Prémons</span>
                                                                         <span class="data-value">
-                                                                            Ishtiyak
+                                                                            {{ Auth::user()->name }}
+                                                                        </span>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="data-item">
+                                                                    <div class="data-col">
+                                                                        <span class="data-label">Email</span>
+                                                                        <span class="data-value">
+                                                                            {{ Auth::user()->email }}
+                                                                        </span>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="data-item">
+                                                                    <div class="data-col">
+                                                                        <span class="data-label">Téléphone</span>
+                                                                        <span class="data-value">
+                                                                            {{ Auth::user()->tel }}
+                                                                        </span>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="data-item">
+                                                                    <div class="data-col">
+                                                                        <span class="data-label">Matricule</span>
+                                                                        <span class="data-value">
+                                                                            {{ Auth::user()->matricule }}
+                                                                        </span>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="data-item" data-bs-toggle="modal" data-bs-target="#profile-edit">
+                                                                    <div class="data-col">
+                                                                        <span class="data-label">Mise à jour</span>
+                                                                        <span class="data-value"> </span>
+                                                                    </div>
+                                                                    <div class="data-col data-col-end">
+                                                                        <span class="data-more">
+                                                                            <em class="icon ni ni-edit"></em>
                                                                         </span>
                                                                     </div>
                                                                 </div>
@@ -141,7 +176,7 @@
                                                                 <div class="nk-block-head-content">
                                                                     <h4 class="nk-block-title">Securité</h4>
                                                                 </div>
-                                                                <div class="nk-block-head-content align-self-start d-lg-none"><a href="#" class="toggle btn btn-icon btn-trigger mt-n1" data-target="userAside"><em class="icon ni ni-menu-alt-r"></em></a></div>
+                                                                <!--<div class="nk-block-head-content align-self-start d-lg-none"><a href="#" class="toggle btn btn-icon btn-trigger mt-n1" data-target="userAside"><em class="icon ni ni-menu-alt-r"></em></a></div>-->
                                                             </div>
                                                         </div>
                                                         <div class="nk-block">
@@ -150,13 +185,22 @@
                                                                     <div class="card-inner">
                                                                         <div class="between-center flex-wrap flex-md-nowrap g-3">
                                                                             <div class="nk-block-text">
-                                                                                <h6>Save my Activity Logs</h6>
-                                                                                <p>You can save your all activity logs including unusual activity detected.</p>
+                                                                                <h6>Enregistrer mes activitées</h6>
+                                                                                <p>Vous pouvez enregistrer toutes vos activitées, y compris les activités inhabituelles détectées.</p>
                                                                             </div>
                                                                             <div class="nk-block-actions">
                                                                                 <ul class="align-center gx-3">
                                                                                     <li class="order-md-last">
-                                                                                        <div class="custom-control custom-switch me-n2"><input type="checkbox" class="custom-control-input" checked="" id="activity-log"><label class="custom-control-label" for="activity-log"></label></div>
+                                                                                        <div class="custom-control custom-switch me-n2">
+                                                                                            <input type="checkbox" class="custom-control-input"
+                                                                                            @php
+                                                                                                if (Auth::user()->suivi_active === 'oui') {
+                                                                                                    echo "checked";
+                                                                                                }
+                                                                                            @endphp
+                                                                                            id="activity-log">
+                                                                                            <label class="custom-control-label" for="activity-log"></label>
+                                                                                        </div>
                                                                                     </li>
                                                                                 </ul>
                                                                             </div>
@@ -165,13 +209,21 @@
                                                                     <div class="card-inner">
                                                                         <div class="between-center flex-wrap g-3">
                                                                             <div class="nk-block-text">
-                                                                                <h6>Change Password</h6>
-                                                                                <p>Set a unique password to protect your account.</p>
+                                                                                <h6>Changer le mot de passe</h6>
+                                                                                <p>
+                                                                                    Définissez un mot de passe unique pour protéger votre compte.
+                                                                                </p>
                                                                             </div>
                                                                             <div class="nk-block-actions flex-shrink-sm-0">
                                                                                 <ul class="align-center flex-wrap flex-sm-nowrap gx-3 gy-2">
-                                                                                    <li class="order-md-last"><a href="#" class="btn btn-primary">Change Password</a></li>
-                                                                                    <li><em class="text-soft text-date fs-12px">Last changed: <span>Oct 2, 2019</span></em></li>
+                                                                                    <li class="order-md-last">
+                                                                                        <a data-bs-toggle="modal" data-bs-target="#profile-edit-mdp" class="btn btn-primary">Changer le mot de passe</a>
+                                                                                    </li>
+                                                                                    <li>
+                                                                                        <em class="text-soft text-date fs-12px">Derniére modification:
+                                                                                            <span>{{ Auth::user()->updated_at }}</span>
+                                                                                        </em>
+                                                                                    </li>
                                                                                 </ul>
                                                                             </div>
                                                                         </div>
@@ -179,10 +231,13 @@
                                                                     <div class="card-inner">
                                                                         <div class="between-center flex-wrap flex-md-nowrap g-3">
                                                                             <div class="nk-block-text">
-                                                                                <h6>2 Factor Auth &nbsp; <span class="badge badge-success ms-0">Enabled</span></h6>
-                                                                                <p>Secure your account with 2FA security. When it is activated you will need to enter not only your password, but also a special code using app. You can receive this code by in mobile app. </p>
+                                                                                <h6>Authentification à 2 facteurs &nbsp; <span class="badge badge-success ms-0">Enabled</span></h6>
+                                                                                <p>Sécurisez votre compte avec la sécurité 2FA. Lorsqu'il est activé, vous devrez saisir non seulement votre mot de passe, mais également saisir le code qui vous sera envoyé par email. </p>
                                                                             </div>
-                                                                            <div class="nk-block-actions"><a href="#" class="btn btn-primary">Disable</a></div>
+                                                                            <div class="nk-block-actions">
+                                                                                <a href="#" class="btn btn-success">Activé</a>
+                                                                                <a href="#" class="btn btn-danger">Désactivé</a>
+                                                                            </div>
                                                                         </div>
                                                                     </div>
                                                                 </div>
@@ -208,38 +263,36 @@
     <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
         <div class="modal-content"><a href="#" class="close" data-bs-dismiss="modal"><em class="icon ni ni-cross-sm"></em></a>
             <div class="modal-body modal-body-lg">
-                <h5 class="title">Update Profile</h5>
+                <h5 class="title">Mise à jour</h5>
                 <ul class="nk-nav nav nav-tabs">
-                    <li class="nav-item"><a class="nav-link active" data-bs-toggle="tab" href="#personal">Personal</a></li>
-                    <li class="nav-item"><a class="nav-link" data-bs-toggle="tab" href="#address">Address</a></li>
+                    <li class="nav-item"><a class="nav-link active" data-bs-toggle="tab" href="#personal">Informations</a></li>
+                    <!--<li class="nav-item"><a class="nav-link" data-bs-toggle="tab" href="#address">Address</a></li>-->
                 </ul>
-                <div class="tab-content">
+                <form class="tab-content">
                     <div class="tab-pane active" id="personal">
                         <div class="row gy-4">
-                            <div class="col-md-6">
-                                <div class="form-group"><label class="form-label" for="full-name">Full Name</label><input type="text" class="form-control form-control-lg" id="full-name" value="Abu Bin Ishtiyak" placeholder="Enter Full name"></div>
+                            <div class="col-lg-12">
+                                <div class="form-group"><label class="form-label" for="display-name">Nom et Prénoms</label><input type="text" class="form-control form-control-lg" value="{{ Auth::user()->name }}" placeholder="Saisie votre nom et prénoms"></div>
                             </div>
-                            <div class="col-md-6">
-                                <div class="form-group"><label class="form-label" for="display-name">Display Name</label><input type="text" class="form-control form-control-lg" id="display-name" value="Ishtiyak" placeholder="Enter display name"></div>
+                            <div class="col-lg-12">
+                                <div class="form-group"><label class="form-label" for="phone-no">Téléphone</label><input type="text" class="form-control form-control-lg" id="tel" value="{{ Auth::user()->tel }}" placeholder="Saisie votre numéro de téléphone"></div>
                             </div>
-                            <div class="col-md-6">
-                                <div class="form-group"><label class="form-label" for="phone-no">Phone Number</label><input type="text" class="form-control form-control-lg" id="phone-no" value="+880" placeholder="Phone Number"></div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="form-group"><label class="form-label" for="birth-day">Date of Birth</label><input type="text" class="form-control form-control-lg date-picker" id="birth-day" placeholder="Enter your birth-date"></div>
-                            </div>
-                            <div class="col-12">
-                                <div class="custom-control custom-switch"><input type="checkbox" class="custom-control-input" id="latest-sale"><label class="custom-control-label" for="latest-sale">Use full name to display </label></div>
+                            <div class="col-lg-12">
+                                <div class="form-group"><label class="form-label" for="birth-day">Email</label><input type="text" class="form-control form-control-lg" value="{{ Auth::user()->email }}" placeholder="Saisie Email"></div>
                             </div>
                             <div class="col-12">
                                 <ul class="align-center flex-wrap flex-sm-nowrap gx-4 gy-2">
-                                    <li><a href="#" data-bs-dismiss="modal" class="btn btn-lg btn-primary">Update Profile</a></li>
-                                    <li><a href="#" data-bs-dismiss="modal" class="link link-light">Cancel</a></li>
+                                    <li>
+                                        <button type="submit" class="btn btn-lg btn-success btn-dim">
+                                            <em class="ni ni-check me-2 "></em>
+                                            <em >Enregistrer</em>
+                                        </button>
+                                    </li>
                                 </ul>
                             </div>
                         </div>
                     </div>
-                    <div class="tab-pane" id="address">
+                    <!--<div class="tab-pane" id="address">
                         <div class="row gy-4">
                             <div class="col-md-6">
                                 <div class="form-group"><label class="form-label" for="address-l1">Address Line 1</label><input type="text" class="form-control form-control-lg" id="address-l1" value="2337 Kildeer Drive"></div>
@@ -267,12 +320,134 @@
                                 </ul>
                             </div>
                         </div>
+                    </div>-->
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" role="dialog" id="profile-edit-mdp">
+    <div class="modal-dialog modal-dialog-centered modal-md" role="document">
+        <div class="modal-content"><a href="#" class="close" data-bs-dismiss="modal"><em class="icon ni ni-cross-sm"></em></a>
+            <div class="modal-body modal-body-lg">
+                <h5 class="title">Mise à jour</h5>
+                <ul class="nk-nav nav nav-tabs">
+                    <li class="nav-item"><a class="nav-link active" data-bs-toggle="tab" href="#personal">Securité</a></li>
+                </ul>
+                <div class="tab-content">
+                    <div class="tab-pane active" id="personal">
+                        <div class="row gy-4">
+                            <div class="col-lg-12">
+                                <div class="form-control-wrap"><a tabindex="-1" href="#" class="form-icon form-icon-right passcode-switch lg" data-target="password"></a><input autocomplete="off" type="password" class="form-control form-control-lg " id="password1" placeholder="Saisie l'ancien mot de passe" name="mdp_ancien"></div>
+                            </div>
+                            <div class="col-lg-12">
+                                <div class="form-control-wrap"><a tabindex="-1" href="#" class="form-icon form-icon-right passcode-switch lg" data-target="password"></a><input autocomplete="off" type="password" class="form-control form-control-lg " id="password2" placeholder="Saisie le nouveau mot de passe" name="mdp_new"></div>
+                            </div>
+                            <div class="col-lg-12">
+                                <div class="form-control-wrap"><a tabindex="-1" href="#" class="form-icon form-icon-right passcode-switch lg" data-target="password"></a><input autocomplete="off" type="password" class="form-control form-control-lg " id="password3" placeholder="Confirmer le nouveau mot de passe" name="mdp_new_conf"></div>
+                            </div>
+                            <div class="col-12">
+                                <ul class="align-center flex-wrap flex-sm-nowrap gx-4 gy-2">
+                                    <li>
+                                        <button id="btn_change_mdp" class="btn btn-lg btn-success btn-dim">
+                                            <em class="ni ni-check me-2 "></em>
+                                            <em >Enregistrer</em>
+                                        </button>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
 </div>
+
+<script>
+    var inputElement = document.getElementById('tel');
+    inputElement.addEventListener('input', function() {
+        // Supprimer tout sauf les chiffres
+        this.value = this.value.replace(/[^0-9]/g, '');
+
+        // Limiter la longueur à 10 caractères
+        if (this.value.length > 10) {
+            this.value = this.value.slice(0, 10);
+        }
+    });
+</script>
+
+<script>
+    const checkbox = document.getElementById('activity-log');
+    var userId  = {{ Auth::user()->id }};
+
+    checkbox.addEventListener('change', function(event) {
+        event.preventDefault();
+
+        if (this.checked) {
+            $.ajax({
+                url: '/suiviactiveoui',
+                method: 'GET',
+                success: function() {
+                    toastr.success("Paramettre Activé.");
+                },
+                error: function() {
+                    checkbox.checked = false;
+                    toastr.error("L'activation a échoué.");
+                }
+            });
+        } else {
+            $.ajax({
+                url: '/suiviactivenon',
+                method: 'GET',
+                success: function() {
+                    toastr.info("Paramettre Désactivé.");
+                },
+                error: function() {
+                    checkbox.checked = true;
+                    toastr.error("La désactivation a échoué.");
+                }
+            });
+        }
+    });
+</script>
+
+<script>
+    const btn = document.getElementById('btn_change_mdp');
+
+    btn.addEventListener('click', function(event) {
+        event.preventDefault();
+
+        const mdp1 = document.getElementById('password1').value;
+        const mdp2 = document.getElementById('password2').value;
+        const mdp3 = document.getElementById('password3').value;
+
+        if ( mdp1 ==='' || mdp2 ==='' || mdp3 ==='') {
+
+            toastr.warning("Veuillez remplir tous les champs.");
+
+        } else {
+
+            if (mdp2 === mdp3) {
+                $.ajax({
+                    url: '/mdp_update',
+                    method: 'GET',
+                    data: { mdp1: mdp1, mdp2: mdp2},
+                    success: function() {
+                        toastr.success("Mot de passe modifié.");
+                    },
+                    error: function() {
+                        toastr.error("Mot de passe incorrect.");
+                    }
+                });
+            } else {
+                toastr.info("Nouveau mot de passe incorrect.");
+            }
+        }
+    });
+</script>
+
 
 
 @endsection

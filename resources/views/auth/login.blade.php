@@ -47,9 +47,9 @@
     <link href="{{asset('notification/toastr.min.css')}}" rel="stylesheet">
     <script src="{{asset('notification/toastr.min.js')}}"></script>
 
-    <!--<script>
+    <script>
         let idleTimer;
-        const idleTime = 60000;
+        const idleTime = 600000;
 
         function resetIdleTimer() {
             clearTimeout(idleTimer);
@@ -63,7 +63,7 @@
         document.addEventListener('mousemove', resetIdleTimer);
         document.addEventListener('keypress', resetIdleTimer);
 
-    </script>-->
+    </script>
 
     @if (session('error_login'))
         <script>

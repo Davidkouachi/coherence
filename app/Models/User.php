@@ -20,6 +20,7 @@ class User extends Authenticatable
         'password',
         'matricule',
         'poste_id',
+        'suivi_active',
         'tel',
     ];
 

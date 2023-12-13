@@ -23,6 +23,7 @@ class CreateUsersTable extends Migration
             $table->foreign('poste_id')->references('id')->on('postes');
             $table->string('tel');
             $table->string('matricule')->unique();
+            $table->string('suivi_active');
             $table->rememberToken();
             $table->timestamps();
         });

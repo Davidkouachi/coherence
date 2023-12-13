@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Auth;
 use App\Models\User;
 use App\Models\Historique_action;
 use App\Models\Poste;
+use App\Models\Autorisation;
 
 use Illuminate\Support\Facades\Validator;
 use Carbon\Carbon;
@@ -168,16 +169,6 @@ class AuthController extends Controller
         }
 
         return back()->with('error_login', 'Coordonnées incorrecte.');
-    }
-
-    public function verifi_session(Request $request)
-    {
-        $mdp = Auth::user()->password;
-        $verifi_mdp = bcrypt($request->input('password'));
-
-        if ($mdp === $verifi_mdp) {
-            return back();
-        }
     }
 
 }
