@@ -496,6 +496,30 @@
         </div>
 
         <script>
+            Pusher.logToConsole = true;
+
+            var pusher = new Pusher('9f9514edd43b1637ff61', {
+              cluster: 'eu'
+            });
+
+            var channel = pusher.subscribe('my-channel-user');
+            channel.bind('my-event-user', function(data) {
+                Swal.fire({
+                            title: "Alert!",
+                            text: "Session Expiré",
+                            icon: "info",
+                            confirmButtonColor: "#00d819",
+                            confirmButtonText: "OK",
+                            allowOutsideClick: false,
+                        }).then((result) => {
+                            if (result.isConfirmed) {
+                                location.reload();
+                            }
+                        });
+            });
+        </script>
+
+        <!--<script>
             let idleTimer;
             const idleTime = 600000;
 
@@ -517,7 +541,7 @@
                 event.preventDefault(); // Pour éviter le comportement par défaut du lien
                 window.location.reload();
             });
-        </script>
+        </script>-->
 
         <div class="modal fade zoom" tabindex="-1" id="modalPoste">
             <div class="modal-dialog modal-lg" role="document" style="width: 100%;">

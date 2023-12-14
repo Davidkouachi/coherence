@@ -52,27 +52,14 @@ class ListeamController extends Controller
             $actionsData[$am->id] = [];
             foreach ($suivi as $suivis) {
 
-                if($suivis->type === 'action') {
-                    $action= null;
+                $action = Suivi_amelioration::join('actions', 'suivi_ameliorations.action_id', 'actions.id')
+                                            ->join('postes', 'actions.poste_id', 'postes.id')
+                                            ->join('risques', 'actions.risque_id', 'risques.id')
+                                            ->join('processuses', 'risques.processus_id', 'processuses.id')
+                                            ->where('actions.id', '=', $suivis->action_id)
+                                            ->select('suivi_ameliorations.*', 'actions.action as action', 'postes.nom as poste', 'processuses.nom as processus', 'risques.nom as risque')
+                                            ->first();
 
-                    $action = Suivi_amelioration::join('actions', 'suivi_ameliorations.action_id', 'actions.id')
-                                                ->join('postes', 'actions.poste_id', 'postes.id')
-                                                ->join('risques', 'actions.risque_id', 'risques.id')
-                                                ->join('processuses', 'risques.processus_id', 'processuses.id')
-                                                ->where('actions.id', '=', $suivis->action_id)
-                                                ->select('suivi_ameliorations.*', 'actions.action as action', 'postes.nom as poste', 'processuses.nom as processus', 'risques.nom as risque')
-                                                ->first();
-
-                } else if($suivis->type !== 'action') {
-                    $action = Suivi_amelioration::join('action_ams', 'suivi_ameliorations.action_id', 'action_ams.id')
-                                                ->join('postes', 'action_ams.poste_id', 'postes.id')
-                                                ->join('risque_ams', 'action_ams.risque_id_am', 'risque_ams.id')
-                                                ->join('processuses', 'risque_ams.processus_id', 'processuses.id')
-                                                ->where('action_ams.id', '=', $suivis->action_id)
-                                                ->select('suivi_ameliorations.*', 'action_ams.action as action', 'postes.nom as poste', 'processuses.nom as processus', 'risque_ams.nom as risque')
-                                                ->first();
-
-                }
 
                 if ($action) {
                     $actionsData[$am->id][] = [
@@ -107,27 +94,13 @@ class ListeamController extends Controller
             $actionsData[$am->id] = [];
             foreach ($suivi as $suivis) {
 
-                if($suivis->type === 'action') {
-                    $action= null;
-
-                    $action = Suivi_amelioration::join('actions', 'suivi_ameliorations.action_id', 'actions.id')
-                                                ->join('postes', 'actions.poste_id', 'postes.id')
-                                                ->join('risques', 'actions.risque_id', 'risques.id')
-                                                ->join('processuses', 'risques.processus_id', 'processuses.id')
-                                                ->where('actions.id', '=', $suivis->action_id)
-                                                ->select('suivi_ameliorations.*', 'actions.action as action', 'postes.nom as poste', 'processuses.nom as processus', 'risques.nom as risque')
-                                                ->first();
-
-                } else if($suivis->type !== 'action') {
-                    $action = Suivi_amelioration::join('action_ams', 'suivi_ameliorations.action_id', 'action_ams.id')
-                                                ->join('postes', 'action_ams.poste_id', 'postes.id')
-                                                ->join('risque_ams', 'actions.risque_id_am', 'risque_ams.id')
-                                                ->join('processuses', 'risque_ams.processus_id', 'processuses.id')
-                                                ->where('action_ams.id', '=', $suivis->action_id)
-                                                ->select('suivi_ameliorations.*', 'action_ams.action as action', 'postes.nom as poste', 'processuses.nom as processus', 'risque_ams.nom as risque')
-                                                ->first();
-
-                }
+                $action = Suivi_amelioration::join('actions', 'suivi_ameliorations.action_id', 'actions.id')
+                                            ->join('postes', 'actions.poste_id', 'postes.id')
+                                            ->join('risques', 'actions.risque_id', 'risques.id')
+                                            ->join('processuses', 'risques.processus_id', 'processuses.id')
+                                            ->where('actions.id', '=', $suivis->action_id)
+                                            ->select('suivi_ameliorations.*', 'actions.action as action', 'postes.nom as poste', 'processuses.nom as processus', 'risques.nom as risque')
+                                            ->first();
 
                 if ($action) {
                     $actionsData[$am->id][] = [

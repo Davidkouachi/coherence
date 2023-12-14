@@ -31,8 +31,6 @@ class CreateSuiviAmeliorationsTable extends Migration
             $table->foreign('action_id')->references('id')->on('actions');
             $table->unsignedBigInteger('risque_id')->nullable();
             $table->foreign('risque_id')->references('id')->on('risques');
-            $table->unsignedBigInteger('risque_id_am')->nullable();
-            $table->foreign('risque_id_am')->references('id')->on('risque_ams');
             $table->unsignedBigInteger('cause_id')->nullable();
             $table->foreign('cause_id')->references('id')->on('causes');
             $table->unsignedBigInteger('processus_id');

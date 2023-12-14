@@ -8,12 +8,9 @@ use Illuminate\Support\Facades\Auth;
 use App\Models\Processuse;
 use App\Models\Objectif;
 use App\Models\Risque;
-use App\Models\Risque_am;
 use App\Models\Cause;
-use App\Models\Cause_am;
 use App\Models\Rejet;
 use App\Models\Action;
-use App\Models\Action_am;
 use App\Models\Suivi_action;
 use App\Models\Suivi_amelioration;
 use App\Models\Pdf_file;
@@ -55,43 +52,15 @@ class ListeactionController extends Controller
 
         foreach ($actions as $action) {
 
-            if ($action->nature === 'new') {
-
-                $ac = Action_am::join('risque_ams', 'action_ams.risque_id_am', 'risque_ams.id')
-                                ->join('postes', 'action_ams.poste_id', 'postes.id')
-                                ->where('action_ams.id', $action->action_id)
-                                ->select('action_ams.*', 'risque_ams.nom as risque', 'postes.nom as poste')
-                                ->first();
-
-                $action->risque = $ac->risque;
-                $action->poste = $ac->poste;
-                $action->action = $ac->action;
-
-            } else if ($action->nature === 'non-accepte') {
-
-                $ac = Action_am::join('risques', 'action_ams.risque_id', 'risques.id')
-                                ->join('postes', 'action_ams.poste_id', 'postes.id')
-                                ->where('action_ams.id', $action->action_id)
-                                ->select('action_ams.*', 'risques.nom as risque', 'postes.nom as poste')
-                                ->first();
-
-                $action->risque = $ac->risque;
-                $action->poste = $ac->poste;
-                $action->action = $ac->action;
-
-            } else if ($action->nature === 'accepte') {
-
-                $ac = Action::join('risques', 'actions.risque_id', 'risques.id')
+            $ac = Action::join('risques', 'actions.risque_id', 'risques.id')
                             ->join('postes', 'actions.poste_id', 'postes.id')
                             ->where('actions.id', $action->action_id)
                             ->select('actions.*', 'risques.nom as risque', 'postes.nom as poste')
                             ->first();
 
-                $action->risque = $ac->risque;
-                $action->poste = $ac->poste;
-                $action->action = $ac->action;
-
-            }
+            $action->risque = $ac->risque;
+            $action->poste = $ac->poste;
+            $action->action = $ac->action;
         }
 
         return view('liste.actioncorrectiveeff', ['actions' => $actions]);
@@ -102,6 +71,7 @@ class ListeactionController extends Controller
         $actions = Action::join('risques', 'actions.risque_id', 'risques.id')
                         ->join('processuses', 'risques.processus_id', 'processuses.id')
                         ->where('actions.type', 'corrective')
+                        ->where('actions.page', 'risk')
                         ->where('risques.statut', 'valider')
                         ->select('actions.*', 'processuses.nom as processus', 'risques.nom as risque')
                         ->get();

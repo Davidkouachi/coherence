@@ -12,12 +12,9 @@ use App\Models\Processuse;
 use App\Models\Objectif;
 use App\Models\Resva;
 use App\Models\Risque;
-use App\Models\Risque_am;
 use App\Models\Cause;
-use App\Models\Cause_am;
 use App\Models\Rejet;
 use App\Models\Action;
-use App\Models\Action_am;
 use App\Models\Suivi_action;
 use App\Models\Suivi_amelioration;
 use App\Models\Poste;
@@ -39,6 +36,7 @@ class AmeliorationController extends Controller
    {
         $risques = Risque::join('postes', 'risques.poste_id', '=', 'postes.id')
                 ->where('risques.statut', '=', 'valider' )
+                ->where('risques.page', '=', 'risk' )
                 ->select('risques.*','postes.nom as validateur')
                 ->get();
 
@@ -94,6 +92,7 @@ class AmeliorationController extends Controller
 
         $causes_selects = Cause::join('risques', 'causes.risque_id', '=', 'risques.id')
                                 ->where('risques.statut', '=', 'valider' )
+                                ->where('risques.page', '=', 'risk' )
                                 ->select('causes.*')
                                 ->get();
 
@@ -319,8 +318,10 @@ class AmeliorationController extends Controller
 
             if ($nature[$index] === 'non-accepte') {
 
-                $actionn = new Action_am();
+                $actionn = new Action();
                 $actionn->action = $action[$index];
+                $actionn->page = 'am';
+                $actionn->type = 'corrective';
                 $actionn->poste_id = $poste_id[$index];
                 $actionn->risque_id = $risque[$index];
                 $actionn->save();
@@ -344,21 +345,25 @@ class AmeliorationController extends Controller
 
             if ($nature[$index] === 'new') {
 
-                $risquee = new Risque_am();
+                $risquee = new Risque();
                 $risquee->nom = $risque[$index];
+                $risquee->page = 'am';
                 $risquee->processus_id = $processus_id[$index];
                 $risquee->poste_id = $poste_id[$index];
                 $risquee->save();
 
-                $cause = new Cause_am();
+                $cause = new Cause();
                 $cause->nom = $resume[$index];
+                $cause->page = 'am';
                 $cause->risque_id = $risquee->id;
                 $cause->save();
 
-                $actionn = new Action_am();
+                $actionn = new Action();
                 $actionn->action = $action[$index];
+                $actionn->page = 'am';
+                $actionn->type = 'corrective';
                 $actionn->poste_id = $poste_id[$index];
-                $actionn->risque_id_am = $risquee->id;
+                $actionn->risque_id = $risquee->id;
                 $actionn->save();
 
                 $suivic = new Suivi_amelioration();
@@ -369,7 +374,7 @@ class AmeliorationController extends Controller
                 $suivic->statut = 'non-realiser';
                 $suivic->amelioration_id = $am->id;
                 $suivic->action_id = $actionn->id;
-                $suivic->risque_id_am = $risquee->id;
+                $suivic->risque_id = $risquee->id;
                 $suivic->processus_id = $processus_id[$index];
                 $suivic->commentaire_am = $commentaire[$index];
                 $suivic->save();
@@ -444,27 +449,13 @@ class AmeliorationController extends Controller
             $actionsData[$am->id] = [];
             foreach ($suivi as $suivis) {
 
-                if($suivis->type === 'action') {
-                    $action= null;
-
-                    $action = Suivi_amelioration::join('actions', 'suivi_ameliorations.action_id', 'actions.id')
-                                                ->join('postes', 'actions.poste_id', 'postes.id')
-                                                ->join('risques', 'actions.risque_id', 'risques.id')
-                                                ->join('processuses', 'risques.processus_id', 'processuses.id')
-                                                ->where('actions.id', '=', $suivis->action_id)
-                                                ->select('suivi_ameliorations.*', 'actions.action as action', 'postes.nom as poste', 'processuses.nom as processus', 'risques.nom as risque')
-                                                ->first();
-
-                } else if($suivis->type !== 'action') {
-                    $action = Suivi_amelioration::join('action_ams', 'suivi_ameliorations.action_id', 'action_ams.id')
-                                                ->join('postes', 'action_ams.poste_id', 'postes.id')
-                                                ->join('risque_ams', 'action_ams.risque_id_am', 'risque_ams.id')
-                                                ->join('processuses', 'risque_ams.processus_id', 'processuses.id')
-                                                ->where('action_ams.id', '=', $suivis->action_id)
-                                                ->select('suivi_ameliorations.*', 'action_ams.action as action', 'postes.nom as poste', 'processuses.nom as processus', 'risque_ams.nom as risque')
-                                                ->first();
-
-                }
+                $action = Suivi_amelioration::join('actions', 'suivi_ameliorations.action_id', 'actions.id')
+                                            ->join('postes', 'actions.poste_id', 'postes.id')
+                                            ->join('risques', 'actions.risque_id', 'risques.id')
+                                            ->join('processuses', 'risques.processus_id', 'processuses.id')
+                                            ->where('actions.id', '=', $suivis->action_id)
+                                            ->select('suivi_ameliorations.*', 'actions.action as action', 'postes.nom as poste', 'processuses.nom as processus', 'risques.nom as risque')
+                                            ->first();
 
                 if ($action) {
                     $actionsData[$am->id][] = [

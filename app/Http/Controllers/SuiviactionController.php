@@ -9,12 +9,9 @@ use App\Models\Processuse;
 use App\Models\Objectif;
 use App\Models\Resva;
 use App\Models\Risque;
-use App\Models\Risque_am;
 use App\Models\Cause;
-use App\Models\Cause_am;
 use App\Models\Rejet;
 use App\Models\Action;
-use App\Models\Action_am;
 use App\Models\Suivi_action;
 use App\Models\Suivi_amelioration;
 use App\Models\User;
@@ -52,53 +49,18 @@ class SuiviactionController extends Controller
                             ->get();
         foreach ($ams as $am) {
 
-            if ($am->nature === 'new') {
+            $actions = Action::join('postes', 'actions.poste_id', '=', 'postes.id')
+                                ->join('risques', 'actions.risque_id', '=', 'risques.id')
+                                ->join('processuses', 'risques.processus_id', '=', 'processuses.id')
+                                ->where('actions.id', $am->action_id)
+                                ->select('actions.*','postes.nom as responsable','risques.nom as risque','processuses.nom as processus')
+                                ->first();
 
-                $actions = Action_am::join('postes', 'action_ams.poste_id', '=', 'postes.id')
-                ->join('risque_ams', 'action_ams.risque_id_am', '=', 'risque_ams.id')
-                ->join('processuses', 'risque_ams.processus_id', '=', 'processuses.id')
-                ->where('action_ams.id', $am->action_id)
-                ->select('action_ams.*','postes.nom as responsable','risque_ams.nom as risque','processuses.nom as processus')
-                ->first();
-
-                if ($actions) {
-                    $am->responsable = $actions->responsable;
-                    $am->risque = $actions->risque;
-                    $am->processus = $actions->processus;
-                    $am->action = $actions->action;
-                }
-
-            } else if ($am->nature === 'accepte') {
-
-                $actions = Action::join('postes', 'actions.poste_id', '=', 'postes.id')
-                ->join('risques', 'actions.risque_id', '=', 'risques.id')
-                ->join('processuses', 'risques.processus_id', '=', 'processuses.id')
-                ->where('actions.id', $am->action_id)
-                ->select('actions.*','postes.nom as responsable','risques.nom as risque','processuses.nom as processus')
-                ->first();
-
-                if ($actions) {
-                    $am->responsable = $actions->responsable;
-                    $am->risque = $actions->risque;
-                    $am->processus = $actions->processus;
-                    $am->action = $actions->action;
-                }
-            } else if ($am->nature === 'non-accepte') {
-
-                $actions = Action_am::join('postes', 'action_ams.poste_id', '=', 'postes.id')
-                ->join('risques', 'action_ams.risque_id', '=', 'risques.id')
-                ->join('processuses', 'risques.processus_id', '=', 'processuses.id')
-                ->where('action_ams.id', $am->action_id)
-                ->select('action_ams.*','postes.nom as responsable','risques.nom as risque','processuses.nom as processus')
-                ->first();
-
-                if ($actions) {
-                    $am->responsable = $actions->responsable;
-                    $am->risque = $actions->risque;
-                    $am->processus = $actions->processus;
-                    $am->action = $actions->action;
-                }
-
+            if ($actions) {
+                $am->responsable = $actions->responsable;
+                $am->risque = $actions->risque;
+                $am->processus = $actions->processus;
+                $am->action = $actions->action;
             }
 
         }

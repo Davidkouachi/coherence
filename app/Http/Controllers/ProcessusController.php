@@ -72,6 +72,7 @@ class ProcessusController extends Controller
 
         $risque = new Risque();
         $risque->nom = $nom_risque;
+        $risque->page = 'risk';
         $risque->vraisemblence = $vrai;
         $risque->gravite = $gravite;
         $risque->evaluation = $evaluation;
@@ -107,6 +108,7 @@ class ProcessusController extends Controller
         foreach ($nom_cause as $index => $valeur) {
             $cause = new Cause();
             $cause->nom = $nom_cause[$index];
+            $cause->page = 'risk';
             $cause->dispositif = $dispositif[$index];
             $cause->risque_id = $risque_id;
             $cause->save();
@@ -124,6 +126,7 @@ class ProcessusController extends Controller
                 
                 $nouvelleActionP = new Action();
                 $nouvelleActionP->action = $actionp[$index];
+                $nouvelleActionP->page = 'risk';
                 $nouvelleActionP->poste_id = $responsable_idp[$index];
                 $nouvelleActionP->risque_id = $risque_id;
                 $nouvelleActionP->date = $delai[$index];
@@ -137,6 +140,7 @@ class ProcessusController extends Controller
 
             $nouvelleActionC = new Action();
             $nouvelleActionC->action = $actionc[$index];
+            $nouvelleActionC->page = 'risk';
             $nouvelleActionC->poste_id = $responsable_idc[$index];
             $nouvelleActionC->risque_id = $risque_id;
             $nouvelleActionC->type = 'corrective';
@@ -199,7 +203,6 @@ class ProcessusController extends Controller
         return redirect()
             ->back()
             ->with('success', 'Enregistrement éffectuée.');
-
     }
 
     public function recherche_processuseva($processusId)
@@ -217,6 +220,7 @@ class ProcessusController extends Controller
     {
         $risques = Risque::join('postes', 'risques.poste_id', '=', 'postes.id')
                 ->where('statut', '!=', 'valider')
+                ->where('page', '=', 'risk')
                 ->select('risques.*','postes.nom as validateur')
                 ->get();
 
@@ -349,7 +353,6 @@ class ProcessusController extends Controller
 
         return back()
             ->with('error', 'Enregistrement a échoué.');
-
     }
 
     public function cause_valider($id)
@@ -424,7 +427,6 @@ class ProcessusController extends Controller
         return redirect()
             ->back()
             ->with('error', 'Validation a échoué.');
-
     }
 
     public function cause_rejet(Request $request)
@@ -473,7 +475,6 @@ class ProcessusController extends Controller
         return redirect()
             ->back()
             ->with('error', 'Rejet a échoué.');
-        
     }
 
 }
