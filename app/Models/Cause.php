@@ -15,6 +15,7 @@ class Cause extends Model
     protected $fillable = [
         'id',
         'nom',
+        'page',
         'dispositif',
         'risque_id',
     ];

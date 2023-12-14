@@ -14,6 +14,7 @@ class Risque extends Model
     protected $fillable = [
         'id',
         'nom',
+        'page',
         'vraisemblence',
         'gravite',
         'evaluation',

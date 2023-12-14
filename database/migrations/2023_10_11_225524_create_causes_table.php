@@ -17,6 +17,7 @@ class CreateCausesTable extends Migration
             $table->id();
             $table->string('nom');
             $table->string('dispositif')->nullable();
+            $table->string('page');
             $table->unsignedBigInteger('risque_id');
             $table->foreign('risque_id')->references('id')->on('risques');
             $table->timestamps();

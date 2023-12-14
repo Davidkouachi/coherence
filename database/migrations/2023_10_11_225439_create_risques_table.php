@@ -16,6 +16,7 @@ class CreateRisquesTable extends Migration
         Schema::create('risques', function (Blueprint $table) {
             $table->id();
             $table->string('nom');
+            $table->string('page');
             $table->integer('vraisemblence')->nullable();
             $table->integer('gravite')->nullable();
             $table->integer('evaluation')->nullable();

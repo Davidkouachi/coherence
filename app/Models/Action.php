@@ -16,6 +16,7 @@ class Action extends Model
         'id',
         'action',
         'type',
+        'page',
         'date',
         'poste_id',
         'risque_id',
