@@ -343,5 +343,29 @@
         </div>
     @endforeach
 
+    <script>
+        Pusher.logToConsole = true;
+
+        var pusher = new Pusher('9f9514edd43b1637ff61', {
+          cluster: 'eu'
+        });
+
+        var channel = pusher.subscribe('my-channel-am1');
+        channel.bind('my-event-am1', function(data) {
+            Swal.fire({
+                        title: "Alert!",
+                        text: "Nouvelle(s) Fiche(s) d'amélioration détecter",
+                        icon: "info",
+                        confirmButtonColor: "#00d819",
+                        confirmButtonText: "OK",
+                        allowOutsideClick: false,
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            location.reload();
+                        }
+                    });
+        });
+    </script>
+
 
 @endsection

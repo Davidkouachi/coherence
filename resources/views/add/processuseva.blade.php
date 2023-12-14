@@ -633,10 +633,13 @@
         fetch(`/recherche/${processusId}`)
             .then(response => response.json())
             .then(data => {
-                // Effacez la liste actuelle des objectifs
+                const objectifs = data.objectifs;
+                const nbre = data.nbre;
+
+                toastr.info(nbre + " Objectif(s) trouvé(s).");
+
                 listeObjectifs.innerHTML = "";
-                // Ajoutez les nouveaux objectifs à la liste
-                data.forEach(objectif => {
+                objectifs.forEach(objectif => {
                     const li = document.createElement("li");
                     li.textContent = "- " + objectif.nom;
                     listeObjectifs.appendChild(li);

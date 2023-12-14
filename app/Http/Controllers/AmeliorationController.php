@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 use App\Events\NotificationAcorrective;
+use App\Events\NotificationAm1;
 
 use App\Models\Processuse;
 use App\Models\Objectif;
@@ -406,11 +407,13 @@ class AmeliorationController extends Controller
 
         if ($am) {
 
-                if ($choix_alert_alert === 'alert') {
+            if ($choix_alert_alert === 'alert') {
 
-                    event(new NotificationAcorrective());
+                event(new NotificationAcorrective());
 
-                }
+            }
+
+            event(new NotificationAm1());
 
             $his = new Historique_action();
             $his->nom_formulaire = "Nouvelle fiche d'amélioration";
@@ -420,6 +423,7 @@ class AmeliorationController extends Controller
 
             return back()
                 ->with('success', 'Enregistrement éffectuée.');
+
         } else {
             return back()
                 ->with('error', 'Enregistrement non éffectuée.');
@@ -454,7 +458,7 @@ class AmeliorationController extends Controller
                 } else if($suivis->type !== 'action') {
                     $action = Suivi_amelioration::join('action_ams', 'suivi_ameliorations.action_id', 'action_ams.id')
                                                 ->join('postes', 'action_ams.poste_id', 'postes.id')
-                                                ->join('risque_ams', 'actions.risque_id_am', 'risque_ams.id')
+                                                ->join('risque_ams', 'action_ams.risque_id_am', 'risque_ams.id')
                                                 ->join('processuses', 'risque_ams.processus_id', 'processuses.id')
                                                 ->where('action_ams.id', '=', $suivis->action_id)
                                                 ->select('suivi_ameliorations.*', 'action_ams.action as action', 'postes.nom as poste', 'processuses.nom as processus', 'risque_ams.nom as risque')

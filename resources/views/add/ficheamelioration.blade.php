@@ -628,7 +628,7 @@
 </div>
 @endforeach
 @foreach($causes_selects as $causes_select)
-<div class="modal fade" id="modalVucause{{$causes_select->id}}" tabindex="-1" aria-labelledby="modalVuLabel" aria-hidden="true">
+<div class="modal fade" id="modalVucause{{$causes_select->id}}" allowOutsideClick="false" tabindex="-1" aria-labelledby="modalVuLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
@@ -943,10 +943,9 @@ $(document).ready(function() {
     $('#risqueSelect').on('change', function() {
         // Récupérez la valeur sélectionnée
         var selectedValue = $(this).val();
-
         // Fermez tous les modals existants
         $('.modal').modal('hide');
-
+        $(`#modalVurisque${selectedValue}`).modal('hide');
         // Ouvrez le modal correspondant à la valeur sélectionnée
         $(`#modalVurisque${selectedValue}`).modal('show');
     });
@@ -959,10 +958,9 @@ $(document).ready(function() {
     $('#causeSelect').on('change', function() {
         // Récupérez la valeur sélectionnée
         var selectedValu = $(this).val();
-
         // Fermez tous les modals existants
         $('.modal').modal('hide');
-
+        $(`#modalVucause${selectedValu}`).modal('hide');
         // Ouvrez le modal correspondant à la valeur sélectionnée
         $(`#modalVucause${selectedValu}`).modal('show');
     });

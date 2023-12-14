@@ -25,7 +25,7 @@
                                 <div class="nk-block-between">
                                     <div class="nk-block-head-content" style="margin:0px auto;">
                                         <h3 class="text-center">
-                                            <span>Liste des Amélioration</span>
+                                            <span>Liste des Améliorations</span>
                                             <em class="icon ni ni-list-index"></em>
                                         </h3>
                                     </div>
@@ -339,6 +339,30 @@
             </div>
         </div>
     @endforeach
+
+    <script>
+        Pusher.logToConsole = true;
+
+        var pusher = new Pusher('9f9514edd43b1637ff61', {
+          cluster: 'eu'
+        });
+
+        var channel = pusher.subscribe('my-channel-am2');
+        channel.bind('my-event-am2', function(data) {
+            Swal.fire({
+                        title: "Alert!",
+                        text: "Nouvelle(s) Fiche(s) d'amélioration(s) Validée(s)",
+                        icon: "info",
+                        confirmButtonColor: "#00d819",
+                        confirmButtonText: "OK",
+                        allowOutsideClick: false,
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            location.reload();
+                        }
+                    });
+        });
+    </script>
 
 
 @endsection

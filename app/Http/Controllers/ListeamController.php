@@ -11,6 +11,8 @@ use App\Events\NotificationAnon;
 use App\Events\NotificationProcessus;
 use App\Events\NotificationRisque;
 use App\Events\NotificationAup;
+use App\Events\NotificationAm2;
+use App\Events\NotificationAm3;
 
 use App\Models\Processuse;
 use App\Models\Amelioration;
@@ -39,7 +41,7 @@ class ListeamController extends Controller
 {
     public function index_validation()
     {
-        $ams = Amelioration::where('statut', '!=', 'valider');
+        $ams = Amelioration::where('statut', '!=', 'valider')->get();
 
         $actionsData = [];
 
@@ -64,7 +66,7 @@ class ListeamController extends Controller
                 } else if($suivis->type !== 'action') {
                     $action = Suivi_amelioration::join('action_ams', 'suivi_ameliorations.action_id', 'action_ams.id')
                                                 ->join('postes', 'action_ams.poste_id', 'postes.id')
-                                                ->join('risque_ams', 'actions.risque_id_am', 'risque_ams.id')
+                                                ->join('risque_ams', 'action_ams.risque_id_am', 'risque_ams.id')
                                                 ->join('processuses', 'risque_ams.processus_id', 'processuses.id')
                                                 ->where('action_ams.id', '=', $suivis->action_id)
                                                 ->select('suivi_ameliorations.*', 'action_ams.action as action', 'postes.nom as poste', 'processuses.nom as processus', 'risque_ams.nom as risque')
@@ -193,6 +195,9 @@ class ListeamController extends Controller
                     // Envoi de l'email
                     $mail->send();
                 }
+
+                event(new NotificationAm2());
+                event(new NotificationAm3());
 
                 return redirect()
                     ->back()

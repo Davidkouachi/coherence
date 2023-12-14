@@ -205,7 +205,12 @@ class ProcessusController extends Controller
     public function recherche_processuseva($processusId)
     {
         $objectifs = Objectif::where('processus_id', $processusId)->get();
-        return response()->json($objectifs);
+        $nbre = count($objectifs);
+        
+        return response()->json([
+            'objectifs' => $objectifs,
+            'nbre' => $nbre
+        ]);
     }
 
     public function index_validation_processus()
