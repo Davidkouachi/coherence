@@ -13,6 +13,7 @@ class Amelioration extends Model
         'id',
         'type',
         'date_fiche',
+        'date_cloture1',
         'lieu',
         'detecteur',
         'non_conformite',

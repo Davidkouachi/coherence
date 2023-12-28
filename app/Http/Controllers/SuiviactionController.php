@@ -34,7 +34,7 @@ class SuiviactionController extends Controller
                 ->where('risques.statut', 'valider')
                 ->where('suivi_actions.statut', 'non-realiser')
                 ->where('actions.type', 'preventive')
-                ->select('actions.*','postes.nom as responsable','risques.nom as risque','processuses.nom as processus')
+                ->select('actions.*','postes.nom as responsable','risques.nom as risque' ,'risques.date_validation as date_validation' ,'processuses.nom as processus')
                 ->get();
 
         return view('traitement.suiviaction',  ['actions' => $actions]);

@@ -10,17 +10,17 @@ use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Queue\SerializesModels;
 
-class NotificationAm3 implements ShouldBroadcast
+class NotificationAmvalider implements ShouldBroadcast
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
     public function broadcastOn()
     {
-        return ['my-channel-am3'];
+        return ['my-channel-am-valider'];
     }
 
     public function broadcastAs()
     {
-        return 'my-event-am3';
+        return 'my-event-am-valider';
     }
 }

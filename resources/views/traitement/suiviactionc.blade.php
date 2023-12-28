@@ -164,7 +164,7 @@
                                                                 Date de réalisation
                                                             </label>
                                                             <div class="form-control-wrap">
-                                                                <input name="date_action" type="date" class="form-control" >
+                                                                <input name="date_action" type="date" class="form-control" value="{{ \Carbon\Carbon::now()->toDateString() }}" max="{{ \Carbon\Carbon::now()->toDateString() }}" >
                                                             </div>
                                                         </div>
                                                     </div>
@@ -206,8 +206,8 @@
           cluster: 'eu'
         });
 
-        var channel = pusher.subscribe('my-channel-ac');
-        channel.bind('my-event-ac', function(data) {
+        var channel = pusher.subscribe('my-channel-am-act-c');
+        channel.bind('my-channel-am-act-c', function(data) {
             Swal.fire({
                         title: "Alert!",
                         text: "Nouvelle(s) action(s) corrective(s)",

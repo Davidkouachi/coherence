@@ -77,7 +77,7 @@
                                                                 Validé
                                                             </td>
                                                         @endif
-                                                        @if ($am->statut === 'non_valider')
+                                                        @if ($am->statut === 'non-valider' || $am->statut === 'modif')
                                                             <td class=" text-danger">
                                                                 Non Validé
                                                             </td>
@@ -347,8 +347,8 @@
           cluster: 'eu'
         });
 
-        var channel = pusher.subscribe('my-channel-am2');
-        channel.bind('my-event-am2', function(data) {
+        var channel = pusher.subscribe('my-channel-am-valider');
+        channel.bind('my-event-am-valider', function(data) {
             Swal.fire({
                         title: "Alert!",
                         text: "Nouvelle(s) Fiche(s) d'amélioration(s) Validée(s)",

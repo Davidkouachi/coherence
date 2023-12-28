@@ -70,7 +70,7 @@
                                                                 En attente de validation
                                                             </td>
                                                         @endif
-                                                        @if ($am->statut === 'non_valider')
+                                                        @if ($am->statut === 'non-valider' || $am->statut === 'modif')
                                                             <td class=" text-danger">
                                                                 Non Validé
                                                             </td>
@@ -86,7 +86,7 @@
                                                                 class="btn btn-icon btn-white btn-dim btn-sm btn-warning">
                                                                 <em class="icon ni ni-eye"></em>
                                                             </a>
-                                                            @if ($am->statut !== 'non_valider')
+                                                            @if ($am->statut === 'update' || $am->statut === 'soumis')
                                                                 <a data-bs-toggle="modal"
                                                                     data-bs-target="#modalConfirme{{ $am->id }}"
                                                                     href="#" class="btn btn-icon btn-white btn-dim btn-sm btn-success border border-1 border-white rounded">
@@ -322,13 +322,13 @@
                             aria-label="Close"><em class="icon ni ni-cross"></em></a>
                     </div>
                     <div class="modal-body">
-                        <form action="" method="post" >
+                        <form action="{{ route('am_rejet') }}" method="post" >
                             @csrf
                             <div class="form-group">
                                 <label class="form-label" for="pay-amount">Motif</label>
                                 <div class="form-control-wrap">
                                     <textarea required name="motif" class="form-control no-resize" id="default-textarea"></textarea>
-                                    <input type="text" value="{{ $am->id }}" name="risque_id" style="display: none;">
+                                    <input type="text" value="{{ $am->id }}" name="amelioration_id" style="display: none;">
                                 </div>
                             </div>
                             <div class="form-group text-center">
@@ -350,8 +350,8 @@
           cluster: 'eu'
         });
 
-        var channel = pusher.subscribe('my-channel-am1');
-        channel.bind('my-event-am1', function(data) {
+        var channel = pusher.subscribe('my-channel-am-new');
+        channel.bind('my-event-am-new', function(data) {
             Swal.fire({
                         title: "Alert!",
                         text: "Nouvelle(s) Fiche(s) d'amélioration détecter",

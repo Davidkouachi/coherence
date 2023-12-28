@@ -168,7 +168,9 @@ class AuthController extends Controller
             return redirect()->intended(route('index_accueil'));
         }
 
-        return back()->with('error_login', 'Coordonnées incorrecte.');
+        return redirect()->back()->withInput($request->only('email'))->with([
+            'error_login' => 'Email ou Mot de passe Incorrect. Veuillez réessayer.',
+        ]);
     }
 
 }

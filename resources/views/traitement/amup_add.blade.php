@@ -11,13 +11,6 @@
         </div>
     </a>
 </li>
-<li class="dropdown chats-dropdown" id="action-add" style="display: none;">
-        <a class="dropdown-toggle nk-quick-nav-icon action-add" data-type="action-add" >
-            <div class="icon-status icon-status-na">
-                <em class="icon ni ni-plus"></em>
-            </div>
-        </a>
-    </li>
 @endsection
 @section('content')
 <div class="nk-content ">
@@ -28,171 +21,22 @@
                     <div class="nk-block-between">
                         <div class="nk-block-head-content" style="margin:0px auto;">
                             <h3 class="text-center">
-                                <span>Fiche d'amélioration</span>
-                                <em class="icon ni ni-reports"></em>
+                                <span>Ajouter une action</span>
+                                <em class="ni ni-plus" ></em>
                             </h3>
                         </div>
                     </div>
                 </div>
-                <form class="nk-block" method="post" action="{{ route('index_add') }}">
+                <form class="nk-block" method="post" action="">
                     @csrf
                     <div class="row g-gs">
 
-                        <div class="col-lg-12 col-xxl-12">
-                            <div class="card card-bordered card-preview">
-                                <div class="card-inner">
-                                    <div class="card-head">
-                                        <h5 class="card-title">
-                                            Notification
-                                        </h5>
-                                    </div>
-                                    <div class="row g-gs">
-                                        <div class="col-lg-4 text-left">
-                                            <div class="custom-control custom-checkbox">
-                                                <input name="choix_alert_alert" value="alert" required type="checkbox" checked class="custom-control-input" id="customCheck1">
-                                                <label class="custom-control-label" for="customCheck1">Alert à l'écran</label>
-                                            </div>
-                                        </div>
-                                        <div class="col-lg-4 text-left">
-                                            <div class="custom-control custom-checkbox">
-                                                <input name="choix_alert_email" value="email" type="checkbox" class="custom-control-input" id="customCheck2">
-                                                <label class="custom-control-label" for="customCheck2">Par Email</label>
-                                            </div>
-                                        </div>
-                                        <div class="col-lg-4 text-left">
-                                            <div class="custom-control custom-checkbox">
-                                                <input name="choix_alert_sms" value="sms" disabled type="checkbox" class="custom-control-input" id="customCheck3">
-                                                <label class="custom-control-label" for="customCheck3">Par Sms</label>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="col-md-12 col-xxl-12" id="groupesContainer">
-                            <div class="card card-bordered">
-                                <div class="card-inner">
-                                    <div class="row g-4 ">
-                                        <div class="col-lg-4">
-                                            <div class="form-group text-center">
-                                                <div class="custom-control custom-radio">
-                                                    <input required type="radio" class="custom-control-input" name="type" id="customRadio7" value="non_conformite_interne">
-                                                    <label class="custom-control-label" for="customRadio7">
-                                                        Non conformité interne
-                                                    </label>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="col-lg-4">
-                                            <div class="form-group text-center">
-                                                <div class="custom-control custom-radio">
-                                                    <input required type="radio" class="custom-control-input" name="type" id="customRadio6" value="reclamation">
-                                                    <label class="custom-control-label" for="customRadio6">
-                                                        Reclamation
-                                                    </label>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="col-lg-4">
-                                            <div class="form-group text-center">
-                                                <div class="custom-control custom-radio">
-                                                    <input required type="radio" class="custom-control-input" name="type" id="customRadio5" value="contentieux">
-                                                    <label class="custom-control-label" for="customRadio5">
-                                                        Contentieux
-                                                    </label>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="col-md-12 col-xxl-12" id="groupesContainer">
-                            <div class="card card-bordered">
-                                <div class="card-inner">
-                                    <div class="row g-4">
-                                        <div class="col-lg-4">
-                                            <div class="form-group">
-                                                <label class="form-label" for="Cause">
-                                                    Date
-                                                </label>
-                                                <div class="form-control-wrap">
-                                                    <input required name="date_fiche" type="date" class="form-control" value="{{ \Carbon\Carbon::now()->toDateString() }}" max="{{ \Carbon\Carbon::now()->toDateString() }}">
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="col-lg-4">
-                                            <div class="form-group">
-                                                <label class="form-label" for="controle">
-                                                    Lieu
-                                                </label>
-                                                <div class="form-control-wrap">
-                                                    <input required placeholder="Saisie obligatoire" name="lieu" type="text" class="form-control" id="controle">
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="col-lg-4">
-                                            <div class="form-group">
-                                                <label class="form-label" for="controle">
-                                                    Détecteur (Agent / Client)
-                                                </label>
-                                                <div class="form-control-wrap">
-                                                    <input required placeholder="Saisie obligatoire" name="detecteur" type="text" class="form-control" id="controle">
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="col-md-12 col-xxl-12" id="groupesContainer">
-                            <div class="card card-bordered">
-                                <div class="card-inner">
-                                    <div class="row g-4">
-                                        <div class="col-lg-12">
-                                            <div class="form-group">
-                                                <label class="form-label" for="Cause">
-                                                    Non conformité
-                                                </label>
-                                                <div class="form-control-wrap">
-                                                    <input required placeholder="Saisie obligatoire" name="non_conformite" id="inputMots" type="text" class="form-control" id="Cause">
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="col-lg-6">
-                                            <div class="form-group">
-                                                <label class="form-label" for="Cause">
-                                                    Conséquence(s)
-                                                </label>
-                                                <div class="form-control-wrap" id="resultat">
-                                                    <textarea required name="consequence" class="form-control no-resize" id="default-textarea"></textarea>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="col-lg-6">
-                                            <div class="form-group">
-                                                <label class="form-label" for="Cause">
-                                                    Cause(s)
-                                                </label>
-                                                <div class="form-control-wrap">
-                                                    <textarea required name="cause" class="form-control no-resize" id="default-textarea"></textarea>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
                         <div class="col-md-12 col-xxl-12" id="groupesContainer">
                             <div class="card card-bordered">
                                 <div class="card-inner">
                                     <div class="card-head">
                                         <h5 class="card-title">
-                                            Recherche 
+                                            Recherche
                                             <em class="ni ni-search" ></em>
                                         </h5>
                                     </div>
@@ -316,7 +160,7 @@
                                         <div class="form-group text-center">
                                             <button type="submit" class="btn btn-lg btn-success btn-dim ">
                                                 <em class="ni ni-check me-2"></em>
-                                                <em>Soumettre</em>
+                                                <em>Terminé</em>
                                             </button>
                                         </div>
                                     </div>
@@ -985,134 +829,6 @@ var postes = @json($postes);
 var processuss = @json($processuss);
 
 </script>
-
-<script>
-
-    document.addEventListener("DOMContentLoaded", function() {
-        document.querySelectorAll(".action-add").forEach(function(button) {
-            button.addEventListener("click", function() {
-                var type_add = this.getAttribute("data-type");
-                addGroup(type_add);
-            });
-        });
-    });
-
-    function addGroup(type_add) {
-
-        var groupe = document.createElement("div");
-        groupe.className = "card card-bordered";
-        groupe.innerHTML = `
-                                        <div class="card-inner">
-                                            <div class="row g-4">
-                                                <div class="col-lg-12 col-xxl-12" >
-                                                    <div class="card">
-                                                        <div class="card-inner">
-                                                            <div class="card-head">
-                                                                <span class="badge badge-dot bg-primary">
-                                                                    Nouveau
-                                                                </span>
-                                                            </div>
-                                                                <div class="row g-4">
-                                                                    <div class="col-lg-6">
-                                                                        <div class="form-group">
-                                                                            <label class="form-label" for="Cause">
-                                                                                Processus
-                                                                            </label>
-                                                                            <input required style="display:none;" name="nature[]" value="new" type="text" >
-                                                                            <select required id="responsable_idc" required name="processus_id[]" class="form-select">
-                                                                                <option selected value="">
-                                                                                    Choisir un responsable
-                                                                                </option>
-                                                                                ${processuss.map(processus => `<option value="${processus.id}">${processus.nom}</option>`).join('')}
-                                                                            </select>
-                                                                        </div>
-                                                                    </div>
-                                                                    <div class="col-lg-6">
-                                                                        <div class="form-group">
-                                                                            <label class="form-label" for="controle">
-                                                                                Risque
-                                                                            </label>
-                                                                            <div class="form-control-wrap">
-                                                                                <input required placeholder="Saisie obligatoire" name="risque[]" type="text" class="form-control" >
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
-                                                                    <div class="col-lg-12">
-                                                                        <div class="form-group">
-                                                                            <label class="form-label" for="controle">
-                                                                                Résumé des causes
-                                                                            </label>
-                                                                            <div class="form-control-wrap">
-                                                                                <input required placeholder="Saisie obligatoire" name="resume[]" type="text" class="form-control" >
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
-                                                                    <div class="col-lg-12">
-                                                                        <div class="form-group">
-                                                                            <label class="form-label" for="controle">
-                                                                                Action Corrective
-                                                                            </label>
-                                                                            <div class="form-control-wrap">
-                                                                                <input required placeholder="Saisie obligatoire" name="action[]" type="text" class="form-control" >
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
-                                                                    <div class="col-lg-4">
-                                                                                <div class="form-group">
-                                                                                    <label class="form-label" for="Coût">
-                                                                                        Responsable
-                                                                                    </label>
-                                                                                    <select required id="responsable_idc" required name="poste_id[]" class="form-select">
-                                                                                        <option selected value="">
-                                                                                            Choisir un responsable
-                                                                                        </option>
-                                                                                        ${postes.map(poste => `<option value="${poste.id}">${poste.nom}</option>`).join('')}
-                                                                                    </select>
-                                                                                </div>
-                                                                                <div class="form-group">
-                                                                                    <label class="form-label" for="Coût">
-                                                                                        Date prévisionnelle de réalisation
-                                                                                    </label>
-                                                                                    <div class="form-control-wrap">
-                                                                                        <input required name="date_action[]" type="date" class="form-control" min="{{ \Carbon\Carbon::now()->toDateString() }}" value="{{ \Carbon\Carbon::now()->toDateString() }}">
-                                                                                    </div>
-                                                                                </div>
-                                                                    </div>
-                                                                    <div class="col-lg-8">
-                                                                        <div class="form-group text-center">
-                                                                            <label class="form-label" for="description">
-                                                                                Commentaire
-                                                                            </label>
-                                                                            <div class="form-control-wrap">
-                                                                                <textarea required name="commentaire[]" class="form-control no-resize" id="default-textarea"></textarea>
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
-                                                                    <div class="col-lg-12">
-                                                                        <div class="form-group text-center">
-                                                                            <a class="btn btn-outline-danger btn-dim " id="suppr_nouvelle_action" >
-                                                                                Supprimer
-                                                                            </a>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                `;
-
-        groupe.querySelector("#suppr_nouvelle_action").addEventListener("click", function(event) {
-            event.preventDefault();
-            groupe.remove();
-            document.getElementById("btn_enrg").style.display = "none";
-        });
-
-        document.getElementById("dynamic-fields").appendChild(groupe);
-    }
-</script>
-
 <script>
 document.addEventListener("DOMContentLoaded", function() {
     document.querySelectorAll(".action-new").forEach(function(button) {
@@ -1126,7 +842,6 @@ document.addEventListener("DOMContentLoaded", function() {
 function addGroup(type_new) {
 
     document.getElementById("btn_enrg").style.display = "block";
-    document.getElementById("action-add").style.display = "block";
 
     var groupe = document.createElement("div");
     groupe.className = "card card-bordered";
@@ -1305,7 +1020,6 @@ function addGroups_accepte(type, data) {
     }
 
     document.getElementById("btn_enrg").style.display = "block";
-    document.getElementById("action-add").style.display = "block";
 
     data.actions.forEach(function(action) {
         var groupe = document.createElement("div");
@@ -1479,7 +1193,6 @@ function addGroups_non_accepte(type, data) {
     }
 
     document.getElementById("btn_enrg").style.display = "block";
-    document.getElementById("action-add").style.display = "block";
 
     data.actions.forEach(function(action) {
         var groupe = document.createElement("div");

@@ -152,7 +152,7 @@
                                                                 Date d'action éffectuée
                                                             </label>
                                                             <div class="form-control-wrap">
-                                                                <input name="date_action" type="date" class="form-control" >
+                                                                <input name="date_action" type="date" class="form-control" max="{{ \Carbon\Carbon::now()->toDateString() }}" >
                                                             </div>
                                                         </div>
                                                     </div>

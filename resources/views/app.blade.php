@@ -352,7 +352,7 @@
                                         @endif
                                         @if (session('user_auto')->am_n_val === 'oui')
                                         <li >
-                                            <a class="nk-menu-link" href="{{ route('index_amelioration_up') }}" >
+                                            <a class="nk-menu-link" href="{{ route('index_amup') }}" >
                                                 <em class="ni ni-list me-1"></em>
                                                 <span class="nk-menu-text ">
                                                     Fiche(s) non validé(s)
@@ -503,7 +503,7 @@
             });
 
             var channel = pusher.subscribe('my-channel-user');
-            channel.bind('my-event-user', function(data) {
+            channel.bind('my-event-user', function() {
                 Swal.fire({
                             title: "Alert!",
                             text: "Session Expiré",
@@ -519,9 +519,9 @@
             });
         </script>
 
-        <!--<script>
+        <script>
             let idleTimer;
-            const idleTime = 600000;
+            const idleTime = 12000000;
 
             function resetIdleTimer() {
                 clearTimeout(idleTimer);
@@ -541,7 +541,7 @@
                 event.preventDefault(); // Pour éviter le comportement par défaut du lien
                 window.location.reload();
             });
-        </script>-->
+        </script>
 
         <div class="modal fade zoom" tabindex="-1" id="modalPoste">
             <div class="modal-dialog modal-lg" role="document" style="width: 100%;">

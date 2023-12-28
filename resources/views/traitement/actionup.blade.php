@@ -42,7 +42,6 @@
                                                     <th>Processus</th>
                                                     <th>Risque</th>
                                                     <th>Evaluation</th>
-                                                    <th>Motif</th>
                                                     <th></th>
                                                 </tr>
                                             </thead>
@@ -64,9 +63,6 @@
                                                         @if ($risque->evaluation_residuel > 16)
                                                             <td class="border-white" style="background-color:#ea6072;"></td>
                                                         @endif
-                                                        <td>
-                                                            {{ $risque->motif }}
-                                                        </td>
                                                         <td>
                                                             <form method="post" action="{{ route('index_risque_actionup2') }}">
                                                             @csrf

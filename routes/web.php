@@ -17,6 +17,7 @@ use App\Http\Controllers\EtatController;
 use App\Http\Controllers\PDFController;
 use App\Http\Controllers\ListeamController;
 use App\Http\Controllers\ListeuserController;
+use App\Http\Controllers\Updateamcontroller;
 
 
 Route::get('/Login', [AuthController::class, 'view_login'])->name('login');
@@ -83,8 +84,15 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/add_amelioration', [AmeliorationController::class, 'index_add'])->name('index_add');
     Route::get('/liste_amelioration', [AmeliorationController::class, 'index_liste'])->name('index_amelioration_liste');
     Route::get('/validation_amelioration', [ListeamController::class, 'index_validation'])->name('index_validation_amelioration');
-    Route::get('/amelioration_up', [ListeamController::class, 'index_amup'])->name('index_amelioration_up');
+    Route::get('/amelioration_up', [ListeamController::class, 'index_amup'])->name('index_amup');
+    Route::post('/amelioration_up2', [ListeamController::class, 'index_amup2'])->name('index_amup2');
+    Route::post('/amelioration_up_add', [ListeamController::class, 'index_amup_add'])->name('index_amup_add');
     Route::get('/am_valider/{id}', [ListeamController::class, 'am_valider'])->name('am_valider');
+    Route::post('/am_rejet', [ListeamController::class, 'am_rejet'])->name('am_rejet');
+
+    Route::post('/amelioration_up_traitement', [Updateamcontroller::class, 'amup_traitement'])->name('amup_traitement');
+    Route::post('/amelioration_up2_traitement', [Updateamcontroller::class, 'amup2_traitement'])->name('amup2_traitement');
+    Route::post('/amelioration_up2_add_traitement', [Updateamcontroller::class, 'amup2_add_traitement'])->name('amup2_add_traitement');
 
     Route::get('/Profil', [ProfilController::class, 'index_profil'])->name('index_profil');
 

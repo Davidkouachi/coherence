@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 use App\Events\NotificationAcorrective;
-use App\Events\NotificationAm1;
+use App\Events\NotificationAmnew;
 
 use App\Models\Processuse;
 use App\Models\Objectif;
@@ -375,6 +375,7 @@ class AmeliorationController extends Controller
                 $suivic->amelioration_id = $am->id;
                 $suivic->action_id = $actionn->id;
                 $suivic->risque_id = $risquee->id;
+                $suivic->cause_id = $cause->id;
                 $suivic->processus_id = $processus_id[$index];
                 $suivic->commentaire_am = $commentaire[$index];
                 $suivic->save();
@@ -418,7 +419,7 @@ class AmeliorationController extends Controller
 
             }
 
-            event(new NotificationAm1());
+            event(new NotificationAmnew());
 
             $his = new Historique_action();
             $his->nom_formulaire = "Nouvelle fiche d'amélioration";

@@ -231,11 +231,11 @@ class ListerisqueController extends Controller
 
             }
 
+            //------------------------------------------------------------------------------------------------
+
             $cause_id = $request->input('cause_id');
             $nom_cause = $request->input('nom_cause');
             $dispositif = $request->input('dispositif');
-            $cause_id_suppr = $request->input('cause_id_suppr');
-            $suppr_cause = $request->input('suppr_cause');
 
             foreach ($cause_id as $index => $valeur) {
 
@@ -262,24 +262,20 @@ class ListerisqueController extends Controller
 
             }
 
-            if ($cause_id_suppr) {
+            $id_suppr_c = $request->input('id_suppr_c');
+            $suppr_c = $request->input('suppr_c');
 
-                foreach ($cause_id_suppr as $index => $valeur) {
-
-                    if ($suppr_cause[$index] === 'oui') {
-
-                        $cause = Cause::where('id', $cause_id_suppr[$index])->delete();
-
+                foreach ($id_suppr_c as $index => $valeur) {
+                    if (isset($suppr_c[$index]) && $suppr_c[$index] === 'oui') {
+                        $cause = Cause::where('id', $valeur)->delete();
                     }
                 }
-            }
 
+            //--------------------------------------------------------------------------------------------------
 
             $action_idc = $request->input('action_idc');
             $actionc = $request->input('actionc');
             $responsable_idc = $request->input('poste_idc');
-            $action_idc_suppr = $request->input('action_idc_suppr');
-            $suppr_actionc = $request->input('suppr_actionc');
 
             foreach ($action_idc as $index => $valeur) {
 
@@ -305,17 +301,16 @@ class ListerisqueController extends Controller
                 }
             }
 
-            if ($action_idc_suppr) {
+            $id_suppr_ac = $request->input('id_suppr_ac');
+            $suppr_ac = $request->input('suppr_ac');
 
-                foreach ($action_idc_suppr as $index => $valeur) {
-
-                    if ($suppr_actionc[$index] === 'oui') {
-
-                        $action = Action::where('id', $action_idc_suppr[$index])->delete();
-
+                foreach ($id_suppr_ac as $index => $valeur) {
+                    if (isset($suppr_ac[$index]) && $suppr_ac[$index] === 'oui') {
+                        $actionc2 = Action::where('id', $id_suppr_ac[$index])->delete();
                     }
                 }
-            }
+
+            //------------------------------------------------------------------------------------
 
 
             $action_idp = $request->input('action_idp');
@@ -352,17 +347,16 @@ class ListerisqueController extends Controller
                 }
             }
 
-            if ($action_idp_suppr) {
+            $id_suppr_ap = $request->input('id_suppr_ap');
+            $suppr_ap = $request->input('suppr_ap');
 
-                foreach ($action_idp_suppr as $index => $valeur) {
-
-                    if ($suppr_actionp[$index] === 'oui') {
-
-                        $action = Action::where('id', $action_idp_suppr[$index])->delete();
-
+                foreach ($id_suppr_ap as $index => $valeur) {
+                    if (isset($suppr_ap[$index]) && $suppr_ap[$index] === 'oui') {
+                        $actionc = Action::where('id', $id_suppr_ap[$index])->delete();
                     }
                 }
-            }
+
+            //----------------------------------------------------------------------------------------------------
 
             $his = new Historique_action();
             $his->nom_formulaire = 'Risque non valider';

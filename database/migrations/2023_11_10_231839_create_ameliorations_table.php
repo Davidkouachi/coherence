@@ -17,6 +17,7 @@ class CreateAmeliorationsTable extends Migration
             $table->id();
             $table->string('type');
             $table->date('date_fiche');
+            $table->date('date_cloture1')->nullable();
             $table->string('lieu');
             $table->string('detecteur');
             $table->string('non_conformite');

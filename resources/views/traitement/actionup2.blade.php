@@ -317,32 +317,15 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        @if ( $key+1 >= '2' )
-                                            <div class="col-lg-2" style="margin: 20px auto;">
-                                                <div class="form-group align-items-center justify-content-center">
-                                                    <span class="preview-title overline-title">Supprimer</span>
-                                                    <div class="row gy-4">
-                                                        <input value="{{ $cause->id }}" name="cause_id_suppr[]" type="text" style="display: none;">
-                                                        <div class="col-md-3 col-sm-6">
-                                                            <div class="preview-block">
-                                                                <div class="custom-control custom-radio">
-                                                                    <input type="radio" id="customRadio1" name="suppr_cause[]" class="custom-control-input" value="oui">
-                                                                    <label class="custom-control-label" for="customRadio1">Oui</label>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-md-3 col-sm-6">
-                                                            <div class="preview-block">
-                                                                <div class="custom-control custom-radio">
-                                                                    <input type="radio" id="customRadio2" name="suppr_cause[]" checked class="custom-control-input" value="non">
-                                                                    <label class="custom-control-label" for="customRadio2">Non</label>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
+                                        <div class="col-lg-4 text-left">
+                                            <div class="custom-control custom-checkbox">
+                                                <input value="{{ $cause->id }}" name="id_suppr_c[{{$key+1}}]" type="text" style="display: none;">
+                                                <input name="suppr_c[{{$key+1}}]" value="oui" type="checkbox" class="custom-control-input" id="customCheck1_{{$key+1}}">
+                                                <label class="custom-control-label" for="customCheck1_{{$key+1}}">
+                                                    Supprimé
+                                                </label>
                                             </div>
-                                        @endif
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -505,18 +488,7 @@
                                                 </label>
                                                 <div class="form-group">
                                                     <div class="form-control-wrap">
-                                                        <input id="delai" value="{{ $action->date }}" autocomplete="off" name="delai[]" type="date" class="form-control text-center" onchange="checkDate()">
-                                                        <script>
-                                                            function checkDate() {
-                                                                var inputDate = new Date(document.getElementById('delai').value);
-                                                                var currentDate = new Date();
-
-                                                                if (inputDate < currentDate) {
-                                                                    toastr.info("Vérifier la date saisie.");
-                                                                    document.getElementById('delai').value = ''; // Vide l'input si la date est future
-                                                                }
-                                                            }
-                                                        </script>
+                                                        <input id="delai" value="{{ $action->date }}" autocomplete="off" name="delai[]" type="date" class="form-control text-center" min="{{ \Carbon\Carbon::now()->toDateString() }}">
                                                     </div>
                                                 </div>
                                             </div>
@@ -535,32 +507,15 @@
                                                 </select>
                                             </div>
                                         </div>
-                                        @if ( $key+1 >= '2' )
-                                            <div class="col-lg-2" style="margin: 20px auto;">
-                                                <div class="form-group align-items-center justify-content-center">
-                                                    <span class="preview-title overline-title">Supprimer</span>
-                                                    <div class="row gy-4">
-                                                        <input value="{{ $action->id }}" name="action_idp_suppr[]" type="text" style="display: none;">
-                                                        <div class="col-md-3 col-sm-6">
-                                                            <div class="preview-block">
-                                                                <div class="custom-control custom-radio">
-                                                                    <input type="radio" id="customRadio3" name="suppr_actionp[]" class="custom-control-input" value="oui">
-                                                                    <label class="custom-control-label" for="customRadio3">Oui</label>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-md-3 col-sm-6">
-                                                            <div class="preview-block">
-                                                                <div class="custom-control custom-radio">
-                                                                    <input type="radio" id="customRadio4" name="suppr_actionp[]" checked class="custom-control-input" value="non">
-                                                                    <label class="custom-control-label" for="customRadio4">Non</label>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
+                                        <div class="col-lg-4 text-left">
+                                            <div class="custom-control custom-checkbox">
+                                                <input value="{{ $action->id }}" name="id_suppr_ap[{{$key+1}}]" type="text" style="display: none;">
+                                                <input name="suppr_ap[{{$key+1}}]" value="oui" type="checkbox" class="custom-control-input" id="customCheck2_{{$key+1}}">
+                                                <label class="custom-control-label" for="customCheck2_{{$key+1}}">
+                                                    Supprimé
+                                                </label>
                                             </div>
-                                        @endif
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -597,32 +552,15 @@
                                                 </select>
                                             </div>
                                         </div>
-                                        @if ( $key+1 >= '2' )
-                                            <div class="col-lg-2" style="margin: 20px auto;">
-                                                <div class="form-group align-items-center justify-content-center">
-                                                    <span class="preview-title overline-title">Supprimer</span>
-                                                    <div class="row gy-4">
-                                                        <input value="{{ $action->id }}" name="action_idc_suppr[]" type="text" style="display: none;">
-                                                        <div class="col-md-3 col-sm-6">
-                                                            <div class="preview-block">
-                                                                <div class="custom-control custom-radio">
-                                                                    <input type="radio" id="customRadio5" name="suppr_actionc[]" class="custom-control-input" value="oui">
-                                                                    <label class="custom-control-label" for="customRadio5">Oui</label>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-md-3 col-sm-6">
-                                                            <div class="preview-block">
-                                                                <div class="custom-control custom-radio">
-                                                                    <input type="radio" id="customRadio6" name="suppr_actionc[]" checked class="custom-control-input" value="non">
-                                                                    <label class="custom-control-label" for="customRadio6">Non</label>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
+                                        <div class="col-lg-4 text-left">
+                                            <div class="custom-control custom-checkbox">
+                                                <input value="{{ $action->id }}" name="id_suppr_ac[{{$key+1}}]" type="text" style="display: none;">
+                                                <input name="suppr_ac[{{$key+1}}]" value="oui" type="checkbox" class="custom-control-input" id="customCheck3_{{$key+1}}">
+                                                <label class="custom-control-label" for="customCheck3_{{$key+1}}">
+                                                    Supprimé
+                                                </label>
                                             </div>
-                                        @endif
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -856,7 +794,7 @@
                                                                 </label>
                                                                 <div class="form-group">
                                                                     <div class="form-control-wrap">
-                                                                        <input autocomplete="off" required name="delai[]" type="date" class="form-control">
+                                                                        <input autocomplete="off" required name="delai[]" type="date" class="form-control" min="{{ \Carbon\Carbon::now()->toDateString() }}">
                                                                     </div>
                                                                 </div>
                                                             </div>
@@ -896,20 +834,6 @@
             });
 
             document.getElementById("groupesActionpr").appendChild(groupe);
-
-            const dateInput = groupe.querySelector('input[name="delai[]"]');
-
-            // Ajoute un événement pour vérifier la date lorsqu'elle est modifiée
-            dateInput.addEventListener('change', function() {
-                const selectedDate = new Date(this.value); // Convertit la valeur de l'input en objet Date
-                const currentDate = new Date(); // Obtient la date actuelle
-
-                if (selectedDate < currentDate) {
-                    // La date prévisionnelle est antérieure à la date actuelle
-                    toastr.info("Vérifier la date saisie.");
-                    this.value = ''; // Vide l'input de la date prévisionnelle
-                }
-            });
         }
     });
 </script>
@@ -1035,6 +959,68 @@
         }
     });
 </script>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        const checkboxesCause = document.querySelectorAll('input[name^="suppr_c["]');
+
+        checkboxesCause.forEach(checkbox => {
+            checkbox.addEventListener('change', function() {
+                const checkedCount = document.querySelectorAll('input[name^="suppr_c["]:checked').length;
+
+                if (checkedCount === checkboxesCause.length) {
+                    // Si toutes les cases sont cochées, décocher la dernière case cochée
+                    checkbox.checked = false;
+
+                    toastr.info(`Impossible de supprimer cette cause`);
+                }
+            });
+        });
+    });
+</script>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        const checkboxesCause = document.querySelectorAll('input[name^="suppr_ap["]');
+
+        checkboxesCause.forEach(checkbox => {
+            checkbox.addEventListener('change', function() {
+                const checkedCount = document.querySelectorAll('input[name^="suppr_ap["]:checked').length;
+
+                if (checkedCount === checkboxesCause.length) {
+                    // Si toutes les cases sont cochées, décocher la dernière case cochée
+                    checkbox.checked = false;
+
+                    toastr.info(`Impossible de supprimer cette Action préventive`);
+                }
+            });
+        });
+    });
+</script>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        const checkboxesCause = document.querySelectorAll('input[name^="suppr_ac["]');
+
+        checkboxesCause.forEach(checkbox => {
+            checkbox.addEventListener('change', function() {
+                const checkedCount = document.querySelectorAll('input[name^="suppr_ac["]:checked').length;
+
+                if (checkedCount === checkboxesCause.length) {
+                    // Si toutes les cases sont cochées, décocher la dernière case cochée
+                    checkbox.checked = false;
+
+                    toastr.info(`Impossible de supprimer cette Action corrective`);
+                }
+            });
+        });
+    });
+</script>
+
+
+
+
+
 
 
 
