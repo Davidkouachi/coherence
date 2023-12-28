@@ -46,7 +46,7 @@
                                                     <th>Lieu</th>
                                                     <th>Détecteur</th>
                                                     <th>Non-conformité</th>
-                                                    <th>Nombre d'actions</th>
+                                                    <th>Statut</th>
                                                     <th></th>
                                                     <th></th>
                                                     <th></th>
@@ -71,7 +71,16 @@
                                                         <td>{{ $am->lieu }}</td>
                                                         <td>{{ $am->detecteur }}</td>
                                                         <td>{{ $am->non_conformite }}</td>
-                                                        <td>{{ $am->nbre_action }}</td>
+                                                        @if ($am->statut === 'non-valider')
+                                                            <td class=" text-warning">
+                                                                Acune modification détecter
+                                                            </td>
+                                                        @endif
+                                                        @if ($am->statut === 'modif')
+                                                            <td class="text-success" >
+                                                                Modification détecter
+                                                            </td>
+                                                        @endif
                                                         <td>
                                                             <form method="post" action="{{ route('index_amup2') }}">
                                                             @csrf
