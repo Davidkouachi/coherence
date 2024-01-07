@@ -48,8 +48,6 @@
                                                     <th>Non-conformité</th>
                                                     <th>Statut</th>
                                                     <th></th>
-                                                    <th></th>
-                                                    <th></th>
                                                 </tr>
                                             </thead>
                                             <tbody>
@@ -81,7 +79,7 @@
                                                                 Modification détecter
                                                             </td>
                                                         @endif
-                                                        <td>
+                                                        <td class="d-flex" >
                                                             <form method="post" action="{{ route('index_amup2') }}">
                                                             @csrf
                                                                 <input type="text" name="id" value="{{ $am->id }}" style="display: none;">
@@ -89,8 +87,6 @@
                                                                     <em class="icon ni ni-edit"></em>
                                                                 </button>
                                                             </form>
-                                                        </td>
-                                                        <td>
                                                             <form method="post" action="{{ route('index_amup_add') }}">
                                                             @csrf
                                                                 <input type="text" name="id" value="{{ $am->id }}" style="display: none;">
@@ -98,13 +94,13 @@
                                                                     <em class="icon ni ni-plus"></em>
                                                                 </button>
                                                             </form>
-                                                        </td>
-                                                        <td>
+                                                        @if ($am->statut !== 'non-valider')
                                                             <a data-bs-toggle="modal"
                                                                 data-bs-target="#modalConfirme{{ $am->id }}"
                                                                 href="#" class="btn btn-icon btn-white btn-dim btn-sm btn-success">
                                                                 <em class="icon ni ni-check"></em>
                                                             </a>
+                                                        @endif
                                                         </td>
                                                     </tr>
                                                 @endforeach
@@ -126,16 +122,16 @@
                 <div class="modal-content"><a href="#" class="close" data-bs-dismiss="modal"><em
                             class="icon ni ni-cross"></em></a>
                     <div class="modal-body modal-body-lg text-center">
-                        <div class="nk-modal"><em
-                                class="nk-modal-icon icon icon-circle icon-circle-xxl ni ni-check bg-success"></em>
+                        <div class="nk-modal">
+                            <em class="nk-modal-icon icon icon-circle icon-circle-xxl ni ni-check bg-success"></em>
                             <h4 class="nk-modal-title">Confirmation</h4>
                             <div class="nk-modal-text">
                                 <div class="caption-text">
-                                    <span>Mise à jour terminée ?</span>
+                                    <span> Mise à jour terminée ?</span>
                                 </div>
                             </div>
                             <div class="nk-modal-action">
-                                <a href="#" class="btn btn-lg btn-mw btn-success me-2">
+                                <a href="/am_update/{{ $am->id }}" class="btn btn-lg btn-mw btn-success me-2">
                                     oui
                                 </a>
                                 <a href="#" class="btn btn-lg btn-mw btn-danger"data-bs-dismiss="modal">

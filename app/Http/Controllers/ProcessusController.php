@@ -24,6 +24,8 @@ use App\Models\Pdf_file_processus;
 use App\Models\User;
 use App\Models\Historique_action;
 use App\Models\Poste;
+use App\Models\Color_para;
+use App\Models\Color_interval;
 
 use Illuminate\Support\Facades\Validator;
 use Carbon\Carbon;
@@ -49,8 +51,16 @@ class ProcessusController extends Controller
                         ->select('postes.*') // Sélectionne les colonnes de la table 'postes'
                         ->distinct() // Rend les résultats uniques
                         ->get();
+                        
+        $color_para = Color_para::where('nbre0', '=', '0')->first();
+        $color_interval_nbre = Color_interval::all()->count();
 
-        return view('add.processuseva', ['processuses' => $processuses, 'postes' => $postes]);
+        return view('add.processuseva', [
+            'processuses' => $processuses,
+            'postes' => $postes,
+            'color_para' => $color_para,
+            'color_interval_nbre' => $color_interval_nbre,
+        ]);
     }
 
     public function add_prc(Request $request)
@@ -300,7 +310,18 @@ class ProcessusController extends Controller
                         ->distinct() // Rend les résultats uniques
                         ->get();
 
-        return view('tableau.validecause', ['risques' => $risques, 'causesData' => $causesData, 'actionsDatap' => $actionsDatap , 'actionsDatac' => $actionsDatac, 'postes' => $postes ]);
+        $color_para = Color_para::where('nbre0', '=', '0')->first();
+        $color_interval_nbre = Color_interval::all()->count();
+
+        return view('tableau.validecause', [
+            'risques' => $risques, 
+            'causesData' => $causesData, 
+            'actionsDatap' => $actionsDatap , 
+            'actionsDatac' => $actionsDatac, 
+            'postes' => $postes,
+            'color_para' => $color_para,
+            'color_interval_nbre' => $color_interval_nbre,
+        ]);
     }
 
     public function add_processus(Request $request)

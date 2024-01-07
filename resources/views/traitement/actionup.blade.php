@@ -86,6 +86,33 @@
         </div>
     </div>
 
+@if( $color_para->nbre_color > $color_interval_nbre)
+    <div class="modal fade zoom show" tabindex="-1" id="modalAlert" style="display: block; background-color:rgba(0, 0, 0, 0.5);" data-bs-backdrop="static" data-bs-keyboard="false">
+        <div class="modal-dialog modal-md" role="document">
+            <div class="modal-content">
+                <div class="modal-body modal-body-lg text-center">
+                    <div class="nk-modal">
+                        <em class="nk-modal-icon icon icon-circle icon-circle-xxl ni ni-alert bg-warning"></em>
+                        <h4 class="nk-modal-title">
+                            Veuillez bien paramettré les differents intervalles et couleurs SVP !!!
+                        </h4>
+                        <div class="nk-modal-action mt-5">
+                            <form class="login-form">
+                                <div class="form-group">
+                                    <a href="{{ route('index_color_risk') }}" class="btn btn-lg btn-dim btn-primary">
+                                        <em class="me-2" >Ok</em>
+                                        <em class="ni ni-arrow-right" ></em>
+                                    </a>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+@endif
+
     <script>
         Pusher.logToConsole = true;
 

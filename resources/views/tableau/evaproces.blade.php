@@ -22,70 +22,89 @@
                 <div class="nk-content-body">
                     <div class="nk-block-head nk-block-head-sm">
                         <div class="nk-block-between">
-                                    <div class="nk-block-head-content" style="margin:0px auto;">
-                                        <h3 class="text-center">
-                                            <span>Tableau d'evaluation</span>
-                                            <em class="icon ni ni-list-index"></em>
-                                        </h3>
-                                    </div>
-                                </div>
+                            <div class="nk-block-head-content" style="margin:0px auto;">
+                                <h3 class="text-center">
+                                    <span>Tableau d'evaluation</span>
+                                    <em class="icon ni ni-list-index"></em>
+                                </h3>
+                            </div>
+                        </div>
                     </div>
-                    <div class="nk-block">
-                        <div class="row g-gs">
-                            <div class="col-md-12 col-xxl-12">
-                                <div class="card card-bordered card-preview">
-                                    <div class="card-inner">
-                                        <table class="datatable-init table">
-                                            <thead>
-                                                <tr class="text-center">
-                                                    <th></th>
-                                                    <th>Processus</th>
-                                                    <th>nombre de risques</th>
-                                                    <th>Evaluation Gbobale</th>
-                                                    <th>Couleur</th>
-                                                    <th></th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                @foreach ($processus as $key => $processu)
-                                                    <tr class="text-center">
-                                                        <td>{{ $key+1}}</td>
-                                                        <td>{{ $processu->nom}}</td>
-                                                        <td>{{ $processu->nbre_risque}}</td>
-                                                        <td>
-                                                            {{ $processu->evag }}
-                                                        </td>
-                                                        @if ($processu->evag < 1  )
-                                                            <td class="border-white" style="background-color:#8e8e8e;" ></td>
-                                                        @endif
-                                                        @if ($processu->evag >= 1 && $processu->evag <= 2 )
-                                                            <td class="border-white" style="background-color:#5eccbf;" ></td>
-                                                        @endif
-                                                        @if ($processu->evag >= 3 && $processu->evag <= 9)
-                                                            <td class="border-white"style="background-color:#f7f880;"></td>
-                                                        @endif
-                                                        @if ($processu->evag >= 10 && $processu->evag <= 16)
-                                                            <td class="border-white"style="background-color:#f2b171;"></td>
-                                                        @endif
-                                                        @if ($processu->evag > 16)
-                                                            <td class="border-white" style="background-color:#ea6072;"></td>
-                                                        @endif
-                                                        <td>
-                                                            <a data-bs-toggle="modal"
-                                                                data-bs-target="#modalDetail{{$processu->id}}"
-                                                                href="#" class="btn btn-icon btn-white btn-dim btn-sm btn-warning border border-1 border-white rounded">
-                                                                <em class="icon ni ni-eye"></em>
-                                                            </a>
-                                                        </td>
-                                                    </tr>
-                                                @endforeach
-                                            </tbody>
-                                        </table>
+                    @if( $color_para->nbre_color > $color_interval_nbre)
+                        <div class="nk-block">
+                            <div class="row g-gs">
+                                <div class="col-lg-12 col-xxl-12">
+                                    <div class="modal-content">
+                                        <div class="modal-body modal-body-lg text-center">
+                                            <div class="nk-modal">
+                                                <em class="nk-modal-icon icon icon-circle icon-circle-xxl ni ni-alert bg-warning"></em>
+                                                <h4 class="nk-modal-title">
+                                                    Veuillez bien paramettré les differents intervalles et couleurs SVP !!!
+                                                </h4>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    @else
+                        <div class="nk-block">
+                            <div class="row g-gs">
+                                <div class="col-md-12 col-xxl-12">
+                                    <div class="card card-bordered card-preview">
+                                        <div class="card-inner">
+                                            <table class="datatable-init table">
+                                                <thead>
+                                                    <tr class="text-center">
+                                                        <th></th>
+                                                        <th>Processus</th>
+                                                        <th>nombre de risques</th>
+                                                        <th>Evaluation Gbobale</th>
+                                                        <th>Couleur</th>
+                                                        <th></th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    @foreach ($processus as $key => $processu)
+                                                        <tr class="text-center">
+                                                            <td>{{ $key+1}}</td>
+                                                            <td>{{ $processu->nom}}</td>
+                                                            <td>{{ $processu->nbre_risque}}</td>
+                                                            <td>
+                                                                {{ $processu->evag }}
+                                                            </td>
+                                                            @if ($processu->evag < 1  )
+                                                                <td class="border-white" style="background-color:#8e8e8e;" ></td>
+                                                            @endif
+                                                            @if ($processu->evag >= 1 && $processu->evag <= 2 )
+                                                                <td class="border-white" style="background-color:#5eccbf;" ></td>
+                                                            @endif
+                                                            @if ($processu->evag >= 3 && $processu->evag <= 9)
+                                                                <td class="border-white"style="background-color:#f7f880;"></td>
+                                                            @endif
+                                                            @if ($processu->evag >= 10 && $processu->evag <= 16)
+                                                                <td class="border-white"style="background-color:#f2b171;"></td>
+                                                            @endif
+                                                            @if ($processu->evag > 16)
+                                                                <td class="border-white" style="background-color:#ea6072;"></td>
+                                                            @endif
+                                                            <td>
+                                                                <a data-bs-toggle="modal"
+                                                                    data-bs-target="#modalDetail{{$processu->id}}"
+                                                                    href="#" class="btn btn-icon btn-white btn-dim btn-sm btn-warning border border-1 border-white rounded">
+                                                                    <em class="icon ni ni-eye"></em>
+                                                                </a>
+                                                            </td>
+                                                        </tr>
+                                                    @endforeach
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    @endif
                 </div>
             </div>
         </div>
@@ -97,8 +116,9 @@
                 <div class="modal-content">
                     <div class="modal-header">
                         <h5 class="modal-title">Détails</h5>
-                        <a href="#" class="close" data-bs-dismiss="modal" aria-label="Close"><em
-                                class="icon ni ni-cross"></em></a>
+                        <a href="#" class="close" data-bs-dismiss="modal" aria-label="Close">
+                            <em class="icon ni ni-cross"></em>
+                        </a>
                     </div>
                     <div class="modal-body">
                         <form class="nk-block" >
@@ -199,7 +219,5 @@
             </div>
         </div>
 @endforeach
-
-
 
 @endsection

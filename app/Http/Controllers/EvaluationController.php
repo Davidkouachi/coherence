@@ -11,6 +11,8 @@ use App\Models\Risque;
 use App\Models\Cause;
 use App\Models\Rejet;
 use App\Models\Action;
+use App\Models\Color_para;
+use App\Models\Color_interval;
 
 use Illuminate\Support\Facades\Validator;
 use Carbon\Carbon;
@@ -56,6 +58,14 @@ class EvaluationController extends Controller
 
         }
 
-        return view('tableau.evaproces',['processus' => $processus, 'risquesData' => $risquesData]);
+        $color_para = Color_para::where('nbre0', '=', '0')->first();
+        $color_interval_nbre = Color_interval::all()->count();
+
+        return view('tableau.evaproces',[
+            'processus' => $processus, 
+            'risquesData' => $risquesData,
+            'color_para' => $color_para,
+            'color_interval_nbre' => $color_interval_nbre,
+        ]);
     }
 }

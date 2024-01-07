@@ -21,6 +21,8 @@ use App\Models\Pdf_file_processus;
 use App\Models\User;
 use App\Models\Historique_action;
 use App\Models\Poste;
+use App\Models\Color_para;
+use App\Models\Color_interval;
 
 use Illuminate\Support\Facades\Validator;
 use Carbon\Carbon;
@@ -105,8 +107,17 @@ class ListerisqueController extends Controller
             }
         }
 
+        $color_para = Color_para::where('nbre0', '=', '0')->first();
+        $color_interval_nbre = Color_interval::all()->count();
 
-        return view('liste.risque', ['risques' => $risques, 'causesData' => $causesData, 'actionsDatap' => $actionsDatap , 'actionsDatac' => $actionsDatac]);
+        return view('liste.risque', [
+            'risques' => $risques, 
+            'causesData' => $causesData, 
+            'actionsDatap' => $actionsDatap , 
+            'actionsDatac' => $actionsDatac,
+            'color_para' => $color_para,
+            'color_interval_nbre' => $color_interval_nbre,
+        ]);
     }
 
     public function index_risque_actionup()
@@ -118,7 +129,14 @@ class ListerisqueController extends Controller
                 ->select('risques.*','processuses.nom as processus', 'rejets.motif as motif')
                 ->get();
 
-        return view('traitement.actionup', ['risques' => $risques ]);
+        $color_para = Color_para::where('nbre0', '=', '0')->first();
+        $color_interval_nbre = Color_interval::all()->count();
+
+        return view('traitement.actionup', [
+            'risques' => $risques,
+            'color_para' => $color_para,
+            'color_interval_nbre' => $color_interval_nbre,
+             ]);
     }
 
     public function index_risque_actionup2(Request $request)

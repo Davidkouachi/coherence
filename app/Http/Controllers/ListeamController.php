@@ -30,6 +30,8 @@ use App\Models\User;
 use App\Models\Historique_action;
 use App\Models\Poste;
 use App\Models\Suivi_amelioration;
+use App\Models\Color_para;
+use App\Models\Color_interval;
 
 use Illuminate\Support\Facades\Validator;
 use Carbon\Carbon;
@@ -229,8 +231,10 @@ class ListeamController extends Controller
         return view('traitement.amup2', ['postes' => $postes, 'processuss' => $processuss, 'actionsDatam' => $actionsDatam, 'am' => $am]);
     }
 
-    public function index_amup_add()
+    public function index_amup_add(Request $request)
     {
+        $am_id = $request->id;
+
         $risques = Risque::join('postes', 'risques.poste_id', '=', 'postes.id')
                 ->where('risques.statut', '=', 'valider' )
                 ->where('risques.page', '=', 'risk' )
@@ -380,9 +384,12 @@ class ListeamController extends Controller
                         ->get();
         $processuss = Processuse::all();
 
+        $color_para = Color_para::where('nbre0', '=', '0')->first();
+        $color_interval_nbre = Color_interval::all()->count();
+
         return view('traitement.amup_add', 
             ['risques' => $risques, 'causesData' => $causesData, 'actionsData' => $actionsData, 
-            'causes_selects' => $causes_selects, 'Suivi_action2' => $Suivi_action2, 'caus2' => $caus2, 'causesData2' => $causesData2, 'actionsData2' => $actionsData2, 'postes' => $postes, 'processuss' => $processuss]);
+            'causes_selects' => $causes_selects, 'Suivi_action2' => $Suivi_action2, 'caus2' => $caus2, 'causesData2' => $causesData2, 'actionsData2' => $actionsData2, 'postes' => $postes, 'processuss' => $processuss, 'am_id' => $am_id,'color_para' => $color_para,'color_interval_nbre' => $color_interval_nbre,]);
    }
 
     public function am_valider($id)

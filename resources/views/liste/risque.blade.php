@@ -22,108 +22,127 @@
                 <div class="nk-content-body">
                     <div class="nk-block-head nk-block-head-sm">
                         <div class="nk-block-between">
-                                    <div class="nk-block-head-content" style="margin:0px auto;">
-                                        <h3 class="text-center">
-                                            <span>Liste des Risques</span>
-                                            <em class="icon ni ni-list-index"></em>
-                                        </h3>
-                                    </div>
-                                </div>
+                            <div class="nk-block-head-content" style="margin:0px auto;">
+                                <h3 class="text-center">
+                                    <span>Liste des Risques</span>
+                                    <em class="icon ni ni-list-index"></em>
+                                </h3>
+                            </div>
+                        </div>
                     </div>
-                    <div class="nk-block">
-                        <div class="row g-gs">
-                            <div class="col-md-12 col-xxl-12">
-                                <div class="card card-bordered card-preview">
-                                    <div class="card-inner">
-                                        <table class="datatable-init table">
-                                            <thead>
-                                                <tr class="text-center">
-                                                    <th></th>
-                                                    <th>Risque</th>
-                                                    <th>Processus</th>
-                                                    <!--<th>Nombre de cause</th>
-                                                    <th>Nombre d'action Préventive</th>
-                                                    <th>Nombre d'action Corrective</th>-->
-                                                    <th>Evaluation</th>
-                                                    <th>Coût</th>
-                                                    <th>Statut</th>
-                                                    <th></th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                @foreach ($risques as $key => $risque)
-                                                    <tr class="text-center">
-                                                        <td>{{ $key+1 }}</td>
-                                                        <td>{{ $risque->nom }}</td>
-                                                        <td>{{ $risque->nom_processus }}</td>
-                                                        <!--<td>{{ $risque->nbre_cause }}</td>
-                                                        <td>{{ $risque->nbre_actionp }}</td>
-                                                        <td>{{ $risque->nbre_actionc }}</td>-->
-                                                        <!--<td>{{ $risque->vraisemblence_residuel }}</td>
-                                                        <td>{{ $risque->gravite_residuel }}</td>-->
-                                                        @if ($risque->evaluation_residuel < 1 && $risque->evaluation_residuel <= 2 )
-                                                            <td class="border-white" style="background-color:#8e8e8e;" ></td>
-                                                        @endif
-                                                        @if ($risque->evaluation_residuel >= 1 && $risque->evaluation_residuel <= 2 )
-                                                            <td class="border-white" style="background-color:#5eccbf;" ></td>
-                                                        @endif
-                                                        @if ($risque->evaluation_residuel >= 3 && $risque->evaluation_residuel <= 9)
-                                                            <td class="border-white"style="background-color:#f7f880;"></td>
-                                                        @endif
-                                                        @if ($risque->evaluation_residuel >= 10 && $risque->evaluation_residuel <= 16)
-                                                            <td class="border-white"style="background-color:#f2b171;"></td>
-                                                        @endif
-                                                        @if ($risque->evaluation_residuel > 16)
-                                                            <td class="border-white" style="background-color:#ea6072;"></td>
-                                                        @endif
-                                                        <td>
-                                                            @php
-                                                                $cout = $risque->cout_residuel;
-                                                                $formatcommande = number_format($cout, 0, '.', '.');
-                                                            @endphp
-                                                            {{ $formatcommande }} Fcfa
-                                                        </td>
-                                                        @if ($risque->statut === 'soumis')
-                                                            <td class=" text-warning">
-                                                                En attente de validation
-                                                            </td>
-                                                        @endif
-                                                        @if ($risque->statut === 'valider')
-                                                            <td class=" text-success">
-                                                                Validé
-                                                            </td>
-                                                        @endif
-                                                        @if ($risque->statut === 'non_valider')
-                                                            <td class=" text-danger">
-                                                                Non Validé
-                                                            </td>
-                                                        @endif
-                                                        @if ($risque->statut === 'update')
-                                                            <td class="text-info" >
-                                                                Modification éffectuée
-                                                            </td>
-                                                        @endif
-                                                        <td>
-                                                            <a data-bs-toggle="modal"
-                                                                data-bs-target="#modalDetail{{ $risque->id }}"
-                                                                href="#" class="btn btn-icon btn-white btn-dim btn-sm btn-warning border border-1 border-white rounded">
-                                                                <em class="icon ni ni-eye"></em>
-                                                            </a>
-                                                            <a data-bs-toggle="modal"
-                                                                data-bs-target="#modalFile{{ $risque->id }}"
-                                                                href="#" class="btn btn-icon btn-white btn-dim btn-sm btn-info border border-1 border-white rounded">
-                                                                <em class="icon ni ni-file"></em>
-                                                            </a>
-                                                        </td>
-                                                    </tr>
-                                                @endforeach
-                                            </tbody>
-                                        </table>
+                    @if( $color_para->nbre_color > $color_interval_nbre)
+                        <div class="nk-block">
+                            <div class="row g-gs">
+                                <div class="col-lg-12 col-xxl-12">
+                                    <div class="modal-content">
+                                        <div class="modal-body modal-body-lg text-center">
+                                            <div class="nk-modal">
+                                                <em class="nk-modal-icon icon icon-circle icon-circle-xxl ni ni-alert bg-warning"></em>
+                                                <h4 class="nk-modal-title">
+                                                    Veuillez bien paramettré les differents intervalles et couleurs SVP !!!
+                                                </h4>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    @else
+                        <div class="nk-block">
+                            <div class="row g-gs">
+                                <div class="col-md-12 col-xxl-12">
+                                    <div class="card card-bordered card-preview">
+                                        <div class="card-inner">
+                                            <table class="datatable-init table">
+                                                <thead>
+                                                    <tr class="text-center">
+                                                        <th></th>
+                                                        <th>Risque</th>
+                                                        <th>Processus</th>
+                                                        <!--<th>Nombre de cause</th>
+                                                        <th>Nombre d'action Préventive</th>
+                                                        <th>Nombre d'action Corrective</th>-->
+                                                        <th>Evaluation</th>
+                                                        <th>Coût</th>
+                                                        <th>Statut</th>
+                                                        <th></th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    @foreach ($risques as $key => $risque)
+                                                        <tr class="text-center">
+                                                            <td>{{ $key+1 }}</td>
+                                                            <td>{{ $risque->nom }}</td>
+                                                            <td>{{ $risque->nom_processus }}</td>
+                                                            <!--<td>{{ $risque->nbre_cause }}</td>
+                                                            <td>{{ $risque->nbre_actionp }}</td>
+                                                            <td>{{ $risque->nbre_actionc }}</td>-->
+                                                            <!--<td>{{ $risque->vraisemblence_residuel }}</td>
+                                                            <td>{{ $risque->gravite_residuel }}</td>-->
+                                                            @if ($risque->evaluation_residuel < 1 && $risque->evaluation_residuel <= 2 )
+                                                                <td class="border-white" style="background-color:#8e8e8e;" ></td>
+                                                            @endif
+                                                            @if ($risque->evaluation_residuel >= 1 && $risque->evaluation_residuel <= 2 )
+                                                                <td class="border-white" style="background-color:#5eccbf;" ></td>
+                                                            @endif
+                                                            @if ($risque->evaluation_residuel >= 3 && $risque->evaluation_residuel <= 9)
+                                                                <td class="border-white"style="background-color:#f7f880;"></td>
+                                                            @endif
+                                                            @if ($risque->evaluation_residuel >= 10 && $risque->evaluation_residuel <= 16)
+                                                                <td class="border-white"style="background-color:#f2b171;"></td>
+                                                            @endif
+                                                            @if ($risque->evaluation_residuel > 16)
+                                                                <td class="border-white" style="background-color:#ea6072;"></td>
+                                                            @endif
+                                                            <td>
+                                                                @php
+                                                                    $cout = $risque->cout_residuel;
+                                                                    $formatcommande = number_format($cout, 0, '.', '.');
+                                                                @endphp
+                                                                {{ $formatcommande }} Fcfa
+                                                            </td>
+                                                            @if ($risque->statut === 'soumis')
+                                                                <td class=" text-warning">
+                                                                    En attente de validation
+                                                                </td>
+                                                            @endif
+                                                            @if ($risque->statut === 'valider')
+                                                                <td class=" text-success">
+                                                                    Validé
+                                                                </td>
+                                                            @endif
+                                                            @if ($risque->statut === 'non_valider')
+                                                                <td class=" text-danger">
+                                                                    Non Validé
+                                                                </td>
+                                                            @endif
+                                                            @if ($risque->statut === 'update')
+                                                                <td class="text-info" >
+                                                                    Modification éffectuée
+                                                                </td>
+                                                            @endif
+                                                            <td>
+                                                                <a data-bs-toggle="modal"
+                                                                    data-bs-target="#modalDetail{{ $risque->id }}"
+                                                                    href="#" class="btn btn-icon btn-white btn-dim btn-sm btn-warning border border-1 border-white rounded">
+                                                                    <em class="icon ni ni-eye"></em>
+                                                                </a>
+                                                                <a data-bs-toggle="modal"
+                                                                    data-bs-target="#modalFile{{ $risque->id }}"
+                                                                    href="#" class="btn btn-icon btn-white btn-dim btn-sm btn-info border border-1 border-white rounded">
+                                                                    <em class="icon ni ni-file"></em>
+                                                                </a>
+                                                            </td>
+                                                        </tr>
+                                                    @endforeach
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    @endif
                 </div>
             </div>
         </div>

@@ -224,6 +224,14 @@
                                             </a>
                                         </li>
                                         @endif
+                                        <li >
+                                            <a class="nk-menu-link" href="{{ route('index_color_risk') }}">
+                                                <em class="ni ni-opt-dot-alt me-1"></em>
+                                                <span class="nk-menu-text">
+                                                    Paramettrage
+                                                </span>
+                                            </a>
+                                        </li>
                                     </ul>
                                 </li>
                                 @endif
@@ -316,7 +324,7 @@
                                     <a class="nk-menu-toggle btn " >
                                         <em class="ni ni-share-alt me-2"></em>
                                         <span class="nk-menu-text text-dark">
-                                            Amélioration
+                                            Incidents
                                         </span>
                                     </a>
                                     <ul class="nk-menu-sub">
@@ -325,7 +333,7 @@
                                             <a class="nk-menu-link" href="{{ route('index_amelioration') }}">
                                                 <em class="icon ni ni-property-add me-1"></em>
                                                 <span class="nk-menu-text ">
-                                                    Fiche
+                                                    Fiche de résolution d'incident
                                                 </span>
                                             </a>
                                         </li>
@@ -335,7 +343,7 @@
                                             <a class="nk-menu-link" href="{{ route('index_amelioration_liste') }}" >
                                                 <em class="ni ni-list-index me-1"></em>
                                                 <span class="nk-menu-text ">
-                                                    Liste des améliorations
+                                                    Suivis des incidents
                                                 </span>
                                             </a>
                                         </li>

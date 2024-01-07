@@ -23,6 +23,8 @@ use App\Models\Amelioration;
 use App\Models\Causetrouver;
 use App\Models\Risquetrouver;
 use App\Models\Historique_action;
+use App\Models\Color_para;
+use App\Models\Color_interval;
 
 use Illuminate\Support\Facades\Validator;
 use Carbon\Carbon;
@@ -183,9 +185,22 @@ class AmeliorationController extends Controller
                         ->get();
         $processuss = Processuse::all();
 
-        return view('add.ficheamelioration', 
-            ['risques' => $risques, 'causesData' => $causesData, 'actionsData' => $actionsData, 
-            'causes_selects' => $causes_selects, 'Suivi_action2' => $Suivi_action2, 'caus2' => $caus2, 'causesData2' => $causesData2, 'actionsData2' => $actionsData2, 'postes' => $postes, 'processuss' => $processuss]);
+        $color_para = Color_para::where('nbre0', '=', '0')->first();
+        $color_interval_nbre = Color_interval::all()->count();
+
+        return view('add.ficheamelioration',[
+            'risques' => $risques, 
+            'causesData' => $causesData, 
+            'actionsData' => $actionsData, 
+            'causes_selects' => $causes_selects, 
+            'Suivi_action2' => $Suivi_action2, 
+            'caus2' => $caus2, 'causesData2' => $causesData2, 
+            'actionsData2' => $actionsData2, 
+            'postes' => $postes, 
+            'processuss' => $processuss,
+            'color_para' => $color_para,
+            'color_interval_nbre' => $color_interval_nbre,
+        ]);
    }
 
     public function get_cause_info($id)
@@ -434,7 +449,6 @@ class AmeliorationController extends Controller
             return back()
                 ->with('error', 'Enregistrement non éffectuée.');
         }
-
     }
 
     public function index_liste()

@@ -106,11 +106,10 @@ class StatistiqueController extends Controller
         $nbres = [];
 
         foreach ($types as $type) {
-            $nbres[$type] = Suivi_amelioration::join('ameliorations', 'suivi_ameliorations.amelioration_id', 'ameliorations.id')
-                                            ->where('suivi_ameliorations.date_action', '>=', $date1)
-                                            ->where('suivi_ameliorations.date_action', '<=', $date2)
-                                            ->where('ameliorations.type', $type)
-                                            ->count();
+            $nbres[$type] = Amelioration::where('ameliorations.date_fiche', '>=', $date1)
+                                        ->where('ameliorations.date_fiche', '<=', $date2)
+                                        ->where('ameliorations.type', $type)
+                                        ->count();
         }
 
         return response()->json([

@@ -27,149 +27,168 @@
                         </div>
                     </div>
                 </div>
-                <form class="nk-block" method="post" action="">
-                    @csrf
-                    <div class="row g-gs">
-
-                        <div class="col-md-12 col-xxl-12" id="groupesContainer">
-                            <div class="card card-bordered">
-                                <div class="card-inner">
-                                    <div class="card-head">
-                                        <h5 class="card-title">
-                                            Recherche
-                                            <em class="ni ni-search" ></em>
-                                        </h5>
-                                    </div>
-                                    <div class="row g-4">
-                                        <div class="col-lg-6">
-                                            <div class="form-group">
-                                                <div class="form-control-wrap">
-                                                    <select class="form-select js-select2 select_rech" id="causeSelect" data-search="on" data-placeholder="Recherche Cause">
-                                                        <option value="">
-                                                        </option>
-                                                        @foreach($causes_selects as $causes_select)
-                                                        <option value="{{$causes_select->id}}">
-                                                            {{$causes_select->nom}}
-                                                        </option>
-                                                        @endforeach
-                                                    </select>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="col-lg-6">
-                                            <div class="form-group">
-                                                <div class="form-control-wrap">
-                                                    <select class="form-select js-select2 select_rech" id="risqueSelect" data-search="on" data-placeholder="Recherche Risque">
-                                                        <option value="">
-                                                        </option>
-                                                        @foreach($risques as $risque)
-                                                        <option value="{{$risque->id}}">
-                                                            {{$risque->nom}}
-                                                        </option>
-                                                        @endforeach
-                                                    </select>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="col-lg-12" id="div_choix">
-                                            <div class="row g-2">
-                                                <div class="col-md-4">
-                                                    <div class="form-group text-center">
-                                                        <div class="custom-control custom-radio">
-                                                            <input required type="radio" class="custom-control-input choix_select" name="choix_select" id="choixcause" value="cause">
-                                                            <label class="custom-control-label" for="choixcause">
-                                                                Cause trouvé
-                                                            </label>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="col-md-4">
-                                                    <div class="form-group text-center">
-                                                        <div class="custom-control custom-radio">
-                                                            <input required type="radio" class="custom-control-input choix_select" name="choix_select" id="choixnt" value="cause_risque_nt">
-                                                            <label class="custom-control-label" for="choixnt">
-                                                                Cause / Risque non-trouvé
-                                                            </label>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="col-md-4">
-                                                    <div class="form-group text-center">
-                                                        <div class="custom-control custom-radio">
-                                                            <input required type="radio" class="custom-control-input choix_select" name="choix_select" id="choixrisque" value="risque">
-                                                            <label class="custom-control-label" for="choixrisque">
-                                                                Risque trouvé
-                                                            </label>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
+                @if( $color_para->nbre_color > $color_interval_nbre)
+                    <div class="nk-block">
+                        <div class="row g-gs">
+                            <div class="col-lg-12 col-xxl-12">
+                                <div class="modal-content">
+                                    <div class="modal-body modal-body-lg text-center">
+                                        <div class="nk-modal">
+                                            <em class="nk-modal-icon icon icon-circle icon-circle-xxl ni ni-alert bg-warning"></em>
+                                            <h4 class="nk-modal-title">
+                                                Veuillez bien paramettré les differents intervalles et couleurs SVP !!!
+                                            </h4>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-
-                        <div class="col-md-12 col-xxl-12" id="groupesContainer_btn_trouve">
-                            <div class="card card-bordered">
-                                <div class="card-inner">
-                                    <div class="row g-4">
-                                        <div class="col-lg-6" id="btn-cause-trouve">
-                                            <div class="form-group text-center">
-                                                <a class="btn btn-outline-primary btn-dim action-accepte" data-type="acceptee">
-                                                    Action corrective acceptée
-                                                </a>
-                                            </div>
-                                        </div>
-                                        <div class="col-lg-6" id="btn-risque-trouve">
-                                            <div class="form-group text-center">
-                                                <a class="btn btn-outline-primary btn-dim action-non-accepte" data-type="nouvelle-action">
-                                                    Action corrective non-acceptée
-                                                </a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="col-md-12 col-xxl-12" id="groupesContainer_btn_new">
-                            <div class="card card-bordered">
-                                <div class="card-inner">
-                                    <div class="row g-4">
-                                        <div class="col-lg-12" id="btn-non-trouve">
-                                            <div class="form-group text-center">
-                                                <a class="btn btn-outline-primary btn-dim action-new" data-type="nouvelle-action">
-                                                    Nouvelle action corrective
-                                                </a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div id="dynamic-fields">
-
-                        </div>
-
-                        <div class="col-md-12 col-xxl-12" id="btn_enrg">
-                            <div class="card card-bordered card-preview">
-                                <div class="card-inner row g-gs">
-                                    <div class="col-12">
-                                        <div class="form-group text-center">
-                                            <button type="submit" class="btn btn-lg btn-success btn-dim ">
-                                                <em class="ni ni-check me-2"></em>
-                                                <em>Terminé</em>
-                                            </button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
                     </div>
-                </form>
+                @else
+                    <form class="nk-block" method="post" action="{{ route('amup2_add_traitement') }}">
+                        @csrf
+                        <div class="row g-gs">
+                            <input type="text" name="amelioration_id" value="{{ $am_id }}" style="display: none;">
+                            <div class="col-md-12 col-xxl-12" id="groupesContainer">
+                                <div class="card card-bordered">
+                                    <div class="card-inner">
+                                        <div class="card-head">
+                                            <h5 class="card-title">
+                                                Recherche
+                                                <em class="ni ni-search" ></em>
+                                            </h5>
+                                        </div>
+                                        <div class="row g-4">
+                                            <div class="col-lg-6">
+                                                <div class="form-group">
+                                                    <div class="form-control-wrap">
+                                                        <select class="form-select js-select2 select_rech" id="causeSelect" data-search="on" data-placeholder="Recherche Cause">
+                                                            <option value="">
+                                                            </option>
+                                                            @foreach($causes_selects as $causes_select)
+                                                            <option value="{{$causes_select->id}}">
+                                                                {{$causes_select->nom}}
+                                                            </option>
+                                                            @endforeach
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-6">
+                                                <div class="form-group">
+                                                    <div class="form-control-wrap">
+                                                        <select class="form-select js-select2 select_rech" id="risqueSelect" data-search="on" data-placeholder="Recherche Risque">
+                                                            <option value="">
+                                                            </option>
+                                                            @foreach($risques as $risque)
+                                                            <option value="{{$risque->id}}">
+                                                                {{$risque->nom}}
+                                                            </option>
+                                                            @endforeach
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-12" id="div_choix">
+                                                <div class="row g-2">
+                                                    <div class="col-md-4">
+                                                        <div class="form-group text-center">
+                                                            <div class="custom-control custom-radio">
+                                                                <input required type="radio" class="custom-control-input choix_select" name="choix_select" id="choixcause" value="cause">
+                                                                <label class="custom-control-label" for="choixcause">
+                                                                    Cause trouvé
+                                                                </label>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-4">
+                                                        <div class="form-group text-center">
+                                                            <div class="custom-control custom-radio">
+                                                                <input required type="radio" class="custom-control-input choix_select" name="choix_select" id="choixnt" value="cause_risque_nt">
+                                                                <label class="custom-control-label" for="choixnt">
+                                                                    Cause / Risque non-trouvé
+                                                                </label>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-4">
+                                                        <div class="form-group text-center">
+                                                            <div class="custom-control custom-radio">
+                                                                <input required type="radio" class="custom-control-input choix_select" name="choix_select" id="choixrisque" value="risque">
+                                                                <label class="custom-control-label" for="choixrisque">
+                                                                    Risque trouvé
+                                                                </label>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-md-12 col-xxl-12" id="groupesContainer_btn_trouve">
+                                <div class="card card-bordered">
+                                    <div class="card-inner">
+                                        <div class="row g-4">
+                                            <div class="col-lg-6" id="btn-cause-trouve">
+                                                <div class="form-group text-center">
+                                                    <a class="btn btn-outline-primary btn-dim action-accepte" data-type="acceptee">
+                                                        Action corrective acceptée
+                                                    </a>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-6" id="btn-risque-trouve">
+                                                <div class="form-group text-center">
+                                                    <a class="btn btn-outline-primary btn-dim action-non-accepte" data-type="nouvelle-action">
+                                                        Action corrective non-acceptée
+                                                    </a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-md-12 col-xxl-12" id="groupesContainer_btn_new">
+                                <div class="card card-bordered">
+                                    <div class="card-inner">
+                                        <div class="row g-4">
+                                            <div class="col-lg-12" id="btn-non-trouve">
+                                                <div class="form-group text-center">
+                                                    <a class="btn btn-outline-primary btn-dim action-new" data-type="nouvelle-action">
+                                                        Nouvelle action corrective
+                                                    </a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div id="dynamic-fields">
+
+                            </div>
+
+                            <div class="col-md-12 col-xxl-12" id="btn_enrg">
+                                <div class="card card-bordered card-preview">
+                                    <div class="card-inner row g-gs">
+                                        <div class="col-12">
+                                            <div class="form-group text-center">
+                                                <button type="submit" class="btn btn-lg btn-success btn-dim ">
+                                                    <em class="ni ni-check me-2"></em>
+                                                    <em>Terminé</em>
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </form>
+                @endif
             </div>
         </div>
     </div>
@@ -950,7 +969,6 @@ function addGroup(type_new) {
     groupe.querySelector("#suppr_nouvelle_action").addEventListener("click", function(event) {
         event.preventDefault();
         groupe.remove();
-        document.getElementById("btn_enrg").style.display = "none";
     });
 
     document.getElementById("dynamic-fields").appendChild(groupe);
@@ -1120,7 +1138,7 @@ function addGroups_accepte(type, data) {
         groupe.querySelector("#suppr_action").addEventListener("click", function(event) {
             event.preventDefault();
             groupe.remove();
-            document.getElementById("btn_enrg").style.display = "none";
+            
         });
 
         document.getElementById("dynamic-fields").appendChild(groupe);
@@ -1297,7 +1315,7 @@ function addGroups_non_accepte(type, data) {
         groupe.querySelector("#suppr_action").addEventListener("click", function(event) {
             event.preventDefault();
             groupe.remove();
-            document.getElementById("btn_enrg").style.display = "none";
+            
         });
 
         document.getElementById("dynamic-fields").appendChild(groupe);

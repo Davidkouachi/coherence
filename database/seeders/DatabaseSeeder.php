@@ -6,6 +6,7 @@ use Illuminate\Database\Seeder;
 use App\Models\User;
 use App\Models\Poste;
 use App\Models\Autorisation;
+use App\Models\Color_para;
 
 class DatabaseSeeder extends Seeder
 {
@@ -62,6 +63,15 @@ class DatabaseSeeder extends Seeder
             'am_n_val' => 'oui',
             
             'user_id' => $user->id,
+        ]);
+
+
+        $color_para = Color_para::create([
+            'nbre0' => '0',
+            'nbre1' => '1',
+            'nbre2' => '5',
+            'nbre_color' => '4',
+            'operation' => 'multiplication',
         ]);
     }
 }

@@ -18,6 +18,7 @@ use App\Http\Controllers\PDFController;
 use App\Http\Controllers\ListeamController;
 use App\Http\Controllers\ListeuserController;
 use App\Http\Controllers\Updateamcontroller;
+use App\Http\Controllers\ParamettreController;
 
 
 Route::get('/Login', [AuthController::class, 'view_login'])->name('login');
@@ -26,6 +27,11 @@ Route::post('/auth_user', [AuthController::class, 'auth_user']);
 Route::get('/Registre', [AuthController::class, 'view_registre'])->name('registre');
 
 Route::middleware(['auth'])->group(function () {
+
+    Route::get('/Color paramettre', [ParamettreController::class, 'index_color_risk'])->name('index_color_risk');
+    Route::post('/Color paramettre traitement', [ParamettreController::class, 'color_para_traitement'])->name('color_para_traitement');
+    Route::post('/Color interval add traitement', [ParamettreController::class, 'color_interval_add_traitement'])->name('color_interval_add_traitement');
+    Route::get('/Color_interval_delete_traitement/{id}', [ParamettreController::class, 'color_interval_delete_traitement'])->name('color_interval_delete_traitement');
 
     Route::get('/suiviactiveoui', [ProfilController::class, 'suivi_oui']);
     Route::get('/suiviactivenon', [ProfilController::class, 'suivi_non']);
@@ -93,6 +99,7 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/amelioration_up_traitement', [Updateamcontroller::class, 'amup_traitement'])->name('amup_traitement');
     Route::post('/amelioration_up2_traitement', [Updateamcontroller::class, 'amup2_traitement'])->name('amup2_traitement');
     Route::post('/amelioration_up2_add_traitement', [Updateamcontroller::class, 'amup2_add_traitement'])->name('amup2_add_traitement');
+    Route::get('/am_update/{id}', [Updateamcontroller::class, 'am_update'])->name('am_update');
 
     Route::get('/Profil', [ProfilController::class, 'index_profil'])->name('index_profil');
 
