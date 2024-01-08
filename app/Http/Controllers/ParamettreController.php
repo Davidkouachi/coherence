@@ -52,8 +52,9 @@ class ParamettreController extends Controller
     public function color_para_traitement(Request $request)
     {
         $color_para = Color_para::where('nbre0', '=', '0')->first();
+        $color_nbre = Color_interval::all()->count();
 
-        if ($request->operation != $color_para->operation) {
+        if ($request->operation != $color_para->operation || $request->nbre_color < $color_nbre) {
             Color_interval::truncate();
         }
 
@@ -76,6 +77,26 @@ class ParamettreController extends Controller
         if ( $request->nbre1 >= $request->nbre2){
             return redirect()->back()->with(['info' => 'le deuxieme nombre doit toujours etre supérieur.']);
         }
+
+        $color_intervals = Color_interval::all();
+
+        $overlapDetected = false;
+
+        foreach ($color_intervals as $value) {
+            if (
+                ($value->nbre1 <= $request->nbre1 && $request->nbre1 <= $value->nbre2) ||
+                ($value->nbre1 <= $request->nbre2 && $request->nbre2 <= $value->nbre2) ||
+                ($request->nbre1 <= $value->nbre1 && $value->nbre2 <= $request->nbre2)
+            ) {
+                $overlapDetected = true;
+                break; // Sortir de la boucle dès qu'un chevauchement est trouvé
+            }
+        }
+
+        if ($overlapDetected) {
+            return redirect()->back()->with(['error' => 'Enregistrement impossible.']);
+        }
+
 
         $color_interval = new Color_interval();
         $color_interval->nbre1 = $request->nbre1;

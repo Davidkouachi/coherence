@@ -108,12 +108,75 @@
                                                                 <label class="form-label">
                                                                     <em class="nk-modal-icon icon icon-circle icon-circle-md ni ni-alert bg-danger"></em>
                                                                     <em class="text-danger" >
-                                                                        Paraméttrage non complet (le deuxiéme
-                                                                        chiffre du dernier interval doit être : {{ intval($color_para->nbre2)+intval($color_para->nbre2) }} )
+                                                                        Paraméttrage non complet
                                                                     </em>
                                                                 </label>
                                                             </div>
                                                         </div>
+                                                    @elseif( $color_para->nbre2+$color_para->nbre2 === $color_interval_dernier->nbre2 )
+                                                        @if( $color_para->nbre_color === $color_interval_nbre )
+                                                            @php
+                                                                $isOutOfRange = false;
+                                                            @endphp
+
+                                                            @for ($i = 1; $i <= (intval($color_para->nbre2) + intval($color_para->nbre2)); $i++)
+                                                                @php
+                                                                    $isInInterval = false;
+                                                                @endphp
+
+                                                                @foreach($color_intervals as $color_interval)
+                                                                    @if ($i >= $color_interval->nbre1 && $i <= $color_interval->nbre2)
+                                                                        @php
+                                                                            $isInInterval = true;
+                                                                            break; // Sortir de la boucle dès qu'un intervalle correspond
+                                                                        @endphp
+                                                                    @endif
+                                                                @endforeach
+
+                                                                @unless($isInInterval)
+                                                                    @if($i)
+                                                                        @php
+                                                                            $isOutOfRange = true;
+                                                                        @endphp
+                                                                    @endif
+                                                                @endunless
+                                                            @endfor
+
+                                                            @if($isOutOfRange)
+                                                                <div class="col-lg-12">
+                                                                    <div class="form-group text-center">
+                                                                        <label class="form-label">
+                                                                            <em class="nk-modal-icon icon icon-circle icon-circle-md ni ni-alert bg-danger"></em>
+                                                                            <em class="text-danger" >
+                                                                                Paraméttrage non complet
+                                                                            </em>
+                                                                        </label>
+                                                                    </div>
+                                                                </div>
+                                                            @else
+                                                                <div class="col-lg-12">
+                                                                    <div class="form-group text-center">
+                                                                        <label class="form-label">
+                                                                            <em class="nk-modal-icon icon icon-circle icon-circle-md ni ni-check bg-success"></em>
+                                                                            <em class="text-success" >
+                                                                                Paraméttrage complet
+                                                                            </em>
+                                                                        </label>
+                                                                    </div>
+                                                                </div>
+                                                            @endif
+                                                        @else
+                                                            <div class="col-lg-12">
+                                                                <div class="form-group text-center">
+                                                                    <label class="form-label">
+                                                                        <em class="nk-modal-icon icon icon-circle icon-circle-md ni ni-alert bg-danger"></em>
+                                                                        <em class="text-danger" >
+                                                                            Paraméttrage non complet
+                                                                        </em>
+                                                                    </label>
+                                                                </div>
+                                                            </div>
+                                                        @endif
                                                     @endif
                                                 @elseif( $color_para->operation === 'multiplication' )
                                                     @if( $color_para->nbre2*$color_para->nbre2 != $color_interval_dernier->nbre2 )
@@ -122,19 +185,94 @@
                                                                 <label class="form-label">
                                                                     <em class="nk-modal-icon icon icon-circle icon-circle-md ni ni-alert bg-danger"></em>
                                                                     <em class="text-danger" >
-                                                                        Paraméttrage non complet (le deuxiéme chiffre du dernier interval doit être : {{ intval($color_para->nbre2)*intval($color_para->nbre2) }} )
+                                                                        Paraméttrage non complet
                                                                     </em>
                                                                 </label>
                                                             </div>
                                                         </div>
+                                                    @elseif( $color_para->nbre2*$color_para->nbre2 === $color_interval_dernier->nbre2 )
+                                                        @if( $color_para->nbre_color === $color_interval_nbre )
+                                                            @php
+                                                                $isOutOfRange = false;
+                                                            @endphp
+
+                                                            @for ($i = 1; $i <= (intval($color_para->nbre2) * intval($color_para->nbre2)); $i++)
+                                                                @php
+                                                                    $isInInterval = false;
+                                                                @endphp
+
+                                                                @foreach($color_intervals as $color_interval)
+                                                                    @if ($i >= $color_interval->nbre1 && $i <= $color_interval->nbre2)
+                                                                        @php
+                                                                            $isInInterval = true;
+                                                                            break; // Sortir de la boucle dès qu'un intervalle correspond
+                                                                        @endphp
+                                                                    @endif
+                                                                @endforeach
+
+                                                                @unless($isInInterval)
+                                                                    @if($i)
+                                                                        @php
+                                                                            $isOutOfRange = true;
+                                                                        @endphp
+                                                                    @endif
+                                                                @endunless
+                                                            @endfor
+
+                                                            @if($isOutOfRange)
+                                                                <div class="col-lg-12">
+                                                                    <div class="form-group text-center">
+                                                                        <label class="form-label">
+                                                                            <em class="nk-modal-icon icon icon-circle icon-circle-md ni ni-alert bg-danger"></em>
+                                                                            <em class="text-danger" >
+                                                                                Paraméttrage non complet
+                                                                            </em>
+                                                                        </label>
+                                                                    </div>
+                                                                </div>
+                                                            @else
+                                                                <div class="col-lg-12">
+                                                                    <div class="form-group text-center">
+                                                                        <label class="form-label">
+                                                                            <em class="nk-modal-icon icon icon-circle icon-circle-md ni ni-check bg-success"></em>
+                                                                            <em class="text-success" >
+                                                                                Paraméttrage complet
+                                                                            </em>
+                                                                        </label>
+                                                                    </div>
+                                                                </div>
+                                                            @endif
+                                                        @else
+                                                            <div class="col-lg-12">
+                                                                <div class="form-group text-center">
+                                                                    <label class="form-label">
+                                                                        <em class="nk-modal-icon icon icon-circle icon-circle-md ni ni-alert bg-danger"></em>
+                                                                        <em class="text-danger" >
+                                                                            Paraméttrage non complet
+                                                                        </em>
+                                                                    </label>
+                                                                </div>
+                                                            </div>
+                                                        @endif
                                                     @endif
                                                 @endif
+                                            @elseif($color_interval_nbre === 0)
+                                                <div class="col-lg-12">
+                                                    <div class="form-group text-center">
+                                                        <label class="form-label">
+                                                            <em class="nk-modal-icon icon icon-circle icon-circle-md ni ni-info bg-warning"></em>
+                                                            <em class="text-warning">
+                                                                Aucun interval n'a étè défini
+                                                            </em>
+                                                        </label>
+                                                    </div>
+                                                </div>
                                             @endif
                                         </div>
                                     </div>
                                 </div>
                                 <ul class="nk-activity" style="margin: 0 auto;">
-                                    
+
                                     @if( $color_interval_nbre > 0 )
                                         @foreach($color_intervals as $key => $color_interval )
                                         <li class="nk-activity-item border-0">
@@ -167,14 +305,6 @@
                                             </div>
                                         </li>
                                         @endforeach
-                                    @else
-                                        <li class="nk-activity-item border-0">
-                                            <div class="nk-activity-data" style="width: 200px;">
-                                                <div class="label">
-                                                    Aucun interval enregistré
-                                                </div>
-                                            </div>
-                                        </li>
                                     @endif
                                 </ul>
                             </div>
@@ -220,10 +350,11 @@
                                                 </label>
                                                 <div class="form-control-wrap">
                                                     <select required name="nbre2" class="form-select text-center">
-                                                        @for ($i = 2; $i <= 10; $i++) <option value="{{ $i }}" {{ $color_para->nbre2 == $i ? 'selected' : '' }}>
-                                                            {{ $i }}
+                                                        @for ($i = 2; $i <= 10; $i++)
+                                                            <option value="{{ $i }}" {{ $color_para->nbre2 == $i ? 'selected' : '' }} >
+                                                                {{ $i }}
                                                             </option>
-                                                            @endfor
+                                                        @endfor
                                                     </select>
                                                 </div>
                                             </div>
@@ -303,11 +434,64 @@
                                                     De
                                                 </label>
                                                 <div class="form-control-wrap">
-                                                        @if( $color_interval_nbre >= 1 )
-                                                            <input name="nbre1" value="{{ (intval($color_interval_dernier->nbre2) + 1) }}" readonly type="number" class="form-control text-center">
+                                                    <select required name="nbre1" class="form-select text-center">
+                                                        @if( $color_interval_nbre > 0 )
+                                                            @if( $color_para->operation === 'addition' )
+                                                                @for ($i = 1; $i <= (intval($color_para->nbre2) * intval($color_para->nbre2)); $i++)
+                                                                    @php
+                                                                        $isInInterval = false;
+                                                                    @endphp
+                                                                    @foreach($color_intervals as $color_interval)
+                                                                        @if ($i >= $color_interval->nbre1 && $i <= $color_interval->nbre2)
+                                                                            @php
+                                                                                $isInInterval = true;
+                                                                                break; // Sortir de la boucle dès qu'un intervalle correspond
+                                                                            @endphp
+                                                                        @endif
+                                                                    @endforeach
+                                                                    @unless($isInInterval)
+                                                                        <option value="{{ $i }}">
+                                                                            {{ $i }}
+                                                                        </option>
+                                                                    @endunless
+                                                                @endfor
+
+                                                            @elseif( $color_para->operation === 'multiplication' )
+                                                                @for ($i = 1; $i <= (intval($color_para->nbre2) * intval($color_para->nbre2)); $i++)
+                                                                    @php
+                                                                        $isInInterval = false;
+                                                                    @endphp
+                                                                    @foreach($color_intervals as $color_interval)
+                                                                        @if ($i >= $color_interval->nbre1 && $i <= $color_interval->nbre2)
+                                                                            @php
+                                                                                $isInInterval = true;
+                                                                                break; // Sortir de la boucle dès qu'un intervalle correspond
+                                                                            @endphp
+                                                                        @endif
+                                                                    @endforeach
+                                                                    @unless($isInInterval)
+                                                                        <option value="{{ $i }}">
+                                                                            {{ $i }}
+                                                                        </option>
+                                                                    @endunless
+                                                                @endfor
+                                                            @endif
                                                         @else
-                                                            <input name="nbre1" value="1" readonly type="number" class="form-control text-center">
+                                                            @if( $color_para->operation === 'addition' )
+                                                                @for ($i = 1; $i <= (intval($color_para->nbre2) + intval($color_para->nbre2)); $i++)
+                                                                    <option value="{{ $i }}">
+                                                                        {{ $i }}
+                                                                    </option>
+                                                                @endfor
+                                                            @elseif( $color_para->operation === 'multiplication' )
+                                                                @for ($i = 1; $i <= (intval($color_para->nbre2) * intval($color_para->nbre2)); $i++)
+                                                                    <option value="{{ $i }}">
+                                                                        {{ $i }}
+                                                                    </option>
+                                                                @endfor
+                                                            @endif
                                                         @endif
+                                                    </select>
                                                 </div>
                                             </div>
                                         </div>
@@ -320,27 +504,53 @@
                                                     <select required name="nbre2" class="form-select text-center">
                                                         @if( $color_interval_nbre > 0 )
                                                             @if( $color_para->operation === 'addition' )
-                                                                @for ($i = (intval($color_interval_dernier->nbre2) + 2); $i <= (intval($color_para->nbre2) + intval($color_para->nbre2)); $i++)
-                                                                    <option value="{{ $i }}">
-                                                                        {{ $i }}
-                                                                    </option>
+                                                                @for ($i = 1; $i <= (intval($color_para->nbre2) + intval($color_para->nbre2)); $i++)
+                                                                    @php
+                                                                        $isInInterval = false;
+                                                                    @endphp
+                                                                    @foreach($color_intervals as $color_interval)
+                                                                        @if ($i >= $color_interval->nbre1 && $i <= $color_interval->nbre2)
+                                                                            @php
+                                                                                $isInInterval = true;
+                                                                                break; // Sortir de la boucle dès qu'un intervalle correspond
+                                                                            @endphp
+                                                                        @endif
+                                                                    @endforeach
+                                                                    @unless($isInInterval)
+                                                                        <option value="{{ $i }}">
+                                                                            {{ $i }}
+                                                                        </option>
+                                                                    @endunless
                                                                 @endfor
                                                             @elseif( $color_para->operation === 'multiplication' )
-                                                                @for ($i = (intval($color_interval_dernier->nbre2) + 2); $i <= (intval($color_para->nbre2) * intval($color_para->nbre2)); $i++)
-                                                                    <option value="{{ $i }}">
-                                                                        {{ $i }}
-                                                                    </option>
+                                                                @for ($i = 1; $i <= (intval($color_para->nbre2) * intval($color_para->nbre2)); $i++)
+                                                                    @php
+                                                                        $isInInterval = false;
+                                                                    @endphp
+                                                                    @foreach($color_intervals as $color_interval)
+                                                                        @if ($i >= $color_interval->nbre1 && $i <= $color_interval->nbre2)
+                                                                            @php
+                                                                                $isInInterval = true;
+                                                                                break; // Sortir de la boucle dès qu'un intervalle correspond
+                                                                            @endphp
+                                                                        @endif
+                                                                    @endforeach
+                                                                    @unless($isInInterval)
+                                                                        <option value="{{ $i }}">
+                                                                            {{ $i }}
+                                                                        </option>
+                                                                    @endunless
                                                                 @endfor
                                                             @endif
                                                         @else
                                                             @if( $color_para->operation === 'addition' )
-                                                                @for ($i = 2; $i <= (intval($color_para->nbre2) + intval($color_para->nbre2)); $i++)
+                                                                @for ($i = 1; $i <= (intval($color_para->nbre2) + intval($color_para->nbre2)); $i++)
                                                                     <option value="{{ $i }}">
                                                                         {{ $i }}
                                                                     </option>
                                                                 @endfor
                                                             @elseif( $color_para->operation === 'multiplication' )
-                                                                @for ($i = 2; $i <= (intval($color_para->nbre2) * intval($color_para->nbre2)); $i++)
+                                                                @for ($i = 1; $i <= (intval($color_para->nbre2) * intval($color_para->nbre2)); $i++)
                                                                     <option value="{{ $i }}">
                                                                         {{ $i }}
                                                                     </option>
@@ -358,22 +568,21 @@
                                                 </label>
                                                 <div class="form-control-wrap">
                                                     <select required name="color" class="form-select text-center">
-                                                        <option value="" >
-                                                            Choisir une couleur
-                                                        </option>
-                                                        <option value="vert" >
-                                                            Vert
-                                                        </option>
-                                                        <option value="jaune" >
-                                                            Jaune
-                                                        </option>
-                                                        <option value="orange" >
-                                                            Orange
-                                                        </option>
-                                                        <option value="rouge" >
-                                                            Rouge
-                                                        </option>
+                                                        <option value="">Choisir une couleur</option>
+                                                        @php
+                                                            $colors = ['vert', 'jaune', 'orange', 'rouge'];
+                                                            $intervalColors = $color_intervals->pluck('color')->toArray();
+                                                        @endphp
+
+                                                        @foreach($colors as $color)
+                                                            @unless(in_array($color, $intervalColors))
+                                                                <option value="{{ $color }}">
+                                                                    {{ ucfirst($color) }}
+                                                                </option>
+                                                            @endunless
+                                                        @endforeach
                                                     </select>
+
                                                 </div>
                                             </div>
                                         </div>
