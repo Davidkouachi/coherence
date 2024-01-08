@@ -18,6 +18,7 @@ class CreateColorIntervalsTable extends Migration
             $table->integer('nbre1');
             $table->integer('nbre2');
             $table->string('color');
+            $table->string('code_color');
             $table->timestamps();
         });
     }

@@ -108,7 +108,8 @@ class ListerisqueController extends Controller
         }
 
         $color_para = Color_para::where('nbre0', '=', '0')->first();
-        $color_interval_nbre = Color_interval::all()->count();
+        $color_intervals = Color_interval::orderBy('nbre1', 'asc')->get();
+        $color_interval_nbre = count($color_intervals);
 
         return view('liste.risque', [
             'risques' => $risques, 
@@ -116,6 +117,7 @@ class ListerisqueController extends Controller
             'actionsDatap' => $actionsDatap , 
             'actionsDatac' => $actionsDatac,
             'color_para' => $color_para,
+            'color_intervals' => $color_intervals,
             'color_interval_nbre' => $color_interval_nbre,
         ]);
     }
@@ -129,13 +131,9 @@ class ListerisqueController extends Controller
                 ->select('risques.*','processuses.nom as processus', 'rejets.motif as motif')
                 ->get();
 
-        $color_para = Color_para::where('nbre0', '=', '0')->first();
-        $color_interval_nbre = Color_interval::all()->count();
-
         return view('traitement.actionup', [
             'risques' => $risques,
-            'color_para' => $color_para,
-            'color_interval_nbre' => $color_interval_nbre,
+            
              ]);
     }
 
@@ -182,7 +180,20 @@ class ListerisqueController extends Controller
 
             $processuses = Processuse::all();
 
-            return view('traitement.actionup2', ['risque' => $risque, 'causes' => $causes, 'actionsp' => $actionsp , 'actionsc' => $actionsc, 'postes' => $postes, 'processuses' => $processuses]);
+            $color_para = Color_para::where('nbre0', '=', '0')->first();
+            $color_intervals = Color_interval::orderBy('nbre1', 'asc')->get();
+            $color_interval_nbre = count($color_intervals);
+
+            return view('traitement.actionup2', [
+                'risque' => $risque, 
+                'causes' => $causes, 
+                'actionsp' => $actionsp , 'actionsc' => $actionsc, 
+                'postes' => $postes, 
+                'processuses' => $processuses,
+                'color_para' => $color_para,
+                'color_intervals' => $color_intervals,
+                'color_interval_nbre' => $color_interval_nbre,
+            ]);
             
         }
 

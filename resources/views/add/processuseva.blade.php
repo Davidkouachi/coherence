@@ -79,475 +79,483 @@
                         </div>
                     </div>
                 </div>
-                @if( $color_para->nbre_color > $color_interval_nbre)
-                    <div class="nk-block">
-                        <div class="row g-gs">
-                            <div class="col-lg-12 col-xxl-12">
-                                <div class="modal-content">
-                                    <div class="modal-body modal-body-lg text-center">
-                                        <div class="nk-modal">
-                                            <em class="nk-modal-icon icon icon-circle icon-circle-xxl ni ni-alert bg-warning"></em>
-                                            <h4 class="nk-modal-title">
-                                                Veuillez bien paramettré les differents intervalles et couleurs SVP !!!
-                                            </h4>
+
+                    @if( intval($color_para->nbre_color) > intval($color_interval_nbre) )
+                        <div class="nk-block">
+                            <div class="row g-gs">
+                                <div class="col-lg-12 col-xxl-12">
+                                    <div class="modal-content">
+                                        <div class="modal-body modal-body-lg text-center">
+                                            <div class="nk-modal">
+                                                <em class="nk-modal-icon icon icon-circle icon-circle-xxl ni ni-alert bg-warning"></em>
+                                                <h4 class="nk-modal-title">
+                                                    Paraméttrage des couleurs non complet
+                                                </h4>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                @else
-                    <form class="nk-block" method="post" action="{{ route('add_prc') }}" enctype="multipart/form-data">
-                        @csrf
-                        <div class="row g-gs">
-                            <div class="col-md-4 col-xxl-4 row g-2" style="margin-left:1px;">
-                                <div class="form-group col-md-12">
-                                    <div class="card card-bordered h-100">
-                                        <div class="card-inner">
-                                            <span id="fileSize"> </span>
-                                            <div class="card " id="pdfPreview" style="height: 500px; " data-simplebar>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="form-group col-md-12" style="margin-top: -10px">
-                                    <div class="card card-bordered h-100">
-                                        <div class="card-inner">
-                                            <div class="form-group">
-                                                <label class="form-label" for="cf-full-name">
-                                                    Fichier ( .pdf )
-                                                </label>
-                                                <input autocomplete="off" id="fileInput" name="pdfFile" accept=".pdf" type="file" class="form-control" id="">
+                    @else
+                        @php
+                            $isOutOfRange = false;
+                            $maxValue = ($color_para->operation === 'addition') ? (intval($color_para->nbre2) + intval($color_para->nbre2)) : (intval($color_para->nbre2) * intval($color_para->nbre2));
+                        @endphp
+
+                        @for ($i = 1; $i <= $maxValue; $i++)
+                            @php
+                                $isInInterval = false;
+                            @endphp
+
+                            @foreach($color_intervals as $color_interval)
+                                @if ($i >= $color_interval->nbre1 && $i <= $color_interval->nbre2)
+                                    @php
+                                        $isInInterval = true;
+                                        break; // Sortir de la boucle dès qu'un intervalle correspond
+                                    @endphp
+                                @endif
+                            @endforeach
+
+                            @unless($isInInterval)
+                                @if($i)
+                                    @php
+                                        $isOutOfRange = true;
+                                    @endphp
+                                @endif
+                            @endunless
+                        @endfor
+
+                        @if($isOutOfRange)
+                            <div class="nk-block">
+                                <div class="row g-gs">
+                                    <div class="col-lg-12 col-xxl-12">
+                                        <div class="modal-content">
+                                            <div class="modal-body modal-body-lg text-center">
+                                                <div class="nk-modal">
+                                                    <em class="nk-modal-icon icon icon-circle icon-circle-xxl ni ni-alert bg-warning"></em>
+                                                    <h4 class="nk-modal-title">
+                                                        Paraméttrage des couleurs non complet
+                                                    </h4>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-md-8 col-xxl-8 row g-2" style="margin-left:5px;">
-                                <div class="col-md-12 ">
-                                    <div class="card card-bordered h-100">
-                                        <div class="card-inner">
-                                            <div>
-                                                <div class="row g-gs">
-                                                    <div class="form-group col-md-12">
+                        @else
+                            <form class="nk-block" method="post" action="{{ route('add_prc') }}" enctype="multipart/form-data">
+                                @csrf
+                                <div class="row g-gs">
+                                    <div class="col-md-4 col-xxl-4 row g-2" style="margin-left:1px;">
+                                        <div class="form-group col-md-12">
+                                            <div class="card card-bordered h-100">
+                                                <div class="card-inner">
+                                                    <span id="fileSize"> </span>
+                                                    <div class="card " id="pdfPreview" style="height: 500px; " data-simplebar>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="form-group col-md-12" style="margin-top: -10px">
+                                            <div class="card card-bordered h-100">
+                                                <div class="card-inner">
+                                                    <div class="form-group">
+                                                        <label class="form-label" for="cf-full-name">
+                                                            Fichier ( .pdf )
+                                                        </label>
+                                                        <input autocomplete="off" id="fileInput" name="pdfFile" accept=".pdf" type="file" class="form-control" id="">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-8 col-xxl-8 row g-2" style="margin-left:5px;">
+                                        <div class="col-md-12 ">
+                                            <div class="card card-bordered h-100">
+                                                <div class="card-inner">
+                                                    <div>
+                                                        <div class="row g-gs">
+                                                            <div class="form-group col-md-12">
+                                                                <div class="form-group">
+                                                                    <label class="form-label" for="cf-full-name">Processus</label>
+                                                                    <select required name="processus_id" class="form-select" id="selectProcessus">
+                                                                        <option value="">
+                                                                            Choisir un processus
+                                                                        </option>
+                                                                        @foreach ($processuses as $processuse)
+                                                                        <option value="{{ $processuse->id }}">
+                                                                            {{ $processuse->nom }}
+                                                                        </option>
+                                                                        @endforeach
+                                                                    </select>
+                                                                </div>
+                                                            </div>
+                                                            <div class="form-group col-md-12" style="margin-top: -10px">
+                                                                <label class="form-label" for="cf-full-name">Objectifs</label>
+                                                                <div class="card ">
+                                                                    <div class="card-inner" style="height: 100px;" data-simplebar>
+                                                                        <ul id="listeObjectifs">
+                                                                        </ul>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-12 ">
+                                            <div class="card card-bordered h-100">
+                                                <div class="card-inner">
+                                                    <div>
+                                                        <div class="row g-gs">
+                                                            <div class=" form-group col-md-12">
+                                                                <label class="form-label" for="cf-full-name">Risque</label>
+                                                                <input placeholder="Saisir le risque" autocomplete="off" required name="nom_risque" type="text" class="form-control" id="cf-full-name">
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-12 ">
+                                            <div class="card card-bordered h-100" id="divToChange">
+                                                <div class="card-inner">
+                                                    <div class="row g-gs">
+                                                        <div class="col-md-12">
+                                                            <div class="card-head">
+                                                                <h5 class="card-title">Evaluation risque sans dispositif de contrôle interne ou dispositif antérieur</h5>
+                                                            </div>
+                                                            <form action="#">
+                                                                <div class="row g-4">
+                                                                    <div class="col-md-3">
+                                                                        <div class="form-group">
+                                                                            <label class="form-label">
+                                                                                Vraisemblance
+                                                                            </label>
+                                                                            <select required name="vrai" class="form-select " id="select1">
+                                                                                <option value="">
+                                                                                    Choisir
+                                                                                </option>
+                                                                                @for ($i = 1; $i <= intval($color_para->nbre2); $i++)
+                                                                                    <option value="{{ $i }}" >
+                                                                                        {{ $i }}
+                                                                                    </option>
+                                                                                @endfor
+                                                                            </select>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="col-md-3">
+                                                                        <div class="form-group">
+                                                                            <label class="form-label">Gravité</label>
+                                                                            <select required name="gravite" class="form-select" id="select2">
+                                                                                <option value="">
+                                                                                    Choisir
+                                                                                </option>
+                                                                                @for ($i = 1; $i <= intval($color_para->nbre2); $i++)
+                                                                                    <option value="{{ $i }}" >
+                                                                                        {{ $i }}
+                                                                                    </option>
+                                                                                @endfor
+                                                                            </select>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="col-md-2">
+                                                                        <div class="form-group">
+                                                                            <label id="labelcolor" class="form-label" for="cf-email">Evaluation</label>
+                                                                            <input disabled type="text" class="form-control text-center" id="result">
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="col-md-4">
+                                                                        <div class="form-group">
+                                                                            <label id="labelcolor" class="form-label">Coût</label>
+                                                                            <input placeholder="Entrer le montant" id="cout" autocomplete="off" required name="cout" type="text" class="form-control ">
+                                                                        </div>
+                                                                        <script>
+                                                                            var inputElement = document.getElementById('cout');
+                                                                                inputElement.addEventListener('input', function() {
+                                                                                    this.value = this.value.replace(/[^0-9]/g, '');
+                                                                                });
+                                                                        </script>
+                                                                    </div>
+                                                                </div>
+                                                            </form>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12 col-xxl-12" id="groupesContainer">
+                                        <div class="card card-bordered">
+                                            <div class="card-inner">
+                                                <div class="row g-4">
+                                                    <div class="col-lg-7">
                                                         <div class="form-group">
-                                                            <label class="form-label" for="cf-full-name">Processus</label>
-                                                            <select required name="processus_id" class="form-select" id="selectProcessus">
+                                                            <label class="form-label" for="Cause">
+                                                                Cause Probable
+                                                            </label>
+                                                            <div class="form-control-wrap">
+                                                                <input placeholder="Saisie Obligatoire" autocomplete="off" id="nom_cause" required name="nom_cause[]" type="text" class="form-control" id="Cause">
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-lg-5">
+                                                        <div class="form-group">
+                                                            <label class="form-label" for="controle">
+                                                                Dispositif de Contrôle
+                                                            </label>
+                                                            <div class="form-control-wrap">
+                                                                <input value="neant" placeholder="Saisie Obligatoire" autocomplete="off" id="dispositif" required name="dispositif[]" type="text" class="form-control" id="controle">
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12 col-xxl-12">
+                                        <div class="card card-bordered" id="divToChangee">
+                                            <div class="card-inner">
+                                                <div class="card-head">
+                                                    <h5 class="card-title">
+                                                        Evaluation risque avec dispositif de contrôle interne actuel
+                                                    </h5>
+                                                </div>
+                                                <div class="row g-4">
+                                                    <div class="col-md-2">
+                                                        <div class="form-group">
+                                                            <label class="form-label">
+                                                                Vraisemblance
+                                                            </label>
+                                                            <select required name="vrai_residuel" class="form-select " id="select11">
                                                                 <option value="">
-                                                                    Choisir un processus
+                                                                    Choisir
                                                                 </option>
-                                                                @foreach ($processuses as $processuse)
-                                                                <option value="{{ $processuse->id }}">
-                                                                    {{ $processuse->nom }}
+                                                                @for ($i = 1; $i <= intval($color_para->nbre2); $i++)
+                                                                    <option value="{{ $i }}" >
+                                                                       {{ $i }}
+                                                                    </option>
+                                                                @endfor
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-2">
+                                                        <div class="form-group">
+                                                            <label class="form-label">Gravité</label>
+                                                            <select required name="gravite_residuel" class="form-select" id="select22">
+                                                                <option value="">
+                                                                    Choisir
+                                                                </option>
+                                                                @for ($i = 1; $i <= intval($color_para->nbre2); $i++)
+                                                                    <option value="{{ $i }}" >
+                                                                        {{ $i }}
+                                                                    </option>
+                                                                @endfor
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-2">
+                                                        <div class="form-group">
+                                                            <label id="labelcolor" class="form-label" for="cf-email">Evaluation</label>
+                                                            <input disabled type="text" class="form-control " id="resultt">
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-3">
+                                                        <div class="form-group">
+                                                            <label id="labelcolor" class="form-label">Coût</label>
+                                                            <input placeholder="Entrer le montant" id="cout_residuel" autocomplete="off" required name="cout_residuel" type="text" class="form-control">
+                                                            <script>
+                                                                var inputElement = document.getElementById('cout_residuel');
+                                                                    inputElement.addEventListener('input', function() {
+                                                                    this.value = this.value.replace(/[^0-9]/g, '');
+                                                                });
+                                                            </script>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-lg-3">
+                                                        <div class="form-group">
+                                                            <label class="form-label" for="email-address-1">
+                                                                Traitement
+                                                            </label>
+                                                            <select required name="traitement" class="form-select ">
+                                                                <option value="">
+                                                                    Choisir un traitement
+                                                                </option>
+                                                                <option value="reduire le risque">
+                                                                    Réduire le risque
+                                                                </option>
+                                                                <option value="accepter le risque">
+                                                                    Accepter le risque
+                                                                </option>
+                                                                <option value="partager le risque">
+                                                                    Partager le risque
+                                                                </option>
+                                                                <option value="eliminer le risque">
+                                                                    Éliminer le risque
+                                                                </option>
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12 col-xxl-12" id="groupesActionpr">
+                                        <div class="card card-bordered">
+                                            <div class="card-inner">
+                                                <div class="row g-4">
+                                                    <div class="col-lg-7">
+                                                        <div class="form-group">
+                                                            <label class="form-label" for="preventif">
+                                                                Action préventive
+                                                            </label>
+                                                            <div class="form-control-wrap">
+                                                                <input id="actionp" autocomplete="off" placeholder="Néant" name="actionp[]" type="text" class="form-control">
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-lg-2">
+                                                        <div class="form-group">
+                                                            <label class="form-label" for="email-address-1">
+                                                                Délai
+                                                            </label>
+                                                            <div class="form-group">
+                                                                <div class="form-control-wrap">
+                                                                    <input id="delai" name="delai[]" type="date" class="form-control" min="{{ \Carbon\Carbon::now()->toDateString() }}">
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-lg-3">
+                                                        <div class="form-group">
+                                                            <label class="form-label" for="Responsabilité">
+                                                                Responsabilité
+                                                            </label>
+                                                            <select id="responsable_idp" name="poste_idp[]" class="form-select">
+                                                                <option value="">
+                                                                    Choisir un responsable
+                                                                </option>
+                                                                @foreach ($postes as $poste)
+                                                                <option value="{{ $poste->id }}">
+                                                                    {{ $poste->nom }}
                                                                 </option>
                                                                 @endforeach
                                                             </select>
                                                         </div>
                                                     </div>
-                                                    <div class="form-group col-md-12" style="margin-top: -10px">
-                                                        <label class="form-label" for="cf-full-name">Objectifs</label>
-                                                        <div class="card ">
-                                                            <div class="card-inner" style="height: 100px;" data-simplebar>
-                                                                <ul id="listeObjectifs">
-                                                                </ul>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12 col-xxl-12" id="groupesActionco">
+                                        <div class="card card-bordered">
+                                            <div class="card-inner">
+                                                <div class="row g-4">
+                                                    <div class="col-lg-9">
+                                                        <div class="form-group">
+                                                            <label class="form-label" for="corectif">
+                                                                Action corrective
+                                                            </label>
+                                                            <div class="form-control-wrap">
+                                                                <input autocomplete="off" required placeholder="Néant" id="actionc" name="actionc[]" type="text" class="form-control" >
                                                             </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-lg-3">
+                                                        <div class="form-group">
+                                                            <label class="form-label" for="Responsabilité">
+                                                                Responsabilité
+                                                            </label>
+                                                            <select id="responsable_idc" required name="poste_idc[]" class="form-select">
+                                                                <option selected value="">
+                                                                    Choisir un responsable
+                                                                </option>
+                                                                @foreach ($postes as $poste)
+                                                                <option value="{{ $poste->id }}">
+                                                                    {{ $poste->nom }}
+                                                                </option>
+                                                                @endforeach
+                                                            </select>
                                                         </div>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
-                                </div>
-                                <div class="col-md-12 ">
-                                    <div class="card card-bordered h-100">
-                                        <div class="card-inner">
-                                            <div>
-                                                <div class="row g-gs">
-                                                    <div class=" form-group col-md-12">
-                                                        <label class="form-label" for="cf-full-name">Risque</label>
-                                                        <input placeholder="Saisir le risque" autocomplete="off" required name="nom_risque" type="text" class="form-control" id="cf-full-name">
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-md-12 ">
-                                    <div class="card card-bordered h-100" id="divToChange">
-                                        <div class="card-inner">
-                                            <div class="row g-gs">
-                                                <div class="col-md-12">
-                                                    <div class="card-head">
-                                                        <h5 class="card-title">Evaluation risque sans dispositif de contrôle interne ou dispositif antérieur</h5>
-                                                    </div>
-                                                    <form action="#">
-                                                        <div class="row g-4">
-                                                            <div class="col-md-3">
-                                                                <div class="form-group">
-                                                                    <label class="form-label">
-                                                                        Vraisemblance
-                                                                    </label>
-                                                                    <select required name="vrai" class="form-select " id="select1">
-                                                                        <option value="">
-                                                                            Choisir
-                                                                        </option>
-                                                                        <option value="1">
-                                                                            1
-                                                                        </option>
-                                                                        <option value="2">
-                                                                            2
-                                                                        </option>
-                                                                        <option value="3">
-                                                                            3
-                                                                        </option>
-                                                                        <option value="4">
-                                                                            4
-                                                                        </option>
-                                                                        <option value="5">
-                                                                            5
-                                                                        </option>
-                                                                    </select>
-                                                                </div>
-                                                            </div>
-                                                            <div class="col-md-3">
-                                                                <div class="form-group">
-                                                                    <label class="form-label">Gravité</label>
-                                                                    <select required name="gravite" class="form-select" id="select2">
-                                                                        <option value="">
-                                                                            Choisir
-                                                                        </option>
-                                                                        <option value="1">
-                                                                            1
-                                                                        </option>
-                                                                        <option value="2">
-                                                                            2
-                                                                        </option>
-                                                                        <option value="3">
-                                                                            3
-                                                                        </option>
-                                                                        <option value="4">
-                                                                            4
-                                                                        </option>
-                                                                        <option value="5">
-                                                                            5
-                                                                        </option>
-                                                                    </select>
-                                                                </div>
-                                                            </div>
-                                                            <div class="col-md-2">
-                                                                <div class="form-group">
-                                                                    <label id="labelcolor" class="form-label" for="cf-email">Evaluation</label>
-                                                                    <input disabled type="text" class="form-control text-center" id="result">
-                                                                </div>
-                                                            </div>
-                                                            <div class="col-md-4">
-                                                                <div class="form-group">
-                                                                    <label id="labelcolor" class="form-label">Coût</label>
-                                                                    <input placeholder="Entrer le montant" id="cout" autocomplete="off" required name="cout" type="text" class="form-control ">
-                                                                </div>
-                                                                <script>
-                                                                    var inputElement = document.getElementById('cout');
-                                                                        inputElement.addEventListener('input', function() {
-                                                                            this.value = this.value.replace(/[^0-9]/g, '');
-                                                                        });
-                                                                </script>
-                                                            </div>
-                                                        </div>
-                                                    </form>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-12 col-xxl-12" id="groupesContainer">
-                                <div class="card card-bordered">
-                                    <div class="card-inner">
-                                        <div class="row g-4">
-                                            <div class="col-lg-7">
-                                                <div class="form-group">
-                                                    <label class="form-label" for="Cause">
-                                                        Cause Probable
-                                                    </label>
-                                                    <div class="form-control-wrap">
-                                                        <input placeholder="Saisie Obligatoire" autocomplete="off" id="nom_cause" required name="nom_cause[]" type="text" class="form-control" id="Cause">
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="col-lg-5">
-                                                <div class="form-group">
-                                                    <label class="form-label" for="controle">
-                                                        Dispositif de Contrôle
-                                                    </label>
-                                                    <div class="form-control-wrap">
-                                                        <input value="neant" placeholder="Saisie Obligatoire" autocomplete="off" id="dispositif" required name="dispositif[]" type="text" class="form-control" id="controle">
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-12 col-xxl-12">
-                                <div class="card card-bordered" id="divToChangee">
-                                    <div class="card-inner">
-                                        <div class="card-head">
-                                            <h5 class="card-title">
-                                                Evaluation risque avec dispositif de contrôle interne actuel
-                                            </h5>
-                                        </div>
-                                        <div class="row g-4">
-                                            <div class="col-md-2">
-                                                <div class="form-group">
-                                                    <label class="form-label">
-                                                        Vraisemblance
-                                                    </label>
-                                                    <select required name="vrai_residuel" class="form-select " id="select11">
-                                                        <option value="">
-                                                            Choisir
-                                                        </option>
-                                                        <option value="1">
-                                                            1
-                                                        </option>
-                                                        <option value="2">
-                                                            2
-                                                        </option>
-                                                        <option value="3">
-                                                            3
-                                                        </option>
-                                                        <option value="4">
-                                                            4
-                                                        </option>
-                                                        <option value="5">
-                                                            5
-                                                        </option>
-                                                    </select>
-                                                </div>
-                                            </div>
-                                            <div class="col-md-2">
-                                                <div class="form-group">
-                                                    <label class="form-label">Gravité</label>
-                                                    <select required name="gravite_residuel" class="form-select" id="select22">
-                                                        <option value="">
-                                                            Choisir
-                                                        </option>
-                                                        <option value="1">
-                                                            1
-                                                        </option>
-                                                        <option value="2">
-                                                            2
-                                                        </option>
-                                                        <option value="3">
-                                                            3
-                                                        </option>
-                                                        <option value="4">
-                                                            4
-                                                        </option>
-                                                        <option value="5">
-                                                            5
-                                                        </option>
-                                                    </select>
-                                                </div>
-                                            </div>
-                                            <div class="col-md-2">
-                                                <div class="form-group">
-                                                    <label id="labelcolor" class="form-label" for="cf-email">Evaluation</label>
-                                                    <input disabled type="text" class="form-control " id="resultt">
-                                                </div>
-                                            </div>
-                                            <div class="col-md-3">
-                                                <div class="form-group">
-                                                    <label id="labelcolor" class="form-label">Coût</label>
-                                                    <input placeholder="Entrer le montant" id="cout_residuel" autocomplete="off" required name="cout_residuel" type="text" class="form-control">
-                                                    <script>
-                                                        var inputElement = document.getElementById('cout_residuel');
-                                                            inputElement.addEventListener('input', function() {
-                                                            this.value = this.value.replace(/[^0-9]/g, '');
-                                                        });
-                                                    </script>
-                                                </div>
-                                            </div>
-                                            <div class="col-lg-3">
-                                                <div class="form-group">
-                                                    <label class="form-label" for="email-address-1">
-                                                        Traitement
-                                                    </label>
-                                                    <select required name="traitement" class="form-select ">
-                                                        <option value="">
-                                                            Choisir un traitement
-                                                        </option>
-                                                        <option value="reduire le risque">
-                                                            Réduire le risque
-                                                        </option>
-                                                        <option value="accepter le risque">
-                                                            Accepter le risque
-                                                        </option>
-                                                        <option value="partager le risque">
-                                                            Partager le risque
-                                                        </option>
-                                                        <option value="eliminer le risque">
-                                                            Éliminer le risque
-                                                        </option>
-                                                    </select>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-12 col-xxl-12" id="groupesActionpr">
-                                <div class="card card-bordered">
-                                    <div class="card-inner">
-                                        <div class="row g-4">
-                                            <div class="col-lg-7">
-                                                <div class="form-group">
-                                                    <label class="form-label" for="preventif">
-                                                        Action préventive
-                                                    </label>
-                                                    <div class="form-control-wrap">
-                                                        <input id="actionp" autocomplete="off" placeholder="Néant" name="actionp[]" type="text" class="form-control">
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="col-lg-2">
-                                                <div class="form-group">
-                                                    <label class="form-label" for="email-address-1">
-                                                        Délai
-                                                    </label>
+                                    <div class="col-md-12 col-xxl-12">
+                                        <div class="card card-bordered card-preview">
+                                            <div class="card-inner row g-gs">
+                                                <div class="col-lg-12">
                                                     <div class="form-group">
-                                                        <div class="form-control-wrap">
-                                                            <input id="delai" name="delai[]" type="date" class="form-control" min="{{ \Carbon\Carbon::now()->toDateString() }}">
+                                                        <label class="form-label" for="Responsabilité">
+                                                            Validateur
+                                                        </label>
+                                                        <select required name="poste_id" class="form-select">
+                                                            <option value="">
+                                                                Choisir le validateur
+                                                            </option>
+                                                            @foreach ($postes as $poste)
+                                                            <option value="{{ $poste->id }}">
+                                                                {{ $poste->nom }}
+                                                            </option>
+                                                            @endforeach
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12 col-xxl-12">
+                                        <div class="card card-bordered card-preview">
+                                            <div class="card-inner">
+                                                <div class="card-head">
+                                                    <h5 class="card-title">
+                                                        Notification
+                                                    </h5>
+                                                </div>
+                                                <div class="row g-gs">
+                                                    <div class="col-lg-4 text-left">
+                                                        <div class="custom-control custom-checkbox">
+                                                            <input name="choix_alert_alert" value="alert" required type="checkbox" checked class="custom-control-input" id="customCheck1">
+                                                            <label class="custom-control-label" for="customCheck1">Alert à l'écran</label>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-lg-4 text-left">
+                                                        <div class="custom-control custom-checkbox">
+                                                            <input name="choix_alert_email" value="email" type="checkbox" class="custom-control-input" id="customCheck2">
+                                                            <label class="custom-control-label" for="customCheck2">Par Email</label>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-lg-4 text-left">
+                                                        <div class="custom-control custom-checkbox">
+                                                            <input name="choix_alert_sms" value="sms" disabled type="checkbox" class="custom-control-input" id="customCheck3">
+                                                            <label class="custom-control-label" for="customCheck3">Par Sms</label>
                                                         </div>
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div class="col-lg-3">
-                                                <div class="form-group">
-                                                    <label class="form-label" for="Responsabilité">
-                                                        Responsabilité
-                                                    </label>
-                                                    <select id="responsable_idp" name="poste_idp[]" class="form-select">
-                                                        <option value="">
-                                                            Choisir un responsable
-                                                        </option>
-                                                        @foreach ($postes as $poste)
-                                                        <option value="{{ $poste->id }}">
-                                                            {{ $poste->nom }}
-                                                        </option>
-                                                        @endforeach
-                                                    </select>
-                                                </div>
-                                            </div>
                                         </div>
                                     </div>
-                                </div>
-                            </div>
-                            <div class="col-md-12 col-xxl-12" id="groupesActionco">
-                                <div class="card card-bordered">
-                                    <div class="card-inner">
-                                        <div class="row g-4">
-                                            <div class="col-lg-9">
-                                                <div class="form-group">
-                                                    <label class="form-label" for="corectif">
-                                                        Action corrective
-                                                    </label>
-                                                    <div class="form-control-wrap">
-                                                        <input autocomplete="off" required placeholder="Néant" id="actionc" name="actionc[]" type="text" class="form-control" >
+                                    <div class="col-md-12 col-xxl-12">
+                                        <div class="card card-preview">
+                                            <div class="card-inner row g-gs">
+                                                <div class="col-12">
+                                                    <div class="form-group text-center">
+                                                        <button type="submit" class="btn btn-lg btn-success btn-dim ">
+                                                            <em class="ni ni-check me-2"></em>
+                                                            <em>Soumettre</em>
+                                                        </button>
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div class="col-lg-3">
-                                                <div class="form-group">
-                                                    <label class="form-label" for="Responsabilité">
-                                                        Responsabilité
-                                                    </label>
-                                                    <select id="responsable_idc" required name="poste_idc[]" class="form-select">
-                                                        <option selected value="">
-                                                            Choisir un responsable
-                                                        </option>
-                                                        @foreach ($postes as $poste)
-                                                        <option value="{{ $poste->id }}">
-                                                            {{ $poste->nom }}
-                                                        </option>
-                                                        @endforeach
-                                                    </select>
-                                                </div>
-                                            </div>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
-                            <div class="col-md-12 col-xxl-12">
-                                <div class="card card-bordered card-preview">
-                                    <div class="card-inner row g-gs">
-                                        <div class="col-lg-12">
-                                            <div class="form-group">
-                                                <label class="form-label" for="Responsabilité">
-                                                    Validateur
-                                                </label>
-                                                <select required name="poste_id" class="form-select">
-                                                    <option value="">
-                                                        Choisir le validateur
-                                                    </option>
-                                                    @foreach ($postes as $poste)
-                                                    <option value="{{ $poste->id }}">
-                                                        {{ $poste->nom }}
-                                                    </option>
-                                                    @endforeach
-                                                </select>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-12 col-xxl-12">
-                                <div class="card card-bordered card-preview">
-                                    <div class="card-inner">
-                                        <div class="card-head">
-                                            <h5 class="card-title">
-                                                Notification
-                                            </h5>
-                                        </div>
-                                        <div class="row g-gs">
-                                            <div class="col-lg-4 text-left">
-                                                <div class="custom-control custom-checkbox">
-                                                    <input name="choix_alert_alert" value="alert" required type="checkbox" checked class="custom-control-input" id="customCheck1">
-                                                    <label class="custom-control-label" for="customCheck1">Alert à l'écran</label>
-                                                </div>
-                                            </div>
-                                            <div class="col-lg-4 text-left">
-                                                <div class="custom-control custom-checkbox">
-                                                    <input name="choix_alert_email" value="email" type="checkbox" class="custom-control-input" id="customCheck2">
-                                                    <label class="custom-control-label" for="customCheck2">Par Email</label>
-                                                </div>
-                                            </div>
-                                            <div class="col-lg-4 text-left">
-                                                <div class="custom-control custom-checkbox">
-                                                    <input name="choix_alert_sms" value="sms" disabled type="checkbox" class="custom-control-input" id="customCheck3">
-                                                    <label class="custom-control-label" for="customCheck3">Par Sms</label>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-12 col-xxl-12">
-                                <div class="card card-preview">
-                                    <div class="card-inner row g-gs">
-                                        <div class="col-12">
-                                            <div class="form-group text-center">
-                                                <button type="submit" class="btn btn-lg btn-success btn-dim ">
-                                                    <em class="ni ni-check me-2"></em>
-                                                    <em>Soumettre</em>
-                                                </button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </form>
-                @endif
+                            </form>
+                        @endif
+                    @endif
             </div>
         </div>
     </div>
@@ -563,7 +571,8 @@
 
 
 <script>
-    // Sélectionnez les éléments
+    const color_intervals = @json($color_intervals);
+
     const select1 = document.getElementById("select1");
     const select2 = document.getElementById("select2");
     const resultInput = document.getElementById("result");
@@ -573,23 +582,29 @@
     select1.addEventListener("change", sum);
     select2.addEventListener("change", sum);
 
-    // Fonction pour vérifier les valeurs et effectuer la multiplication
+    // Fonction pour vérifier les valeurs et effectuer le calcul en fonction de l'opération
     function sum() {
         const num1 = parseInt(select1.value);
         const num2 = parseInt(select2.value);
 
         if (num1 > 0 && num2 > 0) {
-            const multiplicationResult = num1 * num2;
-            resultInput.value = multiplicationResult;
-            if (multiplicationResult > 16) {
-                divToChange.style.backgroundColor = "#ea6072";
-            } else if (multiplicationResult >= 10 && multiplicationResult <= 16) {
-                divToChange.style.backgroundColor = "#f2b171";
-            } else if (multiplicationResult >= 3 && multiplicationResult <= 9) {
-                divToChange.style.backgroundColor = "#f7f880";
-            } else if (multiplicationResult >= 1 && multiplicationResult <= 2) {
-                divToChange.style.backgroundColor = "#5eccbf";
+            let multiplicationResult;
+
+            if ( @json($color_para->operation) === 'addition') {
+                multiplicationResult = num1 + num2;
+            } else if ( @json($color_para->operation) === 'multiplication') {
+                multiplicationResult = num1 * num2;
             }
+
+            resultInput.value = multiplicationResult;
+
+            // Itérer à travers les intervalles pour déterminer la couleur
+            color_intervals.forEach(color_interval => {
+                if (multiplicationResult >= color_interval.nbre1 && multiplicationResult <= color_interval.nbre2) {
+                    divToChange.style.backgroundColor = color_interval.code_color ;
+                    return;
+                }
+            });
 
         } else {
             resultInput.value = "";
@@ -599,6 +614,7 @@
 </script>
 
 <script>
+    const color_intervalss = @json($color_intervals);
     // Sélectionnez les éléments
     const select11 = document.getElementById("select11");
     const select22 = document.getElementById("select22");
@@ -615,17 +631,23 @@
         const num22 = parseInt(select22.value);
 
         if (num11 > 0 && num22 > 0) {
-            const multiplicationResultt = num11 * num22;
-            resultInputt.value = multiplicationResultt;
-            if (multiplicationResultt > 16) {
-                divToChangee.style.backgroundColor = "#ea6072";
-            } else if (multiplicationResultt >= 10 && multiplicationResultt <= 16) {
-                divToChangee.style.backgroundColor = "#f2b171";
-            } else if (multiplicationResultt >= 3 && multiplicationResultt <= 9) {
-                divToChangee.style.backgroundColor = "#f7f880";
-            } else if (multiplicationResultt >= 1 && multiplicationResultt <= 2) {
-                divToChangee.style.backgroundColor = "#5eccbf";
+            let multiplicationResultt;
+
+            if ( @json($color_para->operation) === 'addition') {
+                multiplicationResultt = num11 + num22;
+            } else if ( @json($color_para->operation) === 'multiplication') {
+                multiplicationResultt = num11 * num22;
             }
+
+            resultInputt.value = multiplicationResultt;
+
+            // Itérer à travers les intervalles pour déterminer la couleur
+            color_intervalss.forEach(color_interval => {
+                if (multiplicationResultt >= color_interval.nbre1 && multiplicationResultt <= color_interval.nbre2) {
+                    divToChangee.style.backgroundColor = color_interval.code_color ;
+                    return;
+                }
+            });
 
         } else {
             resultInputt.value = "";
@@ -922,35 +944,6 @@
             fileSizeElementmodal.textContent = '';
         }
     });
-
-
-    //si l'on veut selectionner et afficher plusieurs fichiers
-    /*const fileInput = document.getElementById('fileInput');
-    const pdfPreviews = document.getElementById('pdfPreviews');
-
-    fileInput.addEventListener('change', function () {
-        // Réinitialisez la div des prévisualisations
-        pdfPreviews.innerHTML = '';
-
-        // Parcourez tous les fichiers sélectionnés
-        for (const fichier of fileInput.files) {
-            // Créez un élément d'incorporation pour chaque fichier PDF
-            const embedElement = document.createElement('embed');
-            embedElement.src = URL.createObjectURL(fichier);
-            embedElement.type = 'application/pdf';
-            embedElement.style.width = '100%';
-            embedElement.style.height = '100%';
-
-            // Créez un conteneur div pour chaque prévisualisation
-            const previewContainer = document.createElement('div');
-            previewContainer.style.width = '500px'; // Spécifiez la largeur de chaque prévisualisation
-            previewContainer.style.height = '500px'; // Spécifiez la hauteur de chaque prévisualisation
-            previewContainer.appendChild(embedElement);
-
-            // Ajoutez l'élément d'incorporation dans le conteneur des prévisualisations
-            pdfPreviews.appendChild(previewContainer);
-        }
-    });*/
 </script>
 
 

@@ -385,11 +385,12 @@ class ListeamController extends Controller
         $processuss = Processuse::all();
 
         $color_para = Color_para::where('nbre0', '=', '0')->first();
-        $color_interval_nbre = Color_interval::all()->count();
+        $color_intervals = Color_interval::orderBy('nbre1', 'asc')->get();
+        $color_interval_nbre = count($color_intervals);
 
         return view('traitement.amup_add', 
             ['risques' => $risques, 'causesData' => $causesData, 'actionsData' => $actionsData, 
-            'causes_selects' => $causes_selects, 'Suivi_action2' => $Suivi_action2, 'caus2' => $caus2, 'causesData2' => $causesData2, 'actionsData2' => $actionsData2, 'postes' => $postes, 'processuss' => $processuss, 'am_id' => $am_id,'color_para' => $color_para,'color_interval_nbre' => $color_interval_nbre,]);
+            'causes_selects' => $causes_selects, 'Suivi_action2' => $Suivi_action2, 'caus2' => $caus2, 'causesData2' => $causesData2, 'actionsData2' => $actionsData2, 'postes' => $postes, 'processuss' => $processuss, 'am_id' => $am_id,'color_para' => $color_para,'color_intervals' => $color_intervals,'color_interval_nbre' => $color_interval_nbre,]);
    }
 
     public function am_valider($id)

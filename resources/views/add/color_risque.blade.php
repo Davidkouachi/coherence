@@ -100,173 +100,70 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                            @if($color_interval_nbre > 0)
-                                                @if( $color_para->operation === 'addition' )
-                                                    @if( $color_para->nbre2+$color_para->nbre2 != $color_interval_dernier->nbre2 )
-                                                        <div class="col-lg-12">
-                                                            <div class="form-group text-center">
-                                                                <label class="form-label">
-                                                                    <em class="nk-modal-icon icon icon-circle icon-circle-md ni ni-alert bg-danger"></em>
-                                                                    <em class="text-danger" >
-                                                                        Paraméttrage non complet
-                                                                    </em>
-                                                                </label>
-                                                            </div>
-                                                        </div>
-                                                    @elseif( $color_para->nbre2+$color_para->nbre2 === $color_interval_dernier->nbre2 )
-                                                        @if( $color_para->nbre_color === $color_interval_nbre )
-                                                            @php
-                                                                $isOutOfRange = false;
-                                                            @endphp
 
-                                                            @for ($i = 1; $i <= (intval($color_para->nbre2) + intval($color_para->nbre2)); $i++)
-                                                                @php
-                                                                    $isInInterval = false;
-                                                                @endphp
-
-                                                                @foreach($color_intervals as $color_interval)
-                                                                    @if ($i >= $color_interval->nbre1 && $i <= $color_interval->nbre2)
-                                                                        @php
-                                                                            $isInInterval = true;
-                                                                            break; // Sortir de la boucle dès qu'un intervalle correspond
-                                                                        @endphp
-                                                                    @endif
-                                                                @endforeach
-
-                                                                @unless($isInInterval)
-                                                                    @if($i)
-                                                                        @php
-                                                                            $isOutOfRange = true;
-                                                                        @endphp
-                                                                    @endif
-                                                                @endunless
-                                                            @endfor
-
-                                                            @if($isOutOfRange)
-                                                                <div class="col-lg-12">
-                                                                    <div class="form-group text-center">
-                                                                        <label class="form-label">
-                                                                            <em class="nk-modal-icon icon icon-circle icon-circle-md ni ni-alert bg-danger"></em>
-                                                                            <em class="text-danger" >
-                                                                                Paraméttrage non complet
-                                                                            </em>
-                                                                        </label>
-                                                                    </div>
-                                                                </div>
-                                                            @else
-                                                                <div class="col-lg-12">
-                                                                    <div class="form-group text-center">
-                                                                        <label class="form-label">
-                                                                            <em class="nk-modal-icon icon icon-circle icon-circle-md ni ni-check bg-success"></em>
-                                                                            <em class="text-success" >
-                                                                                Paraméttrage complet
-                                                                            </em>
-                                                                        </label>
-                                                                    </div>
-                                                                </div>
-                                                            @endif
-                                                        @else
-                                                            <div class="col-lg-12">
-                                                                <div class="form-group text-center">
-                                                                    <label class="form-label">
-                                                                        <em class="nk-modal-icon icon icon-circle icon-circle-md ni ni-alert bg-danger"></em>
-                                                                        <em class="text-danger" >
-                                                                            Paraméttrage non complet
-                                                                        </em>
-                                                                    </label>
-                                                                </div>
-                                                            </div>
-                                                        @endif
-                                                    @endif
-                                                @elseif( $color_para->operation === 'multiplication' )
-                                                    @if( $color_para->nbre2*$color_para->nbre2 != $color_interval_dernier->nbre2 )
-                                                        <div class="col-lg-12">
-                                                            <div class="form-group text-center">
-                                                                <label class="form-label">
-                                                                    <em class="nk-modal-icon icon icon-circle icon-circle-md ni ni-alert bg-danger"></em>
-                                                                    <em class="text-danger" >
-                                                                        Paraméttrage non complet
-                                                                    </em>
-                                                                </label>
-                                                            </div>
-                                                        </div>
-                                                    @elseif( $color_para->nbre2*$color_para->nbre2 === $color_interval_dernier->nbre2 )
-                                                        @if( $color_para->nbre_color === $color_interval_nbre )
-                                                            @php
-                                                                $isOutOfRange = false;
-                                                            @endphp
-
-                                                            @for ($i = 1; $i <= (intval($color_para->nbre2) * intval($color_para->nbre2)); $i++)
-                                                                @php
-                                                                    $isInInterval = false;
-                                                                @endphp
-
-                                                                @foreach($color_intervals as $color_interval)
-                                                                    @if ($i >= $color_interval->nbre1 && $i <= $color_interval->nbre2)
-                                                                        @php
-                                                                            $isInInterval = true;
-                                                                            break; // Sortir de la boucle dès qu'un intervalle correspond
-                                                                        @endphp
-                                                                    @endif
-                                                                @endforeach
-
-                                                                @unless($isInInterval)
-                                                                    @if($i)
-                                                                        @php
-                                                                            $isOutOfRange = true;
-                                                                        @endphp
-                                                                    @endif
-                                                                @endunless
-                                                            @endfor
-
-                                                            @if($isOutOfRange)
-                                                                <div class="col-lg-12">
-                                                                    <div class="form-group text-center">
-                                                                        <label class="form-label">
-                                                                            <em class="nk-modal-icon icon icon-circle icon-circle-md ni ni-alert bg-danger"></em>
-                                                                            <em class="text-danger" >
-                                                                                Paraméttrage non complet
-                                                                            </em>
-                                                                        </label>
-                                                                    </div>
-                                                                </div>
-                                                            @else
-                                                                <div class="col-lg-12">
-                                                                    <div class="form-group text-center">
-                                                                        <label class="form-label">
-                                                                            <em class="nk-modal-icon icon icon-circle icon-circle-md ni ni-check bg-success"></em>
-                                                                            <em class="text-success" >
-                                                                                Paraméttrage complet
-                                                                            </em>
-                                                                        </label>
-                                                                    </div>
-                                                                </div>
-                                                            @endif
-                                                        @else
-                                                            <div class="col-lg-12">
-                                                                <div class="form-group text-center">
-                                                                    <label class="form-label">
-                                                                        <em class="nk-modal-icon icon icon-circle icon-circle-md ni ni-alert bg-danger"></em>
-                                                                        <em class="text-danger" >
-                                                                            Paraméttrage non complet
-                                                                        </em>
-                                                                    </label>
-                                                                </div>
-                                                            </div>
-                                                        @endif
-                                                    @endif
-                                                @endif
-                                            @elseif($color_interval_nbre === 0)
+                                            @if( intval($color_para->nbre_color) > intval($color_interval_nbre) )
                                                 <div class="col-lg-12">
                                                     <div class="form-group text-center">
                                                         <label class="form-label">
-                                                            <em class="nk-modal-icon icon icon-circle icon-circle-md ni ni-info bg-warning"></em>
-                                                            <em class="text-warning">
-                                                                Aucun interval n'a étè défini
+                                                            <em class="nk-modal-icon icon icon-circle icon-circle-md ni ni-alert bg-warning"></em>
+                                                            <em class="text-warning" >
+                                                                Paraméttrage non complet
                                                             </em>
                                                         </label>
                                                     </div>
                                                 </div>
+                                            @else
+                                                @php
+                                                    $isOutOfRange = false;
+                                                    $maxValue = ($color_para->operation === 'addition') ? (intval($color_para->nbre2) + intval($color_para->nbre2)) : (intval($color_para->nbre2) * intval($color_para->nbre2));
+                                                @endphp
+
+                                                @for ($i = 1; $i <= $maxValue; $i++)
+                                                    @php
+                                                        $isInInterval = false;
+                                                    @endphp
+
+                                                    @foreach($color_intervals as $color_interval)
+                                                        @if ($i >= $color_interval->nbre1 && $i <= $color_interval->nbre2)
+                                                            @php
+                                                                $isInInterval = true;
+                                                                break; // Sortir de la boucle dès qu'un intervalle correspond
+                                                            @endphp
+                                                        @endif
+                                                    @endforeach
+
+                                                    @unless($isInInterval)
+                                                        @if($i)
+                                                            @php
+                                                                $isOutOfRange = true;
+                                                            @endphp
+                                                        @endif
+                                                    @endunless
+                                                @endfor
+
+                                                @if($isOutOfRange)
+                                                    <div class="col-lg-12">
+                                                        <div class="form-group text-center">
+                                                            <label class="form-label">
+                                                                <em class="nk-modal-icon icon icon-circle icon-circle-md ni ni-alert bg-warning"></em>
+                                                                <em class="text-warning" >
+                                                                    Paraméttrage non complet
+                                                                </em>
+                                                            </label>
+                                                        </div>
+                                                    </div>
+                                                @else
+                                                    <div class="col-lg-12">
+                                                        <div class="form-group text-center">
+                                                            <label class="form-label">
+                                                                <em class="nk-modal-icon icon icon-circle icon-circle-md ni ni-check bg-success"></em>
+                                                                <em class="text-success" >
+                                                                    Paraméttrage complet
+                                                                </em>
+                                                            </label>
+                                                        </div>
+                                                    </div>
+                                                @endif
                                             @endif
                                         </div>
                                     </div>
@@ -277,21 +174,13 @@
                                         @foreach($color_intervals as $key => $color_interval )
                                         <li class="nk-activity-item border-0">
                                             @if( $color_interval->color === 'vert' )
-                                            <div class="nk-activity-media user-avatar" style="background-color: #5eccbf;">
-                                                
-                                            </div>
+                                                <div class="nk-activity-media user-avatar" style="background-color:{{$color_interval->code_color}};"></div>
                                             @elseif( $color_interval->color === 'jaune' )
-                                            <div class="nk-activity-media user-avatar" style="background-color: #f7f880;">
-                                                
-                                            </div>
+                                                <div class="nk-activity-media user-avatar" style="background-color:{{$color_interval->code_color}};"></div>
                                             @elseif( $color_interval->color === 'orange' )
-                                            <div class="nk-activity-media user-avatar" style="background-color: #f2b171;">
-                                                
-                                            </div>
+                                                <div class="nk-activity-media user-avatar" style="background-color:{{$color_interval->code_color}};"></div>
                                             @elseif( $color_interval->color === 'rouge' )
-                                            <div class="nk-activity-media user-avatar" style="background-color: #ea6072;">
-                                                
-                                            </div>
+                                                <div class="nk-activity-media user-avatar" style="background-color:{{$color_interval->code_color}};"></div>
                                             @endif
                                             <div class="nk-activity-data" style="width: 100px;">
                                                 <div class="label">
@@ -631,328 +520,6 @@
     </div>
 </div>
 @endforeach
-
-
-
-
-<!--<script>
-    document.addEventListener('DOMContentLoaded', function() {
-        // Récupérer les éléments du DOM
-        var nbreInput = document.getElementById('nbre');
-        var nbreColorInput = document.getElementById('nbre_color');
-        var colorPara = document.getElementById('color_para');
-        var suivantButton =  document.getElementById('btn_suivant'); // Bouton suivant
-
-        suivantButton.addEventListener('click', function(event) {
-
-            if (nbreInput.value === '') {
-                toastr.info("Sélectionné un nombre.");
-                event.preventDefault();
-                return;
-            }else if (nbreColorInput.value === '') {
-                toastr.info("Sélectionné le nombre de couleur.");
-                event.preventDefault();
-                return;
-            }else if (operation.value === '') {
-                toastr.info("Sélectionné une opération.");
-                event.preventDefault();
-                return;
-            }
-
-            var nbre = parseInt(nbreInput.value);
-            var nbreColor = parseInt(nbreColorInput.value);
-
-            document.getElementById('block').style.display = 'block';
-
-            // Supprimer les blocs existants
-            while (colorPara.firstChild) {
-                colorPara.removeChild(colorPara.firstChild);
-            }
-
-            // Créer et afficher les nouveaux blocs
-            for (var i = 0; i < nbreColor; i++) {
-
-                var defaultValueInput = '';
-                var readonly = '';
-                if (i === nbreColor - 1) {
-                    if (operation.value === 'addition') {
-                        var defaultValueInput = nbre + nbre;
-                        var readonly = 'readonly';
-                    } else if (operation.value === 'multiplication') {
-                        var defaultValueInput = nbre * nbre;
-                        var readonly = 'readonly';
-                    }
-                }
-
-                var defaultValueInput1 = '';
-                if (i + 1 === 1) {
-                    var defaultValueInput1 = '1';
-                }else {
-                    var defaultValueInput1 = '';
-                }
-
-                var bloc = document.createElement('div');
-                bloc.className = 'col-lg-12 row g-4';
-                bloc.innerHTML = `
-                    <div class="card-head">
-                        <h5 class="card-title">
-                            ${i + 1}
-                        </h5>
-                    </div>
-                    <div class="col-lg-4">
-                        <div class="form-group text-center">
-                            <label class="form-label" for="Cause">De</label>
-                            <div class="form-control-wrap">
-                                <input placeholder="Entrer un chiffre" value="${defaultValueInput1}" readonly required type="text" class="form-control text-center" name="nbre1">
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-4">
-                        <div class="form-group text-center">
-                            <label class="form-label" for="Cause">à</label>
-                            <div class="form-control-wrap">
-                                <input placeholder="Entrer un chiffre" ${readonly} value="${defaultValueInput}" required type="text" class="form-control text-center" name="nbre2">
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-4">
-                        <div class="form-group text-center">
-                            <label class="form-label" for="Cause">Couleur</label>
-                            <div class="form-control-wrap">
-                                <select required class="form-select text-center" >
-                                    <option value="" >
-                                        Choisir une couleur
-                                    </option>
-                                    <option value="vert" >
-                                        Vert
-                                    </option>
-                                    <option value="jaune" >
-                                        Jaune
-                                    </option>
-                                    <option value="orange" >
-                                        Orange
-                                    </option>
-                                    <option value="rouge" >
-                                        Rouge
-                                    </option>
-                                </select>
-                            </div>
-                        </div>
-                    </div>
-                `;
-                colorPara.appendChild(bloc);
-
-                var inputNbre2 = bloc.querySelector('input[name="nbre2"]');
-
-                inputNbre2.addEventListener('input', createInputListener(inputNbre2));
-            }
-
-            function createInputListener(input) {
-                return function() {
-                    var parentBloc = input.closest('.row');
-                    var nextBloc = parentBloc.nextElementSibling;
-
-                    if (nextBloc) {
-                        var inputNbre1 = nextBloc.querySelector('input[name="nbre1"]');
-                        if (inputNbre1) {
-                            if (parseInt(input.value) >= parseInt(defaultValueInput)) {
-                                toastr.warning("Veuillez vérifier le nombre saisie.");
-                                return;
-                            }else {
-                                inputNbre1.value = parseInt(input.value) + 1;
-                            }
-                        }
-                    }
-                };
-            }
-
-            var selectElements = document.querySelectorAll('.form-control-wrap select');
-
-            // Réinitialiser les options disponibles pour chaque sélecteur de couleur
-            selectElements.forEach(function(select) {
-                var selectedOptions = new Set(); // Stocker les options déjà sélectionnées
-
-                // Parcourir tous les sélecteurs de couleur sauf celui actuellement modifié
-                selectElements.forEach(function(otherSelect) {
-                    if (otherSelect !== select) {
-                        var selectedValue = otherSelect.value;
-                        if (selectedValue !== '') {
-                            selectedOptions.add(selectedValue); // Ajouter l'option sélectionnée à l'ensemble
-                        }
-                    }
-                });
-
-                // Désactiver les options déjà sélectionnées dans ce sélecteur
-                var options = select.querySelectorAll('option');
-                options.forEach(function(option) {
-                    if (selectedOptions.has(option.value)) {
-                        option.disabled = true; // Désactiver l'option si elle est sélectionnée dans un autre sélecteur
-                    } else {
-                        option.disabled = false; // Activer l'option si elle n'est pas sélectionnée dans un autre sélecteur
-                    }
-                });
-            });
-
-        });
-
-    });
-</script>-->
-
-<!--<script>
-    document.addEventListener('DOMContentLoaded', function() {
-        // Récupérer les éléments du DOM
-        var nbreInput = document.getElementById('nbre');
-        var nbreColorInput = document.getElementById('nbre_color');
-        var colorPara = document.getElementById('color_para');
-        var suivantButton =  document.getElementById('btn_suivant'); // Bouton suivant
-
-        if (nbreInput.value !== '' && nbreColorInput.value !== '' && operation.value !== '') {
-
-            var nbre = parseInt(nbreInput.value);
-            var nbreColor = parseInt(nbreColorInput.value);
-
-            document.getElementById('block').style.display = 'block';
-
-            // Créer et afficher les nouveaux blocs
-            for (var i = 0; i < nbreColor; i++) {
-
-                var defaultValueInput = '';
-                var readonly = '';
-                if (i === nbreColor - 1) {
-                    if (operation.value === 'addition') {
-                        var defaultValueInput = nbre + nbre;
-                        var readonly = 'readonly';
-                    } else if (operation.value === 'multiplication') {
-                        var defaultValueInput = nbre * nbre;
-                        var readonly = 'readonly';
-                    }
-                }
-
-                var defaultValueInput1 = '';
-                if (i + 1 === 1) {
-                    var defaultValueInput1 = '1';
-                }else {
-                    var defaultValueInput1 = '';
-                }
-
-                var bloc = document.createElement('div');
-                bloc.className = 'col-lg-12 row g-4';
-                bloc.innerHTML = `
-                    <div class="card-head">
-                        <h5 class="card-title">
-                            ${i + 1}
-                        </h5>
-                    </div>
-                    <div class="col-lg-4">
-                        <div class="form-group text-center">
-                            <label class="form-label" for="Cause">De</label>
-                            <div class="form-control-wrap">
-                                <input placeholder="Entrer un chiffre" value="${defaultValueInput1}" readonly required type="text" class="form-control text-center" name="nbre1">
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-4">
-                        <div class="form-group text-center">
-                            <label class="form-label" for="Cause">à</label>
-                            <div class="form-control-wrap">
-                                <input placeholder="Entrer un chiffre" ${readonly} value="${defaultValueInput}" required type="text" class="form-control text-center" name="nbre2">
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-4">
-                        <div class="form-group text-center">
-                            <label class="form-label" for="Cause">Couleur</label>
-                            <div class="form-control-wrap">
-                                <select name="color_interval" required class="form-select text-center" >
-                                    <option value="" >
-                                        Choisir une couleur
-                                    </option>
-                                    <option value="vert" >
-                                        Vert
-                                    </option>
-                                    <option value="jaune" >
-                                        Jaune
-                                    </option>
-                                    <option value="orange" >
-                                        Orange
-                                    </option>
-                                    <option value="rouge" >
-                                        Rouge
-                                    </option>
-                                </select>
-                            </div>
-                        </div>
-                    </div>
-                `;
-                colorPara.appendChild(bloc);
-
-                var inputNbre2 = bloc.querySelector('input[name="nbre2"]');
-
-                inputNbre2.addEventListener('input', createInputListener(inputNbre2));
-            }
-
-            function createInputListener(input) {
-                return function() {
-                    var parentBloc = input.closest('.row');
-                    var nextBloc = parentBloc.nextElementSibling;
-
-                    if (nextBloc) {
-                        var inputNbre1 = nextBloc.querySelector('input[name="nbre1"]');
-                        if (inputNbre1) {
-                            if (parseInt(input.value) >= parseInt(defaultValueInput)) {
-                                toastr.warning("Veuillez vérifier le nombre saisie.");
-                                return;
-                            }else {
-                                inputNbre1.value = parseInt(input.value) + 1;
-                            }
-                        }
-                    }
-                };
-            }
-
-            var selectElements = document.querySelectorAll('.form-control-wrap select');
-
-            // Réinitialiser les options disponibles pour chaque sélecteur de couleur
-            selectElements.forEach(function(select) {
-                var selectedOptions = new Set(); // Stocker les options déjà sélectionnées
-
-                // Parcourir tous les sélecteurs de couleur sauf celui actuellement modifié
-                selectElements.forEach(function(otherSelect) {
-                    if (otherSelect !== select) {
-                        var selectedValue = otherSelect.value;
-                        if (selectedValue !== '') {
-                            selectedOptions.add(selectedValue); // Ajouter l'option sélectionnée à l'ensemble
-                        }
-                    }
-                });
-
-                // Désactiver les options déjà sélectionnées dans ce sélecteur
-                var options = select.querySelectorAll('option');
-                options.forEach(function(option) {
-                    if (selectedOptions.has(option.value)) {
-                        option.disabled = true; // Désactiver l'option si elle est sélectionnée dans un autre sélecteur
-                    } else {
-                        option.disabled = false; // Activer l'option si elle n'est pas sélectionnée dans un autre sélecteur
-                    }
-                });
-            });
-
-            var colorOptions = ['vert', 'jaune', 'orange', 'rouge'];
-
-            var selectElements = colorPara.querySelectorAll('select');
-
-            selectElements.forEach(function(select) {
-                var optionsHTML = '<option value="">Choisir une couleur</option>';
-                colorOptions.forEach(function(color) {
-                    optionsHTML += `<option value="${color}">${color.charAt(0).toUpperCase() + color.slice(1)}</option>`;
-                });
-                select.innerHTML = optionsHTML;
-            });
-
-        }
-
-    });
-</script>-->
 
 @endsection
 

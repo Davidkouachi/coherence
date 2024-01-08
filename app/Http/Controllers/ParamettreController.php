@@ -35,17 +35,13 @@ class ParamettreController extends Controller
     public function index_color_risk()
     {
         $color_para = Color_para::where('nbre0', '=', '0')->first();
-
         $color_intervals = Color_interval::orderBy('nbre1', 'asc')->get();
         $color_interval_nbre = count($color_intervals);
 
-        $color_interval_dernier = Color_interval::orderBy('nbre1', 'desc')->latest()->first();
-
-
         return view('add.color_risque',[
             'color_para' => $color_para,
-            'color_intervals' => $color_intervals,'color_interval_nbre' => $color_interval_nbre,
-            'color_interval_dernier' => $color_interval_dernier,
+            'color_intervals' => $color_intervals,
+            'color_interval_nbre' => $color_interval_nbre,
         ]);
     }
 
@@ -102,6 +98,16 @@ class ParamettreController extends Controller
         $color_interval->nbre1 = $request->nbre1;
         $color_interval->nbre2 = $request->nbre2;
         $color_interval->color = $request->color;
+
+        if($request->color === 'vert'){
+            $color_interval->code_color = '#5eccbf';
+        }elseif($request->color === 'jaune'){
+            $color_interval->code_color = '#f7f880';
+        }elseif($request->color === 'orange'){
+            $color_interval->code_color = '#f2b171';
+        }elseif($request->color === 'rouge'){
+            $color_interval->code_color = '#ea6072';
+        }
 
         if($color_interval->save()) {
             return redirect()->back()->with(['success' => 'Nouvel interval ajouté.']);

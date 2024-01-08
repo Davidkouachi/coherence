@@ -14,5 +14,6 @@ class Color_interval extends Model
         'nbre1',
         'nbre2',
         'color',
+        'code_color',
     ];
 }
