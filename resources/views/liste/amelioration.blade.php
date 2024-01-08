@@ -25,7 +25,7 @@
                                 <div class="nk-block-between">
                                     <div class="nk-block-head-content" style="margin:0px auto;">
                                         <h3 class="text-center">
-                                            <span>Liste des Améliorations</span>
+                                            <span>Liste des Incidents</span>
                                             <em class="icon ni ni-list-index"></em>
                                         </h3>
                                     </div>
@@ -84,7 +84,7 @@
                                                         @endif
                                                         @if ($am->statut === 'update')
                                                             <td class="text-info" >
-                                                                Modification éffectuée
+                                                                Modification Détectée
                                                             </td>
                                                         @endif
                                                         <td>

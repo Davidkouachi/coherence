@@ -120,20 +120,23 @@
                                                                 <td>
                                                                     {{ $processu->evag }}
                                                                 </td>
-                                                                @if ($processu->evag < 1  )
+                                                                @php
+                                                                    $colorMatchFound = false;
+                                                                @endphp
+
+                                                                @foreach($color_intervals as $color_interval)
+                                                                    @if($color_interval->nbre1 <= $processu->evag  && $color_interval->nbre2 >= $processu->evag )
+                                                                        <td class="border-white" style="background-color:{{$color_interval->code_color}}" ></td>
+                                                                        @php
+                                                                            $colorMatchFound = true;
+                                                                        @endphp
+                                                                        @break
+                                                                    @endif
+                                                                @endforeach
+
+                                                                @if(!$colorMatchFound)
+                                                                    <!-- Afficher un message si aucune correspondance n'a été trouvée -->
                                                                     <td class="border-white" style="background-color:#8e8e8e;" ></td>
-                                                                @endif
-                                                                @if ($processu->evag >= 1 && $processu->evag <= 2 )
-                                                                    <td class="border-white" style="background-color:#5eccbf;" ></td>
-                                                                @endif
-                                                                @if ($processu->evag >= 3 && $processu->evag <= 9)
-                                                                    <td class="border-white"style="background-color:#f7f880;"></td>
-                                                                @endif
-                                                                @if ($processu->evag >= 10 && $processu->evag <= 16)
-                                                                    <td class="border-white"style="background-color:#f2b171;"></td>
-                                                                @endif
-                                                                @if ($processu->evag > 16)
-                                                                    <td class="border-white" style="background-color:#ea6072;"></td>
                                                                 @endif
                                                                 <td>
                                                                     <a data-bs-toggle="modal"
@@ -184,25 +187,24 @@
                                                                 Processus : {{$processu->nom}}
                                                             </label>
                                                             <div class="form-control-wrap">
-                                                                @if ($processu->evag < 1 )
+                                                                @php
+                                                                    $colorMatchFound0 = false;
+                                                                @endphp
+
+                                                                @foreach($color_intervals as $color_interval)
+                                                                    @if($color_interval->nbre1 <= $processu->evag && $color_interval->nbre2 >= $processu->evag)
+                                                                        <input value="{{ $processu->evag }}" disabled type="text"
+                                                                            class="form-control border-white text-center " id="Cause" style="background-color:{{$color_interval->code_color}}" >
+                                                                        @php
+                                                                            $colorMatchFound0 = true;
+                                                                        @endphp
+                                                                        @break
+                                                                    @endif
+                                                                @endforeach
+
+                                                                @if(!$colorMatchFound0)
                                                                     <input value="{{ $processu->evag }}" disabled type="text" 
                                                                     class="form-control border-white text-center " id="Cause" style="background-color:#8e8e8e;" >
-                                                                @endif
-                                                                @if ($processu->evag >= 1 && $processu->evag <= 2 )
-                                                                    <input value="{{ $processu->evag }}" disabled type="text" 
-                                                                    class="form-control border-white text-center " id="Cause" style="background-color:#5eccbf;" >
-                                                                @endif
-                                                                @if ($processu->evag >= 3 && $processu->evag <= 9)
-                                                                    <input value="{{ $processu->evag }}" disabled type="text" 
-                                                                    class="form-control border-white text-center " id="Cause"style="background-color:#f7f880;">
-                                                                @endif
-                                                                @if ($processu->evag >= 10 && $processu->evag <= 16)
-                                                                    <input value="{{ $processu->evag }}" disabled type="text" 
-                                                                    class="form-control border-white text-center " id="Cause"style="background-color:#f2b171;">
-                                                                @endif
-                                                                @if ($processu->evag > 16)
-                                                                    <input value="{{ $processu->evag }}" disabled type="text" 
-                                                                    class="form-control border-white text-center " id="Cause"style="background-color:#ea6072;">
                                                                 @endif
                                                             </div>
                                                         </div>
@@ -226,28 +228,29 @@
                                                                     Risque : {{ $risqueData['nom'] }}
                                                                 </label>
                                                                 <div class="form-control-wrap">
-                                                                    @if ($risqueData['evaluation_residuel'] >= 1 && $risqueData['evaluation_residuel'] <= 2 )
-                                                                        <input value="{{ $risqueData['evaluation_residuel'] }}" disabled type="text" 
-                                                                        class="form-control border-white text-center " id="Cause" style="background-color:#5eccbf;" >
-                                                                    @endif
-                                                                    @if ($risqueData['evaluation_residuel'] >= 3 && $risqueData['evaluation_residuel'] <= 9)
-                                                                        <input value="{{ $risqueData['evaluation_residuel'] }}" disabled type="text" 
-                                                                        class="form-control border-white text-center " id="Cause"style="background-color:#f7f880;">
-                                                                    @endif
-                                                                    @if ($risqueData['evaluation_residuel'] >= 10 && $risqueData['evaluation_residuel'] <= 16)
-                                                                        <input value="{{ $risqueData['evaluation_residuel'] }}" disabled type="text" 
-                                                                        class="form-control border-white text-center " id="Cause"style="background-color:#f2b171;">
-                                                                    @endif
-                                                                    @if ($risqueData['evaluation_residuel'] > 16)
-                                                                        <input value="{{ $risqueData['evaluation_residuel'] }}" disabled type="text" 
-                                                                        class="form-control border-white text-center " id="Cause"style="background-color:#ea6072;">
+
+                                                                    @php
+                                                                        $colorMatchFound1 = false;
+                                                                    @endphp
+
+                                                                    @foreach($color_intervals as $color_interval)
+                                                                        @if($color_interval->nbre1 <= $risqueData['evaluation_residuel'] && $color_interval->nbre2 >= $risqueData['evaluation_residuel'])
+                                                                            <input value="{{ $risqueData['evaluation_residuel'] }}" disabled type="text" class="form-control border-white text-center " id="Cause" style="background-color:{{$color_interval->code_color}}" >
+                                                                            @php
+                                                                                $colorMatchFound1 = true;
+                                                                            @endphp
+                                                                            @break
+                                                                        @endif
+                                                                    @endforeach
+
+                                                                    @if(!$colorMatchFound1)
+                                                                        <input value="{{ $risqueData['evaluation_residuel'] }}" disabled type="text" class="form-control border-white text-center " id="Cause" style="background-color:#8e8e8e;" >
                                                                     @endif
                                                                 </div>
                                                             </div>
                                                         </div>
                                                         @endforeach
-                                                    @endif
-                                                    @if ($processu->evag === 0 )
+                                                    @elseif ($processu->evag === 0 )
                                                         <div class="col-lg-12">
                                                             <div class="form-group text-center">
                                                                 <label class="form-label" for="Cause">

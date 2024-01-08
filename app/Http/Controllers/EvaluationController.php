@@ -21,11 +21,17 @@ class EvaluationController extends Controller
 {
     public function index()
     {
+        $color_para = Color_para::where('nbre0', '=', '0')->first();
+        $color_intervals = Color_interval::orderBy('nbre1', 'asc')->get();
+        $color_interval_nbre = count($color_intervals);
+
         $processus = Processuse::all();
         $risquesData = [];
 
         foreach ($processus as $processu) {
-            $risques = Risque::where('processus_id', $processu->id)->get();
+            $risques = Risque::where('processus_id', $processu->id)
+                            ->where('date_validation', '!=', null)
+                            ->get();
 
             if ($risques) {
                 $processu->nbre_risque = $risques->count();
@@ -58,9 +64,6 @@ class EvaluationController extends Controller
 
         }
 
-        $color_para = Color_para::where('nbre0', '=', '0')->first();
-        $color_intervals = Color_interval::orderBy('nbre1', 'asc')->get();
-        $color_interval_nbre = count($color_intervals);
 
         return view('tableau.evaproces',[
             'processus' => $processus, 

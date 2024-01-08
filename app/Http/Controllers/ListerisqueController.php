@@ -131,8 +131,16 @@ class ListerisqueController extends Controller
                 ->select('risques.*','processuses.nom as processus', 'rejets.motif as motif')
                 ->get();
 
+        $color_para = Color_para::where('nbre0', '=', '0')->first();
+        $color_intervals = Color_interval::orderBy('nbre1', 'asc')->get();
+        $color_interval_nbre = count($color_intervals);
+
+
         return view('traitement.actionup', [
             'risques' => $risques,
+            'color_para' => $color_para,
+            'color_intervals' => $color_intervals,
+            'color_interval_nbre' => $color_interval_nbre,
             
              ]);
     }
@@ -208,11 +216,25 @@ class ListerisqueController extends Controller
         $nom_risque = $request->input('risque');
         $vrai = $request->input('vrai');
         $gravite = $request->input('gravite');
-        $evaluation = $request->input('vrai') * $request->input('gravite');
+        
+        if($request->operation ==='addition'){
+            $evaluation = $request->input('vrai') + $request->input('gravite');
+        }elseif($request->operation ==='multiplication'){
+            $evaluation = $request->input('vrai') * $request->input('gravite');
+        }
+        
+
         $cout = $request->input('cout');
         $vrai_residuel = $request->input('vrai_residuel');
         $gravite_residuel = $request->input('gravite_residuel');
-        $evaluation_residuel = $request->input('vrai_residuel') * $request->input('gravite_residuel');
+
+        if($request->operation ==='addition'){
+            $evaluation_residuel = $request->input('vrai_residuel') + $request->input('gravite_residuel');
+        }elseif($request->operation ==='multiplication'){
+            $evaluation_residuel = $request->input('vrai_residuel') * $request->input('gravite_residuel');
+        }
+
+        
         $cout_residuel = $request->input('cout_residuel');
         $traitement = $request->input('traitement');
         $validateur = $request->input('poste_id');

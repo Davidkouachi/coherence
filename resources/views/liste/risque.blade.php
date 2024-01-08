@@ -125,21 +125,31 @@
                                                                 <td>{{ $risque->nbre_actionc }}</td>-->
                                                                 <!--<td>{{ $risque->vraisemblence_residuel }}</td>
                                                                 <td>{{ $risque->gravite_residuel }}</td>-->
-                                                                @if ($risque->evaluation_residuel < 1 && $risque->evaluation_residuel <= 2 )
-                                                                    <td class="border-white" style="background-color:#8e8e8e;" ></td>
+                                                                @php
+                                                                    $colorMatchFound = false;
+                                                                @endphp
+
+                                                                @foreach($color_intervals as $color_interval)
+                                                                
+                                                                    @if($color_interval->nbre1 <= $risque->evaluation_residuel && $color_interval->nbre2 >= $risque->evaluation_residuel)
+                                                                        <td class="border-white" style="background-color:{{$color_interval->code_color}}" ></td>
+                                                                        @php
+                                                                            $colorMatchFound = true;
+                                                                        @endphp
+
+                                                                        @break
+
+                                                                    @endif
+
+                                                                @endforeach
+
+                                                                @if(!$colorMatchFound)
+                                                                    <!-- Afficher un message si aucune correspondance n'a été trouvée -->
+                                                                    <td>
+                                                                        Aucune couleur correspondante
+                                                                    </td>
                                                                 @endif
-                                                                @if ($risque->evaluation_residuel >= 1 && $risque->evaluation_residuel <= 2 )
-                                                                    <td class="border-white" style="background-color:#5eccbf;" ></td>
-                                                                @endif
-                                                                @if ($risque->evaluation_residuel >= 3 && $risque->evaluation_residuel <= 9)
-                                                                    <td class="border-white"style="background-color:#f7f880;"></td>
-                                                                @endif
-                                                                @if ($risque->evaluation_residuel >= 10 && $risque->evaluation_residuel <= 16)
-                                                                    <td class="border-white"style="background-color:#f2b171;"></td>
-                                                                @endif
-                                                                @if ($risque->evaluation_residuel > 16)
-                                                                    <td class="border-white" style="background-color:#ea6072;"></td>
-                                                                @endif
+
                                                                 <td>
                                                                     @php
                                                                         $cout = $risque->cout_residuel;
@@ -151,18 +161,15 @@
                                                                     <td class=" text-warning">
                                                                         En attente de validation
                                                                     </td>
-                                                                @endif
-                                                                @if ($risque->statut === 'valider')
+                                                                @elseif ($risque->statut === 'valider')
                                                                     <td class=" text-success">
                                                                         Validé
                                                                     </td>
-                                                                @endif
-                                                                @if ($risque->statut === 'non_valider')
+                                                                @elseif ($risque->statut === 'non_valider')
                                                                     <td class=" text-danger">
                                                                         Non Validé
                                                                     </td>
-                                                                @endif
-                                                                @if ($risque->statut === 'update')
+                                                                @elseif ($risque->statut === 'update')
                                                                     <td class="text-info" >
                                                                         Modification éffectuée
                                                                     </td>
@@ -243,14 +250,11 @@
                                                                 Risque
                                                                 @if ($risque->statut === 'soumis')
                                                                     <span class="text-warning"> ( En attente de validation )</span>
-                                                                @endif
-                                                                @if ($risque->statut === 'valider')
+                                                                @elseif ($risque->statut === 'valider')
                                                                     <span class="text-success"> ( Validé )</span>
-                                                                @endif
-                                                                @if ($risque->statut === 'non_valider')
+                                                                @elseif ($risque->statut === 'non_valider')
                                                                     <span class="text-danger"> (Non Validé )</span>
-                                                                @endif
-                                                                @if ($risque->statut === 'update')
+                                                                @elseif ($risque->statut === 'update')
                                                                     <span class="text-info"> (Modification éffectuée )</span>
                                                                 @endif
                                                             </label>
@@ -265,17 +269,22 @@
                                 </div>
                                 <div class="col-md-12 row g-2" style="margin-left:1px;">
                                     <div class="col-md-12">
-                                        @if ($risque->evaluation >= 1 && $risque->evaluation <= 2 )
-                                            <div class="card card-bordered h-100 border-white" style="background-color:#5eccbf;">
-                                        @endif
-                                        @if ($risque->evaluation >= 3 && $risque->evaluation <= 9)
-                                            <div class="card card-bordered h-100 border-white" style="background-color:#f7f880;">
-                                        @endif
-                                        @if ($risque->evaluation >= 10 && $risque->evaluation <= 16)
-                                            <div class="card card-bordered h-100 border-white" style="background-color:#f2b171;">
-                                        @endif
-                                        @if ($risque->evaluation > 16)
-                                            <div class="card card-bordered h-100 border-white" style="background-color:#ea6072;">
+                                        @php
+                                            $colorMatchFound0 = false;
+                                        @endphp
+
+                                        @foreach($color_intervals as $color_interval)
+                                            @if($color_interval->nbre1 <= $risque->evaluation && $color_interval->nbre2 >= $risque->evaluation)
+                                                <div class="card card-bordered h-100 border-white" style="background-color:{{$color_interval->code_color}}">
+                                                @php
+                                                    $colorMatchFound0 = true;
+                                                @endphp
+                                                @break
+                                            @endif
+                                        @endforeach
+
+                                        @if(!$colorMatchFound0)
+                                            <div class="card card-bordered h-100 border-white" style="background-color:#8e8e8e;">
                                         @endif
                                             <div class="card-inner">
                                                 <div class="card-head">
@@ -367,17 +376,22 @@
                                 @endforeach
                                 <div class="col-md-12 row g-2" style="margin-left:1px;">
                                     <div class="col-md-12">
-                                        @if ($risque->evaluation_residuel >= 1 && $risque->evaluation_residuel <= 2 )
-                                            <div class="card card-bordered h-100 border-white" style="background-color:#5eccbf;">
-                                        @endif
-                                        @if ($risque->evaluation_residuel >= 3 && $risque->evaluation_residuel <= 9)
-                                            <div class="card card-bordered h-100 border-white" style="background-color:#f7f880;">
-                                        @endif
-                                        @if ($risque->evaluation_residuel >= 10 && $risque->evaluation_residuel <= 16)
-                                            <div class="card card-bordered h-100 border-white" style="background-color:#f2b171;">
-                                        @endif
-                                        @if ($risque->evaluation_residuel > 16)
-                                            <div class="card card-bordered h-100 border-white" style="background-color:#ea6072;">
+                                        @php
+                                            $colorMatchFound0 = false;
+                                        @endphp
+
+                                        @foreach($color_intervals as $color_interval)
+                                            @if($color_interval->nbre1 <= $risque->evaluation_residuel && $color_interval->nbre2 >= $risque->evaluation_residuel)
+                                                <div class="card card-bordered h-100 border-white" style="background-color:{{$color_interval->code_color}}">
+                                                @php
+                                                    $colorMatchFound0 = true;
+                                                @endphp
+                                                @break
+                                            @endif
+                                        @endforeach
+
+                                        @if(!$colorMatchFound0)
+                                            <div class="card card-bordered h-100 border-white" style="background-color:#8e8e8e;">
                                         @endif
                                             <div class="card-inner">
                                                 <div class="card-head">

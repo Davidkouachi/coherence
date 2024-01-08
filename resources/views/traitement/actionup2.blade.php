@@ -219,6 +219,9 @@
                                                 </div>
                                             </div>
                                         </div>
+
+                                        <input name="operation" type="text" value="{{ $color_para->operation }}" style="display: none;">
+                                        
                                         <div class="col-lg-12 ">
                                             <div class="card card-bordered h-100">
                                                 <div class="card-inner">
@@ -261,21 +264,11 @@
                                                                     </label>
                                                                     <div class="form-control-wrap">
                                                                         <select required name="vrai" class="form-select text-center" id="select1">
-                                                                            <option value="1" {{ strval($risque->vraisemblence) === '1' ? 'selected' : '' }}>
-                                                                                1
-                                                                            </option>
-                                                                            <option value="2" {{ strval($risque->vraisemblence) === '2' ? 'selected' : '' }}>
-                                                                                2
-                                                                            </option>
-                                                                            <option value="3" {{ strval($risque->vraisemblence) === '3' ? 'selected' : '' }}>
-                                                                                3
-                                                                            </option>
-                                                                            <option value="4" {{ strval($risque->vraisemblence) === '4' ? 'selected' : '' }}>
-                                                                                4
-                                                                            </option>
-                                                                            <option value="5" {{ strval($risque->vraisemblence) === '5' ? 'selected' : '' }}>
-                                                                                5
-                                                                            </option>
+                                                                            @for ($i = 1; $i <= intval($color_para->nbre2); $i++)
+                                                                                <option value="{{ $i }}" {{ intval($risque->vraisemblence) === $i ? 'selected' : '' }} >
+                                                                                    {{ $i }}
+                                                                                </option>
+                                                                            @endfor
                                                                         </select>
                                                                     </div>
                                                                 </div>
@@ -287,21 +280,11 @@
                                                                     </label>
                                                                     <div class="form-control-wrap">
                                                                         <select required name="gravite" class="form-select text-center" id="select2">
-                                                                            <option value="1" {{ strval($risque->gravite) === '1' ? 'selected' : '' }}>
-                                                                                1
-                                                                            </option>
-                                                                            <option value="2" {{ strval($risque->gravite) === '2' ? 'selected' : '' }}>
-                                                                                2
-                                                                            </option>
-                                                                            <option value="3" {{ strval($risque->gravite) === '3' ? 'selected' : '' }}>
-                                                                                3
-                                                                            </option>
-                                                                            <option value="4" {{ strval($risque->gravite) === '4' ? 'selected' : '' }}>
-                                                                                4
-                                                                            </option>
-                                                                            <option value="5" {{ strval($risque->gravite) === '5' ? 'selected' : '' }}>
-                                                                                5
-                                                                            </option>
+                                                                            @for ($i = 1; $i <= intval($color_para->nbre2); $i++)
+                                                                                <option value="{{ $i }}" {{ intval($risque->gravite) === $i ? 'selected' : '' }} >
+                                                                                    {{ $i }}
+                                                                                </option>
+                                                                            @endfor
                                                                         </select>
                                                                     </div>
                                                                 </div>
@@ -315,21 +298,27 @@
                                                                         <input value="{{ $risque->evaluation }}" readonly type="text" class="form-control text-center" id="result">
                                                                     </div>
                                                                     <script>
-                                                                        document.addEventListener("DOMContentLoaded", function() {
-                                                                                    var evaluationValue = parseInt("{{ $risque->evaluation }}");
-                                                                                    var divToChange = document.getElementById("divToChange");
+                                                                        document.addEventListener("DOMContentLoaded",function(){
+                                                                            const color_intervals = @json($color_intervals);
 
-                                                                                    if (evaluationValue > 16) {
-                                                                                        divToChange.style.backgroundColor = "#ea6072";
-                                                                                    } else if (evaluationValue >= 10 && evaluationValue <= 16) {
-                                                                                        divToChange.style.backgroundColor = "#f2b171";
-                                                                                    } else if (evaluationValue >= 3 && evaluationValue <= 9) {
-                                                                                        divToChange.style.backgroundColor = "#f7f880";
-                                                                                    } else if (evaluationValue >= 1 && evaluationValue <= 2) {
-                                                                                        divToChange.style.backgroundColor = "#5eccbf";
-                                                                                    }
-                                                                                });
-                                                                            </script>
+                                                                            var evaluationValue = parseInt("{{ $risque->evaluation }}");
+                                                                            var divToChange = document.getElementById("divToChange");
+
+                                                                            let colorFound = false;
+
+                                                                            color_intervals.forEach(color_interval => {
+                                                                                if (evaluationValue >= color_interval.nbre1 && evaluationValue <= color_interval.nbre2) {
+                                                                                    divToChange.style.backgroundColor = color_interval.code_color;
+                                                                                    colorFound = true;
+                                                                                }
+                                                                            });
+
+                                                                            if (!colorFound) {
+                                                                                divToChange.style.backgroundColor = "black";
+                                                                            }
+
+                                                                        });
+                                                                    </script>
                                                                 </div>
                                                             </div>
                                                             <div class="col-lg-6">
@@ -363,7 +352,7 @@
                                                     <div class="col-lg-7">
                                                         <div class="form-group">
                                                             <label class="form-label" for="Cause">
-                                                                Cause {{ $key+1 }}
+                                                                Cause Probable {{ $key+1 }}
                                                             </label>
                                                             <div class="form-control-wrap">
                                                                 <input value="{{ $cause->id }}" autocomplete="off" name="cause_id[]" type="text" style="display: none;">
@@ -413,21 +402,11 @@
                                                                 </label>
                                                                 <div class="form-control-wrap">
                                                                     <select required name="vrai_residuel" class="form-select text-center " id="select11">
-                                                                        <option value="1" {{ strval($risque->vraisemblence_residuel) === '1' ? 'selected' : '' }}>
-                                                                            1
-                                                                        </option>
-                                                                        <option value="2" {{ strval($risque->vraisemblence_residuel) === '2' ? 'selected' : '' }}>
-                                                                            2
-                                                                        </option>
-                                                                        <option value="3" {{ strval($risque->vraisemblence_residuel) === '3' ? 'selected' : '' }}>
-                                                                            3
-                                                                        </option>
-                                                                        <option value="4" {{ strval($risque->vraisemblence_residuel) === '4' ? 'selected' : '' }}>
-                                                                            4
-                                                                        </option>
-                                                                        <option value="5" {{ strval($risque->vraisemblence_residuel) === '5' ? 'selected' : '' }}>
-                                                                            5
-                                                                        </option>
+                                                                        @for ($i = 1; $i <= intval($color_para->nbre2); $i++)
+                                                                            <option value="{{ $i }}" {{ intval($risque->vraisemblence_residuel) === $i ? 'selected' : '' }} >
+                                                                                    {{ $i }}
+                                                                            </option>
+                                                                        @endfor
                                                                     </select>
                                                                 </div>
                                                             </div>
@@ -439,21 +418,11 @@
                                                                 </label>
                                                                 <div class="form-control-wrap">
                                                                     <select required name="gravite_residuel" class="form-select text-center" id="select22">
-                                                                        <option value="1" {{ strval($risque->gravite_residuel) === '1' ? 'selected' : '' }}>
-                                                                            1
-                                                                        </option>
-                                                                        <option value="2" {{ strval($risque->gravite_residuel) === '2' ? 'selected' : '' }}>
-                                                                            2
-                                                                        </option>
-                                                                        <option value="3" {{ strval($risque->gravite_residuel) === '3' ? 'selected' : '' }}>
-                                                                            3
-                                                                        </option>
-                                                                        <option value="4" {{ strval($risque->gravite_residuel) === '4' ? 'selected' : '' }}>
-                                                                            4
-                                                                        </option>
-                                                                        <option value="5" {{ strval($risque->gravite_residuel) === '5' ? 'selected' : '' }}>
-                                                                            5
-                                                                        </option>
+                                                                        @for ($i = 1; $i <= intval($color_para->nbre2); $i++)
+                                                                            <option value="{{ $i }}" {{ intval($risque->gravite_residuel) === $i ? 'selected' : '' }} >
+                                                                                    {{ $i }}
+                                                                            </option>
+                                                                        @endfor
                                                                     </select>
                                                                 </div>
                                                             </div>
@@ -468,20 +437,26 @@
                                                                 </div>
                                                                 <script>
                                                                     document.addEventListener("DOMContentLoaded", function() {
-                                                                                    var evaluation_residuel = parseInt("{{ $risque->evaluation_residuel }}");
-                                                                                    var divToChangee = document.getElementById("divToChangee");
+                                                                        const color_intervalss = @json($color_intervals);
 
-                                                                                    if (evaluation_residuel > 16) {
-                                                                                        divToChangee.style.backgroundColor = "#ea6072";
-                                                                                    } else if (evaluation_residuel >= 10 && evaluation_residuel <= 16) {
-                                                                                        divToChangee.style.backgroundColor = "#f2b171";
-                                                                                    } else if (evaluation_residuel >= 3 && evaluation_residuel <= 9) {
-                                                                                        divToChangee.style.backgroundColor = "#f7f880";
-                                                                                    } else if (evaluation_residuel >= 1 && evaluation_residuel <= 2) {
-                                                                                        divToChangee.style.backgroundColor = "#5eccbf";
-                                                                                    }
-                                                                                });
-                                                                            </script>
+                                                                        var evaluation_residuel = parseInt("{{ $risque->evaluation_residuel }}");
+                                                                        var divToChangee = document.getElementById("divToChangee");
+
+                                                                        let colorFound0 = false;
+
+                                                                        color_intervalss.forEach(color_interval => {
+                                                                            if (evaluation_residuel >= color_interval.nbre1 && evaluation_residuel <= color_interval.nbre2) {
+                                                                                    divToChangee.style.backgroundColor = color_interval.code_color;
+                                                                                    colorFound0 = true;
+                                                                                }
+                                                                            });
+
+                                                                            if (!colorFound0) {
+                                                                                divToChangee.style.backgroundColor = "black";
+                                                                            }
+
+                                                                        });
+                                                                </script>
                                                             </div>
                                                         </div>
                                                         <div class="col-lg-3">
@@ -691,7 +666,8 @@
 </div>
 
 <script>
-    // Sélectionnez les éléments
+    const color_intervals = @json($color_intervals);
+
     const select1 = document.getElementById("select1");
     const select2 = document.getElementById("select2");
     const resultInput = document.getElementById("result");
@@ -701,23 +677,29 @@
     select1.addEventListener("change", sum);
     select2.addEventListener("change", sum);
 
-    // Fonction pour vérifier les valeurs et effectuer la multiplication
+    // Fonction pour vérifier les valeurs et effectuer le calcul en fonction de l'opération
     function sum() {
         const num1 = parseInt(select1.value);
         const num2 = parseInt(select2.value);
 
         if (num1 > 0 && num2 > 0) {
-            const multiplicationResult = num1 * num2;
-            resultInput.value = multiplicationResult;
-            if (multiplicationResult > 16) {
-                divToChange.style.backgroundColor = "#ea6072";
-            } else if (multiplicationResult >= 10 && multiplicationResult <= 16) {
-                divToChange.style.backgroundColor = "#f2b171";
-            } else if (multiplicationResult >= 3 && multiplicationResult <= 9) {
-                divToChange.style.backgroundColor = "#f7f880";
-            } else if (multiplicationResult >= 1 && multiplicationResult <= 2) {
-                divToChange.style.backgroundColor = "#5eccbf";
+            let multiplicationResult;
+
+            if ( @json($color_para->operation) === 'addition') {
+                multiplicationResult = num1 + num2;
+            } else if ( @json($color_para->operation) === 'multiplication') {
+                multiplicationResult = num1 * num2;
             }
+
+            resultInput.value = multiplicationResult;
+
+            // Itérer à travers les intervalles pour déterminer la couleur
+            color_intervals.forEach(color_interval => {
+                if (multiplicationResult >= color_interval.nbre1 && multiplicationResult <= color_interval.nbre2) {
+                    divToChange.style.backgroundColor = color_interval.code_color ;
+                    return;
+                }
+            });
 
         } else {
             resultInput.value = "";
@@ -727,6 +709,7 @@
 </script>
 
 <script>
+    const color_intervalss = @json($color_intervals);
     // Sélectionnez les éléments
     const select11 = document.getElementById("select11");
     const select22 = document.getElementById("select22");
@@ -743,17 +726,23 @@
         const num22 = parseInt(select22.value);
 
         if (num11 > 0 && num22 > 0) {
-            const multiplicationResultt = num11 * num22;
-            resultInputt.value = multiplicationResultt;
-            if (multiplicationResultt > 16) {
-                divToChangee.style.backgroundColor = "#ea6072";
-            } else if (multiplicationResultt >= 10 && multiplicationResultt <= 16) {
-                divToChangee.style.backgroundColor = "#f2b171";
-            } else if (multiplicationResultt >= 3 && multiplicationResultt <= 9) {
-                divToChangee.style.backgroundColor = "#f7f880";
-            } else if (multiplicationResultt >= 1 && multiplicationResultt <= 2) {
-                divToChangee.style.backgroundColor = "#5eccbf";
+            let multiplicationResultt;
+
+            if ( @json($color_para->operation) === 'addition') {
+                multiplicationResultt = num11 + num22;
+            } else if ( @json($color_para->operation) === 'multiplication') {
+                multiplicationResultt = num11 * num22;
             }
+
+            resultInputt.value = multiplicationResultt;
+
+            // Itérer à travers les intervalles pour déterminer la couleur
+            color_intervalss.forEach(color_interval => {
+                if (multiplicationResultt >= color_interval.nbre1 && multiplicationResultt <= color_interval.nbre2) {
+                    divToChangee.style.backgroundColor = color_interval.code_color ;
+                    return;
+                }
+            });
 
         } else {
             resultInputt.value = "";

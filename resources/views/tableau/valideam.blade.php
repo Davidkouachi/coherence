@@ -25,7 +25,7 @@
                                 <div class="nk-block-between">
                                     <div class="nk-block-head-content" style="margin:0px auto;">
                                         <h3 class="text-center">
-                                            <span>Tableau de validation</span>
+                                            <span>Tableau de validation des incidents</span>
                                             <em class="icon ni ni-list-index"></em>
                                         </h3>
                                     </div>
@@ -77,7 +77,7 @@
                                                         @endif
                                                         @if ($am->statut === 'update')
                                                             <td class="text-info" >
-                                                                Modification éffectuée
+                                                                Modification Détectée
                                                             </td>
                                                         @endif
                                                         <td>
@@ -295,7 +295,7 @@
                             <h4 class="nk-modal-title">Confirmation</h4>
                             <div class="nk-modal-text">
                                 <div class="caption-text">
-                                    <span>Voulez-vous vraiment valider cette fiche d'amélioration ?</span>
+                                    <span>Voulez-vous vraiment valider cette fiche d'incident ?</span>
                                 </div>
                             </div>
                             <div class="nk-modal-action">

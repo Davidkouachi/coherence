@@ -83,7 +83,7 @@
                     @if( intval($color_para->nbre_color) > intval($color_interval_nbre) )
                         <div class="nk-block">
                             <div class="row g-gs">
-                                <div class="col-lg-12 col-xxl-12">
+                                <div class="col-lg-12 col-xxl-12 bg-white">
                                     <div class="modal-content">
                                         <div class="modal-body modal-body-lg text-center">
                                             <div class="nk-modal">
@@ -129,7 +129,7 @@
                         @if($isOutOfRange)
                             <div class="nk-block">
                                 <div class="row g-gs">
-                                    <div class="col-lg-12 col-xxl-12">
+                                    <div class="col-lg-12 col-xxl-12 bg-white">
                                         <div class="modal-content">
                                             <div class="modal-body modal-body-lg text-center">
                                                 <div class="nk-modal">
@@ -219,6 +219,9 @@
                                                 </div>
                                             </div>
                                         </div>
+
+                                        <input name="operation" type="text" value="{{ $color_para->operation }}" style="display: none;">
+
                                         <div class="col-md-12 ">
                                             <div class="card card-bordered h-100" id="divToChange">
                                                 <div class="card-inner">
