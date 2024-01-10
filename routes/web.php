@@ -118,9 +118,8 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/Nouveau Poste', [Controller::class, 'index_add_poste_traitement'])->name('index_add_poste_traitement');
 
     Route::get('/Etat_am', [EtatController::class, 'index_etat_am'])->name('index_etat_am');
-    Route::get('/Etat_am_imprimer', [EtatController::class, 'index_etat_am_imprimer'])->name('index_etat_am_imprimer');
 
-    Route::get('/etat_pdf', [PDFController::class, 'generatePDF'])->name('generatePDF');
+    Route::get('/etat_pdf', [EtatController::class, 'download'])->name('generate_PDF');
 });
 
 

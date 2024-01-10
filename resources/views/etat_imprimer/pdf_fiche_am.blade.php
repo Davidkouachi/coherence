@@ -1,7 +1,5 @@
 <!DOCTYPE html>
 <html lang="zxx" class="js">
-<!-- Mirrored from dashlite.net/demo8/invoice-print.html by HTTrack Website Copier/3.x [XR&CO'2014], Tue, 14 Mar 2023 15:18:16 GMT -->
-<!-- Added by HTTrack -->
 <meta http-equiv="content-type" content="text/html;charset=UTF-8" /><!-- /Added by HTTrack -->
 
 <head>
@@ -9,18 +7,22 @@
     <meta name="author" content="Softnio">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="A powerful and conceptual apps base dashboard template that especially build for developers and programmers.">
-    <link rel="shortcut icon" href="images/favicon.png">
+    <link rel="shortcut icon" href="asset('assets/css/dashlite0226.css')">
     <title>Invoice Print | DashLite Admin Template</title>
-    <link rel="stylesheet" href="{{ asset('assets/css/dashlite0226.css') }}">
-    <link id="skin-default" rel="stylesheet" href="{{ asset('assets/css/theme0226.css') }}">
-    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-91615293-4"></script>
+    <link rel="stylesheet" href="asset('assets/css/dashlite0226.css')">
+    <link id="skin-default" rel="stylesheet" href="asset('assets/css/theme0226.css')">
 </head>
 
-<body class="bg-white" onload="printPromot()">
+<body class="bg-white" >
     <div class="nk-block">
-        <div class="invoice invoice-print">
+        <div class="invoice">
             <div class="invoice-wrap">
-                <div class="invoice-brand text-center"><img src="images/logo.png" srcset="/demo8/images/logo-dark2x.png 2x" alt=""></div>
+                <div class="invoice-brand text-center">
+                    <img src="asset('images/logo.png')" srcset="/demo8/images/logo-dark2x.png 2x" alt="">
+                </div>
+                <div class="invoice-brand text-center">
+                    <h3 class="nk-block-title page-title">Fiche d'amélioration </h3>
+                </div>
                 <div class="invoice-head">
                     <div class="row g-gs">
                         <div class="col-md-12 col-xxl-12" id="groupesContainer">
@@ -207,11 +209,7 @@
             </div>
         </div>
     </div>
-    <script>
-    function printPromot() { window.print(); }
 
-    </script>
 </body>
-<!-- Mirrored from dashlite.net/demo8/invoice-print.html by HTTrack Website Copier/3.x [XR&CO'2014], Tue, 14 Mar 2023 15:18:16 GMT -->
 
 </html>

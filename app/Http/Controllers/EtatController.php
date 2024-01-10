@@ -32,6 +32,8 @@ use Twilio\Rest\Client;
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
 
+use PDF;
+
 class EtatController extends Controller
 {
     public function index_etat_am()
@@ -39,9 +41,19 @@ class EtatController extends Controller
         return view('etat.amelioration');
         
     }
-
-    public function index_etat_am_imprimer()
+ 
+    public function download()
     {
-        return view('etat_imprimer.amelioration');
+        $data = [
+            [
+                'quantity' => 1,
+                'description' => '1 Year Subscription',
+                'price' => '129.00'
+            ]
+        ];
+
+        $pdf = PDF::loadView('etat_imprimer.pdf_fiche_am');
+     
+        return $pdf->stream();
     }
 }

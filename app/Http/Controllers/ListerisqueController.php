@@ -36,6 +36,7 @@ class ListerisqueController extends Controller
     public function index_liste_risque()
     {
         $risques = Risque::join('postes', 'risques.poste_id', '=', 'postes.id')
+                ->where('page', '!=', 'am')
                 ->select('risques.*','postes.nom as validateur')
                 ->get();
 
@@ -128,6 +129,7 @@ class ListerisqueController extends Controller
                 ->join('postes', 'risques.poste_id', '=', 'postes.id')
                 ->join('processuses', 'risques.processus_id', '=', 'processuses.id')
                 ->where('statut' ,'non_valider')
+                ->where('page', '!=', 'am')
                 ->select('risques.*','processuses.nom as processus', 'rejets.motif as motif')
                 ->get();
 
@@ -150,6 +152,7 @@ class ListerisqueController extends Controller
         $risque = Risque::join('rejets', 'rejets.risque_id', '=', 'risques.id')
                 ->join('postes', 'risques.poste_id', '=', 'postes.id')
                 ->where('risques.id', '=' ,$request->id)
+                ->where('page', '!=', 'am')
                 ->select('risques.*','postes.nom as validateur', 'rejets.motif as motif','postes.id as poste_id')
                 ->first();
 

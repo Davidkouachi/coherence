@@ -94,7 +94,7 @@
                                                                 <em class="icon ni ni-eye"></em>
                                                             </a>
                                                             @if ($am->statut === 'valider')
-                                                            <a href="{{ route('index_etat_am',['id' => $am->id ]) }}"
+                                                            <a href="{{ route('index_etat_am') }}"
                                                                 class="btn btn-icon btn-white btn-dim btn-sm btn-primary">
                                                                 <em class="icon ni ni-printer-fill"></em>
                                                             </a>
