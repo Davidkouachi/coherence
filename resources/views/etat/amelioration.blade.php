@@ -57,7 +57,7 @@
                     </div>
 
 
-                    <div class="nk-block mt-5">
+                    <div class="nk-block mt-3">
                         <div class="bg-white">
 
                             <div class="row g-gs" id="cadre" style="margin-top: -30px;">
@@ -78,13 +78,13 @@
                                     </div>
                                 </div>
 
-                                <div class="col-md-12 col-xxl-12" style="margin-top: -20px;">
+                                <div class="col-md-12 col-xxl-12" style="margin-top: -30px;">
                                     <div class="card" style="background: transparent;">
                                         <div class="card-inner">
                                             <div class="gy-3">
-                                                <div class="row g-3 align-center">
+                                                <div class="row g-3 align-center text-center">
                                                     @if( $am->date_cloture1 != null)
-                                                        <div class="col-lg-3">
+                                                        <div class="col-lg-6">
                                                             <div class="form-group">
                                                                 <label class="form-label" for="site-name">
                                                                     Statut :
@@ -94,7 +94,7 @@
                                                                 </span>
                                                             </div>
                                                         </div>
-                                                        <div class="col-lg-3">
+                                                        <div class="col-lg-6">
                                                             <div class="form-group">
                                                                 <label class="form-label" for="site-name">
                                                                     Date de réalisation :
@@ -106,7 +106,7 @@
                                                         </div>
                                                     @else
                                                         @if($am->statut === 'valider')
-                                                            <div class="col-lg-3">
+                                                            <div class="col-lg-6">
                                                                 <div class="form-group">
                                                                     <label class="form-label" for="site-name">
                                                                         Statut :
@@ -116,7 +116,7 @@
                                                                     </span>
                                                                 </div>
                                                             </div>
-                                                            <div class="col-lg-3">
+                                                            <div class="col-lg-6">
                                                                 <div class="form-group">
                                                                     <label class="form-label" for="site-name">
                                                                         Date de validation :
@@ -127,7 +127,7 @@
                                                                 </div>
                                                             </div>
                                                         @elseif($am->statut === 'non-valider' || $am->statut === 'update' || $am->statut === 'modif')
-                                                            <div class="col-lg-3">
+                                                            <div class="col-lg-12">
                                                                 <div class="form-group">
                                                                     <label class="form-label" for="site-name">
                                                                         Statut :
@@ -138,7 +138,7 @@
                                                                 </div>
                                                             </div>
                                                         @elseif($am->statut === 'soumis')
-                                                            <div class="col-lg-3">
+                                                            <div class="col-lg-12">
                                                                 <div class="form-group">
                                                                     <label class="form-label" for="site-name">
                                                                         Statut :
@@ -156,11 +156,11 @@
                                     </div>
                                 </div>
 
-                                <div class="col-md-12 col-xxl-12" style="margin-top: -30px;">
-                                    <div class="card" style="background: transparent;">
+                                <div class="col-md-12 col-xxl-12" style="margin-top: -20px;">
+                                    <div class="card" style="background: transparent; ">
                                         <div class="card-inner">
                                             <div class="gy-3">
-                                                <div class="row g-3 align-center">
+                                                <div class="row g-1 align-center"style="border: 1px solid black; border-radius: 10px; padding-left: 10px;">
                                                     <div class="col-lg-3">
                                                         <div class="form-group">
                                                             <label class="form-label" for="site-name">
@@ -238,12 +238,12 @@
                                 </div>
 
                                 @foreach($actionsData[$am->id] as $key => $actions)
-                                <div style="page-break-inside: avoid;">
+                                <div style="page-break-inside: avoid; margin-top: -10px;" >
                                     <div class="col-md-12 col-xxl-12">
                                         <div class="card" style="background: transparent;">
-                                            <div class="card-inner">
+                                            <div class="card-inner" >
                                                 <div class="card-head">
-                                                    <h5 class="card-title">
+                                                    <h5 class="card-title text-dark">
                                                         Action Corrective {{ $key+1 }}
                                                         @if($actions['date_action'] === null)
                                                             ( <em class="text-danger"> Non Réaliser </em> )
@@ -253,8 +253,8 @@
                                                     </h5>
                                                 </div>
                                                 <div class="gy-3">
-                                                    <div class="row g-3 align-center">
-                                                        <div class="col-lg-4">
+                                                    <div class="row g-1 align-center" style="border: 1px solid black; border-radius: 10px;padding-left: 10px;">
+                                                        <div class="col-lg-4 ">
                                                             <div class="form-group">
                                                                 <label class="form-label" for="site-name">
                                                                     Action :
@@ -294,62 +294,60 @@
                                                                 </span>
                                                             </div>
                                                         </div>
-
-                                                        @if($actions['date_action'] != null)
-                                                        <div class="col-lg-3">
-                                                            <div class="form-group">
-                                                                <label class="form-label" for="site-name">
-                                                                    Date de réalisation :
-                                                                </label>
-                                                                @if($actions['delai'] >= $actions['date_action'])
-                                                                    <span class="form-note text-success">
-                                                                        {{ \Carbon\Carbon::parse($actions['date_action'])->translatedFormat('j F Y ') }}
-                                                                    </span>
-                                                                @else
-                                                                    <span class="form-note text-danger">
-                                                                        {{ \Carbon\Carbon::parse($actions['date_action'])->translatedFormat('j F Y ') }}
-                                                                    </span>
-                                                                @endif
+                                                        @if($actions['statut'] === 'realiser')
+                                                            <div class="col-lg-3">
+                                                                <div class="form-group">
+                                                                    <label class="form-label" for="site-name">
+                                                                        Date de réalisation :
+                                                                    </label>
+                                                                    @if($actions['delai'] >= $actions['date_action'])
+                                                                        <span class="form-note text-success">
+                                                                            {{ \Carbon\Carbon::parse($actions['date_action'])->translatedFormat('j F Y ') }}
+                                                                        </span>
+                                                                    @else
+                                                                        <span class="form-note text-danger">
+                                                                            {{ \Carbon\Carbon::parse($actions['date_action'])->translatedFormat('j F Y ') }}
+                                                                        </span>
+                                                                    @endif
+                                                                </div>
                                                             </div>
-                                                        </div>
-                                                        <div class="col-lg-3">
-                                                            <div class="form-group">
-                                                                <label class="form-label" for="site-name">
-                                                                    Date du suivi :
-                                                                </label>
-                                                                <span class="form-note">
-                                                                    {{ \Carbon\Carbon::parse($actions['date_suivi'])->translatedFormat('j F Y H:i') }}
-                                                                </span>
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-lg-3">
-                                                            <div class="form-group">
-                                                                <label class="form-label" for="site-name">
-                                                                    Efficacitée :
-                                                                </label>
-                                                                @if($actions['efficacite'] === 'efficace')
-                                                                    <span class="form-note text-success">
-                                                                        Oui
+                                                            <div class="col-lg-3">
+                                                                <div class="form-group">
+                                                                    <label class="form-label" for="site-name">
+                                                                        Date du suivi :
+                                                                    </label>
+                                                                    <span class="form-note">
+                                                                        {{ \Carbon\Carbon::parse($actions['date_suivi'])->translatedFormat('j F Y H:i') }}
                                                                     </span>
-                                                                @else
-                                                                    <span class="form-note text-danger">
-                                                                        Non
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-lg-3">
+                                                                <div class="form-group">
+                                                                    <label class="form-label" for="site-name">
+                                                                        Efficacitée :
+                                                                    </label>
+                                                                    @if($actions['efficacite'] === 'efficace')
+                                                                        <span class="form-note text-success">
+                                                                            Oui
+                                                                        </span>
+                                                                    @else
+                                                                        <span class="form-note text-danger">
+                                                                            Non
+                                                                        </span>
+                                                                    @endif
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-lg-12">
+                                                                <div class="form-group">
+                                                                    <label class="form-label" for="site-name">
+                                                                        Commentaire :
+                                                                    </label>
+                                                                    <span class="form-note">
+                                                                        {{ $actions['commentaire'] }}
                                                                     </span>
-                                                                @endif
+                                                                </div>
                                                             </div>
-                                                        </div>
-                                                        <div class="col-lg-12">
-                                                            <div class="form-group">
-                                                                <label class="form-label" for="site-name">
-                                                                    Commentaire :
-                                                                </label>
-                                                                <span class="form-note">
-                                                                    {{ $actions['commentaire'] }}
-                                                                </span>
-                                                            </div>
-                                                        </div>
                                                         @endif
-
                                                     </div>
                                                 </div>
                                             </div>
@@ -366,6 +364,17 @@
             </div>
         </div>
     </div>
+
+    <style>
+        .form-label{
+            color: black;
+            font-size:17px;
+        }
+        .form-note{
+            color: black;
+            font-size:15px;
+        }
+    </style>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.9.3/html2pdf.bundle.min.js"></script>
 

@@ -45,7 +45,9 @@ class ListeamController extends Controller
 {
     public function index_validation()
     {
-        $ams = Amelioration::where('statut', '!=', 'valider')->get();
+        $ams = Amelioration::where('statut', '!=', 'valider')
+                            ->where('statut', '!=', 'terminer')
+                            ->get();
 
         $actionsData = [];
 
@@ -480,7 +482,6 @@ class ListeamController extends Controller
             if ($valide)
             {
 
-                $valide->date_validation = now()->format('Y-m-d\TH:i');
                 $valide->statut = 'non-valider';
                 $valide->update();
 

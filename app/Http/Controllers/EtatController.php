@@ -46,6 +46,7 @@ class EtatController extends Controller
         $actionsData = [];
 
         if ($am) {
+
             $am->nbre_action = Suivi_amelioration::where('amelioration_id', '=', $am->id)->count();
 
             $suivi = Suivi_amelioration::where('amelioration_id', '=', $am->id)->get();
@@ -54,26 +55,25 @@ class EtatController extends Controller
 
             foreach ($suivi as $suivis) {
 
-                $action = Suivi_amelioration::join('actions', 'suivi_ameliorations.action_id', 'actions.id')
-                                            ->join('postes', 'actions.poste_id', 'postes.id')
-                                            ->join('risques', 'actions.risque_id', 'risques.id')
-                                            ->join('processuses', 'risques.processus_id', 'processuses.id')
-                                            ->where('actions.id', '=', $suivis->action_id)
-                                            ->select('suivi_ameliorations.*', 'actions.action as action', 'postes.nom as poste', 'processuses.nom as processus', 'risques.nom as risque')
-                                            ->first();
+                $action = Action::join('postes', 'actions.poste_id', 'postes.id')
+                                ->join('risques', 'actions.risque_id', 'risques.id')
+                                ->join('processuses', 'risques.processus_id', 'processuses.id')
+                                ->where('actions.id', '=', $suivis->action_id)
+                                ->select('actions.*', 'postes.nom as poste', 'processuses.nom as processus', 'risques.nom as risque')
+                                ->first();
 
                 if ($action) {
                     $actionsData[$am->id][] = [
                         'action' => $action->action,
                         'responsable' => $action->poste,
-                        'delai' => $action->delai,
-                        'date_action' => $action->date_action,
-                        'date_suivi' => $action->date_suivi,
-                        'statut' => $action->statut,
+                        'delai' => $suivis->delai,
+                        'date_action' => $suivis->date_action,
+                        'date_suivi' => $suivis->date_suivi,
+                        'statut' => $suivis->statut,
                         'processus' => $action->processus,
                         'risque' => $action->risque,
-                        'commentaire' => $action->commentaire_am,
-                        'efficacite' => $action->efficacite,
+                        'commentaire' => $suivis->commentaire_am,
+                        'efficacite' => $suivis->efficacite,
                     ];
                 }
 
