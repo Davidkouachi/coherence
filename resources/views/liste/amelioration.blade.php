@@ -71,33 +71,38 @@
                                                             <td class=" text-warning">
                                                                 En attente de validation
                                                             </td>
-                                                        @endif
-                                                        @if ($am->statut === 'valider')
-                                                            <td class=" text-success">
+                                                        @elseif ($am->statut === 'valider')
+                                                            <td class=" text-primary">
                                                                 Validé
                                                             </td>
-                                                        @endif
-                                                        @if ($am->statut === 'non-valider' || $am->statut === 'modif')
+                                                        @elseif ($am->statut === 'non-valider' || $am->statut === 'modif')
                                                             <td class=" text-danger">
                                                                 Non Validé
                                                             </td>
-                                                        @endif
-                                                        @if ($am->statut === 'update')
+                                                        @elseif ($am->statut === 'update')
                                                             <td class="text-info" >
                                                                 Modification Détectée
                                                             </td>
+                                                        @elseif ($am->statut === 'terminer')
+                                                            <td class="text-success" >
+                                                                Réaliser
+                                                            </td>
                                                         @endif
-                                                        <td>
+                                                        <td class="d-flex" >
                                                             <a data-bs-toggle="modal"
                                                                 data-bs-target="#modalDetail{{ $am->id }}"
                                                                 class="btn btn-icon btn-white btn-dim btn-sm btn-warning">
                                                                 <em class="icon ni ni-eye"></em>
                                                             </a>
-                                                            @if ($am->statut === 'valider')
-                                                            <a href="{{ route('index_etat_am') }}"
+                                                            @if ($am->statut === 'valider' || $am->statut === 'terminer')
+                                                            <form method="post" action="{{ route('index_etat_am') }}">
+                                                                @csrf
+                                                                <input type="text" name="id" value="{{ $am->id }}" style="display: none;">
+                                                                <button href="{{ route('index_etat_am') }}"
                                                                 class="btn btn-icon btn-white btn-dim btn-sm btn-primary">
-                                                                <em class="icon ni ni-printer-fill"></em>
-                                                            </a>
+                                                                    <em class="icon ni ni-printer-fill"></em>
+                                                                </button>
+                                                            </form>
                                                             @endif
                                                         </td>
                                                     </tr>
@@ -306,8 +311,7 @@
                                                         </div>
                                                     </div>
                                                 </div>
-                                                @endif
-                                                @if ($actions['statut'] !== 'realiser')
+                                                @else
                                                 <div class="col-lg-12">
                                                     <div class="form-group text-center">
                                                         <div class="form-control-wrap">

@@ -45,7 +45,7 @@ class SuiviactionController extends Controller
         $ams = Amelioration::join('suivi_ameliorations', 'ameliorations.id', '=', 'suivi_ameliorations.amelioration_id')
                             ->where('suivi_ameliorations.statut', 'non-realiser')
                             ->where('ameliorations.statut', 'valider')
-                            ->select('ameliorations.*','suivi_ameliorations.delai as delai', 'suivi_ameliorations.date_action as date_ation', 'suivi_ameliorations.nature as nature', 'suivi_ameliorations.action_id as action_id')
+                            ->select('ameliorations.*','suivi_ameliorations.id as suivi_id','suivi_ameliorations.delai as delai', 'suivi_ameliorations.date_action as date_ation', 'suivi_ameliorations.nature as nature', 'suivi_ameliorations.action_id as action_id')
                             ->get();
         foreach ($ams as $am) {
 
@@ -101,7 +101,7 @@ class SuiviactionController extends Controller
 
     public function add_suivi_actionc(Request $request, $id)
     {
-        $suivi = Suivi_amelioration::where('amelioration_id', $id)->first();
+        $suivi = Suivi_amelioration::find($id);
         if ($suivi)
         {
             $suivi->efficacite = $request->input('efficacite');
@@ -110,6 +110,16 @@ class SuiviactionController extends Controller
             $suivi->date_suivi = now()->format('Y-m-d\TH:i');
             $suivi->statut = 'realiser';
             $suivi->update();
+
+            $suivi2 = Suivi_amelioration::where('amelioration_id', $suivi->amelioration_id)->where('statut', 'non-realiser')->count();
+
+                if ($suivi2 === 0 ) {
+
+                    $am = Amelioration::where('id', $suivi->amelioration_id)->first();
+                    $am->date_cloture1 = $request->input('date_action');
+                    $am->statut = 'terminer';
+                    $am->update();
+                }
 
             if ($suivi)
             {
@@ -127,7 +137,7 @@ class SuiviactionController extends Controller
         }
 
         return back()
-            ->with('érror', 'Suivi non éffectuée.');
+            ->with('error', 'Suivi non éffectuée.');
     }
 
     public function index_historique()

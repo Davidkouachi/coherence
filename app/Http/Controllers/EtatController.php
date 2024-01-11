@@ -23,6 +23,9 @@ use App\Models\Pdf_file_processus;
 use App\Models\User;
 use App\Models\Historique_action;
 use App\Models\Poste;
+use App\Models\Amelioration;
+use App\Models\Suivi_amelioration;
+
 
 use Illuminate\Support\Facades\Validator;
 use Carbon\Carbon;
@@ -36,24 +39,48 @@ use PDF;
 
 class EtatController extends Controller
 {
-    public function index_etat_am()
+    public function index_etat_am(Request $request)
     {
-        return view('etat.amelioration');
-        
-    }
- 
-    public function download()
-    {
-        $data = [
-            [
-                'quantity' => 1,
-                'description' => '1 Year Subscription',
-                'price' => '129.00'
-            ]
-        ];
+        $am = Amelioration::find($request->id);
 
-        $pdf = PDF::loadView('etat_imprimer.pdf_fiche_am');
-     
-        return $pdf->stream();
+        $actionsData = [];
+
+        if ($am) {
+            $am->nbre_action = Suivi_amelioration::where('amelioration_id', '=', $am->id)->count();
+
+            $suivi = Suivi_amelioration::where('amelioration_id', '=', $am->id)->get();
+
+            $actionsData[$am->id] = [];
+
+            foreach ($suivi as $suivis) {
+
+                $action = Suivi_amelioration::join('actions', 'suivi_ameliorations.action_id', 'actions.id')
+                                            ->join('postes', 'actions.poste_id', 'postes.id')
+                                            ->join('risques', 'actions.risque_id', 'risques.id')
+                                            ->join('processuses', 'risques.processus_id', 'processuses.id')
+                                            ->where('actions.id', '=', $suivis->action_id)
+                                            ->select('suivi_ameliorations.*', 'actions.action as action', 'postes.nom as poste', 'processuses.nom as processus', 'risques.nom as risque')
+                                            ->first();
+
+                if ($action) {
+                    $actionsData[$am->id][] = [
+                        'action' => $action->action,
+                        'responsable' => $action->poste,
+                        'delai' => $action->delai,
+                        'date_action' => $action->date_action,
+                        'date_suivi' => $action->date_suivi,
+                        'statut' => $action->statut,
+                        'processus' => $action->processus,
+                        'risque' => $action->risque,
+                        'commentaire' => $action->commentaire_am,
+                        'efficacite' => $action->efficacite,
+                    ];
+                }
+
+            }
+        }
+
+        return view('etat.amelioration', ['am' => $am, 'actionsData' => $actionsData ]);
+        
     }
 }
