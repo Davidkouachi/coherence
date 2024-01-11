@@ -45,11 +45,11 @@
                                 </div>
                             </div>
                             <div class="nk-block-head-content">
-                                <a href="javascript:void(0);" onclick="history.back();" class="btn btn-outline-light bg-white d-none d-sm-inline-flex">
+                                <a href="{{ route('index_amelioration_liste') }}" class="btn btn-outline-light bg-white d-none d-sm-inline-flex">
                                     <em class="icon ni ni-arrow-left"></em>
                                     <span>Retour</span>
                                 </a>
-                                <a href="javascript:void(0);" onclick="history.back();" class="btn btn-icon btn-outline-light bg-white d-inline-flex d-sm-none">
+                                <a href="{{ route('index_amelioration_liste') }}" class="btn btn-icon btn-outline-light bg-white d-inline-flex d-sm-none">
                                     <em class="icon ni ni-arrow-left"></em>
                                 </a>
                             </div>
@@ -78,7 +78,25 @@
                                     </div>
                                 </div>
 
-                                <div class="col-md-12 col-xxl-12" style="margin-top: -30px;">
+                                <div class="col-md-12 col-xxl-12" style="margin-top: -40px;">
+                                    <div class="card" style="background: transparent;">
+                                        <div class="card-inner text-center">
+                                            <h6 class="text-success"> Validé </h6>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-12 col-xxl-12" style="margin-top: -40px;">
+                                    <div class="card" style="background: transparent;">
+                                        <div class="card-inner text-center">
+                                            <label class="form-label">
+                                                Le 10 décembre 2023 à 15h30
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-12 col-xxl-12" style="margin-top: -20px;">
                                     <div class="card" style="background: transparent;">
                                         <div class="card-inner">
                                             <div class="gy-3">
@@ -160,91 +178,91 @@
                                 </div>
 
                                 <div style="page-break-inside: avoid;">
-                                <div class="col-md-12 col-xxl-12">
-                                    <div class="card" style="background: transparent;">
-                                        <div class="card-inner">
-                                            <div class="card-head">
-                                                <h5 class="card-title">
-                                                    Action Corrective
-                                                </h5>
-                                            </div>
-                                            <div class="gy-3">
-                                                <div class="row g-3 align-center">
-                                                    <div class="col-lg-4">
-                                                        <div class="form-group">
-                                                            <label class="form-label" for="site-name">
-                                                                Action :
-                                                            </label>
-                                                            <span class="form-note">
-                                                                Specify the name of your website.
-                                                            </span>
+                                    <div class="col-md-12 col-xxl-12">
+                                        <div class="card" style="background: transparent;">
+                                            <div class="card-inner">
+                                                <div class="card-head">
+                                                    <h5 class="card-title">
+                                                        Action Corrective
+                                                    </h5>
+                                                </div>
+                                                <div class="gy-3">
+                                                    <div class="row g-3 align-center">
+                                                        <div class="col-lg-4">
+                                                            <div class="form-group">
+                                                                <label class="form-label" for="site-name">
+                                                                    Action :
+                                                                </label>
+                                                                <span class="form-note">
+                                                                    Specify the name of your website.
+                                                                </span>
+                                                            </div>
                                                         </div>
-                                                    </div>
-                                                    <div class="col-lg-4">
-                                                        <div class="form-group">
-                                                            <label class="form-label" for="site-name">
-                                                                Risque :
-                                                            </label>
-                                                            <span class="form-note">
-                                                                Specify the name of your website.
-                                                            </span>
+                                                        <div class="col-lg-4">
+                                                            <div class="form-group">
+                                                                <label class="form-label" for="site-name">
+                                                                    Risque :
+                                                                </label>
+                                                                <span class="form-note">
+                                                                    Specify the name of your website.
+                                                                </span>
+                                                            </div>
                                                         </div>
-                                                    </div>
-                                                    <div class="col-lg-4">
-                                                        <div class="form-group">
-                                                            <label class="form-label" for="site-name">
-                                                                Processus :
-                                                            </label>
-                                                            <span class="form-note">
-                                                                Specify the name of your website.
-                                                            </span>
+                                                        <div class="col-lg-4">
+                                                            <div class="form-group">
+                                                                <label class="form-label" for="site-name">
+                                                                    Processus :
+                                                                </label>
+                                                                <span class="form-note">
+                                                                    Specify the name of your website.
+                                                                </span>
+                                                            </div>
                                                         </div>
-                                                    </div>
-                                                    <div class="col-lg-3">
-                                                        <div class="form-group">
-                                                            <label class="form-label" for="site-name">
-                                                                Délai :
-                                                            </label>
-                                                            <span class="form-note">
-                                                                Specify the name of your website.
-                                                            </span>
+                                                        <div class="col-lg-3">
+                                                            <div class="form-group">
+                                                                <label class="form-label" for="site-name">
+                                                                    Délai :
+                                                                </label>
+                                                                <span class="form-note">
+                                                                    Specify the name of your website.
+                                                                </span>
+                                                            </div>
                                                         </div>
-                                                    </div>
-                                                    <div class="col-lg-3">
-                                                        <div class="form-group">
-                                                            <label class="form-label" for="site-name">
-                                                                Date de réalisation :
-                                                            </label>
-                                                            <span class="form-note">
-                                                                Specify the name of your website.
-                                                            </span>
+                                                        <div class="col-lg-3">
+                                                            <div class="form-group">
+                                                                <label class="form-label" for="site-name">
+                                                                    Date de réalisation :
+                                                                </label>
+                                                                <span class="form-note text-success">
+                                                                    Specify the name of your website.
+                                                                </span>
+                                                            </div>
                                                         </div>
-                                                    </div>
-                                                    <div class="col-lg-3">
-                                                        <div class="form-group">
-                                                            <label class="form-label" for="site-name">
-                                                                Date du suivi :
-                                                            </label>
-                                                            <span class="form-note">
-                                                                Specify the name of your website.
-                                                            </span>
+                                                        <div class="col-lg-3">
+                                                            <div class="form-group">
+                                                                <label class="form-label" for="site-name">
+                                                                    Date du suivi :
+                                                                </label>
+                                                                <span class="form-note">
+                                                                    Specify the name of your website.
+                                                                </span>
+                                                            </div>
                                                         </div>
-                                                    </div>
-                                                    <div class="col-lg-3">
-                                                        <div class="form-group">
-                                                            <label class="form-label" for="site-name">
-                                                                Statut :
-                                                            </label>
-                                                            <span class="form-note text-success">
-                                                                Specify the name of your website.
-                                                            </span>
+                                                        <div class="col-lg-3">
+                                                            <div class="form-group">
+                                                                <label class="form-label" for="site-name">
+                                                                    Efficacitée :
+                                                                </label>
+                                                                <span class="form-note text-success">
+                                                                    Specify the name of your website.
+                                                                </span>
+                                                            </div>
                                                         </div>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
-                                </div>
                                 </div>
 
                             </div>
