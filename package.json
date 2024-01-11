@@ -17,6 +17,7 @@
     },
     "dependencies": {
         "chart.js": "^4.4.0",
+        "html2pdf.js": "^0.10.1",
         "laravel-echo": "^1.15.3",
         "pdfjs-dist": "^3.11.174",
         "pusher-js": "^8.3.0"
