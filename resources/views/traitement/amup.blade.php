@@ -39,12 +39,10 @@
                                     <div class="card-inner">
                                         <table class="datatable-init table">
                                             <thead>
-                                                <tr class="text-center">
+                                                <tr>
                                                     <th></th>
                                                     <th>Type</th>
                                                     <th>Date</th>
-                                                    <th>Lieu</th>
-                                                    <th>Détecteur</th>
                                                     <th>Non-conformité</th>
                                                     <th>Statut</th>
                                                     <th></th>
@@ -52,7 +50,7 @@
                                             </thead>
                                             <tbody>
                                                 @foreach($ams as $key => $am)
-                                                    <tr class="text-center">
+                                                    <tr>
                                                         <td>{{ $key+1 }}</td>
                                                         <td>
                                                             @if ($am->type === 'contentieux')
@@ -66,41 +64,46 @@
                                                             @endif
                                                         </td>
                                                         <td>{{ \Carbon\Carbon::parse($am->date_fiche)->format('d/m/Y') }}</td>
-                                                        <td>{{ $am->lieu }}</td>
-                                                        <td>{{ $am->detecteur }}</td>
                                                         <td>{{ $am->non_conformite }}</td>
                                                         @if ($am->statut === 'non-valider')
-                                                            <td class=" text-warning">
-                                                                Acune modification détecter
+                                                            <td>
+                                                                <span class="badge badge-dim bg-warning">
+                                                                    <em class="icon ni ni-stop-circle"></em>
+                                                                    <span class="fs-12px" >Acune modification détecter</span>
+                                                                </span>
+                                                            </td>
+                                                        @elseif ($am->statut === 'modif')
+                                                            <td>
+                                                                <span class="badge badge-dim bg-info">
+                                                                    <em class="icon ni ni-check"></em>
+                                                                    <span class="fs-12px" >Modification détecter</span>
+                                                                </span>
                                                             </td>
                                                         @endif
-                                                        @if ($am->statut === 'modif')
-                                                            <td class="text-success" >
-                                                                Modification détecter
-                                                            </td>
-                                                        @endif
-                                                        <td class="d-flex" >
-                                                            <form method="post" action="{{ route('index_amup2') }}">
-                                                            @csrf
-                                                                <input type="text" name="id" value="{{ $am->id }}" style="display: none;">
-                                                                <button type="submit" class="btn btn-icon btn-white btn-dim btn-sm btn-info border border-1 border-white rounded">
-                                                                    <em class="icon ni ni-edit"></em>
-                                                                </button>
-                                                            </form>
-                                                            <form method="post" action="{{ route('index_amup_add') }}">
-                                                            @csrf
-                                                                <input type="text" name="id" value="{{ $am->id }}" style="display: none;">
-                                                                <button type="submit" class="btn btn-icon btn-white btn-dim btn-sm btn-warning border border-1 border-white rounded">
-                                                                    <em class="icon ni ni-plus"></em>
-                                                                </button>
-                                                            </form>
-                                                        @if ($am->statut !== 'non-valider')
-                                                            <a data-bs-toggle="modal"
-                                                                data-bs-target="#modalConfirme{{ $am->id }}"
-                                                                href="#" class="btn btn-icon btn-white btn-dim btn-sm btn-success">
-                                                                <em class="icon ni ni-check"></em>
-                                                            </a>
-                                                        @endif
+                                                        <td >
+                                                            <div class="d-flex" >
+                                                                <form method="post" action="{{ route('index_amup2') }}">
+                                                                @csrf
+                                                                    <input type="text" name="id" value="{{ $am->id }}" style="display: none;">
+                                                                    <button type="submit" class="btn btn-icon btn-white btn-dim btn-sm btn-info border border-1 border-white rounded">
+                                                                        <em class="icon ni ni-edit"></em>
+                                                                    </button>
+                                                                </form>
+                                                                <form method="post" action="{{ route('index_amup_add') }}">
+                                                                @csrf
+                                                                    <input type="text" name="id" value="{{ $am->id }}" style="display: none;">
+                                                                    <button type="submit" class="btn btn-icon btn-white btn-dim btn-sm btn-warning border border-1 border-white rounded">
+                                                                        <em class="icon ni ni-plus"></em>
+                                                                    </button>
+                                                                </form>
+                                                                @if ($am->statut !== 'non-valider')
+                                                                    <a data-bs-toggle="modal"
+                                                                        data-bs-target="#modalConfirme{{ $am->id }}"
+                                                                        href="#" class="btn btn-icon btn-white btn-dim btn-sm btn-success">
+                                                                        <em class="icon ni ni-check"></em>
+                                                                    </a>
+                                                                @endif
+                                                            </div>
                                                         </td>
                                                     </tr>
                                                 @endforeach

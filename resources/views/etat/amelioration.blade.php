@@ -89,7 +89,7 @@
                                                                 <label class="form-label" for="site-name">
                                                                     Statut :
                                                                 </label>
-                                                                <span class="form-note text-success">
+                                                                <span class="form-note text-success fw-bold">
                                                                     Terminé
                                                                 </span>
                                                             </div>

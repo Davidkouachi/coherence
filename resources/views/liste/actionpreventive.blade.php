@@ -39,7 +39,7 @@
                                     <div class="card-inner">
                                         <table class="datatable-init table">
                                             <thead>
-                                                <tr class="text-center">
+                                                <tr>
                                                     <th></th>
                                                     <th>Action</th>
                                                     <th>Délai</th>
@@ -49,23 +49,32 @@
                                             </thead>
                                             <tbody>
                                                 @foreach ($actions as $key => $action)
-                                                    <tr class="text-center">
+                                                    <tr>
                                                         <td>{{ $key+1}}</td>
                                                         <td>{{ $action->action}}</td>
                                                         <td>{{ \Carbon\Carbon::parse($action->delai)->format('d/m/Y') }}</td>
                                                         @if ($action->date_action !== null && $action->delai >= $action->date_action)
-                                                            <td class="text-center text-success" >
-                                                                Realiser dans le delai
+                                                            <td>
+                                                                <span class="badge badge-dim bg-success">
+                                                                    <em class="icon ni ni-check"></em>
+                                                                    <span class="fs-12px" >Realiser dans le delai</span>
+                                                                </span>
                                                             </td>
                                                         @endif
                                                         @if ($action->date_action !== null && $action->delai < $action->date_action)
-                                                            <td class="text-center text-danger" >
-                                                                Realiser hors delai
+                                                            <td>
+                                                                <span class="badge badge-dim bg-danger">
+                                                                    <em class="icon ni ni-alert"></em>
+                                                                    <span class="fs-12px" >Realiser hors delai</span>
+                                                                </span>
                                                             </td>
                                                         @endif
                                                         @if ($action->date_action === null)
-                                                            <td class="text-center text-warning" >
-                                                                Non réaliser
+                                                            <td>
+                                                                <span class="badge badge-dim bg-warning">
+                                                                    <em class="icon ni ni-stop-circle"></em>
+                                                                    <span class="fs-12px" >Non Realiser</span>
+                                                                </span>
                                                             </td>
                                                         @endif
                                                         <td>

@@ -102,7 +102,7 @@
                                             <div class="card-inner">
                                                 <table class="datatable-init table">
                                                     <thead>
-                                                        <tr class="text-center">
+                                                        <tr>
                                                             <th></th>
                                                             <th>Processus</th>
                                                             <th>nombre de risques</th>
@@ -113,7 +113,7 @@
                                                     </thead>
                                                     <tbody>
                                                         @foreach ($processus as $key => $processu)
-                                                            <tr class="text-center">
+                                                            <tr>
                                                                 <td>{{ $key+1}}</td>
                                                                 <td>{{ $processu->nom}}</td>
                                                                 <td>{{ $processu->nbre_risque}}</td>
@@ -126,7 +126,11 @@
 
                                                                 @foreach($color_intervals as $color_interval)
                                                                     @if($color_interval->nbre1 <= $processu->evag  && $color_interval->nbre2 >= $processu->evag )
-                                                                        <td class="border-white" style="background-color:{{$color_interval->code_color}}" ></td>
+                                                                        <td class="border-white" >
+                                                                            <div class="user-avatar" style="background-color:{{$color_interval->code_color}}">
+                                                                                
+                                                                            </div>
+                                                                        </td>
                                                                         @php
                                                                             $colorMatchFound = true;
                                                                         @endphp
@@ -136,7 +140,11 @@
 
                                                                 @if(!$colorMatchFound)
                                                                     <!-- Afficher un message si aucune correspondance n'a été trouvée -->
-                                                                    <td class="border-white" style="background-color:#8e8e8e;" ></td>
+                                                                    <td class="border-white"  >
+                                                                        <div class="user-avatar" style="background-color:#8e8e8e;">
+
+                                                                        </div>
+                                                                    </td>
                                                                 @endif
                                                                 <td>
                                                                     <a data-bs-toggle="modal"

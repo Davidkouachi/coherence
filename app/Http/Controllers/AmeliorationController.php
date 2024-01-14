@@ -461,6 +461,12 @@ class AmeliorationController extends Controller
 
         foreach ($ams as $am) {
             $am->nbre_action = Suivi_amelioration::where('amelioration_id', '=', $am->id)->count();
+            $am->nbre_action_eff = Suivi_amelioration::where('amelioration_id', '=', $am->id)
+                                                ->where('statut', 'realiser')
+                                                ->count();
+            $am->nbre_action_non = Suivi_amelioration::where('amelioration_id', '=', $am->id)
+                                                ->where('statut', 'non-realiser')
+                                                ->count();
 
             $suivi = Suivi_amelioration::where('amelioration_id', '=', $am->id)->get();
             $actionsData[$am->id] = [];
@@ -492,6 +498,50 @@ class AmeliorationController extends Controller
         }
 
         return view('liste.amelioration', ['ams' => $ams, 'actionsData' => $actionsData ]);
+    }
+
+    public function date_recla(Request $request)
+    {
+        $amelioration_id = $request->input('amelioration_id');
+        $date1 = $request->input('date1');
+        $date22 = $request->input('date2');
+        $dateObj2 = \DateTime::createFromFormat('d/m/Y', $date22);
+        $date2 = $dateObj2->format('Y-m-d');
+
+        $am = Amelioration::find($amelioration_id);
+        $am->date1 = $date1;
+        $am->date2 = $date2;
+        $am->statut = 'date_efficacite';
+        $am->update();
+
+        if ($am) {
+
+            return back()->with('success', 'Enregistrement éffectuée');
+        }
+
+        return back()->with('error', 'Echec');
+    }
+
+    public function eff_recla(Request $request)
+    {
+        $amelioration_id = $request->input('amelioration_id');
+        $efficacite = $request->input('efficacite');
+        $date_eff = $request->input('date_eff');
+        $commentaire = $request->input('commentaire');
+
+        $am = Amelioration::find($amelioration_id);
+        $am->efficacite = $efficacite;
+        $am->date_eff = $date_eff;
+        $am->commentaire_eff= $commentaire;
+        $am->statut = 'cloturer';
+        $am->update();
+
+        if ($am) {
+
+            return back()->with('success', 'Enregistrement éffectuée');
+        }
+
+        return back()->with('error', 'Echec');
     }
 
 

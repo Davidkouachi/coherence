@@ -39,10 +39,10 @@
                                     <div class="card-inner">
                                         <table class="datatable-init table">
                                             <thead>
-                                                <tr class="text-center">
+                                                <tr class="">
                                                     <th></th>
                                                     <th>Type</th>
-                                                    <th>Date</th>
+                                                    <th>Date de réception</th>
                                                     <th>Non-conformité</th>
                                                     <th>Statut</th>
                                                     <th></th>
@@ -50,7 +50,7 @@
                                             </thead>
                                             <tbody>
                                                 @foreach($ams as $key => $am)
-                                                    <tr class="text-center">
+                                                    <tr class="">
                                                         <td>{{ $key+1 }}</td>
                                                         <td>
                                                             @if ($am->type === 'contentieux')
@@ -63,21 +63,32 @@
                                                                 Non conformité
                                                             @endif
                                                         </td>
-                                                        <td>{{ \Carbon\Carbon::parse($am->date_fiche)->format('d/m/Y') }}</td>
+                                                        <td>
+                                                            {{ \Carbon\Carbon::parse($am->date_fiche)->translatedFormat('j F Y ') }}
+                                                        </td>
                                                         <td>{{ $am->non_conformite }}</td>
                                                         @if ($am->statut === 'soumis')
-                                                            <td class=" text-warning">
-                                                                En attente de validation
+                                                            <td>
+                                                                <span class="badge badge-dim bg-warning">
+                                                                    <em class="icon ni ni-stop-circle"></em>
+                                                                    <span class="fs-12px">En attente de validation</span>
+                                                                </span>
                                                             </td>
                                                         @endif
                                                         @if ($am->statut === 'non-valider' || $am->statut === 'modif')
-                                                            <td class=" text-danger">
-                                                                Non Validé
+                                                            <td>
+                                                                <span class="badge badge-dim bg-danger">
+                                                                    <em class="icon ni ni-alert"></em>
+                                                                    <span class="fs-12px">Non Validé</span>
+                                                                </span>
                                                             </td>
                                                         @endif
                                                         @if ($am->statut === 'update')
-                                                            <td class="text-info" >
-                                                                Modification Détectée
+                                                            <td>
+                                                                <span class="badge badge-dim bg-info">
+                                                                    <em class="icon ni ni-info"></em>
+                                                                    <span class="fs-12px">Modification Détectée</span>
+                                                                </span>
                                                             </td>
                                                         @endif
                                                         <td>

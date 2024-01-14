@@ -117,7 +117,7 @@ class SuiviactionController extends Controller
 
                     $am = Amelioration::where('id', $suivi->amelioration_id)->first();
                     $am->date_cloture1 = $request->input('date_action');
-                    $am->statut = 'terminer';
+                    $am->statut = 'date_efficacite';
                     $am->update();
                 }
 

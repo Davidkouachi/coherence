@@ -101,7 +101,7 @@
                                             <div class="card-inner">
                                                 <table class="datatable-init table">
                                                     <thead>
-                                                        <tr class="text-center">
+                                                        <tr>
                                                             <th></th>
                                                             <th>Processus</th>
                                                             <th>Risque</th>
@@ -111,7 +111,7 @@
                                                     </thead>
                                                     <tbody>
                                                         @foreach ($risques as $key => $risque)
-                                                            <tr class="text-center">
+                                                            <tr>
                                                                 <td>{{ $key+1 }}</td>
                                                                 <td>{{ $risque->processus }}</td>
                                                                 <td>{{ $risque->nom }}</td>
@@ -122,7 +122,9 @@
                                                                 @foreach($color_intervals as $color_interval)
                                                                         
                                                                     @if($color_interval->nbre1 <= $risque->evaluation_residuel && $color_interval->nbre2 >= $risque->evaluation_residuel)
-                                                                        <td class="border-white" style="background-color:{{$color_interval->code_color}}" ></td>
+                                                                        <td>
+                                                                            <div class="user-avatar" style="background-color:{{$color_interval->code_color}}" ></div>
+                                                                        </td>
                                                                         @php
                                                                             $colorMatchFound = true;
                                                                         @endphp
@@ -134,7 +136,9 @@
                                                                 @endforeach
 
                                                                 @if(!$colorMatchFound)
-                                                                    <td class="border-white" style="background-color:#8e8e8e" ></td>
+                                                                    <td>
+                                                                        <div class="user-avatar" style="background-color:#8e8e8e;"></div>
+                                                                    </td>
                                                                 @endif
                                                                 <td>
                                                                     <form method="post" action="{{ route('index_risque_actionup2') }}">

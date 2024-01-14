@@ -101,7 +101,7 @@
                                             <div class="card-inner">
                                                 <table class="datatable-init table">
                                                     <thead>
-                                                        <tr class="text-center">
+                                                        <tr>
                                                             <th></th>
                                                             <th>Risque</th>
                                                             <th>Processus</th>
@@ -116,7 +116,7 @@
                                                     </thead>
                                                     <tbody>
                                                         @foreach ($risques as $key => $risque)
-                                                            <tr class="text-center">
+                                                            <tr>
                                                                 <td>{{ $key+1 }}</td>
                                                                 <td>{{ $risque->nom }}</td>
                                                                 <td>{{ $risque->nom_processus }}</td>
@@ -132,7 +132,9 @@
                                                                 @foreach($color_intervals as $color_interval)
                                                                 
                                                                     @if($color_interval->nbre1 <= $risque->evaluation_residuel && $color_interval->nbre2 >= $risque->evaluation_residuel)
-                                                                        <td class="border-white" style="background-color:{{$color_interval->code_color}}" ></td>
+                                                                        <td>
+                                                                            <div class="user-avatar" style="background-color:{{$color_interval->code_color}}" ></div>
+                                                                        </td>
                                                                         @php
                                                                             $colorMatchFound = true;
                                                                         @endphp
@@ -146,7 +148,7 @@
                                                                 @if(!$colorMatchFound)
                                                                     <!-- Afficher un message si aucune correspondance n'a été trouvée -->
                                                                     <td>
-                                                                        Aucune couleur correspondante
+                                                                        <div class="user-avatar" style="background-color:#8e8e8e;"></div>
                                                                     </td>
                                                                 @endif
 
@@ -158,20 +160,32 @@
                                                                     {{ $formatcommande }} Fcfa
                                                                 </td>
                                                                 @if ($risque->statut === 'soumis')
-                                                                    <td class=" text-warning">
-                                                                        En attente de validation
+                                                                    <td>
+                                                                        <span class="badge badge-dim bg-warning">
+                                                                            <em class="icon ni ni-stop-circle"></em>
+                                                                            <span class="fs-12px" >En attente de validation</span>
+                                                                        </span>
                                                                     </td>
                                                                 @elseif ($risque->statut === 'valider')
-                                                                    <td class=" text-success">
-                                                                        Validé
+                                                                    <td>
+                                                                        <span class="badge badge-dim bg-success">
+                                                                            <em class="icon ni ni-check"></em>
+                                                                            <span class="fs-12px" >Validé</span>
+                                                                        </span>
                                                                     </td>
                                                                 @elseif ($risque->statut === 'non_valider')
-                                                                    <td class=" text-danger">
-                                                                        Non Validé
+                                                                    <td>
+                                                                        <span class="badge badge-dim bg-danger">
+                                                                            <em class="icon ni ni-alert"></em>
+                                                                            <span class="fs-12px" >Non Validé</span>
+                                                                        </span>
                                                                     </td>
                                                                 @elseif ($risque->statut === 'update')
-                                                                    <td class="text-info" >
-                                                                        Modification éffectuée
+                                                                    <td>
+                                                                        <span class="badge badge-dim bg-info">
+                                                                            <em class="icon ni ni-info"></em>
+                                                                            <span class="fs-12px" >Modification éffectuée</span>
+                                                                        </span>
                                                                     </td>
                                                                 @endif
                                                                 <td>

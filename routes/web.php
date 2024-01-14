@@ -95,6 +95,9 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/amelioration_up_add', [ListeamController::class, 'index_amup_add'])->name('index_amup_add');
     Route::get('/am_valider/{id}', [ListeamController::class, 'am_valider'])->name('am_valider');
     Route::post('/am_rejet', [ListeamController::class, 'am_rejet'])->name('am_rejet');
+    Route::post('/traitement_date', [AmeliorationController::class, 'date_recla'])->name('date_recla');
+    Route::post('/traitement_eff', [AmeliorationController::class, 'eff_recla'])->name('eff_recla');
+
 
     Route::post('/amelioration_up_traitement', [Updateamcontroller::class, 'amup_traitement'])->name('amup_traitement');
     Route::post('/amelioration_up2_traitement', [Updateamcontroller::class, 'amup2_traitement'])->name('amup2_traitement');

@@ -101,7 +101,7 @@
                                             <div class="card-inner">
                                                 <table class="datatable-init table">
                                                     <thead>
-                                                        <tr class="text-center">
+                                                        <tr>
                                                             <th></th>
                                                             <th>Processus</th>
                                                             <th>Risque</th>
@@ -116,7 +116,7 @@
                                                     </thead>
                                                     <tbody>
                                                         @foreach ($risques as $key => $risque)
-                                                            <tr class="text-center">
+                                                            <tr>
                                                                 <td>{{ $key+1 }}</td>
                                                                 <td>{{ $risque->nom_processus }}</td>
                                                                 <td>{{ $risque->nom }}</td>
@@ -131,7 +131,9 @@
 
                                                                 @foreach($color_intervals as $color_interval)
                                                                     @if($color_interval->nbre1 <= $risque->evaluation_residuel && $color_interval->nbre2 >= $risque->evaluation_residuel)
-                                                                        <td class="border-white" style="background-color:{{$color_interval->code_color}}" ></td>
+                                                                        <td>
+                                                                            <div class="user-avatar" style="background-color:{{$color_interval->code_color}}" ></div>
+                                                                        </td>
                                                                         @php
                                                                             $colorMatchFound = true;
                                                                         @endphp
@@ -142,7 +144,7 @@
                                                                 @if(!$colorMatchFound)
                                                                     <!-- Afficher un message si aucune correspondance n'a été trouvée -->
                                                                     <td>
-                                                                        Aucune couleur correspondante
+                                                                        <div class="user-avatar" style="background-color:#8e8e8e;"></div>
                                                                     </td>
                                                                 @endif
                                                                 <td>
@@ -153,18 +155,27 @@
                                                                     {{ $formatcommande }} Fcfa
                                                                 </td>
                                                                 @if ($risque->statut === 'soumis')
-                                                                    <td class="text-warning" >
-                                                                        En attente de Vérification
+                                                                    <td>
+                                                                        <span class="badge badge-dim bg-warning">
+                                                                            <em class="icon ni ni-stop-circle"></em>
+                                                                            <span class="fs-12px" >En attente de validation</span>
+                                                                        </span>
                                                                     </td>
                                                                 @endif
                                                                 @if ($risque->statut === 'non_valider')
-                                                                    <td class="text-danger" >
-                                                                        En attente de Modification
+                                                                    <td>
+                                                                        <span class="badge badge-dim bg-danger">
+                                                                            <em class="icon ni ni-alert"></em>
+                                                                            <span class="fs-12px" >Non Validé</span>
+                                                                        </span>
                                                                     </td>
                                                                 @endif
                                                                 @if ($risque->statut === 'update')
-                                                                    <td class="text-info" >
-                                                                        Mise à jour détecter
+                                                                    <td>
+                                                                        <span class="badge badge-dim bg-info">
+                                                                            <em class="icon ni ni-info"></em>
+                                                                            <span class="fs-12px" >Mise à jour détectée</span>
+                                                                        </span>
                                                                     </td>
                                                                 @endif
                                                                 <td>

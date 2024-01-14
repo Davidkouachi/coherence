@@ -22,6 +22,11 @@ class Amelioration extends Model
         'choix_select',
         'statut',
         'date_validation',
+        'date1',
+        'date2',
+        'efficacite',
+        'commentaire_eff',
+        'date_eff',
     ];
 
 }

@@ -26,6 +26,11 @@ class CreateAmeliorationsTable extends Migration
             $table->string('choix_select');
             $table->string('statut');
             $table->date('date_validation')->nullable();
+            $table->date('date1')->nullable();
+            $table->date('date2')->nullable();
+            $table->date('date_eff')->nullable();
+            $table->string('efficacite')->nullable();
+            $table->text('commentaire_eff')->nullable();
             $table->timestamps();
         });
     }
