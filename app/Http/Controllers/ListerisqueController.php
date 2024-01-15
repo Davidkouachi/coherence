@@ -55,7 +55,7 @@ class ListerisqueController extends Controller
             }
             
             $processus = Processuse::where('id', $risque->processus_id)->first();
-            $risque->nom_processus = $processus->nom;            
+            $risque->nom_processus = $processus->nom;
 
             $actionsp = Action::join('postes', 'actions.poste_id', '=', 'postes.id')
                 ->where('actions.risque_id', $risque->id)

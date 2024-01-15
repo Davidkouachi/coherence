@@ -120,8 +120,8 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/Nouveau Poste', [Controller::class, 'index_add_poste'])->name('index_add_poste');
     Route::post('/Nouveau Poste', [Controller::class, 'index_add_poste_traitement'])->name('index_add_poste_traitement');
 
-    Route::post('/Etat_am', [EtatController::class, 'index_etat_am'])->name('index_etat_am');
-    Route::get('/Test', [EtatController::class, 'generatePDF'])->name('test-pdf');
+    Route::post('/Etat am', [EtatController::class, 'index_etat_am'])->name('index_etat_am');
+    Route::post('/Etat risque', [EtatController::class, 'index_etat_risque'])->name('index_etat_risque');
 });
 
 

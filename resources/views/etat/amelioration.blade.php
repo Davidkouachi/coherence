@@ -62,7 +62,7 @@
 
                             <div class=" row g-gs" id="cadre" style="margin-top: -30px; ">
 
-                                <div class="col-lg-12 col-xxl-12" style="margin-top: -1px;">
+                                <div class="col-lg-12 col-xxl-12" style="margin-top: +2px;">
                                     <div class="card" style="background: transparent;">
                                         <div class="card-inner text-center">
                                             <img src="images/logo.png" height="100" width="120">
