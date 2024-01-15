@@ -121,6 +121,7 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/Nouveau Poste', [Controller::class, 'index_add_poste_traitement'])->name('index_add_poste_traitement');
 
     Route::post('/Etat_am', [EtatController::class, 'index_etat_am'])->name('index_etat_am');
+    Route::get('/Test', [EtatController::class, 'generatePDF'])->name('test-pdf');
 });
 
 

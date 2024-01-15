@@ -45,6 +45,7 @@
                                     </div>
                                 </div>
                             </div>
+                            <a href="{{route('test-pdf')}}">imprimer</a>
                         </form>
                     </div>
                 </div>

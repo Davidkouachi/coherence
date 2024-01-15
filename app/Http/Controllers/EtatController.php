@@ -37,6 +37,8 @@ use PHPMailer\PHPMailer\Exception;
 
 use PDF;
 
+/*use Barryvdh\DomPDF\Facade\Pdf;*/
+
 class EtatController extends Controller
 {
     public function index_etat_am(Request $request)
@@ -83,4 +85,14 @@ class EtatController extends Controller
         return view('etat.amelioration', ['am' => $am, 'actionsData' => $actionsData ]);
         
     }
+
+    /*public function generatePDF()
+    {
+        $pdf = Pdf::loadView('pdf');
+
+        return $pdf->download('mon_pdf.pdf');
+    }*/
+
+
+
 }
