@@ -55,16 +55,25 @@
                                                         <td>{{ $processu->finalite}}</td>
                                                         <td>{{ $processu->nbre}}</td>
                                                         <td>
-                                                            <a data-bs-toggle="modal"
-                                                                data-bs-target="#modalDetail{{$processu->id}}"
-                                                                href="#" class="btn btn-icon btn-white btn-dim btn-sm btn-warning border border-1 border-white rounded">
-                                                                <em class="icon ni ni-eye"></em>
-                                                            </a>
-                                                            <a data-bs-toggle="modal"
-                                                                data-bs-target="#modalFile{{ $processu->id }}"
-                                                                href="#" class="btn btn-icon btn-white btn-dim btn-sm btn-info border border-1 border-white rounded">
-                                                                <em class="icon ni ni-file"></em>
-                                                            </a>
+                                                            <div class="d-flex" >
+                                                                <form method="post" action="{{ route('index_etat_processus') }}">
+                                                                    @csrf
+                                                                    <input type="text" name="id" value="{{$processu->id}}" style="display: none;">
+                                                                    <a data-bs-toggle="modal"
+                                                                        data-bs-target="#modalDetail{{$processu->id}}"
+                                                                        href="#" class="btn btn-icon btn-white btn-dim btn-sm btn-warning border border-1 border-white rounded">
+                                                                        <em class="icon ni ni-eye"></em>
+                                                                    </a>
+                                                                    <a data-bs-toggle="modal"
+                                                                        data-bs-target="#modalFile{{ $processu->id }}"
+                                                                        href="#" class="btn btn-icon btn-white btn-dim btn-sm btn-info border border-1 border-white rounded">
+                                                                        <em class="icon ni ni-file"></em>
+                                                                    </a>
+                                                                    <button class="btn btn-icon btn-white btn-dim btn-sm btn-primary">
+                                                                        <em class="icon ni ni-printer-fill"></em>
+                                                                    </button>
+                                                                </form>
+                                                            </div>
                                                         </td>
                                                     </tr>
                                                 @endforeach

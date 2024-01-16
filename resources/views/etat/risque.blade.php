@@ -586,6 +586,7 @@
                                                                 </div>
                                                             </div>
                                                         </div>
+                                                        @if($actionsDatas['suivi'] === 'oui')
                                                         <div class="col-lg-12 row">
                                                             <div class="col-lg-3">
                                                                 <div class="form-group ">
@@ -614,6 +615,7 @@
                                                                 </div>
                                                             </div>
                                                         </div>
+                                                        @endif
                                                     </div>
                                                 </div>
                                             </div>
@@ -682,24 +684,26 @@
                                 </div>
                                 @endforeach
 
-                                <div class="col-lg-12 col-xxl-12" style="margin-top: -20px;">
-                                    <div class="card" style="background: transparent; ">
-                                        <div class="card-inner">
-                                            <div class="gy-3">
-                                                <div class="row g-1 align-center">
-                                                    <div class="col-lg-12 row">
-                                                        <div class="col-lg-3">
-                                                            <div class="form-group ">
-                                                                <label class="form-label" style="font-size: 14px;">
-                                                                    Validateur :
-                                                                </label>
+                                <div style="page-break-inside: avoid; margin-top: -10px;" >
+                                    <div class="col-lg-12 col-xxl-12" style="margin-top: -20px;">
+                                        <div class="card" style="background: transparent; ">
+                                            <div class="card-inner">
+                                                <div class="gy-3">
+                                                    <div class="row g-1 align-center">
+                                                        <div class="col-lg-12 row">
+                                                            <div class="col-lg-3">
+                                                                <div class="form-group ">
+                                                                    <label class="form-label" style="font-size: 14px;">
+                                                                        Validateur :
+                                                                    </label>
+                                                                </div>
                                                             </div>
-                                                        </div>
-                                                        <div class="col-lg-9">
-                                                            <div class="form-group ">
-                                                                <span class="fw-normal text-dark" style="font-size: 14px;">
-                                                                    {{ $risque->validateur }}
-                                                                </span>
+                                                            <div class="col-lg-9">
+                                                                <div class="form-group ">
+                                                                    <span class="fw-normal text-dark" style="font-size: 14px;">
+                                                                        {{ $risque->validateur }}
+                                                                    </span>
+                                                                </div>
                                                             </div>
                                                         </div>
                                                     </div>

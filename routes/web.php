@@ -122,6 +122,9 @@ Route::middleware(['auth'])->group(function () {
 
     Route::post('/Etat am', [EtatController::class, 'index_etat_am'])->name('index_etat_am');
     Route::post('/Etat risque', [EtatController::class, 'index_etat_risque'])->name('index_etat_risque');
+    Route::post('/Etat processus', [EtatController::class, 'index_etat_processus'])->name('index_etat_processus');
+    Route::post('/Etat actionp', [EtatController::class, 'index_etat_actionp'])->name('index_etat_actionp');
+    Route::post('/Etat actionc', [EtatController::class, 'index_etat_actionc'])->name('index_etat_actionc');
 });
 
 

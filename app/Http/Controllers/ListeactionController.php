@@ -31,16 +31,30 @@ class ListeactionController extends Controller
 {
     public function index_ap()
     {
-        $actions = Suivi_action::join('actions', 'suivi_actions.action_id', 'actions.id')
-                                    ->join('postes', 'actions.poste_id', 'postes.id')
-                                    ->join('risques', 'actions.risque_id', 'risques.id')
-                                    ->join('processuses', 'risques.processus_id', 'processuses.id')
-                                    ->where('actions.type', '=', 'preventive')
-                                    ->select('Suivi_actions.*','actions.action as action', 'processuses.nom as processus', 'risques.nom as risque','postes.nom as poste', 'risques.nom as risque' )
-                                    ->get();
+        $actions = Action::join('postes', 'actions.poste_id', 'postes.id')
+                        ->join('risques', 'actions.risque_id', 'risques.id')
+                        ->join('processuses', 'risques.processus_id', 'processuses.id')
+                        ->where('actions.type', 'preventive')
+                        ->select('actions.*', 'processuses.nom as processus', 'risques.nom as risque','postes.nom as poste')
+                        ->get();
 
-        return view('liste.actionpreventive', ['actions' => $actions]);
+        foreach ($actions as $action) {
+            $suivi = Suivi_action::where('action_id', $action->id)->first();
+
+            if ($suivi) {
+                $action->suivi = 'oui';
+                $action->date_action = $suivi->date_action;
+                $action->date_suivi = $suivi->date_suivi;
+                $action->commentaire = $suivi->commentaire;
+                $action->efficacite = $suivi->efficacite;
+            } else {
+                $action->suivi = 'non';
+            }
+        }
+
+        return view('liste.actionpreventive', ['actions' => $actions, 'suivi' => $suivi ]); // Utilisez $action->id au lieu de $request->id
     }
+
 
     public function index_ac_eff()
     {
@@ -72,7 +86,6 @@ class ListeactionController extends Controller
                         ->join('processuses', 'risques.processus_id', 'processuses.id')
                         ->where('actions.type', 'corrective')
                         ->where('actions.page', 'risk')
-                        ->where('risques.statut', 'valider')
                         ->select('actions.*', 'processuses.nom as processus', 'risques.nom as risque')
                         ->get();
 

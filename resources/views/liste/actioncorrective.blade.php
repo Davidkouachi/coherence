@@ -55,11 +55,20 @@
                                                         <td>{{ $action->risque}}</td>
                                                         <td>{{ $action->processus}}</td>
                                                         <td>
-                                                            <a data-bs-toggle="modal"
-                                                                data-bs-target="#modalDetail{{$action->id}}"
-                                                                href="#" class="btn btn-icon btn-white btn-dim btn-sm btn-warning border border-1 border-white rounded">
-                                                                <em class="icon ni ni-eye"></em>
-                                                            </a>
+                                                            <div class="d-flex" >
+                                                                <form method="post" action="{{ route('index_etat_actionc') }}">
+                                                                    @csrf
+                                                                    <input type="text" name="id" value="{{$action->id}}" style="display: none;">
+                                                                    <a data-bs-toggle="modal"
+                                                                        data-bs-target="#modalDetail{{$action->id}}"
+                                                                        href="#" class="btn btn-icon btn-white btn-dim btn-sm btn-warning border border-1 border-white rounded">
+                                                                        <em class="icon ni ni-eye"></em>
+                                                                    </a>
+                                                                    <button class="btn btn-icon btn-white btn-dim btn-sm btn-primary">
+                                                                        <em class="icon ni ni-printer-fill"></em>
+                                                                    </button>
+                                                                </form>
+                                                            </div>
                                                         </td>
                                                     </tr>
                                                 @endforeach

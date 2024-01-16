@@ -114,26 +114,38 @@ class EtatController extends Controller
             $risque->nom_processus = $processus->nom;
 
             $actionsp = Action::join('postes', 'actions.poste_id', '=', 'postes.id')
-                ->join('suivi_actions', 'actions.id', '=', 'suivi_actions.action_id')
                 ->where('actions.risque_id', $risque->id)
                 ->where('actions.type', 'preventive')
-                ->select('actions.*','postes.nom as responsable','suivi_actions.date_action as date_action', 'suivi_actions.date_suivi as date_suivi')
+                ->select('actions.*','postes.nom as responsable')
                 ->get();
             $risque->nbre_actionp = count($actionsp);
 
             $actionsDatap[$risque->id] = [];
             
-            foreach($actionsp as $actionp)
-            {
-                $actionsDatap[$risque->id][] = [
-                    'action' => $actionp->action,
-                    'delai' => $actionp->date,
-                    'date_action' => $actionp->date_action,
-                    'date_suivi' => $actionp->date_suivi,
-                    'type' => $actionp->type,
-                    'responsable' => $actionp->responsable,
-                ];
+            foreach ($actionsp as $actionp) {
+                $suivi = Suivi_action::where('action_id', $actionp->id)->first();
+
+                if ($suivi) {
+                    $actionsDatap[$risque->id][] = [
+                        'suivi' => 'oui',
+                        'action' => $actionp->action,
+                        'delai' => $actionp->date,
+                        'date_action' => $suivi->date_action,
+                        'date_suivi' => $suivi->date_suivi,
+                        'type' => $actionp->type,
+                        'responsable' => $actionp->responsable,
+                    ];
+                }else{
+                    $actionsDatap[$risque->id][] = [
+                        'suivi' => 'non',
+                        'action' => $actionp->action,
+                        'delai' => $actionp->date,
+                        'type' => $actionp->type,
+                        'responsable' => $actionp->responsable,
+                    ];
+                }
             }
+
 
             $actionsc = Action::join('postes', 'actions.poste_id', '=', 'postes.id')
                 ->where('actions.risque_id', $risque->id)
@@ -180,6 +192,61 @@ class EtatController extends Controller
             'color_intervals' => $color_intervals,
             'color_interval_nbre' => $color_interval_nbre,
         ]);
+    }
+
+    public function index_etat_processus(Request $request)
+    {
+        $processu = Processuse::find($request->id);
+
+        $objectifData = [];
+
+        if ($processu) {
+
+            $processu->nbre = Objectif::where('processus_id', $processu->id)->count();
+            $objectifs = Objectif::where('processus_id', $processu->id)->get();
+
+            $objectifData[$processu->id] = [];
+            foreach($objectifs as $objectif)
+            {
+                $objectifData[$processu->id][] = [
+                    'objectif' => $objectif->nom,
+                ];
+            }
+        }
+
+        return view('etat.processus', ['processu' => $processu, 'objectifData' => $objectifData]);
+    }
+
+    public function index_etat_actionp(Request $request)
+    {
+        $action = Action::join('postes', 'actions.poste_id', 'postes.id')
+                        ->join('risques', 'actions.risque_id', 'risques.id')
+                        ->join('processuses', 'risques.processus_id', 'processuses.id')
+                        ->where('actions.id', $request->id)
+                        ->select('actions.*', 'processuses.nom as processus', 'risques.nom as risque','postes.nom as poste')
+                        ->first();
+        if($action){
+            $suivi= Suivi_action::where('action_id', $request->id)->first();
+            $action->suivi = 'oui';
+        }else{
+            $action->suivi = 'non';
+        }
+        
+
+        return view('etat.actionp', ['action' => $action, 'suivi' => $suivi]);
+    }
+
+    public function index_etat_actionc(Request $request)
+    {
+        $action = Action::join('risques', 'actions.risque_id', 'risques.id')
+                        ->join('processuses', 'risques.processus_id', 'processuses.id')
+                        ->where('actions.type', 'corrective')
+                        ->where('actions.page', 'risk')
+                        ->where('actions.id', $request->id)
+                        ->select('actions.*', 'processuses.nom as processus', 'risques.nom as risque')
+                        ->first();
+
+        return view('etat.actionc', ['action' => $action]);
     }
 
     /*public function generatePDF()
