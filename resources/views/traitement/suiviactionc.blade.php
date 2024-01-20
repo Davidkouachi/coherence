@@ -37,7 +37,7 @@
                                     <div class="card-inner">
                                         <table class="datatable-init table">
                                             <thead>
-                                                <tr class="text-center">
+                                                <tr>
                                                     <th></th>
                                                     <th>Type</th>
                                                     <th>Non Conformité</th>
@@ -48,7 +48,7 @@
                                             </thead>
                                             <tbody>
                                                 @foreach ($ams as $key => $am)
-                                                    <tr class="text-center">
+                                                    <tr>
                                                         <td>{{ $key+1 }}</td>
                                                         <td>
                                                             @if ($am->type === 'contentieux')
@@ -96,39 +96,49 @@
                     </div>
                     <div class="modal-body">
                         <div class="nk-block">
-                            <form class="row g-gs" method="post" action="/Suivi_actionc/{{ $am->suivi_id }}">
+                            <form class="row g-gs" method="post" action="/Suivi_actionc/{{ $am->id }}">
                                 @csrf
                                 <div class="col-lg-12 col-xxl-12" >
                                     <div class="card">
                                         <div class="card-inner">
                                                 <div class="row g-4">
-                                                    <div class="col-lg-6">
-                                                        <div class="form-group">
-                                                            <label class="form-label" for="Cause">
-                                                                Processus
-                                                            </label>
-                                                            <div class="form-control-wrap">
-                                                                <input value="{{ $am->processus }}" type="text" class="form-control" readonly>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-lg-6">
-                                                        <div class="form-group">
-                                                            <label class="form-label" for="controle">
-                                                                Risque
-                                                            </label>
-                                                            <div class="form-control-wrap">
-                                                                <input value="{{ $am->risque }}" type="text" class="form-control" readonly>
-                                                            </div>
-                                                        </div>
-                                                    </div>
                                                     <div class="col-lg-12">
                                                         <div class="form-group">
                                                             <label class="form-label" for="controle">
                                                                 Action Corrective
                                                             </label>
                                                             <div class="form-control-wrap">
-                                                                <input value="{{ $am->action }}" type="text" class="form-control" readonly>
+                                                                <input disabled value="{{ $am->action }}" type="text" class="form-control" readonly>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-lg-12">
+                                                        <div class="form-group">
+                                                            <label class="form-label" for="controle">
+                                                                Délai
+                                                            </label>
+                                                            <div class="form-control-wrap">
+                                                                <input disabled value="{{ \Carbon\Carbon::parse($am->delai)->format('d-m-Y') }}" type="text" class="form-control" readonly>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-lg-12">
+                                                        <div class="form-group">
+                                                            <label class="form-label" for="controle">
+                                                                Risque
+                                                            </label>
+                                                            <div class="form-control-wrap">
+                                                                <input disabled value="{{ $am->risque }}" type="text" class="form-control" readonly>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-lg-12">
+                                                        <div class="form-group">
+                                                            <label class="form-label" for="Cause">
+                                                                Processus
+                                                            </label>
+                                                            <div class="form-control-wrap">
+                                                                <input disabled value="{{ $am->processus }}" type="text" class="form-control" readonly>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -138,7 +148,7 @@
                                                                 Responsable
                                                             </label>
                                                             <div class="form-control-wrap">
-                                                                <input value="{{ $am->responsable }}" type="text" class="form-control" readonly>
+                                                                <input disabled value="{{ $am->responsable }}" type="text" class="form-control" readonly>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -151,11 +161,11 @@
                                                                 <option value="">
                                                                     Choisir
                                                                 </option>
-                                                                <option value="efficace">
-                                                                    efficace
+                                                                <option value="oui">
+                                                                    Oui
                                                                 </option>
-                                                                <option value="non_efficace">
-                                                                    non-efficace
+                                                                <option value="non">
+                                                                    Non
                                                                 </option>
                                                             </select>
                                                         </div>
@@ -164,7 +174,23 @@
                                                                 Date de réalisation
                                                             </label>
                                                             <div class="form-control-wrap">
-                                                                <input name="date_action" type="date" class="form-control" value="{{ \Carbon\Carbon::now()->toDateString() }}" max="{{ \Carbon\Carbon::now()->toDateString() }}" >
+                                                                <input name="date_action" id="date_action" type="date" class="form-control" max="{{ \Carbon\Carbon::now()->toDateString() }}" onchange="checkDate0()" >
+                                                                <script>
+                                                                    function checkDate0() {
+                                                                        var dateInput = document.getElementById('date_action');
+                                                                        // Récupérer la date entrée
+                                                                        var inputDate = new Date(document.getElementById('date_action').value);
+
+                                                                        // Récupérer la date de validation (convertie en objet Date)
+                                                                        var validationDate = new Date("{{ $am->date_validation }}");
+
+                                                                        // Comparer les dates
+                                                                        if (inputDate < validationDate.setDate(validationDate.getDate() - 0)) {
+                                                                            dateInput.value = "";
+                                                                            toastr.info("La date d'action ne doit pas être supérieur a la date de validation de la fiche d'incident.");
+                                                                        }
+                                                                    }
+                                                                </script>
                                                             </div>
                                                         </div>
                                                     </div>

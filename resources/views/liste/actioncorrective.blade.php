@@ -39,7 +39,7 @@
                                     <div class="card-inner">
                                         <table class="datatable-init table">
                                             <thead>
-                                                <tr class="text-center">
+                                                <tr>
                                                     <th></th>
                                                     <th>Action</th>
                                                     <th>Risque</th>
@@ -49,7 +49,7 @@
                                             </thead>
                                             <tbody>
                                                 @foreach ($actions as $key => $action)
-                                                    <tr class="text-center">
+                                                    <tr>
                                                         <td>{{ $key+1}}</td>
                                                         <td>{{ $action->action}}</td>
                                                         <td>{{ $action->risque}}</td>
@@ -103,10 +103,10 @@
                                                     <div class="col-lg-12">
                                                         <div class="form-group">
                                                             <label class="form-label" for="Cause">
-                                                                Processus
+                                                                Action
                                                             </label>
                                                             <div class="form-control-wrap">
-                                                                <input value="{{ $action->processus }}" readonly type="text" class="form-control" id="Cause">
+                                                                <input disabled value="{{ $action->action }}" readonly type="text" class="form-control" id="Cause">
                                                             </div>
                                                         </div>
                                                     </div>
@@ -116,17 +116,17 @@
                                                                 Risque
                                                             </label>
                                                             <div class="form-control-wrap">
-                                                                <input value="{{ $action->risque }}" readonly type="text" class="form-control" id="Cause">
+                                                                <input disabled value="{{ $action->risque }}" readonly type="text" class="form-control" id="Cause">
                                                             </div>
                                                         </div>
                                                     </div>
                                                     <div class="col-lg-12">
                                                         <div class="form-group">
                                                             <label class="form-label" for="Cause">
-                                                                Actions
+                                                                Processus
                                                             </label>
                                                             <div class="form-control-wrap">
-                                                                <input value="{{ $action->action }}" readonly type="text" class="form-control" id="Cause">
+                                                                <input disabled value="{{ $action->processus }}" readonly type="text" class="form-control" id="Cause">
                                                             </div>
                                                         </div>
                                                     </div>

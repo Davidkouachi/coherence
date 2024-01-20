@@ -106,6 +106,7 @@
                                                             <th>Processus</th>
                                                             <th>Risque</th>
                                                             <th>Evaluation</th>
+                                                            <th>Date de création</th>
                                                             <th></th>
                                                         </tr>
                                                     </thead>
@@ -140,6 +141,7 @@
                                                                         <div class="user-avatar" style="background-color:#8e8e8e;"></div>
                                                                     </td>
                                                                 @endif
+                                                                <td>{{ \Carbon\Carbon::parse($risque->updated_at)->translatedFormat('j F Y '.' à '.' h:i:s') }}</td>
                                                                 <td>
                                                                     <form method="post" action="{{ route('index_risque_actionup2') }}">
                                                                     @csrf

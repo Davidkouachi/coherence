@@ -111,6 +111,7 @@
                                                             <th>Evaluation</th>
                                                             <th>Coût</th>
                                                             <th>Statut</th>
+                                                            <th>Date de crèation</th>
                                                             <th></th>
                                                         </tr>
                                                     </thead>
@@ -188,6 +189,7 @@
                                                                         </span>
                                                                     </td>
                                                                 @endif
+                                                                <td>{{ \Carbon\Carbon::parse($risque->created_at)->translatedFormat('j F Y'.' à '.'h:i:s') }}</td>
                                                                 <td>
                                                                     <div class="d-flex" >
                                                                         <form method="post" action="{{ route('index_etat_risque') }}">
@@ -505,7 +507,7 @@
                                                                 Délai
                                                             </label>
                                                             <div class="form-control-wrap">
-                                                                <input value="{{ $actionsDatas['date_suivip'] }}" readonly type="text" class="form-control text-center" id="preventif">
+                                                                <input value="{{ \Carbon\Carbon::parse($actionsDatas['date_suivip'])->translatedFormat('j F Y') }}" readonly type="text" class="form-control text-center" id="preventif">
                                                             </div>
                                                         </div>
                                                     </div>

@@ -37,27 +37,22 @@
                                     <div class="card-inner">
                                         <table class="datatable-init table" data-export-title="Export">
                                             <thead>
-                                                <tr class="text-center">
+                                                <tr>
                                                     <th></th>
-                                                    <th>Date et heure</th>
-                                                    <th>Action éffecttuée</th>
+                                                    <th>Action éffectuée</th>
                                                     <th>Page</th>
-                                                    <th>Nom et prénom</th>
                                                     <th>Poste</th>
-                                                    <th>matricule</th>
+                                                    <th>Date d'action</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
                                                 @foreach ($historiques as $key => $historique)
-                                                    <tr class="text-center">
+                                                    <tr>
                                                         <td>{{ $key+1 }}</td>
-                                                        <td>{{ $historique->created_at }}</td>
                                                         <td>{{ $historique->nom_action }}</td>
                                                         <td>{{ $historique->nom_formulaire }}</td>
-                                                        <td>{{ $historique->nom }}</td>
                                                         <td>{{ $historique->poste }}</td>
-                                                        <td>{{ $historique->matricule }}</td>
-                                                    </tr>
+                                                        <td>{{ \Carbon\Carbon::parse($historique->created_at)->translatedFormat('j F Y '.' à '.' h:i:s') }}</td>
                                                 @endforeach
                                             </tbody>
                                         </table>

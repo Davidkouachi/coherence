@@ -39,25 +39,27 @@
                                     <div class="card-inner">
                                         <table class="datatable-init table">
                                             <thead>
-                                                <tr class="text-center">
+                                                <tr>
                                                     <th></th>
                                                     <th>Matricule</th>
                                                     <th>Nom et Prénoms</th>
                                                     <th>Email</th>
                                                     <th>Contact</th>
                                                     <th>Poste</th>
+                                                    <th>Date de création</th>
                                                     <th></th>
                                                 </tr>
                                             </thead>
                                             <tbody>
                                                 @foreach($users as $key => $user)
-                                                    <tr class="text-center">
+                                                    <tr>
                                                         <td>{{ $key+1 }}</td>
                                                         <td>{{ $user->matricule }}</td>
                                                         <td>{{ $user->name }}</td>
                                                         <td>{{ $user->email }}</td>
                                                         <td>{{ $user->tel }}</td>
                                                         <td>{{ $user->poste }}</td>
+                                                        <td>{{ \Carbon\Carbon::parse($user->created_at)->translatedFormat('j F Y '.' à '.' h:i:s') }}</td>
                                                         <td>
                                                             <a data-bs-toggle="modal"
                                                                 data-bs-target="#modalDetail{{ $user->id }}"
@@ -420,6 +422,23 @@
 		                                                        </span>
 		                                                    </div>
 		                                                </div>
+		                                                <div class="col-lg-6">
+		                                                    <div class="form-group align-items-center justify-content-center">
+		                                                        <span class="preview-title overline-title">
+		                                                        	Paramettrage des couleurs
+		                                                        	@if ($user->color_para === 'oui')
+		                                                        	<a class="btn btn-sm btn-success">
+		                                                                <em class="icon ni ni-check"></em>
+		                                                            </a>
+		                                                            @endif
+		                                                            @if ($user->color_para === 'non')
+		                                                            <a class="btn btn-sm btn-danger">
+		                                                                <em class="icon ni ni-cross"></em>
+		                                                            </a>
+		                                                            @endif
+		                                                        </span>
+		                                                    </div>
+		                                                </div>
 		                                                <div class="col-lg-12">
 		                                                    <div class="form-group">
 		                                                        <label class="form-label" for="Cause">
@@ -515,14 +534,14 @@
 		                                                <div class="col-lg-12">
 		                                                    <div class="form-group">
 		                                                        <label class="form-label" for="Cause">
-		                                                            AMELIORATION
+		                                                            INCIDENTS
 		                                                        </label>
 		                                                    </div>
 		                                                </div>
 		                                                <div class="col-lg-6">
 		                                                    <div class="form-group align-items-center justify-content-center">
 		                                                        <span class="preview-title overline-title">
-		                                                        	Nouvelle fiche d'amélioration
+		                                                        	Nouvel incident
 		                                                        	@if ($user->fiche_am === 'oui')
 		                                                        	<a class="btn btn-sm btn-success">
 		                                                                <em class="icon ni ni-check"></em>
@@ -539,7 +558,7 @@
 		                                                <div class="col-lg-6">
 		                                                    <div class="form-group align-items-center justify-content-center">
 		                                                        <span class="preview-title overline-title">
-		                                                        	Liste des Améliorations
+		                                                        	Suivis des incidents
 		                                                        	@if ($user->list_am === 'oui')
 		                                                        	<a class="btn btn-sm btn-success">
 		                                                                <em class="icon ni ni-check"></em>
@@ -556,7 +575,7 @@
 		                                                <div class="col-lg-6">
 		                                                    <div class="form-group align-items-center justify-content-center">
 		                                                        <span class="preview-title overline-title">
-		                                                        	Validation des Améliorations
+		                                                        	Validation des incidents
 		                                                        	@if ($user->val_am === 'oui')
 		                                                        	<a class="btn btn-sm btn-success">
 		                                                                <em class="icon ni ni-check"></em>
@@ -573,7 +592,7 @@
 		                                                <div class="col-lg-6">
 		                                                    <div class="form-group align-items-center justify-content-center">
 		                                                        <span class="preview-title overline-title">
-		                                                        	fiche d'amélioration non validés
+		                                                        	Incidents non validés
 		                                                        	@if ($user->am_n_val === 'oui')
 		                                                        	<a class="btn btn-sm btn-success">
 		                                                                <em class="icon ni ni-check"></em>
@@ -1058,6 +1077,37 @@
                                                                 </div>
                                                             </div>
                                                         </div>
+                                                        <div class="col-lg-6">
+                                                            <div class="form-group align-items-center justify-content-center">
+                                                                <span class="preview-title overline-title">Paramettrage des couleurs</span>
+                                                                <div class="row gy-4">
+                                                                    <div class="col-md-3 col-sm-6">
+                                                                        <div class="preview-block">
+                                                                            <div class="custom-control custom-radio">
+                                                                                <input type="radio" id="customRadio0nc" @php 
+                                                                                	if ($user->color_para === 'oui') {
+                                                                                		echo "checked";
+                                                                                	}
+                                                                                @endphp name="color_para" class="custom-control-input" value="oui" >
+                                                                                <label class="custom-control-label" for="customRadio0nc">Oui</label>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="col-md-3 col-sm-6">
+                                                                        <div class="preview-block">
+                                                                            <div class="custom-control custom-radio">
+                                                                                <input type="radio" id="customRadio00nc" name="color_para" @php 
+                                                                                	if ($user->color_para === 'non') {
+                                                                                		echo "checked";
+                                                                                	}
+                                                                                @endphp class="custom-control-input" value="non">
+                                                                                <label class="custom-control-label" for="customRadio00nc">Non</label>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
 
                                                         <div class="col-lg-12">
                                                             <div class="form-group">
@@ -1225,13 +1275,13 @@
                                                         <div class="col-lg-12">
                                                             <div class="form-group">
                                                                 <label class="form-label" for="Cause">
-                                                                    Ameliorations
+                                                                    INCIDENTS
                                                                 </label>
                                                             </div>
                                                         </div>
                                                         <div class="col-lg-6">
                                                             <div class="form-group align-items-center justify-content-center">
-                                                                <span class="preview-title overline-title">Nouvelle Amelioration</span>
+                                                                <span class="preview-title overline-title">Nouvel incident</span>
                                                                 <div class="row gy-4">
                                                                     <div class="col-md-3 col-sm-6">
                                                                         <div class="preview-block">
@@ -1262,7 +1312,7 @@
                                                         </div>
                                                         <div class="col-lg-6">
                                                             <div class="form-group align-items-center justify-content-center">
-                                                                <span class="preview-title overline-title">Liste des Ameliorations</span>
+                                                                <span class="preview-title overline-title">Suivis des incidents</span>
                                                                 <div class="row gy-4">
                                                                     <div class="col-md-3 col-sm-6">
                                                                         <div class="preview-block">
@@ -1293,7 +1343,7 @@
                                                         </div>
                                                         <div class="col-lg-6">
                                                             <div class="form-group align-items-center justify-content-center">
-                                                                <span class="preview-title overline-title">Validation des Ameliorations</span>
+                                                                <span class="preview-title overline-title">Validation des incidents</span>
                                                                 <div class="row gy-4">
                                                                     <div class="col-md-3 col-sm-6">
                                                                         <div class="preview-block">
@@ -1324,7 +1374,7 @@
                                                         </div>
                                                         <div class="col-lg-6">
                                                             <div class="form-group align-items-center justify-content-center">
-                                                                <span class="preview-title overline-title">Risques non validés</span>
+                                                                <span class="preview-title overline-title">Incidents non validés</span>
                                                                 <div class="row gy-4">
                                                                     <div class="col-md-3 col-sm-6">
                                                                         <div class="preview-block">

@@ -224,7 +224,7 @@
                                 </div>
                                 @foreach($actionsData[$am->id] as $key => $actions)
                                 <div class="col-md-12 col-xxl-122" id="groupesContainer">
-                                    <div class="card card-bordered">
+                                    <div class="card ">
                                         <div class="card-inner">
                                             <div class="card-head">
                                                 <h5 class="card-title">
@@ -233,42 +233,42 @@
                                             </div>
                                             <div class="row g-4">
                                                 <div class="col-lg-12">
-                                                    <div class="form-group text-center">
-                                                        <label class="form-label" for="Cause">
-                                                            Processus
-                                                        </label>
-                                                        <div class="form-control-wrap">
-                                                            <input value="{{ $actions['processus'] }}" readonly type="text" class="form-control text-center" id="Cause">
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="col-lg-12">
-                                                    <div class="form-group text-center">
-                                                        <label class="form-label" for="Cause">
-                                                            risque
-                                                        </label>
-                                                        <div class="form-control-wrap">
-                                                            <input value="{{ $actions['risque'] }}" readonly type="text" class="form-control text-center" id="Cause">
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="col-lg-12">
-                                                    <div class="form-group text-center">
+                                                    <div class="form-group ">
                                                         <label class="form-label" for="Cause">
                                                             Action
                                                         </label>
                                                         <div class="form-control-wrap">
-                                                            <input value="{{ $actions['action'] }}" readonly type="text" class="form-control text-center" id="Cause">
+                                                            <input value="{{ $actions['action'] }}" readonly type="text" class="form-control " id="Cause">
                                                         </div>
                                                     </div>
                                                 </div>
                                                 <div class="col-lg-12">
-                                                    <div class="form-group text-center">
+                                                    <div class="form-group ">
+                                                        <label class="form-label" for="Cause">
+                                                            risque
+                                                        </label>
+                                                        <div class="form-control-wrap">
+                                                            <input value="{{ $actions['risque'] }}" readonly type="text" class="form-control " id="Cause">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-12">
+                                                    <div class="form-group ">
+                                                        <label class="form-label" for="Cause">
+                                                            Processus
+                                                        </label>
+                                                        <div class="form-control-wrap">
+                                                            <input value="{{ $actions['processus'] }}" readonly type="text" class="form-control " id="Cause">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-12">
+                                                    <div class="form-group ">
                                                         <label class="form-label" for="Cause">
                                                             Délai
                                                         </label>
                                                         <div class="form-control-wrap">
-                                                            <input value="{{ \Carbon\Carbon::parse($actions['delai'])->format('d/m/Y') }}" readonly type="text" class="form-control text-center" id="Cause">
+                                                            <input value="{{ \Carbon\Carbon::parse($actions['delai'])->format('d/m/Y') }}" readonly type="text" class="form-control " id="Cause">
                                                         </div>
                                                     </div>
                                                 </div>

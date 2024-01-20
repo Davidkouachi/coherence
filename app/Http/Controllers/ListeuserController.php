@@ -41,7 +41,7 @@ class ListeuserController extends Controller
 
         $users = User::join('postes', 'users.poste_id', 'postes.id')
                     ->join('autorisations', 'autorisations.user_id', 'users.id')
-                    ->select('users.*','autorisations.new_user as new_user', 'autorisations.list_user as list_user' ,'autorisations.new_poste as new_poste', 'autorisations.list_poste as list_poste' ,'postes.nom as poste','autorisations.historiq as historiq','autorisations.stat as stat','autorisations.new_proces as new_proces','autorisations.list_proces as list_proces', 'autorisations.eva_proces as eva_proces' ,'autorisations.new_risk as new_risk','autorisations.list_risk as list_risk', 'autorisations.val_risk as val_risk', 'autorisations.act_n_val as act_n_val' ,'autorisations.suivi_actp as suivi_actp','autorisations.list_actp as list_actp', 'autorisations.suivi_actc as suivi_actc' ,'autorisations.list_actc_eff as list_actc_eff','autorisations.list_actc as list_actc','autorisations.fiche_am as fiche_am','autorisations.list_am as list_am','autorisations.val_am as val_am','autorisations.am_n_val as am_n_val')
+                    ->select('users.*','autorisations.new_user as new_user', 'autorisations.list_user as list_user' ,'autorisations.new_poste as new_poste', 'autorisations.list_poste as list_poste' ,'postes.nom as poste','autorisations.historiq as historiq','autorisations.stat as stat','autorisations.new_proces as new_proces','autorisations.list_proces as list_proces', 'autorisations.eva_proces as eva_proces' ,'autorisations.new_risk as new_risk','autorisations.list_risk as list_risk', 'autorisations.val_risk as val_risk', 'autorisations.act_n_val as act_n_val', 'autorisations.color_para as color_para' ,'autorisations.suivi_actp as suivi_actp','autorisations.list_actp as list_actp', 'autorisations.suivi_actc as suivi_actc' ,'autorisations.list_actc_eff as list_actc_eff','autorisations.list_actc as list_actc','autorisations.fiche_am as fiche_am','autorisations.list_am as list_am','autorisations.val_am as val_am','autorisations.am_n_val as am_n_val')
                     ->get();
 
         return view('liste.user',['users' => $users]);
@@ -65,6 +65,7 @@ class ListeuserController extends Controller
         $auto->list_risk = $request->list_risk;
         $auto->val_risk = $request->val_risk;
         $auto->act_n_val = $request->act_n_val;
+        $auto->color_para = $request->color_para;
 
         $auto->suivi_actp = $request->suivi_actp;
         $auto->list_actp = $request->list_actp;

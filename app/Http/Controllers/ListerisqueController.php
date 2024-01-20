@@ -311,6 +311,7 @@ class ListerisqueController extends Controller
                     $cause->nom = $nom_cause[$index];
                     $cause->dispositif = $dispositif[$index];
                     $cause->risque_id = $risque_id;
+                    $cause->page = 'risk';
                     $cause->save();
                 }
 
@@ -351,6 +352,7 @@ class ListerisqueController extends Controller
                     $nouvelleActionC->poste_id = $responsable_idc[$index];
                     $nouvelleActionC->risque_id = $risque_id;
                     $nouvelleActionC->type = 'corrective';
+                    $nouvelleActionC->page = 'risk';
                     $nouvelleActionC->save();
                 }
             }
@@ -396,6 +398,7 @@ class ListerisqueController extends Controller
                     $nouvelleActionP->risque_id = $risque_id;
                     $nouvelleActionP->date = $delai[$index];
                     $nouvelleActionP->type = 'preventive';
+                    $nouvelleActionP->page = 'risk';
                     $nouvelleActionP->save();
 
                 }

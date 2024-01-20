@@ -102,7 +102,7 @@ class ProfilController extends Controller
         $user->update();
 
         if ($user) {
-            
+
             return response()->json(['success' => true]);
         }
 

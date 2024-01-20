@@ -37,7 +37,7 @@
                                     <div class="card-inner">
                                         <table class="datatable-init table">
                                             <thead>
-                                                <tr class="text-center">
+                                                <tr>
                                                     <th></th>
                                                     <th>Poste</th>
                                                     <th>Date de Création</th>
@@ -46,10 +46,10 @@
                                             </thead>
                                             <tbody>
                                                 @foreach ($postes as $key => $poste)
-                                                    <tr class="text-center">
+                                                    <tr>
                                                         <td>{{ $key+1}}</td>
                                                         <td>{{ $poste->nom}}</td>
-                                                        <td>{{ \Carbon\Carbon::parse($poste->created_at)->format('d/m/Y H:i:s') }}</td>
+                                                        <td>{{ \Carbon\Carbon::parse($poste->created_at)->translatedFormat('j F Y '.' à '.' h:i:s') }}</td>
                                                         <td>
                                                             <a data-bs-toggle="modal"
                                                                 data-bs-target="#modalModif{{ $poste->id }}"

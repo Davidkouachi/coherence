@@ -240,8 +240,6 @@ class EtatController extends Controller
     {
         $action = Action::join('risques', 'actions.risque_id', 'risques.id')
                         ->join('processuses', 'risques.processus_id', 'processuses.id')
-                        ->where('actions.type', 'corrective')
-                        ->where('actions.page', 'risk')
                         ->where('actions.id', $request->id)
                         ->select('actions.*', 'processuses.nom as processus', 'risques.nom as risque')
                         ->first();

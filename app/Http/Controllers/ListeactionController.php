@@ -59,23 +59,13 @@ class ListeactionController extends Controller
     public function index_ac_eff()
     {
         $actions = Suivi_amelioration::join('ameliorations', 'suivi_ameliorations.amelioration_id', 'ameliorations.id')
-                        ->where('suivi_ameliorations.statut', 'realiser')
                         ->join('processuses', 'suivi_ameliorations.processus_id', 'processuses.id')
-                        ->select('Suivi_ameliorations.*', 'processuses.nom as processus', 'ameliorations.type as type_am', 'ameliorations.statut as statut_am', 'ameliorations.date_validation as date_validation_am')
+                        ->join('actions', 'suivi_ameliorations.action_id', 'actions.id')
+                        ->join('risques', 'actions.risque_id', 'risques.id')
+                        ->join('postes', 'actions.poste_id', 'postes.id')
+                        ->where('suivi_ameliorations.statut', 'realiser')
+                        ->select('Suivi_ameliorations.*', 'processuses.nom as processus', 'ameliorations.non_conformite as non_conformite', 'ameliorations.statut as statut_am', 'ameliorations.date_validation as date_validation_am','risques.nom as risque', 'postes.nom as poste', 'actions.action as action')
                         ->get();
-
-        foreach ($actions as $action) {
-
-            $ac = Action::join('risques', 'actions.risque_id', 'risques.id')
-                            ->join('postes', 'actions.poste_id', 'postes.id')
-                            ->where('actions.id', $action->action_id)
-                            ->select('actions.*', 'risques.nom as risque', 'postes.nom as poste')
-                            ->first();
-
-            $action->risque = $ac->risque;
-            $action->poste = $ac->poste;
-            $action->action = $ac->action;
-        }
 
         return view('liste.actioncorrectiveeff', ['actions' => $actions]);
     }
@@ -85,7 +75,6 @@ class ListeactionController extends Controller
         $actions = Action::join('risques', 'actions.risque_id', 'risques.id')
                         ->join('processuses', 'risques.processus_id', 'processuses.id')
                         ->where('actions.type', 'corrective')
-                        ->where('actions.page', 'risk')
                         ->select('actions.*', 'processuses.nom as processus', 'risques.nom as risque')
                         ->get();
 

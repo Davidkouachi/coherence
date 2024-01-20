@@ -516,6 +516,12 @@ class AmeliorationController extends Controller
 
         if ($am) {
 
+            $his = new Historique_action();
+            $his->nom_formulaire = 'Suivi des incidents';
+            $his->nom_action = 'ajouter intervale de date de verification de l\'efficacité';
+            $his->user_id = Auth::user()->id;
+            $his->save();
+
             return back()->with('success', 'Enregistrement éffectuée');
         }
 
@@ -537,6 +543,12 @@ class AmeliorationController extends Controller
         $am->update();
 
         if ($am) {
+
+            $his = new Historique_action();
+            $his->nom_formulaire = 'Suivi des incidents';
+            $his->nom_action = 'Vérification de l\'efficacité';
+            $his->user_id = Auth::user()->id;
+            $his->save();
 
             return back()->with('success', 'Enregistrement éffectuée');
         }

@@ -203,6 +203,28 @@
                                                                 </div>
                                                             </div>
                                                         </div>
+                                                        <div class="col-lg-12 row">
+                                                            <div class="col-lg-3" >
+                                                                <div class="form-group ">
+                                                                    <label class="form-label" style="font-size: 14px;">
+                                                                        Efficacité:
+                                                                    </label>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-lg-9">
+                                                                <div class="form-group ">
+                                                                    @if($suivi->efficacite === 'oui')
+                                                                        <span class="fw-normal text-success" style="font-size: 14px;">
+                                                                            Acion éfficace
+                                                                        </span>
+                                                                    @else
+                                                                        <span class="fw-normal text-danger" style="font-size: 14px;">
+                                                                            Acion non éfficace
+                                                                        </span>
+                                                                    @endif
+                                                                </div>
+                                                            </div>
+                                                        </div>
                                                         @else
                                                         <div class="col-lg-12 row">
                                                             <div class="col-lg-3" >
@@ -251,6 +273,22 @@
                                                             <div class="form-group ">
                                                                 <span class="fw-normal text-dark" style="font-size: 14px;">
                                                                     {{$action->poste}}
+                                                                </span>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-lg-12 row">
+                                                        <div class="col-lg-3" >
+                                                            <div class="form-group ">
+                                                                <label class="form-label" style="font-size: 14px;">
+                                                                    Commentaire :
+                                                                </label>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-lg-9">
+                                                            <div class="form-group ">
+                                                                <span class="fw-normal text-dark" style="font-size: 14px;">
+                                                                    {{$suivi->commentaire}}
                                                                 </span>
                                                             </div>
                                                         </div>

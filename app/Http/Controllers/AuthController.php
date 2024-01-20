@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Cache;
 
 use App\Models\User;
 use App\Models\Historique_action;
@@ -33,6 +35,7 @@ class AuthController extends Controller
     
     public function view_login()
     {
+        Cache::flush();
         return view('auth.login');
     }
 
@@ -41,11 +44,15 @@ class AuthController extends Controller
         return view('auth.registre');
     }
 
-    public function logout(Request $request)
+    public function logout(Request $request): RedirectResponse
     {
         Auth::logout();
-
-        return redirect()->route('login');
+     
+        $request->session()->invalidate();
+     
+        $request->session()->regenerateToken();
+     
+        return redirect('/');
     }
 
     public function add_user(Request $request)
@@ -88,6 +95,7 @@ class AuthController extends Controller
                 $auto->list_risk = $request->list_risk;
                 $auto->val_risk = $request->val_risk;
                 $auto->act_n_val = $request->act_n_val;
+                $auto->color_para = $request->color_para;
 
                 $auto->suivi_actp = $request->suivi_actp;
                 $auto->list_actp = $request->list_actp;
@@ -150,7 +158,7 @@ class AuthController extends Controller
 
         if (Auth::attempt($credentials)) {
 
-            Auth::user()->logoutOtherDevices($request->password);
+            Auth::logoutOtherDevices($request->password);
             
             $poste_id = Auth::user()->poste_id;
             $user_id = Auth::user()->id;

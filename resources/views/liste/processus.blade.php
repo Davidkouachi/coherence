@@ -39,21 +39,23 @@
                                     <div class="card-inner">
                                         <table class="datatable-init table">
                                             <thead>
-                                                <tr class="text-center">
+                                                <tr>
                                                     <th></th>
                                                     <th>Approvisionnement</th>
                                                     <th>Finalié</th>
                                                     <th>nombre d'objectif</th>
+                                                    <th>Date de création</th>
                                                     <th></th>
                                                 </tr>
                                             </thead>
                                             <tbody>
                                                 @foreach ($processus as $key => $processu)
-                                                    <tr class="text-center">
+                                                    <tr>
                                                         <td>{{ $key+1}}</td>
                                                         <td>{{ $processu->nom}}</td>
                                                         <td>{{ $processu->finalite}}</td>
                                                         <td>{{ $processu->nbre}}</td>
+                                                        <td>{{ \Carbon\Carbon::parse($processu->created_at)->translatedFormat('j F Y '.' à '.' h:i:s') }}</td>
                                                         <td>
                                                             <div class="d-flex" >
                                                                 <form method="post" action="{{ route('index_etat_processus') }}">

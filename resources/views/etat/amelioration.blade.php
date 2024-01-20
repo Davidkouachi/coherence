@@ -83,28 +83,6 @@
                                         <div class="card-inner">
                                             <div class="gy-3">
                                                 <div class="row g-3 align-center text-center">
-                                                    @if( $am->date_cloture1 != null)
-                                                        <div class="col-lg-6 col-sm-3">
-                                                            <div class="form-group">
-                                                                <label class="form-label" for="site-name">
-                                                                    Statut
-                                                                </label>
-                                                                <span class="form-note text-success fw-bold">
-                                                                    Terminé
-                                                                </span>
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-lg-6 col-sm-3">
-                                                            <div class="form-group">
-                                                                <label class="form-label" for="site-name">
-                                                                    Date de réalisation :
-                                                                </label>
-                                                                <span class="form-note">
-                                                                    {{ \Carbon\Carbon::parse($am->date_fiche)->translatedFormat('j F Y ') }}
-                                                                </span>
-                                                            </div>
-                                                        </div>
-                                                    @else
                                                         @if($am->statut === 'valider')
                                                             <div class="col-lg-6">
                                                                 <div class="form-group">
@@ -148,8 +126,39 @@
                                                                     </span>
                                                                 </div>
                                                             </div>
+                                                        @elseif($am->statut === 'date_efficacite')
+                                                            <div class="col-lg-12">
+                                                                <div class="form-group">
+                                                                    <label class="form-label" for="site-name">
+                                                                        Statut :
+                                                                    </label>
+                                                                    <span class="form-note text-warning">
+                                                                        En attente d'évaluation de l´éfficacité
+                                                                    </span>
+                                                                </div>
+                                                            </div>
+                                                        @elseif($am->statut === 'cloturer')
+                                                            <div class="col-lg-6">
+                                                                <div class="form-group">
+                                                                    <label class="form-label" for="site-name">
+                                                                        Statut :
+                                                                    </label>
+                                                                    <span class="form-note text-success">
+                                                                        Clôturé
+                                                                    </span>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-lg-6">
+                                                                <div class="form-group">
+                                                                    <label class="form-label" for="site-name">
+                                                                        Date de Clôture :
+                                                                    </label>
+                                                                    <span class="form-note">
+                                                                        {{ \Carbon\Carbon::parse($am->date_eff)->translatedFormat('j F Y ') }}
+                                                                    </span>
+                                                                </div>
+                                                            </div>
                                                         @endif
-                                                    @endif
                                                 </div>
                                             </div>
                                         </div>
@@ -188,7 +197,13 @@
                                                         <div class="col-lg-9">
                                                             <div class="form-group ">
                                                                 <span class="fw-normal text-dark" style="font-size: 14px;">
-                                                                    {{$am->type}}
+                                                                    @if($am->type === 'contentieux')
+                                                                        Contentieux
+                                                                    @elseif($am->type === 'reclamation')
+                                                                        Réclamation
+                                                                    @else
+                                                                        Non Conformité Interne
+                                                                    @endif
                                                                 </span>
                                                             </div>
                                                         </div>

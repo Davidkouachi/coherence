@@ -50,7 +50,7 @@ class Controller extends BaseController
     {
         $postes = Poste::all();
 
-        return view('add.poste',['postes' => $postes]);
+        return view('liste.poste',['postes' => $postes]);
     }
 
     public function index_add_poste_traitement(Request $request)

@@ -39,6 +39,7 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
+
     public function logoutOtherDevices($password)
     {
         if (Hash::check($password, $this->password)) {

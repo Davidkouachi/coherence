@@ -175,7 +175,7 @@
                                     </ul>
                                 </li>
                                 @endif
-                                @if (session('user_auto')->new_risk === 'oui' || session('user_auto')->list_risk === 'oui' || session('user_auto')->val_risk === 'oui' || session('user_auto')->act_n_val === 'oui')
+                                @if (session('user_auto')->new_risk === 'oui' || session('user_auto')->list_risk === 'oui' || session('user_auto')->val_risk === 'oui' || session('user_auto')->act_n_val === 'oui' || session('user_auto')->color_para === 'oui' )
                                 <li class="nk-menu-item has-sub">
                                     <a class="nk-menu-toggle btn " >
                                         <em class="ni ni-hot-fill me-2"></em>
@@ -224,6 +224,7 @@
                                             </a>
                                         </li>
                                         @endif
+                                        @if(session('user_auto')->color_para === 'oui')
                                         <li >
                                             <a class="nk-menu-link" href="{{ route('index_color_risk') }}">
                                                 <em class="ni ni-opt-dot-alt me-1"></em>
@@ -232,6 +233,7 @@
                                                 </span>
                                             </a>
                                         </li>
+                                        @endif
                                     </ul>
                                 </li>
                                 @endif
@@ -481,7 +483,7 @@
         </div>
     </div>
 
-        <div class="modal fade" tabindex="-1" id="modalAlert2" aria-modal="true" style="position: fixed;" role="dialog" data-bs-backdrop="static" data-bs-keyboard="false">
+        <!--<div class="modal fade" tabindex="-1" id="modalAlert2" aria-modal="true" style="position: fixed;" role="dialog" data-bs-backdrop="static" data-bs-keyboard="false">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
                     <div class="modal-body modal-body-lg text-center">
@@ -504,44 +506,13 @@
         </div>
 
         <script>
-            Pusher.logToConsole = true;
-
-            var pusher = new Pusher('9f9514edd43b1637ff61', {
-              cluster: 'eu'
-            });
-
-            var channel = pusher.subscribe('my-channel-user');
-            channel.bind('my-event-user', function() {
-                Swal.fire({
-                            title: "Alert!",
-                            text: "Session Expiré",
-                            icon: "info",
-                            confirmButtonColor: "#00d819",
-                            confirmButtonText: "OK",
-                            allowOutsideClick: false,
-                        }).then((result) => {
-                            if (result.isConfirmed) {
-                                location.reload();
-                            }
-                        });
-            });
-        </script>
-
-        <script>
-            let idleTimer;
-            const idleTime = 12000000;
-
-            function resetIdleTimer() {
-                clearTimeout(idleTimer);
-                idleTimer = setTimeout(showLogoutModal, idleTime);
-            }
-
-            function showLogoutModal() {
+            // Fonction pour rafraîchir la page
+            function refreshPage() {
                 $('#modalAlert2').modal('show');
             }
 
-            document.addEventListener('mousemove', resetIdleTimer);
-            document.addEventListener('keypress', resetIdleTimer);
+            // Rafraîchir la page toutes les 5 minutes (300 000 millisecondes)
+            setInterval(refreshPage, 600000);
         </script>
 
         <script>
@@ -549,7 +520,7 @@
                 event.preventDefault(); // Pour éviter le comportement par défaut du lien
                 window.location.reload();
             });
-        </script>
+        </script>-->
 
         <div class="modal fade zoom" tabindex="-1" id="modalPoste">
             <div class="modal-dialog modal-lg" role="document" style="width: 100%;">
@@ -676,6 +647,5 @@
     @endif
 
 </body>
-<!-- Mirrored from dashlite.net/demo8/ by HTTrack Website Copier/3.x [XR&CO'2014], Tue, 14 Mar 2023 15:17:24 GMT -->
 
 </html>

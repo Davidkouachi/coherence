@@ -96,6 +96,12 @@ class Updateamcontroller extends Controller
                     }
                 }
             }
+            
+            $his = new Historique_action();
+            $his->nom_formulaire = 'Fiche d\'incident non validé';
+            $his->nom_action = 'mise à jour';
+            $his->user_id = Auth::user()->id;
+            $his->save();
 
             return redirect()->route('index_amup')->with('success', 'Mise à jour éffectuée.');
         }
@@ -214,6 +220,12 @@ class Updateamcontroller extends Controller
 
         if ($am) {
 
+            $his = new Historique_action();
+            $his->nom_formulaire = 'Fiche d\'incident non validé';
+            $his->nom_action = 'mise à jour';
+            $his->user_id = Auth::user()->id;
+            $his->save();
+
             return redirect()->route('index_amup')->with('success', 'Mise à jour éffectuée.');
 
         } else {
@@ -227,18 +239,23 @@ class Updateamcontroller extends Controller
 
         if ($valide)
         {
-
             $valide->statut = 'update';
             $valide->update();
 
+            $his = new Historique_action();
+            $his->nom_formulaire = 'Fiche d\'incident non validé';
+            $his->nom_action = 'Validation de la mise à jour';
+            $his->user_id = Auth::user()->id;
+            $his->save();
+
             return redirect()
                     ->back()
-                    ->with('success', 'Validation éffectuée.');
+                    ->with('success', 'Validation de la mise à jour éffectuée.');
 
         }
 
         return redirect()
             ->back()
-            ->with('error', 'Validation a échoué.');
+            ->with('error', 'Validation de la mise à jour a échoué.');
     }
 }

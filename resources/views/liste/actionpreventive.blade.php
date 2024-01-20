@@ -188,7 +188,11 @@
                                                                     Efficacitée
                                                                 </label>
                                                                 <div class="form-control-wrap">
-                                                                    <input value="{{ $action->efficacite }}" readonly type="text" class="form-control" id="Cause">
+                                                                    @if($action->efficacite === 'oui')
+                                                                        <input value="{{ $action->efficacite }}" readonly type="text" class="form-control bg-success" id="Cause">
+                                                                    @else
+                                                                        <input value="{{ $action->efficacite }}" readonly type="text" class="form-control bg-danger" id="Cause">
+                                                                    @endif
                                                                 </div>
                                                             </div>
                                                         </div>

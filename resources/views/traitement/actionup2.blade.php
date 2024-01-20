@@ -345,7 +345,7 @@
                                     </div>
 
                                     @foreach ($causes as $key => $cause)
-                                    <div class="col-lg-12 col-xxl-12" id="groupesContainer">
+                                    <div class="col-lg-12 col-xxl-12" >
                                         <div class="card card-bordered">
                                             <div class="card-inner">
                                                 <div class="row g-4">
@@ -384,6 +384,9 @@
                                         </div>
                                     </div>
                                     @endforeach
+
+                                    <div class="col-lg-12 col-xxl-12" id="groupesContainer" style="display: none;">
+                                    </div>
 
                                     <div class="col-lg-12 row g-2" style="margin-left:1px;">
                                         <div class="col-lg-12">
@@ -505,7 +508,7 @@
                                     </div>
 
                                     @foreach ($actionsp as $key => $action)
-                                    <div class="col-lg-12 col-xxl-12" id="groupesActionpr">
+                                    <div class="col-lg-12 col-xxl-12">
                                         <div class="card card-bordered">
                                             <div class="card-inner">
                                                 <div class="row g-4">
@@ -561,8 +564,11 @@
                                     </div>
                                     @endforeach
 
+                                    <div class="col-lg-12 col-xxl-12" id="groupesActionpr" style="display: none;">
+                                    </div>
+
                                     @foreach ($actionsc as $key => $action)
-                                    <div class="col-lg-12 col-xxl-12" id="groupesActionco">
+                                    <div class="col-lg-12 col-xxl-12">
                                         <div class="card card-bordered">
                                             <div class="card-inner">
                                                 <div class="row g-4">
@@ -605,6 +611,9 @@
                                         </div>
                                     </div>
                                     @endforeach
+
+                                    <div class="col-lg-12 col-xxl-12" id="groupesActionco" style="display: none;">
+                                    </div>
 
                                     <div class="col-lg-12 col-xxl-12">
                                         <div class="card card-bordered card-preview">
@@ -762,7 +771,9 @@
 
             toastr.info("Veuillez saisir une cause.");
 
-        } else {
+        } else { 
+
+            document.getElementById("groupesContainer").style.display = 'block';
 
             const groupe = document.createElement("div");
             groupe.className = "card card-bordered";
@@ -825,6 +836,8 @@
             toastr.info("Veuillez saisir une action preventive.");
 
         } else {
+
+            document.getElementById("groupesActionpr").style.display = 'block';
 
             const groupe = document.createElement("div");
             groupe.className = "card card-bordered";
@@ -905,6 +918,8 @@
             toastr.info("Veuillez saisir une action corrective.");
 
         } else {
+
+            document.getElementById("groupesActionco").style.display = 'block';
 
             const groupe = document.createElement("div");
             groupe.className = "card card-bordered";

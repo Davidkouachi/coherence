@@ -4,6 +4,9 @@
 
 <head>
     <meta charset="utf-8">
+    <meta http-equiv="Cache-Control" content="no-store, no-cache, must-revalidate, max-age=0">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="Sat, 01 Jan 1990 00:00:00 GMT">
     <meta name="author" content="Softnio">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="A powerful and conceptual apps base dashboard template that especially build for developers and programmers.">
@@ -11,6 +14,15 @@
     <title>Login</title>
     <link rel="stylesheet" href="{{asset('')}}../../assets/css/dashlite0226.css?ver=3.1.2">
     <link id="skin-default" rel="stylesheet" href="{{asset('')}}../../assets/css/theme0226.css?ver=3.1.2">
+    
+    <script>
+        // Empêcher le retour à la page précédente après la déconnexion
+        history.pushState(null, null, location.href);
+        window.onpopstate = function () {
+            history.go(1);
+        };
+    </script>
+
 </head>
 
 <body class="nk-body bg-white npc-general pg-auth">
@@ -69,7 +81,7 @@
     <link href="{{asset('notification/toastr.min.css')}}" rel="stylesheet">
     <script src="{{asset('notification/toastr.min.js')}}"></script>
 
-    <script>
+    <!--<script>
         // Fonction pour rafraîchir la page
         function refreshPage() {
             location.reload();
@@ -77,7 +89,7 @@
 
         // Rafraîchir la page toutes les 5 minutes (300 000 millisecondes)
         setInterval(refreshPage, 300000);
-    </script>
+    </script>-->
 
     @if (session('error_login'))
         <script>
@@ -87,6 +99,15 @@
             showEasing:"swing",showMethod:"fadeIn",hideMethod:"fadeOut"})
         </script>
         {{ session()->forget('error_login') }}
+    @endif
+    @if (session('info'))
+        <script>
+            toastr.info("{{ session('info') }}"," ",
+            {positionClass:"toast-top-left",timeOut:5e3,debug:!1,newestOnTop:!0,
+            preventDuplicates:!0,showDuration:"300",hideDuration:"1000",extendedTimeOut:"1000",
+            showEasing:"swing",showMethod:"fadeIn",hideMethod:"fadeOut"})
+        </script>
+        {{ session()->forget('info') }}
     @endif
 
 </html>

@@ -173,7 +173,7 @@ class ProcessusController extends Controller
 
         }
 
-        if ($risque || $cause || $nouvelleActionP || $suivip || $nouvelleActionC )
+        if ($risque && $cause && $nouvelleActionP && $nouvelleActionC )
         {
             $choix_alert_alert = $request->input('choix_alert_alert');
             $choix_alert_email = $request->input('choix_alert_email');
@@ -223,11 +223,15 @@ class ProcessusController extends Controller
             $his->user_id = Auth::user()->id;
             $his->save();
 
+            return redirect()
+                ->back()
+                ->with('success', 'Enregistrement éffectuée.');
+
         }
 
         return redirect()
             ->back()
-            ->with('success', 'Enregistrement éffectuée.');
+            ->with('error', 'Echec de l\'enregistrement.');
     }
 
     public function recherche_processuseva($processusId)
@@ -383,10 +387,10 @@ class ProcessusController extends Controller
             $his->user_id = Auth::user()->id;
             $his->save();
 
+            event(new NotificationProcessus());
+
             return back()
                     ->with('success', 'Enregistrement éffectuée.');
-
-            event(new NotificationProcessus());
         }
 
         return back()
@@ -413,13 +417,18 @@ class ProcessusController extends Controller
 
                 foreach ($rechs as $value) {
 
-                    $suivip = new Suivi_action();
-                    $suivip->delai = $value->date;
-                    $suivip->statut = 'non-realiser';
-                    $suivip->risque_id = $id;
-                    $suivip->action_id = $value->id;
-                    $suivip->processus_id = $value->processus_id;
-                    $suivip->save();
+                    $rech =Suivi_action::where('action_id', $value->id)->count();
+
+                    if($rech === 0) {
+
+                        $suivip = new Suivi_action();
+                        $suivip->delai = $value->date;
+                        $suivip->statut = 'non-realiser';
+                        $suivip->risque_id = $id;
+                        $suivip->action_id = $value->id;
+                        $suivip->processus_id = $value->processus_id;
+                        $suivip->save();
+                    }
                 }
             }
 

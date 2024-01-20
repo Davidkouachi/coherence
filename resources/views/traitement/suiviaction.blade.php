@@ -37,21 +37,21 @@
                                     <div class="card-inner">
                                         <table class="datatable-init table">
                                             <thead>
-                                                <tr class="text-center">
+                                                <tr>
                                                     <th></th>
-                                                    <th>Processus</th>
-                                                    <th>Risque</th>
                                                     <th>Action</th>
+                                                    <th>Risque</th>
+                                                    <th>Processus</th>
                                                     <th></th>
                                                 </tr>
                                             </thead>
                                             <tbody>
                                                 @foreach ($actions as $key => $action)
-                                                    <tr class="text-center">
+                                                    <tr>
                                                         <td>{{ $key+1 }}</td>
-                                                        <td>{{ $action->processus }}</td>
-                                                        <td>{{ $action->risque }}</td>
                                                         <td>{{ $action->action }}</td>
+                                                        <td>{{ $action->risque }}</td>
+                                                        <td>{{ $action->processus }}</td>
                                                         <td>
                                                             <a data-bs-toggle="modal"
                                                                 data-bs-target="#modalDetail{{ $action->id }}"
@@ -90,13 +90,23 @@
                                     <div class="card">
                                         <div class="card-inner">
                                                 <div class="row g-4">
-                                                    <div class="col-lg-6">
+                                                    <div class="col-lg-12">
+                                                        <div class="form-group">
+                                                            <label class="form-label" for="controle">
+                                                                Action Préventive
+                                                            </label>
+                                                            <div class="form-control-wrap">
+                                                                <input disabled value="{{ $action->action }}" type="text" class="form-control" readonly>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <!--<div class="col-lg-6">
                                                         <div class="form-group">
                                                             <label class="form-label" for="Cause">
                                                                 Processus
                                                             </label>
                                                             <div class="form-control-wrap">
-                                                                <input value="{{ $action->processus }}" type="text" class="form-control" readonly>
+                                                                <input disabled value="{{ $action->processus }}" type="text" class="form-control" readonly>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -106,27 +116,17 @@
                                                                 Risque
                                                             </label>
                                                             <div class="form-control-wrap">
-                                                                <input value="{{ $action->risque }}" type="text" class="form-control" readonly>
+                                                                <input disabled value="{{ $action->risque }}" type="text" class="form-control" readonly>
                                                             </div>
                                                         </div>
-                                                    </div>
-                                                    <div class="col-lg-12">
-                                                        <div class="form-group">
-                                                            <label class="form-label" for="controle">
-                                                                Action Préventive
-                                                            </label>
-                                                            <div class="form-control-wrap">
-                                                                <input value="{{ $action->action }}" type="text" class="form-control" readonly>
-                                                            </div>
-                                                        </div>
-                                                    </div>
+                                                    </div>-->
                                                     <div class="col-lg-12">
                                                         <div class="form-group">
                                                             <label class="form-label" for="Coût">
                                                                 Responsable
                                                             </label>
                                                             <div class="form-control-wrap">
-                                                                <input value="{{ $action->responsable }}" type="text" class="form-control" readonly>
+                                                                <input disabled value="{{ $action->responsable }}" type="text" class="form-control" readonly>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -139,11 +139,11 @@
                                                                 <option value="">
                                                                     Choisir
                                                                 </option>
-                                                                <option value="efficace">
-                                                                    efficace
+                                                                <option value="oui">
+                                                                    Oui
                                                                 </option>
-                                                                <option value="non_efficace">
-                                                                    non-efficace
+                                                                <option value="non">
+                                                                    Non
                                                                 </option>
                                                             </select>
                                                         </div>
@@ -152,7 +152,23 @@
                                                                 Date d'action éffectuée
                                                             </label>
                                                             <div class="form-control-wrap">
-                                                                <input name="date_action" type="date" class="form-control" max="{{ \Carbon\Carbon::now()->toDateString() }}" >
+                                                                <input name="date_action" id="date_action" type="date" class="form-control" max="{{ \Carbon\Carbon::now()->toDateString() }}" onchange="checkDate0()" >
+                                                                <script>
+                                                                    function checkDate0() {
+                                                                        var dateInput = document.getElementById('date_action');
+                                                                        // Récupérer la date entrée
+                                                                        var inputDate = new Date(document.getElementById('date_action').value);
+
+                                                                        // Récupérer la date de validation (convertie en objet Date)
+                                                                        var validationDate = new Date("{{ $action->date_validation }}");
+
+                                                                        // Comparer les dates
+                                                                        if (inputDate < validationDate.setDate(validationDate.getDate() - 1)) {
+                                                                            dateInput.value = "";
+                                                                            toastr.info("La date d'action ne doit pas être supérieur a la date de validation de la fiche risque.");
+                                                                        }
+                                                                    }
+                                                                </script>
                                                             </div>
                                                         </div>
                                                     </div>

@@ -111,6 +111,7 @@
                                                             <th>Evaluation</th>
                                                             <th>Coût</th>
                                                             <th>Statut</th>
+                                                            <th>Date de création</th>
                                                             <th></th>
                                                         </tr>
                                                     </thead>
@@ -178,6 +179,7 @@
                                                                         </span>
                                                                     </td>
                                                                 @endif
+                                                                <td>{{ \Carbon\Carbon::parse($risque->created_at)->translatedFormat('j F Y '.' à '.' h:i:s') }}</td>
                                                                 <td>
                                                                     <a data-bs-toggle="modal"
                                                                         data-bs-target="#modalDetail{{ $risque->id }}"
@@ -224,9 +226,7 @@
                 <div class="modal-content" data-simplebar>
                     @if ($risque->pdf_nom != '')
                         <embed src="{{ asset('storage/pdf/' . $risque->pdf_nom) }}" type="application/pdf" width="100%" height="1100px">
-                    @endif
-                    
-                    @if ($risque->pdf_nom == '')
+                    @else
                         <p class="text-center mt-2"  >Aucun fichier </p>
                     @endif
                 </div>
@@ -495,7 +495,7 @@
                                                             </label>
                                                             <div class="form-group">
                                                                 <div class="form-control-wrap">
-                                                                    <input value="{{ $actionsDatas['date_suivip'] }}" readonly type="text" class="form-control text-center">
+                                                                    <input value="{{ \Carbon\Carbon::parse($actionsDatas['date_suivip'])->translatedFormat('j F Y') }}" readonly type="text" class="form-control text-center">
                                                                 </div>
                                                             </div>
                                                         </div>

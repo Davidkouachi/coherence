@@ -126,9 +126,8 @@
 
                                                                 @foreach($color_intervals as $color_interval)
                                                                     @if($color_interval->nbre1 <= $processu->evag  && $color_interval->nbre2 >= $processu->evag )
-                                                                        <td class="border-white" >
+                                                                        <td>
                                                                             <div class="user-avatar" style="background-color:{{$color_interval->code_color}}">
-                                                                                
                                                                             </div>
                                                                         </td>
                                                                         @php
@@ -139,10 +138,8 @@
                                                                 @endforeach
 
                                                                 @if(!$colorMatchFound)
-                                                                    <!-- Afficher un message si aucune correspondance n'a été trouvée -->
-                                                                    <td class="border-white"  >
+                                                                    <td>
                                                                         <div class="user-avatar" style="background-color:#8e8e8e;">
-
                                                                         </div>
                                                                     </td>
                                                                 @endif

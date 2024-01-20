@@ -24,8 +24,8 @@
                     <div class="nk-block-between">
                         <div class="nk-block-head-content" style="margin:0px auto;">
                             <h3 class="text-center">
-                                <span>Paramettrage</span>
-                                <em class="icon ni ni-opt-dot-alt"></em>
+                                <span>Paramettrage des couleurs</span>
+                                <em class="icon ni ni-setting-alt"></em>
                             </h3>
                         </div>
                     </div>

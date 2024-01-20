@@ -136,6 +136,7 @@
                                         </div>
                                     </div>
                                 </div>
+
                             </div>
                         </div>
                     </div>
@@ -156,45 +157,56 @@
     </style>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.9.3/html2pdf.bundle.min.js"></script>
+    <script src="https://rawgit.com/eKoopmans/html2pdf/master/dist/html2pdf.bundle.js"></script>
 
     <script>
         window.onload = function() {
             document.getElementById('btn_download').addEventListener('click', function() {
-                // Sélection du formulaire à imprimer
                 const form = document.getElementById('cadre');
 
                 // Configuration pour la génération PDF
-                const opt = {
+                const config = {
                     margin: 10,
-                    filename: 'mon_formulaire.pdf',
+                    filename: 'votre_document.pdf',
                     image: { type: 'jpeg', quality: 0.98 },
                     html2canvas: { scale: 2 },
-                    jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }, // Gestion des sauts de page
-                    header: [
-                        {
-                            content: 'Mon Header',
-                            height: '50mm',
-                            styles: {
-                                textAlign: 'center',
-                            },
-                        }
-                    ],
-                    footer: [
-                        {
-                            content: 'Page {page}/{total}',
-                            height: '50mm',
-                            styles: {
-                                textAlign: 'center',
-                            },
-                        }
-                    ],
+                    jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' },
+                    pagebreak: { before: '.new-page' },
+                    beforePageContent: function(page, pages) {
+                        return `<div style="text-align: center;">Header - Page ${page} / ${pages}</div>`;
+                    },
+                    afterPageContent: function(page, pages) {
+                        return `<div style="text-align: center;">Footer - Page ${page} / ${pages}</div>`;
+                    }
                 };
 
-                // Génération du PDF à partir du formulaire
-                const pdf = html2pdf().from(form).set(opt).save();
+                html2pdf(form, config).then(function(pdf) {
+                    // Une fois que le PDF est généré, vous pouvez imprimer en utilisant window.print()
+
+                    // Sauvegarder le PDF localement
+                    pdf.save();
+
+                    // Créer une nouvelle fenêtre avec le contenu du PDF pour déclencher l'impression
+                    const printWindow = window.open('', '_blank');
+                    printWindow.document.open();
+                    printWindow.document.write('<html><head><title>Votre Document</title></head><body>');
+                    printWindow.document.write(`<embed width="100%" height="100%" type="application/pdf" src="${pdf.output('bloburl')}"></embed>`);
+                    printWindow.document.write('</body></html>');
+                    printWindow.document.close();
+
+                    // Attendez que la fenêtre d'impression soit prête, puis imprimez
+                    printWindow.onload = function() {
+                        printWindow.print();
+                        printWindow.onafterprint = function() {
+                            printWindow.close();
+                        };
+                    };
+                });
             });
         };
     </script>
+
+
 
 
 @endsection

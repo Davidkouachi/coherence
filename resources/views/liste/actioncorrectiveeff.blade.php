@@ -41,7 +41,7 @@
                                             <thead>
                                                 <tr>
                                                     <th></th>
-                                                    <th>Type</th>
+                                                    <th>Non conformité</th>
                                                     <th>Action</th>
                                                     <th>Délai</th>
                                                     <th>Statut</th>
@@ -52,17 +52,7 @@
                                                 @foreach ($actions as $key => $action)
                                                     <tr>
                                                         <td>{{ $key+1}}</td>
-                                                        <td>
-                                                            @if ($action->type_am === 'non_conformite_interne')
-                                                                Non Conformité
-                                                            @endif
-                                                            @if ($action->type_am === 'contentieux')
-                                                                Contentieux
-                                                            @endif
-                                                            @if ($action->type_am === 'reclamation')
-                                                                Réclamation
-                                                            @endif
-                                                        </td>
+                                                        <td>{{ $action->non_conformite}}</td>
                                                         <td>{{ $action->action}}</td>
                                                         <td>{{ $action->delai}}</td>
                                                         @if ($action->date_action !== null && $action->delai >= $action->date_action)
@@ -129,10 +119,10 @@
                                                     <div class="col-lg-12">
                                                         <div class="form-group">
                                                             <label class="form-label" for="Cause">
-                                                                Processus
+                                                                Actions
                                                             </label>
                                                             <div class="form-control-wrap">
-                                                                <input value="{{ $action->processus }}" readonly type="text" class="form-control" id="Cause">
+                                                                <input value="{{ $action->action }}" readonly type="text" class="form-control" id="Cause">
                                                             </div>
                                                         </div>
                                                     </div>
@@ -149,10 +139,10 @@
                                                     <div class="col-lg-12">
                                                         <div class="form-group">
                                                             <label class="form-label" for="Cause">
-                                                                Actions
+                                                                Processus
                                                             </label>
                                                             <div class="form-control-wrap">
-                                                                <input value="{{ $action->action }}" readonly type="text" class="form-control" id="Cause">
+                                                                <input value="{{ $action->processus }}" readonly type="text" class="form-control" id="Cause">
                                                             </div>
                                                         </div>
                                                     </div>
@@ -184,7 +174,11 @@
                                                                 Efficacitée
                                                             </label>
                                                             <div class="form-control-wrap">
-                                                                <input value="{{ $action->efficacite }}" readonly type="text" class="form-control" id="Cause">
+                                                                @if($action->efficacite === 'oui')
+                                                                    <input value="Oui" readonly type="text" class="form-control bg-success" id="Cause">
+                                                                @else
+                                                                    <input value="Non" readonly type="text" class="form-control bg-danger" id="Cause">
+                                                                @endif
                                                             </div>
                                                         </div>
                                                     </div>
@@ -262,7 +256,7 @@
                                                     @endif
 
                                                     @if ($action->date_action === null)
-                                                    <div class="col-lg-12">
+                                                    <div class="col-lg-6">
                                                         <div class="form-group">
                                                             <label class="form-label" for="Cause">
                                                                 Délai
@@ -272,7 +266,7 @@
                                                             </div>
                                                         </div>
                                                     </div>
-                                                    <div class="col-lg-12">
+                                                    <div class="col-lg-6">
                                                         <div class="form-group">
                                                             <div class="form-control-wrap">
                                                                 @if ($action->date_action === null)

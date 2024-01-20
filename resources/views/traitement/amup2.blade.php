@@ -34,6 +34,25 @@
                         <div class="col-md-12 col-xxl-12" id="groupesContainer">
                             <div class="card card-bordered">
                                 <div class="card-inner">
+                                    <div class="row g-4">
+                                        <div class="col-lg-12">
+                                            <div class="form-group">
+                                                <label class="form-label" for="Cause">
+                                                    Motif(s)
+                                                </label>
+                                                <div class="form-control-wrap">
+                                                    <textarea disabled  class="form-control no-resize" id="default-textarea">{{ $am->motif }}</textarea>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-md-12 col-xxl-12" id="groupesContainer">
+                            <div class="card card-bordered">
+                                <div class="card-inner">
                                     <div class="row g-4 ">
                                         <div class="col-lg-4">
                                             <div class="form-group text-center">
@@ -107,6 +126,7 @@
                                 </div>
                             </div>
                         </div>
+
                         <div class="col-md-12 col-xxl-12" id="groupesContainer">
                             <div class="card card-bordered">
                                 <div class="card-inner">

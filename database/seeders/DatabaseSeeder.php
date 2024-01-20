@@ -7,6 +7,7 @@ use App\Models\User;
 use App\Models\Poste;
 use App\Models\Autorisation;
 use App\Models\Color_para;
+use App\Models\Color_interval;
 
 class DatabaseSeeder extends Seeder
 {
@@ -49,6 +50,7 @@ class DatabaseSeeder extends Seeder
             'list_risk' => 'oui',
             'val_risk' => 'oui',
             'act_n_val' => 'oui',
+            'color_para' => 'oui',
 
             'suivi_actp' => 'oui',
             'list_actp' => 'oui',
@@ -72,6 +74,34 @@ class DatabaseSeeder extends Seeder
             'nbre2' => '5',
             'nbre_color' => '4',
             'operation' => 'multiplication',
+        ]);
+
+        $color_interval1 = Color_interval::create([
+            'nbre1' => '1',
+            'nbre2' => '5',
+            'color' => 'vert',
+            'code_color' => '#5eccbf',
+        ]);
+
+        $color_interval2 = Color_interval::create([
+            'nbre1' => '6',
+            'nbre2' => '10',
+            'color' => 'jaune',
+            'code_color' => '#f7f880',
+        ]);
+
+        $color_interval3 = Color_interval::create([
+            'nbre1' => '11',
+            'nbre2' => '15',
+            'color' => 'orange',
+            'code_color' => '#f2b171',
+        ]);
+
+        $color_interval4 = Color_interval::create([
+            'nbre1' => '16',
+            'nbre2' => '25',
+            'color' => 'rouge',
+            'code_color' => '#ea6072',
         ]);
     }
 }

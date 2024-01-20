@@ -60,6 +60,13 @@ class ParamettreController extends Controller
         $color_para->operation = $request->operation;
 
         if ($color_para->save()) {
+
+            $his = new Historique_action();
+            $his->nom_formulaire = 'Paramettrage de couleurs';
+            $his->nom_action = 'Nouveaux paramettre';
+            $his->user_id = Auth::user()->id;
+            $his->save();
+
             return redirect()->back()->with(['success' => 'Mise à jour effectuée.']);
         }
 
@@ -110,6 +117,13 @@ class ParamettreController extends Controller
         }
 
         if($color_interval->save()) {
+
+            $his = new Historique_action();
+            $his->nom_formulaire = 'Paramettrage des couleurs';
+            $his->nom_action = 'Nouvel intervale ajouter';
+            $his->user_id = Auth::user()->id;
+            $his->save();
+
             return redirect()->back()->with(['success' => 'Nouvel interval ajouté.']);
         }
 
@@ -122,6 +136,13 @@ class ParamettreController extends Controller
         $delete->delete();
         
         if($delete) {
+
+            $his = new Historique_action();
+            $his->nom_formulaire = 'Paramettrage des couleurs';
+            $his->nom_action = 'Suppression d\'un interval ';
+            $his->user_id = Auth::user()->id;
+            $his->save();
+
             return redirect()->back()->with(['success' => 'Suppression éffectuée.']);
         }
 

@@ -355,7 +355,7 @@
                                                             <div class="col-lg-9">
                                                                 <div class="form-group ">
                                                                     <span class="fw-normal text-dark" style="font-size: 14px;">
-                                                                        {{ $risque->vraisemblence }}
+                                                                        {{ $causesDatas['cause'] }}
                                                                     </span>
                                                                 </div>
                                                             </div>
@@ -371,7 +371,7 @@
                                                             <div class="col-lg-9">
                                                                 <div class="form-group ">
                                                                     <span class="fw-normal text-dark" style="font-size: 14px;">
-                                                                        {{ $risque->gravite }}
+                                                                        {{ $causesDatas['dispositif'] }}
                                                                     </span>
                                                                 </div>
                                                             </div>

@@ -34,7 +34,7 @@ class SuiviactionController extends Controller
                 ->where('risques.statut', 'valider')
                 ->where('suivi_actions.statut', 'non-realiser')
                 ->where('actions.type', 'preventive')
-                ->select('actions.*','postes.nom as responsable','risques.nom as risque' ,'risques.date_validation as date_validation' ,'processuses.nom as processus')
+                ->select('actions.*','postes.nom as responsable','risques.nom as risque' ,'risques.date_validation as date_validation' ,'processuses.nom as processus','risques.date_validation as date_validation')
                 ->get();
 
         return view('traitement.suiviaction',  ['actions' => $actions]);
@@ -42,28 +42,15 @@ class SuiviactionController extends Controller
 
     public function index_suiviactionc()
     {
-        $ams = Amelioration::join('suivi_ameliorations', 'ameliorations.id', '=', 'suivi_ameliorations.amelioration_id')
+        $ams = Suivi_amelioration::join('ameliorations', 'suivi_ameliorations.amelioration_id', '=', 'ameliorations.id')
+                            ->join('actions', 'suivi_ameliorations.action_id', '=', 'actions.id')
+                            ->join('postes', 'actions.poste_id', '=', 'postes.id')
+                            ->join('risques', 'actions.risque_id', '=', 'risques.id')
+                            ->join('processuses', 'risques.processus_id', '=', 'processuses.id')
                             ->where('suivi_ameliorations.statut', 'non-realiser')
                             ->where('ameliorations.statut', 'valider')
-                            ->select('ameliorations.*','suivi_ameliorations.id as suivi_id','suivi_ameliorations.delai as delai', 'suivi_ameliorations.date_action as date_ation', 'suivi_ameliorations.nature as nature', 'suivi_ameliorations.action_id as action_id')
+                            ->select('Suivi_ameliorations.*', 'postes.nom as responsable', 'risques.nom as risque', 'processuses.nom as processus', 'ameliorations.type as type', 'ameliorations.date_validation as date_validation', 'ameliorations.non_conformite as non_conformite', 'actions.action as action',)
                             ->get();
-        foreach ($ams as $am) {
-
-            $actions = Action::join('postes', 'actions.poste_id', '=', 'postes.id')
-                                ->join('risques', 'actions.risque_id', '=', 'risques.id')
-                                ->join('processuses', 'risques.processus_id', '=', 'processuses.id')
-                                ->where('actions.id', $am->action_id)
-                                ->select('actions.*','postes.nom as responsable','risques.nom as risque','processuses.nom as processus')
-                                ->first();
-
-            if ($actions) {
-                $am->responsable = $actions->responsable;
-                $am->risque = $actions->risque;
-                $am->processus = $actions->processus;
-                $am->action = $actions->action;
-            }
-
-        }
 
         return view('traitement.suiviactionc',  ['ams' => $ams]);
     }

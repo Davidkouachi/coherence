@@ -465,6 +465,29 @@
                                                                 </div>
                                                             </div>
                                                         </div>
+                                                        <div class="col-lg-4">
+                                                            <div class="form-group align-items-center justify-content-center">
+                                                                <span class="preview-title overline-title">Paramettrage des couleurs</span>
+                                                                <div class="row gy-4">
+                                                                    <div class="col-md-3 col-sm-6">
+                                                                        <div class="preview-block">
+                                                                            <div class="custom-control custom-radio">
+                                                                                <input type="radio" id="customRadio0nc" name="color_para" class="custom-control-input" value="oui" >
+                                                                                <label class="custom-control-label" for="customRadio0nc">Oui</label>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="col-md-3 col-sm-6">
+                                                                        <div class="preview-block">
+                                                                            <div class="custom-control custom-radio">
+                                                                                <input type="radio" id="customRadio00nc" name="color_para" checked class="custom-control-input" value="non">
+                                                                                <label class="custom-control-label" for="customRadio00nc">Non</label>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
 
                                                         <div class="col-lg-12">
                                                             <div class="form-group">
@@ -592,13 +615,13 @@
                                                         <div class="col-lg-12">
                                                             <div class="form-group">
                                                                 <label class="form-label" for="Cause">
-                                                                    Ameliorations
+                                                                    Incidents
                                                                 </label>
                                                             </div>
                                                         </div>
                                                         <div class="col-lg-4">
                                                             <div class="form-group align-items-center justify-content-center">
-                                                                <span class="preview-title overline-title">Nouvelle Amelioration</span>
+                                                                <span class="preview-title overline-title">Nouveau incident</span>
                                                                 <div class="row gy-4">
                                                                     <div class="col-md-3 col-sm-6">
                                                                         <div class="preview-block">
@@ -621,7 +644,7 @@
                                                         </div>
                                                         <div class="col-lg-4">
                                                             <div class="form-group align-items-center justify-content-center">
-                                                                <span class="preview-title overline-title">Liste des Ameliorations</span>
+                                                                <span class="preview-title overline-title">Suivi des incidents</span>
                                                                 <div class="row gy-4">
                                                                     <div class="col-md-3 col-sm-6">
                                                                         <div class="preview-block">
@@ -644,7 +667,7 @@
                                                         </div>
                                                         <div class="col-lg-4">
                                                             <div class="form-group align-items-center justify-content-center">
-                                                                <span class="preview-title overline-title">Validation des Ameliorations</span>
+                                                                <span class="preview-title overline-title">Validation des incidents</span>
                                                                 <div class="row gy-4">
                                                                     <div class="col-md-3 col-sm-6">
                                                                         <div class="preview-block">
@@ -667,7 +690,7 @@
                                                         </div>
                                                         <div class="col-lg-4">
                                                             <div class="form-group align-items-center justify-content-center">
-                                                                <span class="preview-title overline-title">Améliorations non validés</span>
+                                                                <span class="preview-title overline-title">Incidents non validés</span>
                                                                 <div class="row gy-4">
                                                                     <div class="col-md-3 col-sm-6">
                                                                         <div class="preview-block">

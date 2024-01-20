@@ -46,6 +46,7 @@
                                                     <th>Non conformité</th>
                                                     <th>Nombre d'actions</th>
                                                     <th>Statut</th>
+                                                    <th>Date de création</th>
                                                     <th></th>
                                                 </tr>
                                             </thead>
@@ -81,18 +82,11 @@
                                                                     <span class="fs-12px" >Validé</span>
                                                                 </span>
                                                             </td>
-                                                        @elseif ($am->statut === 'non-valider' || $am->statut === 'modif')
+                                                        @elseif ($am->statut === 'non-valider' || $am->statut === 'modif' || $am->statut === 'update')
                                                             <td>
                                                                 <span class="badge badge-dim bg-danger">
                                                                     <em class="icon ni ni-alert"></em>
                                                                     <span class="fs-12px" >Non Validé</span>
-                                                                </span>
-                                                            </td>
-                                                        @elseif ($am->statut === 'update')
-                                                            <td>
-                                                                <span class="badge badge-dim bg-info">
-                                                                    <em class="icon ni ni-info"></em>
-                                                                    <span class="fs-12px" >Modification Détectée</span>
                                                                 </span>
                                                             </td>
                                                         @elseif ($am->statut === 'date_efficacite' )
@@ -114,6 +108,7 @@
                                                                 </span>
                                                             </td>
                                                         @endif
+                                                        <td>{{ \Carbon\Carbon::parse($am->created_at)->translatedFormat('j F Y '.' à '.' h:i:s') }}</td>
                                                         <td >
                                                             <div class="d-flex" >
                                                                 <form method="post" action="{{ route('index_etat_am') }}">
@@ -167,18 +162,17 @@
                 <div class="modal-content">
                     <div class="modal-header">
                         <h5 class="modal-title">
-                            Détails 
+                            Détails
                             @if ($am->statut === 'soumis')
                                 <span class="text-warning"> ( En attente de validation )</span>
-                            @endif
-                            @if ($am->statut === 'valider')
-                                <span class="text-success"> ( Validé )</span>
-                            @endif
-                            @if ($am->statut === 'non_valider')
+                            @elseif ($am->statut === 'valider' )
+                                <span class="text-primary"> ( Validé )</span>
+                            @elseif ($am->statut === 'non-valider' || $am->statut === 'update' || $am->statut === 'modif')
                                 <span class="text-danger"> (Non Validé )</span>
-                            @endif
-                            @if ($am->statut === 'update')
-                                <span class="text-info"> (Modification éffectuée )</span>
+                            @elseif ($am->statut === 'date_efficacite' )
+                                <span class="text-warning"> ( En attente de l'évaluation de l'éfficacité )</span>
+                            @elseif ($am->statut === 'cloturer' )
+                                <span class="text-success"> ( Clôturer )</span>
                             @endif
                         </h5>
                         <a href="#" class="close" data-bs-dismiss="modal" aria-label="Close"><em class="icon ni ni-cross"></em></a>
@@ -190,33 +184,6 @@
                                     <div class="">
                                         <div class="card-inner">
                                             <div class="row g-4">
-                                                @if ($am->date_cloture1 !== null)
-                                                    @if ($am->date_fiche <= $am->date_cloture1 && \Carbon\Carbon::parse($am->date_fiche)->addDays($am->nbre_traitement)->format('Y-m-d') >= $am->date_cloture1)
-                                                        <div class="col-lg-12">
-                                                            <div class="form-group text-center">
-                                                                <div class="form-control-wrap">
-                                                                    <input value="Fiche réaliser dans les delais" readonly type="text" class="form-control text-center bg-success" id="Cause">
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    @elseif ($am->date_fiche > $am->date_cloture1 && \Carbon\Carbon::parse($am->date_fiche)->addDays($am->nbre_traitement)->format('Y-m-d') >= $am->date_cloture1 || $am->date_fiche <= $am->date_cloture1 && \Carbon\Carbon::parse($am->date_fiche)->addDays($am->nbre_traitement)->format('Y-m-d') < $am->date_cloture1)
-                                                        <div class="col-lg-12">
-                                                            <div class="form-group text-center">
-                                                                <div class="form-control-wrap">
-                                                                    <input value="Fiche réaliser hors delais" readonly type="text" class="form-control text-center bg-warning" id="Cause">
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    @endif
-                                                @else
-                                                    <div class="col-lg-12">
-                                                        <div class="form-group text-center">
-                                                            <div class="form-control-wrap">
-                                                                <input value="Fiche non réaliser" readonly type="text" class="form-control text-center bg-danger" id="Cause">
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                @endif
                                                 <div class="col-lg-6">
                                                     <div class="form-group">
                                                         <label class="form-label" for="Cause">
@@ -305,64 +272,74 @@
                                             </div>
                                             <div class="row g-4">
                                                 <div class="col-lg-12">
-                                                    <div class="form-group text-center">
+                                                    <div class="form-group ">
                                                         <label class="form-label" for="Cause">
                                                             Action
                                                         </label>
                                                         <div class="form-control-wrap">
-                                                            <input value="{{ $actions['action'] }}" readonly type="text" class="form-control text-center" id="Cause">
+                                                            <input value="{{ $actions['action'] }}" readonly type="text" class="form-control " id="Cause">
                                                         </div>
                                                     </div>
                                                 </div>
-                                                <div class="col-lg-6">
-                                                    <div class="form-group text-center">
+                                                <div class="col-lg-12">
+                                                    <div class="form-group ">
                                                         <label class="form-label" for="Cause">
                                                             risque
                                                         </label>
                                                         <div class="form-control-wrap">
-                                                            <input value="{{ $actions['risque'] }}" readonly type="text" class="form-control text-center" id="Cause">
+                                                            <input value="{{ $actions['risque'] }}" readonly type="text" class="form-control " id="Cause">
                                                         </div>
                                                     </div>
                                                 </div>
-                                                <div class="col-lg-6">
-                                                    <div class="form-group text-center">
+                                                <div class="col-lg-12">
+                                                    <div class="form-group ">
                                                         <label class="form-label" for="Cause">
                                                             Processus
                                                         </label>
                                                         <div class="form-control-wrap">
-                                                            <input value="{{ $actions['processus'] }}" readonly type="text" class="form-control text-center" id="Cause">
+                                                            <input value="{{ $actions['processus'] }}" readonly type="text" class="form-control " id="Cause">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-12">
+                                                    <div class="form-group ">
+                                                        <label class="form-label" for="Cause">
+                                                            Délai
+                                                        </label>
+                                                        <div class="form-control-wrap">
+                                                            <input value="{{ \Carbon\Carbon::parse($actions['delai'])->format('d/m/Y') }}" readonly type="text" class="form-control " id="Cause">
                                                         </div>
                                                     </div>
                                                 </div>
                                                 
                                                 @if ($actions['statut'] === 'realiser')
                                                 <div class="col-lg-4">
-                                                    <div class="form-group text-center">
+                                                    <div class="form-group ">
                                                         <label class="form-label" for="Cause">
                                                             Délai
                                                         </label>
                                                         <div class="form-control-wrap">
-                                                            <input value="{{ \Carbon\Carbon::parse($actions['delai'])->format('d/m/Y') }}" readonly type="text" class="form-control text-center" id="Cause">
+                                                            <input value="{{ \Carbon\Carbon::parse($actions['delai'])->format('d/m/Y') }}" readonly type="text" class="form-control " id="Cause">
                                                         </div>
                                                     </div>
                                                 </div>
                                                 <div class="col-lg-4">
-                                                    <div class="form-group text-center">
+                                                    <div class="form-group ">
                                                         <label class="form-label" for="Cause">
                                                             Date de realisation
                                                         </label>
                                                         <div class="form-control-wrap">
-                                                            <input value="{{ \Carbon\Carbon::parse($actions['date_action'])->format('d/m/Y') }}" readonly type="text" class="form-control text-center" id="Cause">
+                                                            <input value="{{ \Carbon\Carbon::parse($actions['date_action'])->format('d/m/Y') }}" readonly type="text" class="form-control " id="Cause">
                                                         </div>
                                                     </div>
                                                 </div>
                                                 <div class="col-lg-4">
-                                                    <div class="form-group text-center">
+                                                    <div class="form-group ">
                                                         <label class="form-label" for="Cause">
                                                             Date du Suivi
                                                         </label>
                                                         <div class="form-control-wrap">
-                                                            <input value="{{ \Carbon\Carbon::parse($actions['date_suivi'])->format('d/m/Y H:i:s') }}" readonly type="text" class="form-control text-center" id="Cause">
+                                                            <input value="{{ \Carbon\Carbon::parse($actions['date_suivi'])->format('d/m/Y H:i:s') }}" readonly type="text" class="form-control " id="Cause">
                                                         </div>
                                                     </div>
                                                 </div>

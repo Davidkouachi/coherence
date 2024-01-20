@@ -45,8 +45,10 @@ class ListeamController extends Controller
 {
     public function index_validation()
     {
-        $ams = Amelioration::where('statut', '!=', 'valider')
-                            ->where('statut', '!=', 'terminer')
+        $ams = Amelioration::where('statut', '=', 'non-valider')
+                            ->orWhere('statut', '=', 'update')
+                            ->orWhere('statut', '=', 'modif')
+                            ->orWhere('statut', '=', 'soumis')
                             ->get();
 
         $actionsData = [];
@@ -137,6 +139,11 @@ class ListeamController extends Controller
         $actionsDatam = [];
 
         if ($am) {
+
+            $motif = Rejet_am::where('amelioration_id',$am->id)->first();
+            if($motif){
+                $am->motif = $motif->motif;
+            }
 
             $suivi = Suivi_amelioration::where('amelioration_id', '=', $am->id)->get();
 
@@ -236,6 +243,16 @@ class ListeamController extends Controller
     public function index_amup_add(Request $request)
     {
         $am_id = $request->id;
+
+        $am = Amelioration::where('id', '=', $request->id)->first();
+
+        if ($am) {
+
+            $motif = Rejet_am::where('amelioration_id',$am->id)->first();
+            if($motif){
+                $am->motif = $motif->motif;
+            }
+        }
 
         $risques = Risque::join('postes', 'risques.poste_id', '=', 'postes.id')
                 ->where('risques.statut', '=', 'valider' )
@@ -392,7 +409,7 @@ class ListeamController extends Controller
 
         return view('traitement.amup_add', 
             ['risques' => $risques, 'causesData' => $causesData, 'actionsData' => $actionsData, 
-            'causes_selects' => $causes_selects, 'Suivi_action2' => $Suivi_action2, 'caus2' => $caus2, 'causesData2' => $causesData2, 'actionsData2' => $actionsData2, 'postes' => $postes, 'processuss' => $processuss, 'am_id' => $am_id,'color_para' => $color_para,'color_intervals' => $color_intervals,'color_interval_nbre' => $color_interval_nbre,]);
+            'causes_selects' => $causes_selects, 'Suivi_action2' => $Suivi_action2, 'caus2' => $caus2, 'causesData2' => $causesData2, 'actionsData2' => $actionsData2, 'postes' => $postes, 'processuss' => $processuss, 'am_id' => $am_id,'color_para' => $color_para,'color_intervals' => $color_intervals,'color_interval_nbre' => $color_interval_nbre,'am' => $am,]);
    }
 
     public function am_valider($id)
@@ -488,7 +505,7 @@ class ListeamController extends Controller
                 if ($valide) {
 
                     $his = new Historique_action();
-                    $his->nom_formulaire = 'Validation fiche amelioration';
+                    $his->nom_formulaire = 'Validation fiche d\'incidents';
                     $his->nom_action = 'Rejet';
                     $his->user_id = Auth::user()->id;
                     $his->save();
