@@ -36,9 +36,11 @@ class ListeprocessusController extends Controller
             $pdf = Pdf_file_processus::where('processus_id', $processu->id)->first();
             if ($pdf) {
                 $processu->pdf_nom = $pdf->pdf_nom;
+                $processu->pdf_chemin = $pdf->pdf_chemin;
             } else {
                 // Gérer le cas où aucun enregistrement n'est trouvé
-                $processu->pdf_nom = null; // Ou définissez-le comme vous le souhaitez
+                $processu->pdf_nom = null;
+                $processu->pdf_chemin = null; // Ou définissez-le comme vous le souhaitez
             }
 
             $processu->nbre = Objectif::where('processus_id', $processu->id)->count();

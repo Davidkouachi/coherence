@@ -14,7 +14,6 @@ use App\Http\Controllers\ListeprocessusController;
 use App\Http\Controllers\ListerisqueController;
 use App\Http\Controllers\ListeactionController;
 use App\Http\Controllers\EtatController;
-use App\Http\Controllers\PDFController;
 use App\Http\Controllers\ListeamController;
 use App\Http\Controllers\ListeuserController;
 use App\Http\Controllers\Updateamcontroller;

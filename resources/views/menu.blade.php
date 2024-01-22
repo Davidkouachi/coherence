@@ -10,7 +10,7 @@
                 <div class="nk-content-body">
                     <div class="nk-block justify-items-center">
                         <form class="row g-gs" >
-                            <div class="col-lg-12 col-xxl-12" style="margin-bottom: -15px;" >
+                            <div class="col-lg-12 col-xxl-12" style="margin-bottom: -15px; display: none;" >
                                 <div class="card card-preview" style="margin-top: -15px;background: transparent;">
                                     <div class="" style="height: 30px; display: flex; " >
                                         <label class="form-label" style="font-size: 20px; color: red;margin-left:5px;">
@@ -27,7 +27,7 @@
                             <div class="col-md-12 col-xxl-12 " >
                                 <div class="card card-preview" style="background: transparent;">
                                     <div class="card-inner text-center">
-                                        <img height="40%" width="40%" src="{{asset('images/logo.png')}}" alt="">
+                                        <img height="20%" width="20%" src="{{asset('images/logo.png')}}" alt="">
                                     </div>
                                 </div>
                             </div>

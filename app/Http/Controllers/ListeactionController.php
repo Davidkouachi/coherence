@@ -52,7 +52,7 @@ class ListeactionController extends Controller
             }
         }
 
-        return view('liste.actionpreventive', ['actions' => $actions, 'suivi' => $suivi ]); // Utilisez $action->id au lieu de $request->id
+        return view('liste.actionpreventive', ['actions' => $actions ]); // Utilisez $action->id au lieu de $request->id
     }
 
 

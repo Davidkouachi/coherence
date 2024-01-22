@@ -233,9 +233,7 @@
                 <div class="modal-content" data-simplebar>
                     @if ($risque->pdf_nom != '')
                         <embed src="{{ asset('storage/pdf/' . $risque->pdf_nom) }}" type="application/pdf" width="100%" height="1100px">
-                    @endif
-                    
-                    @if ($risque->pdf_nom == '')
+                    @else
                         <p class="text-center mt-2"  >Aucun fichier </p>
                     @endif
                 </div>

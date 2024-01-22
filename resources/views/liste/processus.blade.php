@@ -66,11 +66,12 @@
                                                                         href="#" class="btn btn-icon btn-white btn-dim btn-sm btn-warning border border-1 border-white rounded">
                                                                         <em class="icon ni ni-eye"></em>
                                                                     </a>
-                                                                    <a data-bs-toggle="modal"
-                                                                        data-bs-target="#modalFile{{ $processu->id }}"
+                                                                    @if($processu->pdf_nom != null)
+                                                                    <a href="{{ asset('storage/pdf/'.$processu->pdf_nom) }}" 
                                                                         href="#" class="btn btn-icon btn-white btn-dim btn-sm btn-info border border-1 border-white rounded">
                                                                         <em class="icon ni ni-file"></em>
                                                                     </a>
+                                                                    @endif
                                                                     <button class="btn btn-icon btn-white btn-dim btn-sm btn-primary">
                                                                         <em class="icon ni ni-printer-fill"></em>
                                                                     </button>
@@ -161,17 +162,16 @@
         </div>
     @endforeach
 
-
     @foreach ($processus as $processu)
         <div class="modal fade zoom" tabindex="-1" id="modalFile{{ $processu->id }}">
             <div class="modal-dialog modal-lg" role="document" >
                 <div class="modal-content" data-simplebar>
                     @if ($processu->pdf_nom != '')
-                        <embed src="{{ asset('storage/pdf/' . $processu->pdf_nom) }}" type="application/pdf" width="100%" height="1100px">
+                        <embed src="{{ asset('storage/pdf/'.$processu->pdf_nom) }}" type="application/pdf" width="100%" height="1100px">
                     @endif
 
                     @if ($processu->pdf_nom == '')
-                        <p class="text-center mt-2"  >Aucun fichier </p>
+                        <p class="text-center mt-2" > Aucun fichier </p>
                     @endif
                 </div>
             </div>
