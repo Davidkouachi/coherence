@@ -25,7 +25,7 @@
                                 <div class="nk-block-between">
                                     <div class="nk-block-head-content" style="margin:0px auto;">
                                         <h3 class="text-center">
-                                            <span>Fiche d'amélioration non validé</span>
+                                            <span>Fiche d'incident non validé</span>
                                             <em class="icon ni ni-list-index"></em>
                                         </h3>
                                     </div>

@@ -63,7 +63,7 @@
                                                         </td>
                                                         <td>{{ $am->non_conformite }}</td>
                                                         <td>{{ $am->action }}</td>
-                                                        <td>{{ \Carbon\Carbon::parse($am->delai)->format('d-m-Y') }}</td>
+                                                        <td>{{ \Carbon\Carbon::parse($am->delai)->translatedFormat('j F Y ') }}</td>
                                                         <td>
                                                             <a data-bs-toggle="modal"
                                                                 data-bs-target="#modalDetail{{ $am->id }}"
@@ -118,27 +118,7 @@
                                                                 Délai
                                                             </label>
                                                             <div class="form-control-wrap">
-                                                                <input disabled value="{{ \Carbon\Carbon::parse($am->delai)->format('d-m-Y') }}" type="text" class="form-control" readonly>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-lg-12">
-                                                        <div class="form-group">
-                                                            <label class="form-label" for="controle">
-                                                                Risque
-                                                            </label>
-                                                            <div class="form-control-wrap">
-                                                                <input disabled value="{{ $am->risque }}" type="text" class="form-control" readonly>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-lg-12">
-                                                        <div class="form-group">
-                                                            <label class="form-label" for="Cause">
-                                                                Processus
-                                                            </label>
-                                                            <div class="form-control-wrap">
-                                                                <input disabled value="{{ $am->processus }}" type="text" class="form-control" readonly>
+                                                                <input disabled value="{{ \Carbon\Carbon::parse($am->delai)->translatedFormat('j F Y ') }}" type="text" class="form-control" readonly>
                                                             </div>
                                                         </div>
                                                     </div>

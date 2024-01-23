@@ -21,7 +21,7 @@
                     <div class="nk-block-between">
                         <div class="nk-block-head-content" style="margin:0px auto;">
                             <h3 class="text-center">
-                                <span>Mise à jour de la Fiche d'amélioration</span>
+                                <span>Mise à jour de la Fiche d'incident</span>
                                 <em class="icon ni ni-reports"></em>
                             </h3>
                         </div>
