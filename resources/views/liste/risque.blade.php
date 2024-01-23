@@ -200,8 +200,7 @@
                                                                                 href="#" class="btn btn-icon btn-white btn-dim btn-sm btn-warning border border-1 border-white rounded">
                                                                                 <em class="icon ni ni-eye"></em>
                                                                             </a>
-                                                                            <a data-bs-toggle="modal"
-                                                                                data-bs-target="#modalFile{{ $risque->id }}"
+                                                                            <a href="{{ asset('storage/pdf/' . $risque->pdf_nom) }}" 
                                                                                 href="#" class="btn btn-icon btn-white btn-dim btn-sm btn-info border border-1 border-white rounded">
                                                                                 <em class="icon ni ni-file"></em>
                                                                             </a>

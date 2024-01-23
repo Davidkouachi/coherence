@@ -52,7 +52,7 @@
                                                     <tr>
                                                         <td>{{ $key+1}}</td>
                                                         <td>{{ $action->action}}</td>
-                                                        <td>{{ \Carbon\Carbon::parse($action->delai)->format('d/m/Y') }}</td>
+                                                        <td>{{ \Carbon\Carbon::parse($action->date)->translatedFormat('j F Y ') }}</td>
                                                         @if($action->suivi === 'non')
                                                         <td>
                                                             <span class="badge badge-dim bg-info">
@@ -168,7 +168,7 @@
                                                                     Délai
                                                                 </label>
                                                                 <div class="form-control-wrap">
-                                                                    <input value="{{ $action->date }}" readonly type="date" class="form-control" id="Cause">
+                                                                    <input value="{{ \Carbon\Carbon::parse($action->date)->translatedFormat('j F Y ') }}" readonly type="date" class="form-control" id="Cause">
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -178,7 +178,7 @@
                                                                     Date d'action
                                                                 </label>
                                                                 <div class="form-control-wrap">
-                                                                    <input value="{{ $action->date_action }}" readonly type="date" class="form-control" id="Cause">
+                                                                    <input value="{{ \Carbon\Carbon::parse($action->date_action)->translatedFormat('j F Y ') }}" readonly type="date" class="form-control" id="Cause">
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -224,7 +224,7 @@
                                                                     Délai
                                                                 </label>
                                                                 <div class="form-control-wrap">
-                                                                    <input value="{{ $action->date }}" readonly type="date" class="form-control" id="Cause">
+                                                                    <input value="{{ \Carbon\Carbon::parse($action->date)->translatedFormat('j F Y ') }}" readonly type="date" class="form-control" id="Cause">
                                                                 </div>
                                                             </div>
                                                         </div>

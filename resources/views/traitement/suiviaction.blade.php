@@ -130,6 +130,16 @@
                                                             </div>
                                                         </div>
                                                     </div>
+                                                    <div class="col-lg-12">
+                                                        <div class="form-group">
+                                                            <label class="form-label" for="Coût">
+                                                                Délai
+                                                            </label>
+                                                            <div class="form-control-wrap">
+                                                                <input disabled value="{{ \Carbon\Carbon::parse($action->date)->translatedFormat('j F Y ') }}" type="text" class="form-control" readonly>
+                                                            </div>
+                                                        </div>
+                                                    </div>
                                                     <div class="col-lg-4">
                                                         <div class="form-group">
                                                             <label class="form-label" for="email-address-1">

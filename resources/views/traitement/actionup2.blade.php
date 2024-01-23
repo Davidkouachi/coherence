@@ -47,7 +47,7 @@
                     </a>
                 </li>
                 <li class="mt-2">
-                    <a data-bs-toggle="modal" data-bs-target="#modalDetail" class="btn btn-md btn-primary text-white">
+                    <a href="{{ asset('storage/pdf/' . $risque->pdf_nom) }}" class="btn btn-md btn-primary text-white">
                         <em class="icon ni ni-file"></em>
                         <span>
                             Voir le Ficher PDF
@@ -84,18 +84,13 @@
                                 <div class="toggle-expand-content" data-content="pageMenu">
                                     <ul class="nk-block-tools g-3">
                                         <li>
-                                            <a href="#" class="btn btn-dim btn-white btn-outline-danger" onclick="goBack()">
+                                            <a href="{{ route('index_risque_actionup') }}"class="btn btn-dim btn-white btn-outline-danger" >
                                                 <em class="icon ni ni-arrow-left"></em>
-                                                <span>Back</span>
+                                                <span>Retour</span>
                                             </a>
                                         </li>
                                     </ul>
                                 </div>
-                                <script>
-                                    function goBack() {
-                                        window.history.back();
-                                    }
-                                </script>
                             </div>
                         </div>
                     </div>
@@ -174,12 +169,7 @@
                                                 <div class="card-inner">
                                                     <span id="fileSize"> </span>
                                                     <div class="card " id="pdfPreview" style="height: 500px; " data-simplebar>
-                                                        @if ($risque->pdf_nom != '')
-                                                        <embed src="{{ asset('storage/pdf/' . $risque->pdf_nom) }}" type="application/pdf" width="100%" height="700px">
-                                                        @endif
-                                                        @if ($risque->pdf_nom == '')
-                                                        <p class="text-center" style="margin-top: 250px ;">Aucun fichier </p>
-                                                        @endif
+                                                        
                                                     </div>
                                                 </div>
                                             </div>
@@ -207,7 +197,7 @@
                                                             <div class="col-lg-12">
                                                                 <div class="form-group">
                                                                     <label class="form-label" for="Cause">
-                                                                        Récommandation
+                                                                        Motif(s)
                                                                     </label>
                                                                     <div class="form-control-wrap">
                                                                         <textarea disabled name="description" class="form-control no-resize" id="default-textarea">{{ $risque->motif }}</textarea>
@@ -982,9 +972,6 @@
     const pdfPreview = document.getElementById('pdfPreview');
     const fileSizeElement = document.getElementById('fileSize');
 
-    const pdfPreviewmodal = document.getElementById('pdfPreviewmodal');
-    const fileSizeElementmodal = document.getElementById('fileSizemodal');
-
     fileInput.addEventListener('change', function() {
         // Obtenez le fichier PDF sélectionné
         const fichier = fileInput.files[0];
@@ -1005,27 +992,10 @@
             const fileSizeInKB = fileSize / 1024; // Taille du fichier en kilo-octets
             fileSizeElement.textContent = `Taille du fichier : ${fileSizeInKB.toFixed(2)} Ko`;
 
-
-            const embedElementmodal = document.createElement('embed');
-            embedElementmodal.src = URL.createObjectURL(fichier);
-            embedElementmodal.type = 'application/pdf';
-            embedElementmodal.style.width = '100%';
-            embedElementmodal.style.height = '100%';
-            // Affichez l'élément d'incorporation dans la div de prévisualisation
-            pdfPreviewmodal.innerHTML = '';
-            pdfPreviewmodal.appendChild(embedElementmodal);
-            pdfPreviewmodal.style.height = '1000px';
-            // Affichez la taille du fichier
-            const fileSizemodal = fichier.size; // Taille du fichier en octets
-            const fileSizemodalInKB = fileSizemodal / 1024; // Taille du fichier en kilo-octets
-            fileSizeElementmodal.textContent = `Taille du fichier : ${fileSizemodalInKB.toFixed(2)} Ko`;
         } else {
             // Si aucun fichier n'est sélectionné, videz la div de prévisualisation et l'élément de la taille du fichier
             pdfPreview.innerHTML = '';
             fileSizeElement.textContent = '';
-
-            pdfPreviewmodal.innerHTML = '';
-            fileSizeElementmodal.textContent = '';
         }
     });
 </script>

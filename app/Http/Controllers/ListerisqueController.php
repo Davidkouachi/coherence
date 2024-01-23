@@ -421,31 +421,35 @@ class ListerisqueController extends Controller
             $his->user_id = Auth::user()->id;
             $his->save();
 
+            try {
 
-            event(new NotificationRisqueup());
+                event(new NotificationRisqueup());
 
-            $user = User::join('postes', 'users.poste_id', 'postes.id')
-                            ->where('postes.id', $validateur)
-                            ->select('users.*')
-                            ->first();
-            if ($user) {
+                $user = User::join('postes', 'users.poste_id', 'postes.id')
+                                ->where('postes.id', $validateur)
+                                ->select('users.*')
+                                ->first();
+                if ($user) {
 
-                $mail = new PHPMailer(true);
-                $mail->isHTML(true);
-                $mail->isSMTP();
-                $mail->Host = 'smtp.gmail.com';
-                $mail->SMTPAuth = true;
-                $mail->Username = 'coherencemail01@gmail.com';
-                $mail->Password = 'kiur ejgn ijqt kxam';
-                $mail->SMTPSecure = 'ssl';
-                $mail->Port = 465;
-                // Destinataire, sujet et contenu de l'email
-                $mail->setFrom('coherencemail01@gmail.com', 'Coherence');
-                $mail->addAddress($user->email);
-                $mail->Subject = 'ALERT !';
-                $mail->Body = 'Mise à jour d´/une fiche risque Risque';
-                // Envoi de l'email
-                $mail->send();
+                    $mail = new PHPMailer(true);
+                    $mail->isHTML(true);
+                    $mail->isSMTP();
+                    $mail->Host = 'smtp.gmail.com';
+                    $mail->SMTPAuth = true;
+                    $mail->Username = 'coherencemail01@gmail.com';
+                    $mail->Password = 'kiur ejgn ijqt kxam';
+                    $mail->SMTPSecure = 'ssl';
+                    $mail->Port = 465;
+                    // Destinataire, sujet et contenu de l'email
+                    $mail->setFrom('coherencemail01@gmail.com', 'Coherence');
+                    $mail->addAddress($user->email);
+                    $mail->Subject = 'ALERT !';
+                    $mail->Body = 'Mise à jour d´/une fiche risque Risque';
+                    // Envoi de l'email
+                    $mail->send();
+                }
+            } catch (BroadcastException $exception) {
+                
             }
 
             return redirect()->route('index_risque_actionup')->with('success', 'Modification éffectuée.');
