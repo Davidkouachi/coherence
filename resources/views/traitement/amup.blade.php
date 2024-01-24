@@ -63,7 +63,7 @@
                                                                 Non conformité
                                                             @endif
                                                         </td>
-                                                        <td>{{ \Carbon\Carbon::parse($am->date_fiche)->format('d/m/Y') }}</td>
+                                                        <td>{{ \Carbon\Carbon::parse($am->date_fiche)->translatedFormat('j F Y ') }}</td>
                                                         <td>{{ $am->non_conformite }}</td>
                                                         @if ($am->statut === 'non-valider')
                                                             <td>

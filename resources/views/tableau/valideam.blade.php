@@ -268,7 +268,7 @@
                                                             Délai
                                                         </label>
                                                         <div class="form-control-wrap">
-                                                            <input value="{{ \Carbon\Carbon::parse($actions['delai'])->format('d/m/Y') }}" readonly type="text" class="form-control " id="Cause">
+                                                            <input value="{{ \Carbon\Carbon::parse($actions['delai'])->translatedFormat('j F Y ') }}" readonly type="text" class="form-control " id="Cause">
                                                         </div>
                                                     </div>
                                                 </div>

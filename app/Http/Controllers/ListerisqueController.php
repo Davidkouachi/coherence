@@ -444,7 +444,7 @@ class ListerisqueController extends Controller
                     $mail->setFrom('coherencemail01@gmail.com', 'Coherence');
                     $mail->addAddress($user->email);
                     $mail->Subject = 'ALERT !';
-                    $mail->Body = 'Mise à jour d´/une fiche risque Risque';
+                    $mail->Body = 'Mise à jour d´une fiche Risque';
                     // Envoi de l'email
                     $mail->send();
                 }

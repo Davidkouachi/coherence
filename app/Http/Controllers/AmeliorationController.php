@@ -92,7 +92,7 @@ class AmeliorationController extends Controller
         }
 
 
-        $causes_selects = Cause::join('risques', 'causes.risque_id', '=', 'risques.id')
+        $causes_selects = Cause::join('risques', 'causes.risque_id', 'risques.id')
                                 ->where('risques.statut', '=', 'valider' )
                                 ->where('risques.page', '=', 'risk' )
                                 ->select('causes.*')
@@ -193,7 +193,8 @@ class AmeliorationController extends Controller
             'risques' => $risques, 
             'causesData' => $causesData, 
             'actionsData' => $actionsData, 
-            'causes_selects' => $causes_selects, 
+            'causes_selects' => $causes_selects,
+            'causes_select' => $causes_select,
             'Suivi_action2' => $Suivi_action2, 
             'caus2' => $caus2, 'causesData2' => $causesData2, 
             'actionsData2' => $actionsData2, 
@@ -419,7 +420,7 @@ class AmeliorationController extends Controller
                     $mail->setFrom('coherencemail01@gmail.com', 'Coherence');
                     $mail->addAddress($user->email);
                     $mail->Subject = 'ALERT !';
-                    $mail->Body = 'Nouvelle(s) Action(s) Corrective(s)';
+                    $mail->Body = " Nouvelle Fiche d'incident ";
                     // Envoi de l'email
                     $mail->send();
                  }
@@ -518,7 +519,7 @@ class AmeliorationController extends Controller
 
             $his = new Historique_action();
             $his->nom_formulaire = 'Suivi des incidents';
-            $his->nom_action = 'ajouter intervale de date de verification de l\'efficacité';
+            $his->nom_action = " ajouter intervale de date de verification de l'efficacité ";
             $his->user_id = Auth::user()->id;
             $his->save();
 

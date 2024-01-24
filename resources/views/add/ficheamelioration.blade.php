@@ -37,7 +37,7 @@
                     @if( intval($color_para->nbre_color) > intval($color_interval_nbre) )
                         <div class="nk-block">
                             <div class="row g-gs">
-                                <div class="col-lg-12 col-xxl-12">
+                                <div class="col-lg-12 col-xxl-12 bg-white">
                                     <div class="modal-content">
                                         <div class="modal-body modal-body-lg text-center">
                                             <div class="nk-modal">
@@ -83,7 +83,7 @@
                         @if($isOutOfRange)
                             <div class="nk-block">
                                 <div class="row g-gs">
-                                    <div class="col-lg-12 col-xxl-12">
+                                    <div class="col-lg-12 col-xxl-12 bg-white">
                                         <div class="modal-content">
                                             <div class="modal-body modal-body-lg text-center">
                                                 <div class="nk-modal">
@@ -334,17 +334,24 @@
                                         <div class="card card-bordered">
                                             <div class="card-inner">
                                                 <div class="row g-4">
-                                                    <div class="col-lg-6" id="btn-cause-trouve">
+                                                    <div class="col-lg-4" id="btn-cause-trouve">
                                                         <div class="form-group text-center">
                                                             <a class="btn btn-outline-primary btn-dim action-accepte" data-type="acceptee">
                                                                 Action corrective acceptée
                                                             </a>
                                                         </div>
                                                     </div>
-                                                    <div class="col-lg-6" id="btn-risque-trouve">
+                                                    <div class="col-lg-4" id="btn-risque-trouve">
                                                         <div class="form-group text-center">
                                                             <a class="btn btn-outline-primary btn-dim action-non-accepte" data-type="nouvelle-action">
                                                                 Action corrective non-acceptée
+                                                            </a>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-lg-4" id="btn-non-trouve">
+                                                        <div class="form-group text-center">
+                                                            <a class="btn btn-outline-primary btn-dim action-new" data-type="nouvelle-action">
+                                                                Nouvelle action corrective
                                                             </a>
                                                         </div>
                                                     </div>

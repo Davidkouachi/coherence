@@ -231,7 +231,7 @@ class ProcessusController extends Controller
 
         return redirect()
             ->back()
-            ->with('error', 'Echec de l\'enregistrement.');
+            ->with('error', 'Echec.');
     }
 
     public function recherche_processuseva($processusId)

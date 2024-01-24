@@ -392,12 +392,12 @@
 		                                                    <div class="form-group align-items-center justify-content-center">
 		                                                        <span class="preview-title overline-title">
 		                                                        	Validation des Risques
-		                                                        	@if ($user->eva_risk === 'oui')
+		                                                        	@if ($user->val_risk === 'oui')
 		                                                        	<a class="btn btn-sm btn-success">
 		                                                                <em class="icon ni ni-check"></em>
 		                                                            </a>
 		                                                            @endif
-		                                                            @if ($user->eva_risk === 'non')
+		                                                            @if ($user->val_risk === 'non')
 		                                                            <a class="btn btn-sm btn-danger">
 		                                                                <em class="icon ni ni-cross"></em>
 		                                                            </a>

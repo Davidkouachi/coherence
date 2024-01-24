@@ -14,7 +14,7 @@ class ResvaController extends Controller
 {
     public function index_add_resva()
     {
-        $postes = Poste::all();
+        $postes = Poste::where('occupe', 'non')->get();
         return view('add.res-va', ['postes' => $postes]);
     }
 

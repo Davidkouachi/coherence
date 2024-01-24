@@ -100,7 +100,7 @@
                                                                     Date d'enregistrement :
                                                                 </label>
                                                                 <span class="form-note">
-                                                                    {{ \Carbon\Carbon::parse($risque->created_at)->translatedFormat('j F Y h:i ') }}
+                                                                    {{ \Carbon\Carbon::parse($risque->created_at)->translatedFormat('j F Y H:i ') }}
                                                                 </span>
                                                             </div>
                                                         </div>
@@ -131,7 +131,7 @@
                                                                     Date d'enregistrement :
                                                                 </label>
                                                                 <span class="form-note">
-                                                                    {{ \Carbon\Carbon::parse($risque->created_at)->translatedFormat('j F Y h:i ') }}
+                                                                    {{ \Carbon\Carbon::parse($risque->created_at)->translatedFormat('j F Y H:i ') }}
                                                                 </span>
                                                             </div>
                                                         </div>
@@ -152,7 +152,7 @@
                                                                     Date d'enregistrement :
                                                                 </label>
                                                                 <span class="form-note">
-                                                                    {{ \Carbon\Carbon::parse($risque->created_at)->translatedFormat('j F Y h:i ') }}
+                                                                    {{ \Carbon\Carbon::parse($risque->created_at)->translatedFormat('j F Y H:i ') }}
                                                                 </span>
                                                             </div>
                                                         </div>

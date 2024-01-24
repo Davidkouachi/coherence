@@ -34,7 +34,7 @@
                     @if( intval($color_para->nbre_color) > intval($color_interval_nbre) )
                         <div class="nk-block">
                             <div class="row g-gs">
-                                <div class="col-lg-12 col-xxl-12">
+                                <div class="col-lg-12 col-xxl-12 bg-white">
                                     <div class="modal-content">
                                         <div class="modal-body modal-body-lg text-center">
                                             <div class="nk-modal">
@@ -80,7 +80,7 @@
                         @if($isOutOfRange)
                             <div class="nk-block">
                                 <div class="row g-gs">
-                                    <div class="col-lg-12 col-xxl-12">
+                                    <div class="col-lg-12 col-xxl-12 bg-white">
                                         <div class="modal-content">
                                             <div class="modal-body modal-body-lg text-center">
                                                 <div class="nk-modal">

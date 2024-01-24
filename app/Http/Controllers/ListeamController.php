@@ -454,7 +454,7 @@ class ListeamController extends Controller
                     $mail->setFrom('coherencemail01@gmail.com', 'Coherence');
                     $mail->addAddress($user->email);
                     $mail->Subject = 'ALERT !';
-                    $mail->Body = 'Nouvelle Action Préventive';
+                    $mail->Body = 'Nouvelle Action Corrective';
                     // Envoi de l'email
                     $mail->send();
                 }
@@ -505,7 +505,7 @@ class ListeamController extends Controller
                 if ($valide) {
 
                     $his = new Historique_action();
-                    $his->nom_formulaire = 'Validation fiche d\'incidents';
+                    $his->nom_formulaire = " Validation fiche d'incidents ";
                     $his->nom_action = 'Rejet';
                     $his->user_id = Auth::user()->id;
                     $his->save();

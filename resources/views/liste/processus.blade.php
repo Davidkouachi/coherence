@@ -55,7 +55,7 @@
                                                         <td>{{ $processu->nom}}</td>
                                                         <td>{{ $processu->finalite}}</td>
                                                         <td>{{ $processu->nbre}}</td>
-                                                        <td>{{ \Carbon\Carbon::parse($processu->created_at)->translatedFormat('j F Y '.' à '.' h:i:s') }}</td>
+                                                        <td>{{ \Carbon\Carbon::parse($processu->created_at)->translatedFormat('j F Y '.' à '.' H:i:s') }}</td>
                                                         <td>
                                                             <div class="d-flex" >
                                                                 <form method="post" action="{{ route('index_etat_processus') }}">

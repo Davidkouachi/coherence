@@ -65,7 +65,7 @@
                                                                 Non conformité
                                                             @endif
                                                         </td>
-                                                        <td>{{ \Carbon\Carbon::parse($am->date_fiche)->format('d/m/Y') }}</td>
+                                                        <td>{{ \Carbon\Carbon::parse($am->date_fiche)->translatedFormat('j F Y ') }}</td>
                                                         <td>{{ $am->non_conformite }}</td>
                                                         <td>{{ $am->nbre_action }}</td>
                                                         @if ($am->statut === 'soumis')
@@ -108,7 +108,7 @@
                                                                 </span>
                                                             </td>
                                                         @endif
-                                                        <td>{{ \Carbon\Carbon::parse($am->created_at)->translatedFormat('j F Y '.' à '.' h:i:s') }}</td>
+                                                        <td>{{ \Carbon\Carbon::parse($am->created_at)->translatedFormat('j F Y '.' à '.' H:i:s') }}</td>
                                                         <td >
                                                             <div class="d-flex" >
                                                                 <form method="post" action="{{ route('index_etat_am') }}">
@@ -301,16 +301,6 @@
                                                         </div>
                                                     </div>
                                                 </div>
-                                                <div class="col-lg-12">
-                                                    <div class="form-group ">
-                                                        <label class="form-label" for="Cause">
-                                                            Délai
-                                                        </label>
-                                                        <div class="form-control-wrap">
-                                                            <input value="{{ \Carbon\Carbon::parse($actions['delai'])->format('d/m/Y') }}" readonly type="text" class="form-control " id="Cause">
-                                                        </div>
-                                                    </div>
-                                                </div>
                                                 
                                                 @if ($actions['statut'] === 'realiser')
                                                 <div class="col-lg-4">
@@ -319,7 +309,7 @@
                                                             Délai
                                                         </label>
                                                         <div class="form-control-wrap">
-                                                            <input value="{{ \Carbon\Carbon::parse($actions['delai'])->format('d/m/Y') }}" readonly type="text" class="form-control " id="Cause">
+                                                            <input value="{{ \Carbon\Carbon::parse($actions['delai'])->translatedFormat('j F Y ') }}" readonly type="text" class="form-control " id="Cause">
                                                         </div>
                                                     </div>
                                                 </div>
@@ -329,7 +319,7 @@
                                                             Date de realisation
                                                         </label>
                                                         <div class="form-control-wrap">
-                                                            <input value="{{ \Carbon\Carbon::parse($actions['date_action'])->format('d/m/Y') }}" readonly type="text" class="form-control " id="Cause">
+                                                            <input value="{{ \Carbon\Carbon::parse($actions['date_action'])->translatedFormat('j F Y ') }}" readonly type="text" class="form-control " id="Cause">
                                                         </div>
                                                     </div>
                                                 </div>
@@ -339,7 +329,7 @@
                                                             Date du Suivi
                                                         </label>
                                                         <div class="form-control-wrap">
-                                                            <input value="{{ \Carbon\Carbon::parse($actions['date_suivi'])->format('d/m/Y H:i:s') }}" readonly type="text" class="form-control " id="Cause">
+                                                            <input value="{{ \Carbon\Carbon::parse($actions['date_suivi'])->translatedFormat('j F Y '.' à '.' H:i:s') }}" readonly type="text" class="form-control " id="Cause">
                                                         </div>
                                                     </div>
                                                 </div>
@@ -351,6 +341,16 @@
                                                     </div>
                                                 </div>
                                                 @else
+                                                <div class="col-lg-12">
+                                                    <div class="form-group ">
+                                                        <label class="form-label" for="Cause">
+                                                            Délai
+                                                        </label>
+                                                        <div class="form-control-wrap">
+                                                            <input value="{{ \Carbon\Carbon::parse($actions['delai'])->translatedFormat('j F Y ') }}" readonly type="text" class="form-control " id="Cause">
+                                                        </div>
+                                                    </div>
+                                                </div>
                                                 <div class="col-lg-12">
                                                     <div class="form-group text-center">
                                                         <div class="form-control-wrap">

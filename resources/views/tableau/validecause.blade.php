@@ -33,7 +33,7 @@
                     @if( intval($color_para->nbre_color) > intval($color_interval_nbre) )
                         <div class="nk-block">
                             <div class="row g-gs">
-                                <div class="col-lg-12 col-xxl-12">
+                                <div class="col-lg-12 col-xxl-12 bg-white">
                                     <div class="modal-content">
                                         <div class="modal-body modal-body-lg text-center">
                                             <div class="nk-modal">
@@ -79,7 +79,7 @@
                         @if($isOutOfRange)
                             <div class="nk-block">
                                 <div class="row g-gs">
-                                    <div class="col-lg-12 col-xxl-12">
+                                    <div class="col-lg-12 col-xxl-12 bg-white">
                                         <div class="modal-content">
                                             <div class="modal-body modal-body-lg text-center">
                                                 <div class="nk-modal">
@@ -179,16 +179,14 @@
                                                                         </span>
                                                                     </td>
                                                                 @endif
-                                                                <td>{{ \Carbon\Carbon::parse($risque->created_at)->translatedFormat('j F Y '.' à '.' h:i:s') }}</td>
+                                                                <td>{{ \Carbon\Carbon::parse($risque->created_at)->translatedFormat('j F Y '.' à '.' H:i:s') }}</td>
                                                                 <td>
                                                                     <a data-bs-toggle="modal"
                                                                         data-bs-target="#modalDetail{{ $risque->id }}"
                                                                         href="#" class="btn btn-icon btn-white btn-dim btn-sm btn-warning border border-1 border-white rounded">
                                                                         <em class="icon ni ni-eye"></em>
                                                                     </a>
-                                                                    <a data-bs-toggle="modal"
-                                                                        data-bs-target="#modalFile{{ $risque->id }}"
-                                                                        href="#" class="btn btn-icon btn-white btn-dim btn-sm btn-info border border-1 border-white rounded">
+                                                                    <a href="{{ asset('storage/pdf/'.$risque->pdf_nom) }}"  class="btn btn-icon btn-white btn-dim btn-sm btn-info border border-1 border-white rounded">
                                                                         <em class="icon ni ni-file"></em>
                                                                     </a>
                                                                     @if ($risque->statut !== 'non_valider')

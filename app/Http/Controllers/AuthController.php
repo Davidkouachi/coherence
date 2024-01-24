@@ -75,9 +75,16 @@ class AuthController extends Controller
                 'matricule' => $request->matricule,
                 'tel' => $request->tel,
                 'poste_id' => $request->poste_id,
+                'suivi_active' => 'non',
+                'fa' => 'non',
             ]);
 
+
             if ($user) {
+
+                $poste = Poste::find($request->poste_id);
+                $poste->occupe = 'oui';
+                $poste->update();
 
                 $auto = new Autorisation();
                 $auto->new_user = $request->new_user;
@@ -132,13 +139,13 @@ class AuthController extends Controller
                     // Destinataire, sujet et contenu de l'email
                     $mail->setFrom('coherencemail01@gmail.com', 'Coherence');
                     $mail->addAddress($user->email);
-                    $mail->Subject = 'Coordonnées utilisateur';
+                    $mail->Subject = " Coordonnées utilisateur ";
                     $mail->Body = 'Bienvenue à Cohérence ! <br><br>'.'<br>'
-                            . 'Voici vos informations pour vous connecter :<br>'
+                            . 'Voici vos Coordonnées pour vous connecter :<br>'
                             . 'Matricule : ' . $request->matricule.'<br>'
                             . 'Email : ' . $user->email . '<br>'
                             . 'Mot de passe : ' . $request->mdp.'<br>'
-                            . 'NB : Vous pouvez modifier le mot de passe selon votre choix.';
+                            . 'NB : Veuillez modifier votre mot de passe après votre premiere connexion.';
                     // Envoi de l'email
                     $mail->send();
 

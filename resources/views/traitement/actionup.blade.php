@@ -33,7 +33,7 @@
                     @if( intval($color_para->nbre_color) > intval($color_interval_nbre) )
                         <div class="nk-block">
                             <div class="row g-gs">
-                                <div class="col-lg-12 col-xxl-12">
+                                <div class="col-lg-12 col-xxl-12 bg-white">
                                     <div class="modal-content">
                                         <div class="modal-body modal-body-lg text-center">
                                             <div class="nk-modal">
@@ -79,7 +79,7 @@
                         @if($isOutOfRange)
                             <div class="nk-block">
                                 <div class="row g-gs">
-                                    <div class="col-lg-12 col-xxl-12">
+                                    <div class="col-lg-12 col-xxl-12 bg-white">
                                         <div class="modal-content">
                                             <div class="modal-body modal-body-lg text-center">
                                                 <div class="nk-modal">
@@ -141,7 +141,7 @@
                                                                         <div class="user-avatar" style="background-color:#8e8e8e;"></div>
                                                                     </td>
                                                                 @endif
-                                                                <td>{{ \Carbon\Carbon::parse($risque->updated_at)->translatedFormat('j F Y '.' à '.' h:i:s') }}</td>
+                                                                <td>{{ \Carbon\Carbon::parse($risque->updated_at)->translatedFormat('j F Y'.' à '.' H:i') }}</td>
                                                                 <td>
                                                                     <form method="post" action="{{ route('index_risque_actionup2') }}">
                                                                     @csrf

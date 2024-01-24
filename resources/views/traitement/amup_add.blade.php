@@ -196,17 +196,24 @@
                                         <div class="card card-bordered">
                                             <div class="card-inner">
                                                 <div class="row g-4">
-                                                    <div class="col-lg-6" id="btn-cause-trouve">
+                                                    <div class="col-lg-4" id="btn-cause-trouve">
                                                         <div class="form-group text-center">
                                                             <a class="btn btn-outline-primary btn-dim action-accepte" data-type="acceptee">
                                                                 Action corrective acceptée
                                                             </a>
                                                         </div>
                                                     </div>
-                                                    <div class="col-lg-6" id="btn-risque-trouve">
+                                                    <div class="col-lg-4" id="btn-risque-trouve">
                                                         <div class="form-group text-center">
                                                             <a class="btn btn-outline-primary btn-dim action-non-accepte" data-type="nouvelle-action">
                                                                 Action corrective non-acceptée
+                                                            </a>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-lg-4" id="btn-non-trouve">
+                                                        <div class="form-group text-center">
+                                                            <a class="btn btn-outline-primary btn-dim action-new" data-type="nouvelle-action">
+                                                                Nouvelle action corrective
                                                             </a>
                                                         </div>
                                                     </div>
