@@ -61,17 +61,26 @@
                                                         <td>{{ $user->poste }}</td>
                                                         <td>{{ \Carbon\Carbon::parse($user->created_at)->translatedFormat('j F Y '.' à '.' h:i:s') }}</td>
                                                         <td>
-                                                            <a data-bs-toggle="modal"
-                                                                data-bs-target="#modalDetail{{ $user->id }}"
-                                                                href="#" class="btn btn-icon btn-white btn-dim btn-sm btn-warning">
-                                                                <em class="icon ni ni-eye"></em>
-                                                            </a>
-                                                            <a data-bs-toggle="modal"
+                                                        	<div class="d-flex">
+															    <form method="post" action="{{ route('index_user_modif') }}">
+															        @csrf
+															        <input type="text" name="id" value="{{ $user->id }}" style="display: none;">
+															        <a data-bs-toggle="modal"
+		                                                                data-bs-target="#modalDetail{{ $user->id }}"
+		                                                                href="#" class="btn btn-icon btn-white btn-dim btn-sm btn-warning">
+		                                                                <em class="icon ni ni-eye"></em>
+		                                                            </a>
+															        <button type="submit" class="btn btn-icon btn-white btn-dim btn-sm btn-info">
+															            <em class="icon ni ni-edit"></em>
+															        </button>
+															    </form>
+															</div>
+                                                            <!--<a data-bs-toggle="modal"
                                                                 data-bs-target="#modalModif{{ $user->id }}"
                                                                 href="#" class="btn btn-icon btn-white btn-dim btn-sm btn-info">
                                                                 <em class="icon ni ni-edit"></em>
                                                             </a>
-                                                            <!--<a data-bs-toggle="modal"
+                                                            <a data-bs-toggle="modal"
                                                                 data-bs-target="#modalConfirmelock"
                                                                 href="#" class="btn btn-icon btn-white btn-dim btn-sm btn-danger">
                                                                 <em class="icon ni ni-lock"></em>

@@ -437,7 +437,7 @@
                                                                         </label>
                                                                     </div>
                                                                 </div>
-                                                                @if($actions['efficacite'] === 'efficace')
+                                                                @if($actions['efficacite'] === 'oui')
                                                                 <div class="col-lg-9">
                                                                     <div class="form-group ">
                                                                         <span class="fw-normal text-success" style="font-size: 14px;">

@@ -523,7 +523,7 @@
                                                     </div>
                                     </div>
                                 </div>
-                                @foreach ($causesData[$caus2->risque_id] as $causesDatas)
+                                @foreach ($causesData[$causes_select->risque_id] as $causesDatas)
                                 <div class="col-md-12 col-xxl-12" id="groupesContainer">
                                     <div class="card card-bordered">
                                         <div class="card-inner">
@@ -1224,7 +1224,6 @@ var processuss = @json($processuss);
         groupe.querySelector("#suppr_nouvelle_action").addEventListener("click", function(event) {
             event.preventDefault();
             groupe.remove();
-            document.getElementById("btn_enrg").style.display = "none";
         });
 
         document.getElementById("dynamic-fields").appendChild(groupe);
@@ -1353,7 +1352,6 @@ function addGroup(type_new) {
     groupe.querySelector("#suppr_nouvelle_action").addEventListener("click", function(event) {
         event.preventDefault();
         groupe.remove();
-        document.getElementById("btn_enrg").style.display = "none";
     });
 
     document.getElementById("dynamic-fields").appendChild(groupe);
@@ -1524,7 +1522,6 @@ function addGroups_accepte(type, data) {
         groupe.querySelector("#suppr_action").addEventListener("click", function(event) {
             event.preventDefault();
             groupe.remove();
-            document.getElementById("btn_enrg").style.display = "none";
         });
 
         document.getElementById("dynamic-fields").appendChild(groupe);
@@ -1648,7 +1645,7 @@ function addGroups_non_accepte(type, data) {
                                                                             Action Corrective
                                                                         </label>
                                                                         <div class="form-control-wrap">
-                                                                            <input placeholder="Saisie obligatoire" name="action[]"  type="text" class="form-control" >
+                                                                            <input placeholder="Saisie obligatoire" name="action[]"  type="text" value="${action.action}" class="form-control" >
                                                                             <input style="display:none;" name="action_id[]" value="${action.id}" type="int" class="form-control" >
                                                                         </div>
                                                                     </div>
@@ -1702,7 +1699,6 @@ function addGroups_non_accepte(type, data) {
         groupe.querySelector("#suppr_action").addEventListener("click", function(event) {
             event.preventDefault();
             groupe.remove();
-            document.getElementById("btn_enrg").style.display = "none";
         });
 
         document.getElementById("dynamic-fields").appendChild(groupe);

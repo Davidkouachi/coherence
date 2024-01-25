@@ -42,9 +42,13 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
 
     Route::get('/Liste des utilisateurs', [ListeuserController::class, 'index'])->name('index_liste_resva');
+    Route::post('/Modification des autorisations', [ListeuserController::class, 'index_user_modif'])->name('index_user_modif');
     Route::post('/Modif', [ListeuserController::class, 'index_modif'])->name('index_modif_auto');
 
     Route::get('/Nouveau Processus', [ProcessusController::class, 'index_add_processus'])->name('index_add_processus');
+    Route::get('/Liste processus', [ListeprocessusController::class, 'index_listeprocessus'])->name('index_listeprocessus');
+    Route::post('/Mise a jour processus', [ListeprocessusController::class, 'processus_modif'])->name('processus_modif');
+    Route::get('/suppr_processus/{id}', [ListeprocessusController::class, 'suppr_processus'])->name('suppr_processus');
 
     Route::get('/Liste Poste', [Controller::class, 'index_liste_poste'])->name('index_liste_poste');
     Route::post('/Nouveau Poste', [Controller::class, 'index_add_poste_traitement'])->name('index_add_poste_traitement');
@@ -60,9 +64,6 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/Validation', [ProcessusController::class, 'index_validation_processus'])->name('index_validation_processus');
     Route::get('/cause_valider/{id}', [ProcessusController::class, 'cause_valider'])->name('cause_valider');
     Route::post('/rejet', [ProcessusController::class, 'cause_rejet'])->name('cause_rejet');
-
-    Route::get('/Liste processus', [ListeprocessusController::class, 'index_listeprocessus'])->name('index_listeprocessus');
-    Route::get('/suppr_processus/{id}', [ListeprocessusController::class, 'suppr_processus'])->name('suppr_processus');
 
     Route::get('/Liste risque', [ListerisqueController::class, 'index_liste_risque'])->name('index_liste_risque');
     Route::get('/Mise a jour', [ListerisqueController::class, 'index_risque_actionup'])->name('index_risque_actionup');

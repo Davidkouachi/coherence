@@ -333,13 +333,30 @@
                                                         </div>
                                                     </div>
                                                 </div>
-                                                <div class="col-lg-12">
+                                                <div class="col-lg-8">
                                                     <div class="form-group text-center">
                                                         <div class="form-control-wrap">
                                                             <input value="Action Réaliser" readonly type="text" class="form-control text-center bg-success" id="Cause">
                                                         </div>
                                                     </div>
                                                 </div>
+                                                    @if($actions['efficacite'] === 'oui')
+                                                    <div class="col-lg-4">
+                                                        <div class="form-group text-center">
+                                                            <div class="form-control-wrap">
+                                                                <input value="Action éfficace" readonly type="text" class="form-control text-center bg-success" id="Cause">
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    @else
+                                                    <div class="col-lg-4">
+                                                        <div class="form-group text-center">
+                                                            <div class="form-control-wrap">
+                                                                <input value="Action non éfficace" readonly type="text" class="form-control text-center bg-danger" id="Cause">
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    @endif
                                                 @else
                                                 <div class="col-lg-12">
                                                     <div class="form-group ">
@@ -390,7 +407,7 @@
                                                                                 Du
                                                                             </label>
                                                                             <div class="form-control-wrap">
-                                                                                <input value="{{ \Carbon\Carbon::parse($am->date1)->format('d/m/Y') }}" readonly type="text" class="form-control" id="Cause">
+                                                                                <input value="{{ \Carbon\Carbon::parse($am->date1)->translatedFormat('j F Y ') }}" readonly type="text" class="form-control" id="Cause">
                                                                             </div>
                                                                         </div>
                                                                     </div>
@@ -400,7 +417,7 @@
                                                                                 au
                                                                             </label>
                                                                             <div class="form-control-wrap">
-                                                                                <input value="{{ \Carbon\Carbon::parse($am->date2)->format('d/m/Y') }}" readonly type="text" class="form-control" id="Cause">
+                                                                                <input value="{{ \Carbon\Carbon::parse($am->date2)->translatedFormat('j F Y ') }}" readonly type="text" class="form-control" id="Cause">
                                                                             </div>
                                                                         </div>
                                                                     </div>
@@ -444,11 +461,11 @@
                                                                             </label>
                                                                             @if ($am->date1 <= $am->date_eff && $am->date2 >= $am->date_eff)
                                                                                 <div class="form-control-wrap">
-                                                                                    <input value="{{ \Carbon\Carbon::parse($am->date_eff)->format('d/m/Y') }}" readonly type="text" class="form-control text-center bg-success" id="Cause">
+                                                                                    <input value="{{ \Carbon\Carbon::parse($am->eff)->translatedFormat('j F Y ') }}" readonly type="text" class="form-control text-center bg-success" id="Cause">
                                                                                 </div>
                                                                             @elseif ($am->date1 > $am->date_eff && $am->date2 >= $am->date_eff || $am->date1 <= $am->date_eff && $am->date2 < $am->date_eff)
                                                                                 <div class="form-control-wrap">
-                                                                                    <input value="{{ \Carbon\Carbon::parse($am->date_eff)->format('d/m/Y') }}" readonly type="text" class="form-control text-center bg-danger" id="Cause">
+                                                                                    <input value="{{ \Carbon\Carbon::parse($am->eff)->translatedFormat('j F Y ') }}" readonly type="text" class="form-control text-center bg-danger" id="Cause">
                                                                                 </div>
                                                                             @endif
                                                                         </div>

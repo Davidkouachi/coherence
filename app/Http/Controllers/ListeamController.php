@@ -255,9 +255,10 @@ class ListeamController extends Controller
         }
 
         $risques = Risque::join('postes', 'risques.poste_id', '=', 'postes.id')
+                ->join('processuses', 'risques.processus_id', '=', 'processuses.id')
                 ->where('risques.statut', '=', 'valider' )
                 ->where('risques.page', '=', 'risk' )
-                ->select('risques.*','postes.nom as validateur')
+                ->select('risques.*','postes.nom as validateur', 'processuses.nom as nom_processus')
                 ->get();
 
         $causesData = [];
@@ -265,33 +266,22 @@ class ListeamController extends Controller
 
         foreach($risques as $risque)
         {
-            $processus = Processuse::where('id', $risque->processus_id)->first();
-            $risque->nom_processus = $processus->nom;
 
             $actions = Action::join('postes', 'actions.poste_id', '=', 'postes.id')
                 ->where('actions.risque_id', $risque->id)
                 ->select('actions.*','postes.nom as responsable')
+                ->orderByRaw("CASE WHEN actions.type = 'preventive' THEN 0 ELSE 1 END")
                 ->get();
 
             $actionsData[$risque->id] = [];
             
             foreach($actions as $action)
             {
-                if ($action->type === 'preventive') {
-
-                    $actionsData[$risque->id][] = [
-                        'action' => $action->action,
-                        'type' => $action->type,
-                        'responsable' => $action->responsable,
-                    ];
-                } else if($action->type === 'corrective') {
-
-                    $actionsData[$risque->id][] = [
-                        'action' => $action->action,
-                        'type' => $action->type,
-                        'responsable' => $action->responsable,
-                    ];
-                }
+                $actionsData[$risque->id][] = [
+                    'action' => $action->action,
+                    'type' => $action->type,
+                    'responsable' => $action->responsable,
+                ];
                
             }
 
@@ -310,7 +300,7 @@ class ListeamController extends Controller
         }
 
 
-        $causes_selects = Cause::join('risques', 'causes.risque_id', '=', 'risques.id')
+        $causes_selects = Cause::join('risques', 'causes.risque_id', 'risques.id')
                                 ->where('risques.statut', '=', 'valider' )
                                 ->where('risques.page', '=', 'risk' )
                                 ->select('causes.*')
@@ -319,17 +309,17 @@ class ListeamController extends Controller
         $causesData2 = [];
         $actionsData2 = [];
 
-        $Suivi_action2 = null;
-        $caus2 = null;
-
         foreach($causes_selects as $causes_select)
         {
 
             $risques2 = Risque::join('postes', 'risques.poste_id', '=', 'postes.id')
+                    ->join('processuses', 'risques.processus_id', '=', 'processuses.id')
                     ->where('risques.id', $causes_select->risque_id )
                     ->where('risques.statut', '=', 'valider' )
-                    ->select('risques.*','postes.nom as validateur')
+                    ->where('risques.page', '=', 'risk' )
+                    ->select('risques.*','postes.nom as validateur', 'processuses.nom as processus')
                     ->first();
+
             if($risques2) {
 
                 $causes_select->nom_risque = $risques2->nom;
@@ -345,47 +335,38 @@ class ListeamController extends Controller
                 $causes_select->date_validation = $risques2->date_validation;
                 $causes_select->traitement = $risques2->traitement;
                 $causes_select->validateur = $risques2->validateur;
+                $causes_select->nom_processus = $risques2->processus;
 
-                $processus2 = Processuse::where('id', $risques2->processus_id)->first();
-                if($processus2) {
-                    $causes_select->nom_processus = $processus2->nom;
-                }
-            }
 
-            $causes2 = Cause::where('causes.risque_id', $causes_select->risque_id)->get();
-            if($causes2) {
+                $causes2 = Cause::where('causes.risque_id', $causes_select->risque_id)
+                            ->where('page', '=', 'risk')
+                            ->get();
 
-                $causesData2[$causes_select->risque_id] = [];
+                if($causes2->isNotEmpty()) {
 
-                foreach($causes2 as $caus2)
-                {
-                   $causesData2[$caus2->risque_id][] = [
-                        'cause' => $caus2->nom,
-                        'dispositif' => $caus2->dispositif,
-                    ];
-                }
-            }
+                    $causesData2[$causes_select->risque_id] = [];
 
-            $actions2 = Action::join('postes', 'actions.poste_id', '=', 'postes.id')
-                  ->where('actions.risque_id', $causes_select->risque_id)
-                  ->select('actions.*','postes.nom as responsable')
-                  ->get();
-
-            if($actions2) {
-
-                $actionsData2[$causes_select->risque_id] = [];
-
-                foreach($actions2 as $action2)
-                {
-                    if ($action2->type === 'preventive') {
-
-                        $actionsData2[$causes_select->risque_id][] = [
-                            'action' => $action2->action,
-                            'type' => $action2->type,
-                            'responsable' => $action2->responsable,
+                    foreach($causes2 as $caus2)
+                    {
+                       $causesData2[$causes_select->risque_id][] = [
+                            'cause' => $caus2->nom,
+                            'dispositif' => $caus2->dispositif,
                         ];
-                    } else if($action2->type === 'corrective') {
+                    }
+                }
 
+                $actions2 = Action::join('postes', 'actions.poste_id', '=', 'postes.id')
+                      ->where('actions.risque_id', $causes_select->risque_id)
+                      ->select('actions.*','postes.nom as responsable')
+                      ->orderByRaw("CASE WHEN actions.type = 'preventive' THEN 0 ELSE 1 END")
+                      ->get();
+
+                if($actions2->isNotEmpty()) {
+
+                    $actionsData2[$causes_select->risque_id] = [];
+
+                    foreach($actions2 as $action2)
+                    {
                         $actionsData2[$causes_select->risque_id][] = [
                             'action' => $action2->action,
                             'responsable' => $action2->responsable,
@@ -409,7 +390,7 @@ class ListeamController extends Controller
 
         return view('traitement.amup_add', 
             ['risques' => $risques, 'causesData' => $causesData, 'actionsData' => $actionsData, 
-            'causes_selects' => $causes_selects, 'Suivi_action2' => $Suivi_action2, 'caus2' => $caus2, 'causesData2' => $causesData2, 'actionsData2' => $actionsData2, 'postes' => $postes, 'processuss' => $processuss, 'am_id' => $am_id,'color_para' => $color_para,'color_intervals' => $color_intervals,'color_interval_nbre' => $color_interval_nbre,'am' => $am,]);
+            'causes_selects' => $causes_selects, 'causesData2' => $causesData2, 'actionsData2' => $actionsData2, 'postes' => $postes, 'processuss' => $processuss, 'am_id' => $am_id,'color_para' => $color_para,'color_intervals' => $color_intervals,'color_interval_nbre' => $color_interval_nbre,'am' => $am,]);
    }
 
     public function am_valider($id)
