@@ -125,6 +125,8 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/Etat processus', [EtatController::class, 'index_etat_processus'])->name('index_etat_processus');
     Route::post('/Etat actionp', [EtatController::class, 'index_etat_actionp'])->name('index_etat_actionp');
     Route::post('/Etat actionc', [EtatController::class, 'index_etat_actionc'])->name('index_etat_actionc');
+
+    
 });
 
 
