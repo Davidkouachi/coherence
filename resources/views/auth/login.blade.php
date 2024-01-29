@@ -4,24 +4,12 @@
 
 <head>
     <meta charset="utf-8">
-    <meta http-equiv="Cache-Control" content="no-store, no-cache, must-revalidate, max-age=0">
-    <meta http-equiv="Pragma" content="no-cache">
-    <meta http-equiv="Expires" content="Sat, 01 Jan 1990 00:00:00 GMT">
-    <meta name="author" content="Softnio">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="A powerful and conceptual apps base dashboard template that especially build for developers and programmers.">
     <link href="images/logo.png" rel="shortcut icon">
     <title>Login</title>
-    <link rel="stylesheet" href="{{asset('')}}../../assets/css/dashlite0226.css?ver=3.1.2">
-    <link id="skin-default" rel="stylesheet" href="{{asset('')}}../../assets/css/theme0226.css?ver=3.1.2">
-    
-    <script>
-        // Empêcher le retour à la page précédente après la déconnexion
-        history.pushState(null, null, location.href);
-        window.onpopstate = function () {
-            history.go(1);
-        };
-    </script>
+    <link rel="stylesheet" href="{{asset('../../assets/css/dashlite0226.css')}}">
+    <link id="skin-default" rel="stylesheet" href="{{asset('../../assets/css/theme0226.css')}}">
 
 </head>
 
@@ -47,19 +35,18 @@
                                         <div class="form-label-group">
                                             <label class="form-label" for="default-01">Email</label>
                                         </div>
-                                        <div class="form-control-wrap"><input type="text" class="form-control form-control-lg" id="email" name="email" value="{{ old('email') }}" placeholder="Entrer votre email"></div>
+                                        <div class="form-control-wrap"><input type="email" class="form-control form-control-lg" id="email" name="email" value="{{ old('email') }}" placeholder="Entrer votre email"></div>
                                     </div>
                                     <div class="form-group">
                                         <div class="form-label-group">
                                             <label class="form-label" for="password">Mot de passe</label>
-                                            <a class="link link-primary link-sm" href="auth-reset-v2.html">Mot de passe oublié?</a>
                                         </div>
                                         <div class="form-control-wrap">
                                             <a href="#" class="form-icon form-icon-right passcode-switch lg" data-target="password">
                                                 <em class="passcode-icon icon-show icon ni ni-eye"></em>
                                                 <em class="passcode-icon icon-hide icon ni ni-eye-off"></em>
                                             </a>
-                                            <input type="password" name="password" class="form-control form-control-lg" id="password" placeholder="Entrer votre Mot de passe">
+                                            <input type="password" value="{{ old('password') }}" name="password" class="form-control form-control-lg" id="password" placeholder="Entrer votre Mot de passe">
                                         </div>
                                     </div>
                                     <div class="form-group">

@@ -49,7 +49,7 @@
                                                                 </label>
                                                             </div>
                                                         </div>
-                                                        <div class="col-lg-6">
+                                                        <div class="col-lg-3">
                                                             <div class="form-group align-items-center justify-content-center">
                                                                 <span class="preview-title overline-title">Nouveau Utilisateur</span>
                                                                 <div class="row gy-4">
@@ -83,7 +83,7 @@
                                                                 </div>
                                                             </div>
                                                         </div>
-                                                        <div class="col-lg-6">
+                                                        <div class="col-lg-3">
                                                             <div class="form-group align-items-center justify-content-center">
                                                                 <span class="preview-title overline-title">Lise des Utilisateurs</span>
                                                                 <div class="row gy-4">
@@ -116,7 +116,7 @@
                                                                 </div>
                                                             </div>
                                                         </div>
-                                                        <div class="col-lg-6">
+                                                        <div class="col-lg-3">
                                                             <div class="form-group align-items-center justify-content-center">
                                                                 <span class="preview-title overline-title">Nouveau Poste</span>
                                                                 <div class="row gy-4">
@@ -149,7 +149,7 @@
                                                                 </div>
                                                             </div>
                                                         </div>
-                                                        <div class="col-lg-6">
+                                                        <div class="col-lg-3">
                                                             <div class="form-group align-items-center justify-content-center">
                                                                 <span class="preview-title overline-title">Lise des Postes</span>
                                                                 <div class="row gy-4">
@@ -182,7 +182,7 @@
                                                                 </div>
                                                             </div>
                                                         </div>
-                                                        <div class="col-lg-6">
+                                                        <div class="col-lg-3">
                                                             <div class="form-group align-items-center justify-content-center">
                                                                 <span class="preview-title overline-title">Historique</span>
                                                                 <div class="row gy-4">
@@ -215,7 +215,7 @@
                                                                 </div>
                                                             </div>
                                                         </div>
-                                                        <div class="col-lg-6">
+                                                        <div class="col-lg-3">
                                                             <div class="form-group align-items-center justify-content-center">
                                                                 <span class="preview-title overline-title">Statistique</span>
                                                                 <div class="row gy-4">
@@ -254,7 +254,7 @@
                                                                 </label>
                                                             </div>
                                                         </div>
-                                                        <div class="col-lg-6">
+                                                        <div class="col-lg-3">
                                                             <div class="form-group align-items-center justify-content-center">
                                                                 <span class="preview-title overline-title">Nouveau Processus</span>
                                                                 <div class="row gy-4">
@@ -285,7 +285,7 @@
                                                                 </div>
                                                             </div>
                                                         </div>
-                                                        <div class="col-lg-6">
+                                                        <div class="col-lg-3">
                                                             <div class="form-group align-items-center justify-content-center">
                                                                 <span class="preview-title overline-title">Liste des Processus</span>
                                                                 <div class="row gy-4">
@@ -316,7 +316,7 @@
                                                                 </div>
                                                             </div>
                                                         </div>
-                                                        <div class="col-lg-6">
+                                                        <div class="col-lg-3">
                                                             <div class="form-group align-items-center justify-content-center">
                                                                 <span class="preview-title overline-title">Evaluation des Processus</span>
                                                                 <div class="row gy-4">
@@ -355,7 +355,7 @@
                                                                 </label>
                                                             </div>
                                                         </div>
-                                                        <div class="col-lg-6">
+                                                        <div class="col-lg-3">
                                                             <div class="form-group align-items-center justify-content-center">
                                                                 <span class="preview-title overline-title">Nouveau Risque</span>
                                                                 <div class="row gy-4">
@@ -386,7 +386,7 @@
                                                                 </div>
                                                             </div>
                                                         </div>
-                                                        <div class="col-lg-6">
+                                                        <div class="col-lg-3">
                                                             <div class="form-group align-items-center justify-content-center">
                                                                 <span class="preview-title overline-title">Liste des Risques</span>
                                                                 <div class="row gy-4">
@@ -417,7 +417,7 @@
                                                                 </div>
                                                             </div>
                                                         </div>
-                                                        <div class="col-lg-6">
+                                                        <div class="col-lg-3">
                                                             <div class="form-group align-items-center justify-content-center">
                                                                 <span class="preview-title overline-title">Validation des risques</span>
                                                                 <div class="row gy-4">
@@ -448,7 +448,7 @@
                                                                 </div>
                                                             </div>
                                                         </div>
-                                                        <div class="col-lg-6">
+                                                        <div class="col-lg-3">
                                                             <div class="form-group align-items-center justify-content-center">
                                                                 <span class="preview-title overline-title">Risques non validés</span>
                                                                 <div class="row gy-4">
@@ -479,7 +479,7 @@
                                                                 </div>
                                                             </div>
                                                         </div>
-                                                        <div class="col-lg-6">
+                                                        <div class="col-lg-3">
                                                             <div class="form-group align-items-center justify-content-center">
                                                                 <span class="preview-title overline-title">Paramettrage des couleurs</span>
                                                                 <div class="row gy-4">
@@ -518,7 +518,7 @@
                                                                 </label>
                                                             </div>
                                                         </div>
-                                                        <div class="col-lg-6">
+                                                        <div class="col-lg-3">
                                                             <div class="form-group align-items-center justify-content-center">
                                                                 <span class="preview-title overline-title">Suivis des actions préventives</span>
                                                                 <div class="row gy-4">
@@ -549,7 +549,7 @@
                                                                 </div>
                                                             </div>
                                                         </div>
-                                                        <div class="col-lg-6">
+                                                        <div class="col-lg-3">
                                                             <div class="form-group align-items-center justify-content-center">
                                                                 <span class="preview-title overline-title">Liste des actions préventives</span>
                                                                 <div class="row gy-4">
@@ -580,7 +580,7 @@
                                                                 </div>
                                                             </div>
                                                         </div>
-                                                        <div class="col-lg-6">
+                                                        <div class="col-lg-3">
                                                             <div class="form-group align-items-center justify-content-center">
                                                                 <span class="preview-title overline-title">Suivi des actions correctives</span>
                                                                 <div class="row gy-4">
@@ -611,7 +611,7 @@
                                                                 </div>
                                                             </div>
                                                         </div>
-                                                        <div class="col-lg-6">
+                                                        <div class="col-lg-3">
                                                             <div class="form-group align-items-center justify-content-center">
                                                                 <span class="preview-title overline-title">Actions correctives éffectuées</span>
                                                                 <div class="row gy-4">
@@ -642,7 +642,7 @@
                                                                 </div>
                                                             </div>
                                                         </div>
-                                                        <div class="col-lg-6">
+                                                        <div class="col-lg-3">
                                                             <div class="form-group align-items-center justify-content-center">
                                                                 <span class="preview-title overline-title">Liste des actions correctives</span>
                                                                 <div class="row gy-4">
@@ -681,7 +681,7 @@
                                                                 </label>
                                                             </div>
                                                         </div>
-                                                        <div class="col-lg-6">
+                                                        <div class="col-lg-3">
                                                             <div class="form-group align-items-center justify-content-center">
                                                                 <span class="preview-title overline-title">Nouvel incident</span>
                                                                 <div class="row gy-4">
@@ -712,7 +712,7 @@
                                                                 </div>
                                                             </div>
                                                         </div>
-                                                        <div class="col-lg-6">
+                                                        <div class="col-lg-3">
                                                             <div class="form-group align-items-center justify-content-center">
                                                                 <span class="preview-title overline-title">Suivis des incidents</span>
                                                                 <div class="row gy-4">
@@ -743,7 +743,7 @@
                                                                 </div>
                                                             </div>
                                                         </div>
-                                                        <div class="col-lg-6">
+                                                        <div class="col-lg-3">
                                                             <div class="form-group align-items-center justify-content-center">
                                                                 <span class="preview-title overline-title">Validation des incidents</span>
                                                                 <div class="row gy-4">
@@ -774,7 +774,7 @@
                                                                 </div>
                                                             </div>
                                                         </div>
-                                                        <div class="col-lg-6">
+                                                        <div class="col-lg-3">
                                                             <div class="form-group align-items-center justify-content-center">
                                                                 <span class="preview-title overline-title">Incidents non validés</span>
                                                                 <div class="row gy-4">

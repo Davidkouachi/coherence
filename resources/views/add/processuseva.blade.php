@@ -136,7 +136,7 @@
                                 </div>
                             </div>
                         @else
-                            <form class="nk-block" method="post" action="{{ route('add_prc') }}" enctype="multipart/form-data">
+                            <form class="nk-block" method="post" action="{{ route('add_risque') }}" enctype="multipart/form-data">
                                 @csrf
                                 <div class="row g-gs">
                                     <div class="col-md-4 col-xxl-4 row g-2" style="margin-left:1px;">

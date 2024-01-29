@@ -72,7 +72,7 @@
                                     <ul class="nk-menu-sub">
                                         @if (session('user_auto')->new_user === 'oui')
                                         <li >
-                                            <a class="nk-menu-link" href="{{ route('index_add_resva') }}">
+                                            <a class="nk-menu-link" href="{{ route('index_user') }}">
                                                 <em class="icon ni ni-user-add me-1"></em>
                                                 <span class="nk-menu-text ">
                                                     Nouveau utilisateur
@@ -82,7 +82,7 @@
                                         @endif
                                         @if (session('user_auto')->list_user === 'oui')
                                         <li >
-                                            <a class="nk-menu-link" href="{{ route('index_liste_resva') }} ">
+                                            <a class="nk-menu-link" href="{{ route('index_liste_user') }} ">
                                                 <em class="icon ni ni-list me-1"></em>
                                                 <span class="nk-menu-text ">
                                                     Liste des utilisateurs
@@ -164,7 +164,7 @@
                                         @endif
                                         @if (session('user_auto')->eva_proces === 'oui')
                                         <li >
-                                            <a class="nk-menu-link" href="{{ route('index_evaluation') }}">
+                                            <a class="nk-menu-link" href="{{ route('index_evaluation_processus') }}">
                                                 <em class="icon ni ni-view-list-sq me-1"></em>
                                                 <span class="nk-menu-text ">
                                                     Tableau d'évaluation
@@ -186,7 +186,7 @@
                                     <ul class="nk-menu-sub">
                                         @if (session('user_auto')->new_risk === 'oui')
                                         <li >
-                                            <a class="nk-menu-link" href="{{ route('index_add_processuseva') }}">
+                                            <a class="nk-menu-link" href="{{ route('index_risque') }}">
                                                 <em class="icon ni ni-property-add me-1"></em>
                                                 <span class="nk-menu-text">
                                                     Nouveau risque
@@ -199,14 +199,14 @@
                                             <a class="nk-menu-link" href="{{ route('index_liste_risque') }}">
                                                 <em class="ni ni-list-index me-1"></em>
                                                 <span class="nk-menu-text">
-                                                    Liste des risque
+                                                    Liste des risques
                                                 </span>
                                             </a>
                                         </li>
                                         @endif
                                         @if (session('user_auto')->val_risk === 'oui')
                                         <li >
-                                            <a class="nk-menu-link" href="{{ route('index_validation_processus') }}">
+                                            <a class="nk-menu-link" href="{{ route('index_validation_risque') }}">
                                                 <em class="icon ni ni-view-list-sq me-1"></em>
                                                 <span class="nk-menu-text">
                                                     Tableau de validation
@@ -229,7 +229,7 @@
                                             <a class="nk-menu-link" href="{{ route('index_color_risk') }}">
                                                 <em class="ni ni-opt-dot-alt me-1"></em>
                                                 <span class="nk-menu-text">
-                                                    Paramettrage
+                                                    Paramètrage des couleurs
                                                 </span>
                                             </a>
                                         </li>
@@ -249,6 +249,7 @@
                                         @if (session('user_auto')->suivi_actp === 'oui' || session('user_auto')->list_actp === 'oui')
                                         <li class="nk-menu-item has-sub">
                                             <a class="nk-menu-link nk-menu-toggle" href="#">
+                                                <em class="ni ni-box-view-fill me-1"></em>
                                                 <span class="nk-menu-text">
                                                     Action Préventive
                                                 </span>
@@ -280,6 +281,7 @@
                                         @if (session('user_auto')->suivi_actc === 'oui' || session('user_auto')->list_actc_eff === 'oui' || session('user_auto')->list_actc === 'oui')
                                         <li class="nk-menu-item has-sub">
                                             <a class="nk-menu-link nk-menu-toggle" href="#">
+                                                <em class="ni ni-box-view-fill me-1"></em>
                                                 <span class="nk-menu-text">
                                                     Action Corrective
                                                 </span>
@@ -412,11 +414,11 @@
                                                         {{ Auth::user()->email }}
                                                     </span>
                                                 </div>
-                                                <div class="user-action">
+                                                <!--<div class="user-action">
                                                     <a class="btn btn-icon me-n2" href="user-profile-setting.html">
                                                         <em class="icon ni ni-setting"></em>
                                                     </a>
-                                                </div>
+                                                </div>-->
                                             </div>
                                         </div>
                                         <div class="dropdown-inner">

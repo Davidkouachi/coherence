@@ -19,7 +19,7 @@ use Carbon\Carbon;
 
 class EvaluationController extends Controller
 {
-    public function index()
+    public function index_processus()
     {
         $color_para = Color_para::where('nbre0', '=', '0')->first();
         $color_intervals = Color_interval::orderBy('nbre1', 'asc')->get();

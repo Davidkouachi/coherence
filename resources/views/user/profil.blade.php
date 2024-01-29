@@ -221,7 +221,7 @@
                                                                                     </li>
                                                                                     <li>
                                                                                         <em class="text-soft text-date fs-12px">Derniére modification:
-                                                                                            <span>{{ Auth::user()->mdp_date }}</span>
+                                                                                            <span>{{ \Carbon\Carbon::parse(Auth::user()->mdp_date)->translatedFormat('j F Y '. ' à '.'H:i:s') }}</span>
                                                                                         </em>
                                                                                     </li>
                                                                                 </ul>
@@ -445,7 +445,7 @@
                 $.ajax({
                     url: '/mdp_update',
                     method: 'GET',
-                    data: {mdp2: mdp2},
+                    data: {mdp2: mdp2.value},
                     success: function() {
                         document.getElementById('password2').value='';
                         document.getElementById('password3').value='';

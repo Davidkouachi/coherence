@@ -25,6 +25,8 @@ class CreateUsersTable extends Migration
             $table->string('matricule')->unique();
             $table->string('suivi_active');
             $table->datetime('mdp_date')->nullable();
+            $table->string('code_verification')->nullable();
+            $table->datetime('code_verification_date')->nullable();
             $table->string('fa');
             $table->rememberToken();
             $table->timestamps();

@@ -57,7 +57,7 @@ class ListeuserController extends Controller
         return view('liste.user_modif',['user' => $user]);
     }
 
-    public function index_modif(Request $request)
+    public function index_modif_traitement(Request $request)
     {
         $auto = Autorisation::where('user_id', $request->user_id)->first();
         $auto->new_user = $request->new_user;

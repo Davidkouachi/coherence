@@ -24,6 +24,8 @@ class User extends Authenticatable
         'mdp_date',
         'fa',
         'tel',
+        'code_verification',
+        'code_verification_date',
     ];
 
     public function poste() {
