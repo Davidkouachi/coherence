@@ -54,8 +54,8 @@
                                                         <td>{{ $key+1}}</td>
                                                         <td>{{ $action->non_conformite}}</td>
                                                         <td>{{ $action->action}}</td>
-                                                        <td>{{ $action->delai}}</td>
-                                                        @if ($action->date_action !== null && $action->delai >= $action->date_action)
+                                                        <td>{{ \Carbon\Carbon::parse($action->date)->translatedFormat('j F Y ') }}</td>
+                                                        @if ($action->date_action !== null && $action->date >= $action->date_action)
                                                             <td>
                                                                 <span class="badge badge-dim bg-success">
                                                                     <em class="icon ni ni-check"></em>
@@ -63,7 +63,7 @@
                                                                 </span>
                                                             </td>
                                                         @endif
-                                                        @if ($action->date_action !== null && $action->delai < $action->date_action)
+                                                        @if ($action->date_action !== null && $action->date < $action->date_action)
                                                             <td>
                                                                 <span class="badge badge-dim bg-danger">
                                                                     <em class="icon ni ni-alert"></em>
@@ -147,14 +147,14 @@
                                                         </div>
                                                     </div>
 
-                                                    @if ($action->date_action !== null && $action->delai >= $action->date_action)
+                                                    @if ($action->date_action !== null && $action->date >= $action->date_action)
                                                     <div class="col-lg-4">
                                                         <div class="form-group">
                                                             <label class="form-label" for="Cause">
                                                                 Délai
                                                             </label>
                                                             <div class="form-control-wrap">
-                                                                <input value="{{ $action->delai }}" readonly type="date" class="form-control" id="Cause">
+                                                                <input value="{{ \Carbon\Carbon::parse($action->date)->translatedFormat('j F Y ') }}" readonly type="text" class="form-control" id="Cause">
                                                             </div>
                                                         </div>
                                                     </div>
@@ -164,7 +164,7 @@
                                                                 Date d'action
                                                             </label>
                                                             <div class="form-control-wrap">
-                                                                <input value="{{ $action->date_action }}" readonly type="date" class="form-control" id="Cause">
+                                                                <input value="{{ \Carbon\Carbon::parse($action->date_action)->translatedFormat('j F Y ') }}" readonly type="text" class="form-control" id="Cause">
                                                             </div>
                                                         </div>
                                                     </div>
@@ -185,7 +185,7 @@
                                                     <div class="col-lg-12">
                                                         <div class="form-group">
                                                             <div class="form-control-wrap">
-                                                                @if ($action->date_action !== null && $action->delai >= $action->date_action)
+                                                                @if ($action->date_action !== null && $action->date >= $action->date_action)
                                                                     <input value="Realiser dans le delai" readonly type="text" class="form-control text-center bg-success" id="Cause">
                                                                 @endif
                                                             </div>
@@ -203,14 +203,14 @@
                                                     </div>
                                                     @endif
 
-                                                    @if ($action->date_action !== null && $action->delai < $action->date_action)
+                                                    @if ($action->date_action !== null && $action->date < $action->date_action)
                                                     <div class="col-lg-4">
                                                         <div class="form-group">
                                                             <label class="form-label" for="Cause">
                                                                 Délai
                                                             </label>
                                                             <div class="form-control-wrap">
-                                                                <input value="{{ $action->delai }}" readonly type="date" class="form-control" id="Cause">
+                                                                <input value="{{ $action->date }}" readonly type="date" class="form-control" id="Cause">
                                                             </div>
                                                         </div>
                                                     </div>
@@ -237,7 +237,7 @@
                                                     <div class="col-lg-12">
                                                         <div class="form-group">
                                                             <div class="form-control-wrap">
-                                                                @if ($action->date_action !== null && $action->delai < $action->date_action)
+                                                                @if ($action->date_action !== null && $action->date < $action->date_action)
                                                                     <input value="Realiser hors delai" readonly type="text" class="form-control text-center bg-danger" id="Cause">
                                                                 @endif
                                                             </div>
@@ -262,7 +262,7 @@
                                                                 Délai
                                                             </label>
                                                             <div class="form-control-wrap">
-                                                                <input value="{{ $action->delai }}" readonly type="date" class="form-control" id="Cause">
+                                                                <input value="{{ $action->date }}" readonly type="date" class="form-control" id="Cause">
                                                             </div>
                                                         </div>
                                                     </div>

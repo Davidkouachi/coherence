@@ -22,11 +22,20 @@
                 <div class="nk-content-body">
                     <div class="nk-block-head nk-block-head-sm" >
                                 <div class="nk-block-between">
-                                    <div class="nk-block-head-content" style="margin:0px auto;">
+                                    <div class="nk-block-head-content" style="margin: 0px auto;">
                                         <h3 class="text-center">
                                             <span>Modification des autorisation</span>
                                             <em class="icon ni ni-edit"></em>
                                         </h3>
+                                    </div>
+                                    <div class="nk-block-head-content">
+                                        <a href="{{ route('index_liste_user') }}" class="btn btn-danger btn-outline-white d-none d-sm-inline-flex">
+                                            <em class="icon ni ni-arrow-left"></em>
+                                            <span>Retour</span>
+                                        </a>
+                                        <a href="{{ route('index_liste_user') }}" class="btn btn-danger btn-outline-white d-inline-flex d-sm-none">
+                                            <em class="icon ni ni-arrow-left"></em>
+                                        </a>
                                     </div>
                                 </div>
                             </div>

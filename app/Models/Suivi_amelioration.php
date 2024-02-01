@@ -23,7 +23,6 @@ class Suivi_amelioration extends Model
         'statut',
         'amelioration_id',
         'action_id',
-        'processus_id',
         'risque_id',
         'cause_id',
     ];
@@ -36,11 +35,6 @@ class Suivi_amelioration extends Model
     public function action()
     {
         return $this->belongsTo(Action::class, 'action_id');
-    }
-
-    public function processus()
-    {
-        return $this->belongsTo(Processus::class, 'processus_id');
     }
 
     public function risque()

@@ -24,33 +24,21 @@ class User extends Authenticatable
         'mdp_date',
         'fa',
         'tel',
-        'code_verification',
-        'code_verification_date',
     ];
-
     public function poste() {
         return $this->belongsTo(Poste::class, 'poste_id');
     }
-
     protected $hidden = [
         'password',
         'remember_token',
     ];
-
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
-
-
     public function logoutOtherDevices($password)
     {
-        if (Hash::check($password, $this->password)) {
-            $this->tokens->each(function ($token, $key) {
-                if ($key !== $this->currentAccessToken()->id) {
-                    $token->delete();
-                }
-            });
+        if (Hash::check($password, $this->password)) { $this->tokens->each(function ($token, $key) {
+                if ($key !== $this->currentAccessToken()->id) { $token->delete(); }});
         }
     }
-
 }

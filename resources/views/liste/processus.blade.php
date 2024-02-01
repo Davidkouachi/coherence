@@ -74,7 +74,7 @@
                                                                     @if($processu->pdf_nom != null)
                                                                     <a href="{{ asset('storage/pdf/'.$processu->pdf_nom) }}" 
                                                                         href="#" class="btn btn-icon btn-white btn-dim btn-sm btn-info border border-1 border-white rounded">
-                                                                        <em class="icon ni ni-file"></em>
+                                                                        <em class="icon ni ni-download"></em>
                                                                     </a>
                                                                     @endif
                                                                     <button class="btn btn-icon btn-white btn-dim btn-sm btn-primary">

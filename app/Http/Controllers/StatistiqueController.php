@@ -52,21 +52,25 @@ class StatistiqueController extends Controller
 
         
         $nbre_ap = Action::where('type', 'preventive')->count();
-        $nbre_ed_ap = Suivi_action::whereNotNull('date_action')
-                                    ->whereColumn('delai', '>=', 'date_action')
+        $nbre_ed_ap = Suivi_action::join('actions', 'actions.id', '=', 'suivi_actions.action_id')
+                                    ->whereNotNull('suivi_actions.date_action')
+                                    ->whereColumn('actions.date', '>=', 'suivi_actions.date_action')
                                     ->count();
-        $nbre_ehd_ap = Suivi_action::whereNotNull('date_action')
-                                    ->whereColumn('delai', '<', 'date_action')
+        $nbre_ehd_ap = Suivi_action::join('actions', 'actions.id', '=', 'suivi_actions.action_id')
+                                    ->whereNotNull('suivi_actions.date_action')
+                                    ->whereColumn('actions.date', '<', 'suivi_actions.date_action')
                                     ->count();
         $nbre_hd_ap = Suivi_action::where('statut', '=', 'non-realiser')->count();
 
 
         $nbre_ac = Action::where('type', 'corrective')->count();
-        $nbre_ed_ac = Suivi_amelioration::whereNotNull('date_action')
-                                    ->whereColumn('delai', '>=', 'date_action')
+        $nbre_ed_ac = Suivi_amelioration::join('actions', 'actions.id', '=', 'suivi_ameliorations.action_id')
+                                    ->whereNotNull('suivi_ameliorations.date_action')
+                                    ->whereColumn('actions.date', '>=', 'suivi_ameliorations.date_action')
                                     ->count();
-        $nbre_ehd_ac = Suivi_amelioration::whereNotNull('date_action')
-                                    ->whereColumn('delai', '<', 'date_action')
+        $nbre_ehd_ac = Suivi_amelioration::join('actions', 'actions.id', '=', 'suivi_ameliorations.action_id')
+                                    ->whereNotNull('suivi_ameliorations.date_action')
+                                    ->whereColumn('actions.date', '<', 'suivi_ameliorations.date_action')
                                     ->count();
         $nbre_hd_ac = Suivi_amelioration::where('statut', '=', 'non-realiser')->count();
 
@@ -84,8 +88,11 @@ class StatistiqueController extends Controller
 
         foreach ($types as $type) {
             $nbres[$type] = Suivi_amelioration::join('ameliorations', 'suivi_ameliorations.amelioration_id', 'ameliorations.id')
+                                            ->join('actions', 'actions.id', 'suivi_ameliorations.action_id')
+                                            ->join('risques', 'actions.risque_id', 'risques.id')
+                                            ->join('processuses', 'risques.processus_id', 'processuses.id')
                                             ->where('ameliorations.type', $type)
-                                            ->where('suivi_ameliorations.processus_id', $id)
+                                            ->where('processuses.id', $id)
                                             ->count();
         }
 
@@ -103,8 +110,8 @@ class StatistiqueController extends Controller
         $nbres = [];
 
         foreach ($types as $type) {
-            $nbres[$type] = Amelioration::where('ameliorations.date_fiche', '<=', $date1)
-                                        ->where('ameliorations.date_fiche', '>=', $date2)
+            $nbres[$type] = Amelioration::where('ameliorations.date_fiche', '>=', $date1)
+                                        ->where('ameliorations.date_fiche', '<=', $date2)
                                         ->where('ameliorations.type', $type)
                                         ->count();
         }

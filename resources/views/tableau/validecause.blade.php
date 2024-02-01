@@ -186,9 +186,9 @@
                                                                         href="#" class="btn btn-icon btn-white btn-dim btn-sm btn-warning border border-1 border-white rounded">
                                                                         <em class="icon ni ni-eye"></em>
                                                                     </a>
-                                                                    <a href="{{ asset('storage/pdf/'.$risque->pdf_nom) }}"  class="btn btn-icon btn-white btn-dim btn-sm btn-info border border-1 border-white rounded">
+                                                                    <!--<a href="{{ asset('storage/pdf/'.$risque->pdf_nom) }}"  class="btn btn-icon btn-white btn-dim btn-sm btn-info border border-1 border-white rounded">
                                                                         <em class="icon ni ni-file"></em>
-                                                                    </a>
+                                                                    </a>-->
                                                                     @if ($risque->statut !== 'non_valider')
                                                                         <a data-bs-toggle="modal"
                                                                             data-bs-target="#modalConfirme{{ $risque->id }}"
@@ -218,7 +218,7 @@
         </div>
     </div>
 
-    @foreach ($risques as $risque)
+    <!--@foreach ($risques as $risque)
         <div class="modal fade zoom" tabindex="-1" id="modalFile{{ $risque->id }}">
             <div class="modal-dialog modal-lg" role="document" >
                 <div class="modal-content" data-simplebar>
@@ -230,7 +230,7 @@
                 </div>
             </div>
         </div>
-    @endforeach
+    @endforeach-->
 
     @foreach ($risques as $risque)
         <div class="modal fade zoom" tabindex="-1" id="modalDetail{{ $risque->id }}">
@@ -590,7 +590,7 @@
                                 </div>
                             </div>
                             <div class="nk-modal-action">
-                                <a href="/cause_valider/{{ $risque->id }}" class="btn btn-lg btn-mw btn-success me-2">
+                                <a href="/risque valider/{{ $risque->id }}" class="btn btn-lg btn-mw btn-success me-2">
                                     oui
                                 </a>
                                 <a href="#" class="btn btn-lg btn-mw btn-danger"data-bs-dismiss="modal">
@@ -613,7 +613,7 @@
                             aria-label="Close"><em class="icon ni ni-cross"></em></a>
                     </div>
                     <div class="modal-body">
-                        <form action="{{route('cause_rejet')}}" method="post" >
+                        <form action="{{route('risque_rejet')}}" method="post" >
                             @csrf
                             <div class="form-group">
                                 <label class="form-label" for="pay-amount">Motif</label>

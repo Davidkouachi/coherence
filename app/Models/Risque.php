@@ -27,7 +27,6 @@ class Risque extends Model
         'processus_id',
         'statut',
         'traitement',
-        'commentaire',
         'poste_id',
     ];
 

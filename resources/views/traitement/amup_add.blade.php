@@ -25,6 +25,15 @@
                                 <em class="ni ni-plus" ></em>
                             </h3>
                         </div>
+                        <div class="nk-block-head-content">
+                                        <a href="{{ route('index_amup') }}" class="btn btn-danger btn-outline-white d-none d-sm-inline-flex">
+                                            <em class="icon ni ni-arrow-left"></em>
+                                            <span>Retour</span>
+                                        </a>
+                                        <a href="{{ route('index_amup') }}" class="btn btn-danger btn-outline-white d-inline-flex d-sm-none">
+                                            <em class="icon ni ni-arrow-left"></em>
+                                        </a>
+                                    </div>
                     </div>
                 </div>
                     @if( intval($color_para->nbre_color) > intval($color_interval_nbre) )
@@ -192,57 +201,11 @@
                                         </div>
                                     </div>
 
-                                    <div class="col-md-12 col-xxl-12" id="groupesContainer_btn_trouve">
-                                        <div class="card card-bordered">
-                                            <div class="card-inner">
-                                                <div class="row g-4">
-                                                    <div class="col-lg-4" id="btn-cause-trouve">
-                                                        <div class="form-group text-center">
-                                                            <a class="btn btn-outline-primary btn-dim action-accepte" data-type="acceptee">
-                                                                Action corrective acceptée
-                                                            </a>
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-lg-4" id="btn-risque-trouve">
-                                                        <div class="form-group text-center">
-                                                            <a class="btn btn-outline-primary btn-dim action-non-accepte" data-type="nouvelle-action">
-                                                                Action corrective non-acceptée
-                                                            </a>
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-lg-4" id="btn-non-trouve">
-                                                        <div class="form-group text-center">
-                                                            <a class="btn btn-outline-primary btn-dim action-new" data-type="nouvelle-action">
-                                                                Nouvelle action corrective
-                                                            </a>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <div class="col-md-12 col-xxl-12" id="groupesContainer_btn_new">
-                                        <div class="card card-bordered">
-                                            <div class="card-inner">
-                                                <div class="row g-4">
-                                                    <div class="col-lg-12" id="btn-non-trouve">
-                                                        <div class="form-group text-center">
-                                                            <a class="btn btn-outline-primary btn-dim action-new" data-type="nouvelle-action">
-                                                                Nouvelle action corrective
-                                                            </a>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-
                                     <div id="dynamic-fields">
 
                                     </div>
 
-                                    <div class="col-md-12 col-xxl-12" id="btn_enrg">
+                                    <div class="col-md-12 col-xxl-12" id="btn_enrg" style="display: none;">
                                         <div class="card card-bordered card-preview">
                                             <div class="card-inner row g-gs">
                                                 <div class="col-12">
@@ -265,6 +228,21 @@
         </div>
     </div>
 </div>
+
+<ul class="nk-sticky-toolbar" id="groupes_btn" >
+    <li class="demo-thumb" id="btn-afficher" style="display: none;">
+        <a data-type="afficher" class="toggle tipinfo action-afficher" aria-label="Aficher les actions" data-bs-original-title="Aficher les actions">
+            <em class="icon ni ni-eye">
+            </em>
+        </a>
+    </li>
+    <li class="demo-settings" id="btn-new-action" style="display: none;"> 
+        <a class="toggle tipinfo action-new" aria-label="Nouvelle Action" data-bs-original-title="Nouvelle Action" data-type="nouvelle-action">
+            <em class="icon ni ni-plus">
+            </em>
+        </a>
+    </li>
+</ul>
 
     @foreach($risques as $risque)
         <div class="modal fade" id="modalVurisque{{$risque->id}}" tabindex="-1" aria-labelledby="modalVuLabel" aria-hidden="true">
@@ -385,7 +363,7 @@
                                                     </div>
                                     </div>
                                 </div>
-                                @foreach ($causesData[$caus2->risque_id] as $causesDatas)
+                                @foreach ($causesData[$causes_select->risque_id] as $causesDatas)
                                 <div class="col-md-12 col-xxl-12" id="groupesContainer">
                                     <div class="card card-bordered">
                                         <div class="card-inner">
@@ -932,569 +910,432 @@
     @endforeach
 
 <script>
-$(document).ready(function() {
-    // Écoutez l'événement de changement de l'élément select
-    $('#risqueSelect').on('change', function() {
-        // Récupérez la valeur sélectionnée
-        var selectedValue = $(this).val();
-        // Fermez tous les modals existants
-        $('.modal').modal('hide');
-        $(`#modalVurisque${selectedValue}`).modal('hide');
-        // Ouvrez le modal correspondant à la valeur sélectionnée
-        $(`#modalVurisque${selectedValue}`).modal('show');
-    });
-});
-
-</script>
-<script>
-$(document).ready(function() {
-    // Écoutez l'événement de changement de l'élément select
-    $('#causeSelect').on('change', function() {
-        // Récupérez la valeur sélectionnée
-        var selectedValu = $(this).val();
-        // Fermez tous les modals existants
-        $('.modal').modal('hide');
-        $(`#modalVucause${selectedValu}`).modal('hide');
-        // Ouvrez le modal correspondant à la valeur sélectionnée
-        $(`#modalVucause${selectedValu}`).modal('show');
-    });
-});
-
-</script>
-<script>
-var postes = @json($postes);
-var processuss = @json($processuss);
-
-</script>
-<script>
-document.addEventListener("DOMContentLoaded", function() {
-    document.querySelectorAll(".action-new").forEach(function(button) {
-        button.addEventListener("click", function() {
-            var type_new = this.getAttribute("data-type");
-            addGroup(type_new);
+    $(document).ready(function() {
+        // Écoutez l'événement de changement de l'élément select
+        $('#risqueSelect').on('change', function() {
+            // Récupérez la valeur sélectionnée
+            var selectedValue = $(this).val();
+            // Fermez tous les modals existants
+            $('.modal').modal('hide');
+            $(`#modalVurisque${selectedValue}`).modal('hide');
+            // Ouvrez le modal correspondant à la valeur sélectionnée
+            $(`#modalVurisque${selectedValue}`).modal('show');
         });
     });
-});
-
-function addGroup(type_new) {
-
-    document.getElementById("btn_enrg").style.display = "block";
-
-    var groupe = document.createElement("div");
-    groupe.className = "card card-bordered";
-    groupe.innerHTML = `
-                                    <div class="card-inner">
-                                        <div class="row g-4">
-                                            <div class="col-lg-12 col-xxl-12" >
-                                                <div class="card">
-                                                    <div class="card-inner">
-                                                        <div class="card-head">
-                                                            <span class="badge badge-dot bg-primary">
-                                                                Nouveau
-                                                            </span>
-                                                        </div>
-                                                            <div class="row g-4">
-                                                                <div class="col-lg-6">
-                                                                    <div class="form-group">
-                                                                        <label class="form-label" for="Cause">
-                                                                            Processus
-                                                                        </label>
-                                                                        <input required style="display:none;" name="nature[]" value="new" type="text" >
-                                                                        <select required id="responsable_idc" required name="processus_id[]" class="form-select">
-                                                                            <option selected value="">
-                                                                                Choisir un responsable
-                                                                            </option>
-                                                                            ${processuss.map(processus => `<option value="${processus.id}">${processus.nom}</option>`).join('')}
-                                                                        </select>
-                                                                    </div>
-                                                                </div>
-                                                                <div class="col-lg-6">
-                                                                    <div class="form-group">
-                                                                        <label class="form-label" for="controle">
-                                                                            Risque
-                                                                        </label>
-                                                                        <div class="form-control-wrap">
-                                                                            <input required placeholder="Saisie obligatoire" name="risque[]" type="text" class="form-control" >
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                                <div class="col-lg-12">
-                                                                    <div class="form-group">
-                                                                        <label class="form-label" for="controle">
-                                                                            Résumé des causes
-                                                                        </label>
-                                                                        <div class="form-control-wrap">
-                                                                            <input required placeholder="Saisie obligatoire" name="resume[]" type="text" class="form-control" >
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                                <div class="col-lg-12">
-                                                                    <div class="form-group">
-                                                                        <label class="form-label" for="controle">
-                                                                            Action Corrective
-                                                                        </label>
-                                                                        <div class="form-control-wrap">
-                                                                            <input required placeholder="Saisie obligatoire" name="action[]" type="text" class="form-control" >
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                                <div class="col-lg-4">
-                                                                            <div class="form-group">
-                                                                                <label class="form-label" for="Coût">
-                                                                                    Responsable
-                                                                                </label>
-                                                                                <select required id="responsable_idc" required name="poste_id[]" class="form-select">
-                                                                                    <option selected value="">
-                                                                                        Choisir un responsable
-                                                                                    </option>
-                                                                                    ${postes.map(poste => `<option value="${poste.id}">${poste.nom}</option>`).join('')}
-                                                                                </select>
-                                                                            </div>
-                                                                            <div class="form-group">
-                                                                                <label class="form-label" for="Coût">
-                                                                                    Date prévisionnelle de réalisation
-                                                                                </label>
-                                                                                <div class="form-control-wrap">
-                                                                                    <input required name="date_action[]" type="date" class="form-control" min="{{ \Carbon\Carbon::now()->toDateString() }}" value="{{ \Carbon\Carbon::now()->toDateString() }}">
-                                                                                </div>
-                                                                            </div>
-                                                                </div>
-                                                                <div class="col-lg-8">
-                                                                    <div class="form-group text-center">
-                                                                        <label class="form-label" for="description">
-                                                                            Commentaire
-                                                                        </label>
-                                                                        <div class="form-control-wrap">
-                                                                            <textarea required name="commentaire[]" class="form-control no-resize" id="default-textarea"></textarea>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                                <div class="col-lg-12">
-                                                                    <div class="form-group text-center">
-                                                                        <a class="btn btn-outline-danger btn-dim " id="suppr_nouvelle_action" >
-                                                                            Supprimer
-                                                                        </a>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-            `;
-
-    groupe.querySelector("#suppr_nouvelle_action").addEventListener("click", function(event) {
-        event.preventDefault();
-        groupe.remove();
-    });
-
-    document.getElementById("dynamic-fields").appendChild(groupe);
-}
-
 </script>
-<script>
-document.addEventListener("DOMContentLoaded", function() {
-    document.querySelectorAll(".action-accepte").forEach(function(button) {
-        button.addEventListener("click", function() {
-            var type = this.getAttribute("data-type");
-            var selectedCause = $("#causeSelect").val();
-            var selectedRisque = $("#risqueSelect").val();
-            var choixSelect = $("input[name='choix_select']:checked").val();
 
-            if (choixSelect !== undefined) {
-                // Faites quelque chose avec la valeur sélectionnée
-                if (choixSelect === "cause") {
-                    if (selectedCause !== '') {
-                        $.ajax({
-                            url: '/get-cause-info/' + selectedCause,
-                            method: 'GET',
-                            success: function(data) {
-                                var nbre = data.nbre;
-                                toastr.info(nbre + " Action(s) trouvée(s).");
-                                addGroups_accepte(type, data);
-                            },
-                            error: function() {
-                                toastr.error("Une erreur s'est produite lors de la récupération des informations.");
-                            }
-                        });
-                    } else {
-                        toastr.warning("Veuillez sélectionner une cause.");
-                    }
-                } else if (choixSelect === "risque") {
-                    if (selectedRisque !== '') {
-                        $.ajax({
-                            url: '/get-risque-info/' + selectedRisque,
-                            method: 'GET',
-                            success: function(data) {
-                                var nbre = data.nbre;
-                                toastr.info(nbre + " Action(s) trouvée(s).");
-                                addGroups_accepte(type, data);
-                            },
-                            error: function() {
-                                toastr.error("Une erreur s'est produite lors de la récupération des informations.");
-                            }
-                        });
-                    } else {
-                        toastr.warning("Veuillez sélectionner un risque.");
-                    }
-                }
-            } else {
-                toastr.error("Veuillez préciser le choix de sélection.");
-            }
+<script>
+    $(document).ready(function() {
+        // Écoutez l'événement de changement de l'élément select
+        $('#causeSelect').on('change', function() {
+            // Récupérez la valeur sélectionnée
+            var selectedValu = $(this).val();
+            // Fermez tous les modals existants
+            $('.modal').modal('hide');
+            $(`#modalVucause${selectedValu}`).modal('hide');
+            // Ouvrez le modal correspondant à la valeur sélectionnée
+            $(`#modalVucause${selectedValu}`).modal('show');
         });
     });
-});
+</script>
 
-function addGroups_accepte(type, data) {
-    // Récupérer l'élément qui contient les groupes
-    var dynamicFields = document.getElementById("dynamic-fields");
+<script>
+    var postes = @json($postes);
+    var processuss = @json($processuss);
+</script>
 
-    // Supprimer le contenu existant
-    while (dynamicFields.firstChild) {
-        dynamicFields.removeChild(dynamicFields.firstChild);
-    }
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        document.querySelectorAll(".action-new").forEach(function(button) {
+            button.addEventListener("click", function() {
+                var type_new = this.getAttribute("data-type");
+                addGroup(type_new);
+            });
+        });
+    });
 
-    document.getElementById("btn_enrg").style.display = "block";
+    function addGroup(type_new) {
 
-    data.actions.forEach(function(action) {
+        document.getElementById("btn_enrg").style.display = "block";
+
         var groupe = document.createElement("div");
         groupe.className = "card card-bordered";
         groupe.innerHTML = `
-                    <div class="card-inner">
-                                        <div class="row g-4">
-                                            <div class="col-lg-12 col-xxl-12" >
-                                                <div class="card">
-                                                    <div class="card-inner">
-                                                        <div class="card-head">
-                                                            <span class="badge badge-dot bg-success">
-                                                                Accepté
-                                                            </span>
-                                                        </div>
-                                                            <div class="row g-4">
-
-                                                            <input required style="display:none;" name="trouve[]" value="${action.trouve}" type="text">
-                                                            <input required style="display:none;" name="trouve_id[]" value="${action.trouve_id}" type="int">
-
-                                                                <div class="col-lg-6">
-                                                                    <div class="form-group">
-                                                                        <label class="form-label" for="Cause">
-                                                                            Processus
-                                                                        </label>
-                                                                        <input required style="display:none;" name="nature[]" value="accepte" type="text" >
-                                                                        <div class="form-control-wrap">
-                                                                            <input style="display:none;" name="processus_id[]" value="${action.processus_id}" type="int" class="form-control">
-                                                                            <input value="${action.processus}" type="text" class="form-control" readonly>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                                <div class="col-lg-6">
-                                                                    <div class="form-group">
-                                                                        <label class="form-label" for="controle">
-                                                                            Risque
-                                                                        </label>
-                                                                        <div class="form-control-wrap">
-                                                                            <input value="${action.risque}" type="text" class="form-control" readonly>
-                                                                            <input style="display:none;" required name="risque[]" value="${action.risque_id}" type="int" class="form-control" readonly>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                                <input required style="display:none;" name="resume[]" value="0" type="text" >
-                                                                <div class="col-lg-12">
-                                                                    <div class="form-group">
-                                                                        <label class="form-label" for="controle">
-                                                                            Action Corrective
-                                                                        </label>
-                                                                        <div class="form-control-wrap">
-                                                                            <input placeholder="Saisie obligatoire" name="action[]" value="${action.action}" type="text" readonly class="form-control" >
-                                                                            <input style="display:none;" name="action_id[]" value="${action.id}" type="int" class="form-control" >
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                                <div class="col-lg-4">
-                                                                            <div class="form-group">
-                                                                                <label class="form-label" for="Coût">
-                                                                                    Responsable
-                                                                                </label>
-                                                                                <input style="display:none;" name="poste_id[]" value="${action.poste_id}" type="int" class="form-control">
-                                                                                <input value="${action.responsable}" type="text" class="form-control" readonly>
-                                                                            </div>
-                                                                            <div class="form-group">
-                                                                                <label class="form-label" for="Coût">
-                                                                                    Date prévisionnelle de réalisation
-                                                                                </label>
-                                                                                <div class="form-control-wrap">
-                                                                                    <input required name="date_action[]" type="date" class="form-control" min="{{ \Carbon\Carbon::now()->toDateString() }}" value="{{ \Carbon\Carbon::now()->toDateString() }}">
-                                                                                </div>
-                                                                            </div>
-                                                                </div>
-                                                                <div class="col-lg-8">
-                                                                    <div class="form-group text-center">
-                                                                        <label class="form-label" for="description">
-                                                                            Commentaire
-                                                                        </label>
-                                                                        <div class="form-control-wrap">
-                                                                            <textarea required name="commentaire[]" class="form-control no-resize" id="default-textarea"></textarea>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                                <div class="col-lg-12">
-                                                                    <div class="form-group text-center">
-                                                                        <a class="btn btn-outline-danger btn-dim " id="suppr_action" >
-                                                                            Supprimer
-                                                                        </a>
-                                                                    </div>
-                                                                </div>
+                                        <div class="card-inner">
+                                            <div class="row g-4">
+                                                <div class="col-lg-12 col-xxl-12" >
+                                                    <div class="card">
+                                                        <div class="card-inner">
+                                                            <div class="card-head">
+                                                                <span class="badge badge-dot bg-primary">
+                                                                    Nouveau
+                                                                </span>
                                                             </div>
+                                                                <div class="row g-4">
+                                                                    <div class="col-lg-6">
+                                                                        <div class="form-group">
+                                                                            <label class="form-label" for="Cause">
+                                                                                Processus
+                                                                            </label>
+                                                                            <input required style="display:none;" name="nature[]" value="new" type="text" >
+                                                                            <select required id="responsable_idc" required name="processus_id[]" class="form-select">
+                                                                                <option selected value="">
+                                                                                    Choisir un responsable
+                                                                                </option>
+                                                                                ${processuss.map(processus => `<option value="${processus.id}">${processus.nom}</option>`).join('')}
+                                                                            </select>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="col-lg-6">
+                                                                        <div class="form-group">
+                                                                            <label class="form-label" for="controle">
+                                                                                Risque
+                                                                            </label>
+                                                                            <div class="form-control-wrap">
+                                                                                <input required placeholder="Saisie obligatoire" name="risque[]" type="text" class="form-control" >
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="col-lg-12">
+                                                                        <div class="form-group">
+                                                                            <label class="form-label" for="controle">
+                                                                                Résumé des causes
+                                                                            </label>
+                                                                            <div class="form-control-wrap">
+                                                                                <input required placeholder="Saisie obligatoire" name="resume[]" type="text" class="form-control" >
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="col-lg-12">
+                                                                        <div class="form-group">
+                                                                            <label class="form-label" for="controle">
+                                                                                Action Corrective
+                                                                            </label>
+                                                                            <div class="form-control-wrap">
+                                                                                <input required placeholder="Saisie obligatoire" name="action[]" type="text" class="form-control" >
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="col-lg-4">
+                                                                                <div class="form-group">
+                                                                                    <label class="form-label" for="Coût">
+                                                                                        Responsable
+                                                                                    </label>
+                                                                                    <select required id="responsable_idc" required name="poste_id[]" class="form-select">
+                                                                                        <option selected value="">
+                                                                                            Choisir un responsable
+                                                                                        </option>
+                                                                                        ${postes.map(poste => `<option value="${poste.id}">${poste.nom}</option>`).join('')}
+                                                                                    </select>
+                                                                                </div>
+                                                                                <div class="form-group">
+                                                                                    <label class="form-label" for="Coût">
+                                                                                        Date prévisionnelle de réalisation
+                                                                                    </label>
+                                                                                    <div class="form-control-wrap">
+                                                                                        <input required name="date_action[]" type="date" class="form-control" min="{{ \Carbon\Carbon::now()->toDateString() }}" value="{{ \Carbon\Carbon::now()->toDateString() }}">
+                                                                                    </div>
+                                                                                </div>
+                                                                    </div>
+                                                                    <div class="col-lg-8">
+                                                                        <div class="form-group text-center">
+                                                                            <label class="form-label" for="description">
+                                                                                Commentaire
+                                                                            </label>
+                                                                            <div class="form-control-wrap">
+                                                                                <textarea required name="commentaire[]" class="form-control no-resize" id="default-textarea"></textarea>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="col-lg-12">
+                                                                        <div class="form-group text-center">
+                                                                            <a class="btn btn-outline-danger btn-dim " id="suppr_nouvelle_action" >
+                                                                                Supprimer
+                                                                            </a>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
-                                    </div>
                 `;
 
-        groupe.querySelector("#suppr_action").addEventListener("click", function(event) {
+        groupe.querySelector("#suppr_nouvelle_action").addEventListener("click", function(event) {
             event.preventDefault();
             groupe.remove();
-            
+
+            checkAndHideSubmitButton();
         });
 
         document.getElementById("dynamic-fields").appendChild(groupe);
-    });
-
-    document.getElementById("dynamic-fields").appendChild(groupe);
-}
-
-</script>
-<script>
-document.addEventListener("DOMContentLoaded", function() {
-    document.querySelectorAll(".action-non-accepte").forEach(function(button) {
-        button.addEventListener("click", function() {
-            var type = this.getAttribute("data-type");
-            var selectedCause = $("#causeSelect").val();
-            var selectedRisque = $("#risqueSelect").val();
-            var choixSelect = $("input[name='choix_select']:checked").val();
-
-            if (choixSelect !== undefined) {
-                // Faites quelque chose avec la valeur sélectionnée
-                if (choixSelect === "cause") {
-                    if (selectedCause !== '') {
-                        $.ajax({
-                            url: '/get-cause-info/' + selectedCause,
-                            method: 'GET',
-                            success: function(data) {
-                                var nbre = data.nbre;
-                                toastr.info(nbre + " Action(s) trouvée(s).");
-                                addGroups_non_accepte(type, data);
-                            },
-                            error: function() {
-                                toastr.error("Une erreur s'est produite lors de la récupération des informations.");
-                            }
-                        });
-                    } else {
-                        toastr.warning("Veuillez sélectionner une cause.");
-                    }
-                } else if (choixSelect === "risque") {
-                    if (selectedRisque !== '') {
-                        $.ajax({
-                            url: '/get-risque-info/' + selectedRisque,
-                            method: 'GET',
-                            success: function(data) {
-                                var nbre = data.nbre;
-                                toastr.info(nbre + " Action(s) trouvée(s).");
-                                addGroups_non_accepte(type, data);
-                            },
-                            error: function() {
-                                toastr.error("Une erreur s'est produite lors de la récupération des informations.");
-                            }
-                        });
-                    } else {
-                        toastr.warning("Veuillez sélectionner un risque.");
-                    }
-                }
-            } else {
-                toastr.error("Veuillez préciser le choix de sélection.");
-            }
-        });
-    });
-});
-
-function addGroups_non_accepte(type, data) {
-    // Récupérer l'élément qui contient les groupes
-    var dynamicFields = document.getElementById("dynamic-fields");
-
-    // Supprimer le contenu existant
-    while (dynamicFields.firstChild) {
-        dynamicFields.removeChild(dynamicFields.firstChild);
     }
+</script>
 
-    document.getElementById("btn_enrg").style.display = "block";
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        document.querySelectorAll(".action-afficher").forEach(function(button) {
+            button.addEventListener("click", function() {
+                var type = this.getAttribute("data-type");
+                var selectedCause = $("#causeSelect").val();
+                var selectedRisque = $("#risqueSelect").val();
+                var choixSelect = $("input[name='choix_select']:checked").val();
 
-    data.actions.forEach(function(action) {
-        var groupe = document.createElement("div");
-        groupe.className = "card card-bordered";
-        groupe.innerHTML = `
-                                    <div class="card-inner">
-                                        <div class="row g-4">
-                                            <div class="col-lg-12 col-xxl-12" >
-                                                <div class="card">
-                                                    <div class="card-inner">
-                                                        <div class="card-head">
-                                                            <span class="badge badge-dot bg-danger">
-                                                                Non-accepté
-                                                            </span>
-                                                        </div>
-                                                            <div class="row g-4">
+                if (choixSelect !== undefined) {
+                    // Faites quelque chose avec la valeur sélectionnée
+                    if (choixSelect === "cause") {
+                        if (selectedCause !== '') {
+                            $.ajax({
+                                url: '/get-cause-info/' + selectedCause,
+                                method: 'GET',
+                                success: function(data) {
+                                    var nbre = data.nbre;
+                                    toastr.info(nbre + " Action(s) trouvée(s).");
+                                    addGroups_non_accepte(type, data);
+                                },
+                                error: function() {
+                                    toastr.error("Une erreur s'est produite lors de la récupération des informations.");
+                                }
+                            });
+                        } else {
+                            toastr.warning("Veuillez sélectionner une cause.");
+                        }
+                    } else if (choixSelect === "risque") {
+                        if (selectedRisque !== '') {
+                            $.ajax({
+                                url: '/get-risque-info/' + selectedRisque,
+                                method: 'GET',
+                                success: function(data) {
+                                    var nbre = data.nbre;
+                                    toastr.info(nbre + " Action(s) trouvée(s).");
+                                    addGroups_non_accepte(type, data);
+                                },
+                                error: function() {
+                                    toastr.error("Une erreur s'est produite lors de la récupération des informations.");
+                                }
+                            });
+                        } else {
+                            toastr.warning("Veuillez sélectionner un risque.");
+                        }
+                    }
+                } else {
+                    toastr.error("Veuillez préciser le choix de sélection.");
+                }
+            });
+        });
 
-                                                                <input required style="display:none;" name="trouve[]" value="${action.trouve}" type="text">
-                                                                <input required style="display:none;" name="trouve_id[]" value="${action.trouve_id}" type="int">
+    });
 
-                                                                <div class="col-lg-6">
-                                                                    <div class="form-group">
-                                                                        <label class="form-label" for="Cause">
-                                                                            Processus
-                                                                        </label>
-                                                                        <input required style="display:none;" name="nature[]" value="non-accepte" type="text" >
-                                                                        <div class="form-control-wrap">
-                                                                            <input style="display:none;" name="processus_id[]" value="${action.processus_id}" type="int" class="form-control">
-                                                                            <input value="${action.processus}" type="text" class="form-control" readonly>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                                <div class="col-lg-6">
-                                                                    <div class="form-group">
-                                                                        <label class="form-label" for="controle">
-                                                                            Risque
-                                                                        </label>
-                                                                        <div class="form-control-wrap">
-                                                                            <input value="${action.risque}" type="text" class="form-control" readonly>
-                                                                            <input style="display:none;" required name="risque[]" value="${action.risque_id}" type="int" class="form-control" readonly>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                                <input required style="display:none;" name="resume[]" value="0" type="text" >
-                                                                <div class="col-lg-12">
-                                                                    <div class="form-group">
-                                                                        <label class="form-label" for="controle">
-                                                                            Action Corrective
-                                                                        </label>
-                                                                        <div class="form-control-wrap">
-                                                                            <input placeholder="Saisie obligatoire" name="action[]"  type="text" class="form-control" >
-                                                                            <input style="display:none;" name="action_id[]" value="${action.id}" type="int" class="form-control" >
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                                <div class="col-lg-4">
-                                                                            <div class="form-group">
-                                                                                <label class="form-label" for="Coût">
-                                                                                    Responsable
-                                                                                </label>
-                                                                                <select required id="responsable_idc" required name="poste_id[]" class="form-select" >
-                                                                                    <option selected value="">
-                                                                                        Choisir un responsable
-                                                                                    </option>
-                                                                                    ${postes.map(poste => `<option value="${poste.id}" ${action.poste_id == poste.id ? 'selected' : ''}>${poste.nom}</option>`).join('')}
-                                                                                </select>
-                                                                            </div>
-                                                                            <div class="form-group">
-                                                                                <label class="form-label" for="Coût">
-                                                                                    Date prévisionnelle de réalisation
-                                                                                </label>
-                                                                                <div class="form-control-wrap">
-                                                                                    <input required name="date_action[]" type="date" class="form-control" min="{{ \Carbon\Carbon::now()->toDateString() }}" value="{{ \Carbon\Carbon::now()->toDateString() }}">
-                                                                                </div>
-                                                                            </div>
-                                                                </div>
-                                                                <div class="col-lg-8">
-                                                                    <div class="form-group text-center">
-                                                                        <label class="form-label" for="description">
-                                                                            Commentaire
-                                                                        </label>
-                                                                        <div class="form-control-wrap">
-                                                                            <textarea required name="commentaire[]" class="form-control no-resize" id="default-textarea"></textarea>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                                <div class="col-lg-12">
-                                                                    <div class="form-group text-center">
-                                                                        <a class="btn btn-outline-danger btn-dim " id="suppr_action" >
-                                                                            Supprimer
-                                                                        </a>
-                                                                    </div>
-                                                                </div>
+    function addGroups_non_accepte(type, data) {
+        // Récupérer l'élément qui contient les groupes
+        var dynamicFields = document.getElementById("dynamic-fields");
+
+        // Supprimer le contenu existant
+        while (dynamicFields.firstChild) {
+            dynamicFields.removeChild(dynamicFields.firstChild);
+        }
+
+        document.getElementById("btn_enrg").style.display = "block";
+
+        data.actions.forEach(function(action) {
+            var groupe = document.createElement("div");
+            groupe.className = "card card-bordered";
+            groupe.innerHTML = `
+                                        <div class="card-inner">
+                                            <div class="row g-4">
+                                                <div class="col-lg-12 col-xxl-12" >
+                                                    <div class="card">
+                                                        <div class="card-inner">
+                                                            <div class="card-head">
+                                                                <span class="badge badge-dot bg-success">
+                                                                    Action trouvé
+                                                                </span>
                                                             </div>
+                                                                <div class="row g-4">
+
+                                                                    <input required style="display:none;" name="trouve[]" value="${action.trouve}" type="text">
+                                                                    <input required style="display:none;" name="trouve_id[]" value="${action.trouve_id}" type="int">
+
+                                                                    <div class="col-lg-2">
+                                                                        <div class="form-group">
+                                                                            <label class="form-label" for="Cause">
+                                                                                Statut
+                                                                            </label>
+                                                                            <select name="nature[]" class="form-select">
+                                                                                <option selected value="accepte">
+                                                                                    Accepté
+                                                                                </option>
+                                                                                <option value="non-accepte">
+                                                                                    Non accepté
+                                                                                </option>
+                                                                            </select>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="col-lg-5">
+                                                                        <div class="form-group">
+                                                                            <label class="form-label" for="Cause">
+                                                                                Processus
+                                                                            </label>
+
+                                                                            <div class="form-control-wrap">
+                                                                                <input style="display:none;" name="processus_id[]" value="${action.processus_id}" type="int" class="form-control">
+                                                                                <input value="${action.processus}" type="text" class="form-control" readonly>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="col-lg-5">
+                                                                        <div class="form-group">
+                                                                            <label class="form-label" for="controle">
+                                                                                Risque
+                                                                            </label>
+                                                                            <div class="form-control-wrap">
+                                                                                <input value="${action.risque}" type="text" class="form-control" readonly>
+                                                                                <input style="display:none;" required name="risque[]" value="${action.risque_id}" type="int" class="form-control" readonly>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <input required style="display:none;" name="resume[]" value="0" type="text" >
+                                                                    <div class="col-lg-12">
+                                                                        <div class="form-group">
+                                                                            <label class="form-label" for="controle">
+                                                                                Action Corrective
+                                                                            </label>
+                                                                            <div class="form-control-wrap">
+                                                                                <input placeholder="Saisie obligatoire" name="action[]"  type="text" readonly value="${action.action}" class="form-control" >
+                                                                                <input placeholder="Saisie obligatoire" name="naction[]"  type="text" required style="display:none;" class="form-control" value="neant">
+                                                                                <input style="display:none;" name="action_id[]" value="${action.id}" type="int" class="form-control" >
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="col-lg-4">
+                                                                                <div class="form-group">
+                                                                                    <label class="form-label" for="Coût">
+                                                                                        Responsable
+                                                                                    </label>
+                                                                                    <select required id="responsable_idc" required name="poste_id[]" class="form-select" >
+                                                                                        ${postes.map(poste => `<option value="${poste.id}" ${action.poste_id == poste.id ? 'selected' : ''}>${poste.nom}</option>`).join('')}
+                                                                                    </select>
+                                                                                </div>
+                                                                                <div class="form-group">
+                                                                                    <label class="form-label" for="Coût">
+                                                                                        Date prévisionnelle de réalisation
+                                                                                    </label>
+                                                                                    <div class="form-control-wrap">
+                                                                                        <input required name="date_action[]" type="date" class="form-control" min="{{ \Carbon\Carbon::now()->toDateString() }}" value="{{ \Carbon\Carbon::now()->toDateString() }}">
+                                                                                    </div>
+                                                                                </div>
+                                                                    </div>
+                                                                    <div class="col-lg-8">
+                                                                        <div class="form-group text-center">
+                                                                            <label class="form-label" for="description">
+                                                                                Commentaire
+                                                                            </label>
+                                                                            <div class="form-control-wrap">
+                                                                                <textarea required name="commentaire[]" class="form-control no-resize" id="default-textarea"></textarea>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="col-lg-12">
+                                                                        <div class="form-group text-center">
+                                                                            <a class="btn btn-outline-danger btn-dim " id="suppr_action" >
+                                                                                Supprimer
+                                                                            </a>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
-                                    </div>
-                `;
+                    `;
 
-        groupe.querySelector("#suppr_action").addEventListener("click", function(event) {
-            event.preventDefault();
-            groupe.remove();
-            
+            groupe.querySelector("#suppr_action").addEventListener("click", function(event) {
+                event.preventDefault();
+                groupe.remove();
+
+                checkAndHideSubmitButton();
+            });
+
+            document.getElementById("dynamic-fields").appendChild(groupe);
+
+            document.querySelectorAll("select[name='nature[]']").forEach(function(natureSelect) {
+                natureSelect.addEventListener("change", function() {
+                    var selectedNature = this.value;
+                    var correspondingActionInput = this.closest(".card").querySelector("input[name='action[]']");
+                    var correspondingActionInput2 = this.closest(".card").querySelector("input[name='naction[]']");
+
+                    // Si la nature est "non-accepte", vider l'input action
+                    if (selectedNature === "non-accepte") {
+                        correspondingActionInput.style.display = "none";
+                        correspondingActionInput2.style.display = "block";
+                        correspondingActionInput2.value = "";
+                    } else {
+                        // Sinon, rétablir la valeur initiale
+                        correspondingActionInput.style.display = "block";
+                        correspondingActionInput2.style.display = "none";
+                        correspondingActionInput2.value = "neant";
+                    }
+                });
+            });
+    
         });
 
-        document.getElementById("dynamic-fields").appendChild(groupe);
-    });
-
-    document.getElementById("dynamic-fields").appendChild(groupe);
-
-}
-
+    }
 </script>
+
 <script>
-document.addEventListener("DOMContentLoaded", function() {
-    // Initial setup
-    document.getElementById("groupesContainer_btn_trouve").style.display = "none";
-    document.getElementById("groupesContainer_btn_new").style.display = "none";
-    document.getElementById("btn_enrg").style.display = "none";
+    document.addEventListener("DOMContentLoaded", function() {
+        // Initial setup
+        var selectedCause = $("#causeSelect").val();
+        var selectedRisque = $("#risqueSelect").val();
 
+        document.querySelectorAll(".choix_select").forEach(function(radio) {
+            radio.addEventListener("change", function() {
+                var selectedValue = this.value;
+                if (selectedValue === "cause" || selectedValue === "risque") {
 
-    var selectedCause = $("#causeSelect").val();
-    var selectedRisque = $("#risqueSelect").val();
+                    document.getElementById("btn-afficher").style.display = "block";
+                    document.getElementById("btn-new-action").style.display = "block";
+                    document.getElementById("btn_enrg").style.display = "none";
 
-    document.querySelectorAll(".choix_select").forEach(function(radio) {
-        radio.addEventListener("change", function() {
-            var selectedValue = this.value;
-            if (selectedValue === "cause") {
-                document.getElementById("groupesContainer_btn_trouve").style.display = "block";
-                document.getElementById("groupesContainer_btn_new").style.display = "none";
-                document.getElementById("btn_enrg").style.display = "none";
+                    var dynamicFields = document.getElementById("dynamic-fields");
+                    // Supprimer le contenu existant
+                    while (dynamicFields.firstChild) {
+                        dynamicFields.removeChild(dynamicFields.firstChild);
+                    }
 
-                var dynamicFields = document.getElementById("dynamic-fields");
-                // Supprimer le contenu existant
-                while (dynamicFields.firstChild) {
-                    dynamicFields.removeChild(dynamicFields.firstChild);
+                } else if (selectedValue === "cause_risque_nt") {
+
+                    document.getElementById("btn-afficher").style.display = "none";
+                    document.getElementById("btn-new-action").style.display = "block";
+                    document.getElementById("btn_enrg").style.display = "none";
+
+                    var dynamicFields = document.getElementById("dynamic-fields");
+                    // Supprimer le contenu existant
+                    while (dynamicFields.firstChild) {
+                        dynamicFields.removeChild(dynamicFields.firstChild);
+                    }
                 }
-
-            } else if (selectedValue === "risque") {
-                document.getElementById("groupesContainer_btn_trouve").style.display = "block";
-                document.getElementById("groupesContainer_btn_new").style.display = "none";
-                document.getElementById("btn_enrg").style.display = "none";
-
-                var dynamicFields = document.getElementById("dynamic-fields");
-                // Supprimer le contenu existant
-                while (dynamicFields.firstChild) {
-                    dynamicFields.removeChild(dynamicFields.firstChild);
-                }
-
-            } else if (selectedValue === "cause_risque_nt") {
-                document.getElementById("groupesContainer_btn_trouve").style.display = "none";
-                document.getElementById("groupesContainer_btn_new").style.display = "block";
-                document.getElementById("btn_enrg").style.display = "none";
-
-                var dynamicFields = document.getElementById("dynamic-fields");
-                // Supprimer le contenu existant
-                while (dynamicFields.firstChild) {
-                    dynamicFields.removeChild(dynamicFields.firstChild);
-                }
-            }
+            });
         });
     });
-});
+</script>
 
+<script>
+    function checkAndHideSubmitButton() {
+    var dynamicFields = document.getElementById("dynamic-fields");
+    var btnEnrg = document.getElementById("btn_enrg");
+
+    if (dynamicFields.innerHTML.trim() === "") {
+        // Si vide, cacher le bouton "Soumettre"
+        btnEnrg.style.display = "none";
+    } else {
+        // Sinon, afficher le bouton "Soumettre"
+        btnEnrg.style.display = "block";
+    }
+}
 </script>
 
 @endsection

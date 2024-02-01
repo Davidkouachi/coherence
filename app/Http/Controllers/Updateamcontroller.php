@@ -80,10 +80,14 @@ class Updateamcontroller extends Controller
 
             foreach ($suivi_id as $index => $value) {
 
-                $suivi = Suivi_amelioration::find($suivi_id[$index]);
-                $suivi->delai = $delai[$index];
-                $suivi->commentaire_am = $commentaire_am[$index];
-                $suivi->update();
+                $rech = action::join('suivi_ameliorations', 'actions.id', 'suivi_ameliorations.action_id')
+                                ->where('suivi_ameliorations.id', $suivi_id[$index])
+                                ->first();
+                if ($rech) {
+                    $rech->date = $delai[$index];
+                    $rech->commentaire_am = $commentaire_am[$index];
+                    $rech->update();
+                }                           
             }
 
             $id_suppr = $request->input('id_suppr');
@@ -119,6 +123,7 @@ class Updateamcontroller extends Controller
         $risque = $request->input('risque');
         $resume = $request->input('resume');
         $action = $request->input('action');
+        $naction = $request->input('naction');
         $action_id = $request->input('action_id');
         $poste_id = $request->input('poste_id');
         $date_action = $request->input('date_action');
@@ -134,16 +139,19 @@ class Updateamcontroller extends Controller
 
             if ($nature[$index] === 'accepte') {
 
+                $rech_action = Action::find($action_id[$index]);
+                if ($rech_action) {
+                    $rech_action->date = $date_action[$index];
+                    $rech_action->save();
+                }
+
                 $suivic = new Suivi_amelioration();
-                $suivic->delai = $date_action[$index];
                 $suivic->type = 'action';
                 $suivic->nature = $nature[$index];
                 $suivic->trouve = $trouve[$index];
                 $suivic->statut = 'non-realiser';
                 $suivic->amelioration_id = $am->id;
                 $suivic->action_id = $action_id[$index];
-                $suivic->processus_id = $processus_id[$index];
-                $suivic->risque_id = $risque[$index];
                 if ($trouve[$index] === 'cause') {$suivic->cause_id = $trouve_id[$index];}
                 if ($trouve[$index] === 'risque') {$suivic->risque_id = $trouve_id[$index];}
                 $suivic->commentaire_am = $commentaire[$index];
@@ -154,23 +162,21 @@ class Updateamcontroller extends Controller
             if ($nature[$index] === 'non-accepte') {
 
                 $actionn = new Action();
-                $actionn->action = $action[$index];
+                $actionn->action = $naction[$index];
                 $actionn->page = 'am';
                 $actionn->type = 'corrective';
+                $actionn->date = $date_action[$index];
                 $actionn->poste_id = $poste_id[$index];
                 $actionn->risque_id = $risque[$index];
                 $actionn->save();
 
                 $suivic = new Suivi_amelioration();
-                $suivic->delai = $date_action[$index];
                 $suivic->type = 'action_am';
                 $suivic->nature = $nature[$index];
                 $suivic->trouve = $trouve[$index];
                 $suivic->statut = 'non-realiser';
                 $suivic->amelioration_id = $am->id;
                 $suivic->action_id = $actionn->id;
-                $suivic->risque_id = $risque[$index];
-                $suivic->processus_id = $processus_id[$index];
                 if ($trouve[$index] === 'cause') {$suivic->cause_id = $trouve_id[$index];}
                 if ($trouve[$index] === 'risque') {$suivic->risque_id = $trouve_id[$index];}
                 $suivic->commentaire_am = $commentaire[$index];
@@ -197,21 +203,18 @@ class Updateamcontroller extends Controller
                 $actionn->action = $action[$index];
                 $actionn->page = 'am';
                 $actionn->type = 'corrective';
+                $actionn->date = $date_action[$index];
                 $actionn->poste_id = $poste_id[$index];
                 $actionn->risque_id = $risquee->id;
                 $actionn->save();
 
                 $suivic = new Suivi_amelioration();
-                $suivic->delai = $date_action[$index];
                 $suivic->type = 'action_am';
                 $suivic->nature = $nature[$index];
                 $suivic->trouve = 'new_risque';
                 $suivic->statut = 'non-realiser';
                 $suivic->amelioration_id = $am->id;
                 $suivic->action_id = $actionn->id;
-                $suivic->risque_id = $risquee->id;
-                $suivic->cause_id = $cause->id;
-                $suivic->processus_id = $processus_id[$index];
                 $suivic->commentaire_am = $commentaire[$index];
                 $suivic->save();
             }

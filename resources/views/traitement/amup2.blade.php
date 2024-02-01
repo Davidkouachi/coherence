@@ -25,6 +25,15 @@
                                 <em class="icon ni ni-reports"></em>
                             </h3>
                         </div>
+                        <div class="nk-block-head-content">
+                                        <a href="{{ route('index_amup') }}" class="btn btn-danger btn-outline-white d-none d-sm-inline-flex">
+                                            <em class="icon ni ni-arrow-left"></em>
+                                            <span>Retour</span>
+                                        </a>
+                                        <a href="{{ route('index_amup') }}" class="btn btn-danger btn-outline-white d-inline-flex d-sm-none">
+                                            <em class="icon ni ni-arrow-left"></em>
+                                        </a>
+                                    </div>
                     </div>
                 </div>
                 <form class="nk-block" method="post" action="{{ route('amup2_traitement') }}">

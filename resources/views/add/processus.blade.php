@@ -123,6 +123,28 @@
             </div>
 
     <script>
+        var pdfFiles = @json($pdfFiles);
+
+        document.addEventListener("DOMContentLoaded", function() {
+            var fileInput = document.getElementById("fileInput");
+
+            fileInput.addEventListener("change", function() {
+                var selectedFileName = this.value.split('\\').pop(); // Récupérer le nom du fichier sélectionné
+
+                // Parcourir la liste des fichiers
+                pdfFiles.forEach(function(pdfFile) {
+                    if (selectedFileName === pdfFile.pdf_nom) {
+                        toastr.error("Ce fichier PDF existe déjà.");
+                        fileInput.value = ''; // Vider l'input
+                    }
+                });
+            });
+        });
+    </script>
+
+
+
+    <script>
         document.getElementById('ajouter-objectif').addEventListener('click', function(event) {
             event.preventDefault();
             const container = document.getElementById('objectifs-container');

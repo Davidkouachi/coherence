@@ -50,12 +50,15 @@ class RisqueController extends Controller
         $color_intervals = Color_interval::orderBy('nbre1', 'asc')->get();
         $color_interval_nbre = count($color_intervals);
 
+        $pdfFiles = Pdf_file::all();
+
         return view('add.processuseva', [
             'processuses' => $processuses,
             'postes' => $postes,
             'color_para' => $color_para,
             'color_intervals' => $color_intervals,
             'color_interval_nbre' => $color_interval_nbre,
+            'pdfFiles' => $pdfFiles,
         ]);
     }
 
@@ -364,11 +367,8 @@ class RisqueController extends Controller
                     if($rech === 0) {
 
                         $suivip = new Suivi_action();
-                        $suivip->delai = $value->date;
                         $suivip->statut = 'non-realiser';
-                        $suivip->risque_id = $id;
                         $suivip->action_id = $value->id;
-                        $suivip->processus_id = $value->processus_id;
                         $suivip->save();
                     }
                 }

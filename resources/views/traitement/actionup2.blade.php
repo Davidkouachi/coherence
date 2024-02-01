@@ -77,22 +77,14 @@
                             </h3>
                         </div>
                         <div class="nk-block-head-content">
-                            <div class="toggle-wrap nk-block-tools-toggle">
-                                <a href="#" class="btn btn-icon btn-trigger toggle-expand me-n1" data-target="pageMenu">
-                                    <em class="icon ni ni-menu-alt-r"></em>
-                                </a>
-                                <div class="toggle-expand-content" data-content="pageMenu">
-                                    <ul class="nk-block-tools g-3">
-                                        <li>
-                                            <a href="{{ route('index_risque_actionup') }}"class="btn btn-dim btn-white btn-outline-danger" >
-                                                <em class="icon ni ni-arrow-left"></em>
-                                                <span>Retour</span>
-                                            </a>
-                                        </li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
+                                        <a href="{{ route('index_risque_actionup') }}" class="btn btn-danger btn-outline-white d-none d-sm-inline-flex">
+                                            <em class="icon ni ni-arrow-left"></em>
+                                            <span>Retour</span>
+                                        </a>
+                                        <a href="{{ route('index_risque_actionup') }}" class="btn btn-danger btn-outline-white d-inline-flex d-sm-none">
+                                            <em class="icon ni ni-arrow-left"></em>
+                                        </a>
+                                    </div>
                     </div>
                 </div>
                     @if( intval($color_para->nbre_color) > intval($color_interval_nbre) )

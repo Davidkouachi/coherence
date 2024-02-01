@@ -160,14 +160,14 @@ class ListeamController extends Controller
                                     ->join('causes', 'causes.risque_id', 'risques.id')
                                     ->join('processuses', 'risques.processus_id', 'processuses.id')
                                     ->where('actions.id', '=', $suivis->action_id)
-                                    ->select('actions.action as action', 'postes.id as poste_id', 'processuses.id as processus_id', 'risques.nom as risque', 'causes.nom as cause')
+                                    ->select('actions.*', 'postes.id as poste_id', 'processuses.id as processus_id', 'risques.nom as risque', 'causes.nom as cause')
                                     ->first();
 
                         if ($action) {
                             $actionsDatam[$am->id][] = [
                                 'action' => $action->action,
                                 'poste_id' => $action->poste_id,
-                                'delai' => $suivis->delai,
+                                'delai' => $action->date,
                                 'trouve' => $suivis->trouve,
                                 'processus_id' => $action->processus_id,
                                 'risque' => $action->risque,
@@ -183,14 +183,14 @@ class ListeamController extends Controller
                                     ->join('risques', 'actions.risque_id', 'risques.id')
                                     ->join('processuses', 'risques.processus_id', 'processuses.id')
                                     ->where('actions.id', '=', $suivis->action_id)
-                                    ->select('actions.action as action', 'postes.id as poste_id', 'processuses.id as processus_id', 'risques.nom as risque')
+                                    ->select('actions.*', 'postes.id as poste_id', 'processuses.id as processus_id', 'risques.nom as risque')
                                     ->first();
 
                         if ($action) {
                             $actionsDatam[$am->id][] = [
                                 'action' => $action->action,
                                 'poste_id' => $action->poste_id,
-                                'delai' => $suivis->delai,
+                                'delai' => $action->date,
                                 'trouve' => $suivis->trouve,
                                 'processus_id' => $action->processus_id,
                                 'risque' => $action->risque,
@@ -206,14 +206,14 @@ class ListeamController extends Controller
                                     ->join('causes', 'causes.risque_id', 'risques.id')
                                     ->join('processuses', 'risques.processus_id', 'processuses.id')
                                     ->where('actions.id', '=', $suivis->action_id)
-                                    ->select('actions.action as action', 'postes.id as poste_id', 'processuses.id as processus_id', 'risques.nom as risque', 'causes.nom as cause')
+                                    ->select('actions.*', 'postes.id as poste_id', 'processuses.id as processus_id', 'risques.nom as risque', 'causes.nom as cause')
                                     ->first();
 
                         if ($action) {
                             $actionsDatam[$am->id][] = [
                                 'action' => $action->action,
                                 'poste_id' => $action->poste_id,
-                                'delai' => $suivis->delai,
+                                'delai' => $action->date,
                                 'trouve' => $suivis->trouve,
                                 'processus_id' => $action->processus_id,
                                 'risque' => $action->risque,

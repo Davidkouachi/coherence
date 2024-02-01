@@ -23,7 +23,6 @@ class CreateSuiviAmeliorationsTable extends Migration
             $table->text('commentaire_am')->nullable();
             $table->date('date_action')->nullable();
             $table->dateTime('date_suivi')->nullable();
-            $table->date('delai')->nullable();
             $table->string('statut')->nullable();
             $table->unsignedBigInteger('amelioration_id');
             $table->foreign('amelioration_id')->references('id')->on('ameliorations');
@@ -33,8 +32,6 @@ class CreateSuiviAmeliorationsTable extends Migration
             $table->foreign('risque_id')->references('id')->on('risques');
             $table->unsignedBigInteger('cause_id')->nullable();
             $table->foreign('cause_id')->references('id')->on('causes');
-            $table->unsignedBigInteger('processus_id');
-            $table->foreign('processus_id')->references('id')->on('processuses');
             $table->timestamps();
         });
     }
