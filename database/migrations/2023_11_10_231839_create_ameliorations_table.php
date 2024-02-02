@@ -6,11 +6,6 @@ use Illuminate\Support\Facades\Schema;
 
 class CreateAmeliorationsTable extends Migration
 {
-    /**
-     * Run the migrations.
-     *
-     * @return void
-     */
     public function up()
     {
         Schema::create('ameliorations', function (Blueprint $table) {
@@ -31,15 +26,14 @@ class CreateAmeliorationsTable extends Migration
             $table->date('date_eff')->nullable();
             $table->string('efficacite')->nullable();
             $table->text('commentaire_eff')->nullable();
+            $table->unsignedBigInteger('cause_id')->nullable();
+            $table->foreign('cause_id')->references('id')->on('causes');
+            $table->unsignedBigInteger('risque_id')->nullable();
+            $table->foreign('risque_id')->references('id')->on('risques');
             $table->timestamps();
         });
     }
 
-    /**
-     * Reverse the migrations.
-     *
-     * @return void
-     */
     public function down()
     {
         Schema::dropIfExists('ameliorations');

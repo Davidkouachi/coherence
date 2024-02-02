@@ -27,6 +27,18 @@ class Amelioration extends Model
         'efficacite',
         'commentaire_eff',
         'date_eff',
+        'cause_id',
+        'risque_id',
     ];
+
+    public function risque()
+    {
+        return $this->belongsTo(Risque::class, 'risque_id');
+    }
+
+    public function cause()
+    {
+        return $this->belongsTo(Cause::class, 'cause_id');
+    }
 
 }

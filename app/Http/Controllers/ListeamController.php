@@ -134,7 +134,7 @@ class ListeamController extends Controller
 
     public function index_amup2(Request $request)
     {
-        $am = Amelioration::where('id', '=', $request->id)->first();
+        $am = Amelioration::find($request->id);
 
         $actionsDatam = [];
 
@@ -145,7 +145,10 @@ class ListeamController extends Controller
                 $am->motif = $motif->motif;
             }
 
-            $suivi = Suivi_amelioration::where('amelioration_id', '=', $am->id)->get();
+            $suivi = Suivi_amelioration::join('ameliorations', 'suivi_ameliorations.amelioration_id', 'ameliorations.id')
+                                        ->where('ameliorations.id', '=', $am->id)
+                                        ->select('suivi_ameliorations.*','ameliorations.choix_select as choix_select')
+                                        ->get();
 
             $actionsDatam[$am->id] = [];
 
@@ -153,7 +156,7 @@ class ListeamController extends Controller
 
                     $action= null;
 
-                    if ($suivis->trouve === 'cause') {
+                    if ($suivis->choix_select === 'cause') {
 
                         $action = Action::join('postes', 'actions.poste_id', 'postes.id')
                                     ->join('risques', 'actions.risque_id', 'risques.id')
@@ -177,7 +180,7 @@ class ListeamController extends Controller
                             ];
                         }
 
-                    } else if ($suivis->trouve === 'risque') {
+                    } else if ($suivis->choix_select === 'risque') {
 
                         $action = Action::join('postes', 'actions.poste_id', 'postes.id')
                                     ->join('risques', 'actions.risque_id', 'risques.id')
@@ -199,7 +202,7 @@ class ListeamController extends Controller
                             ];
                         }
 
-                    } else if ($suivis->trouve === 'new_risque') {
+                    } else if ($suivis->choix_select === 'new_risque') {
 
                         $action = Action::join('postes', 'actions.poste_id', 'postes.id')
                                     ->join('risques', 'actions.risque_id', 'risques.id')

@@ -15,16 +15,12 @@ class Suivi_amelioration extends Model
         'nature',
         'type',
         'commentaire',
-        'trouve',
         'commentaire_am',
         'date_action',
         'date_suivi',
-        'delai',
         'statut',
         'amelioration_id',
         'action_id',
-        'risque_id',
-        'cause_id',
     ];
 
     public function amelioration()
@@ -35,16 +31,6 @@ class Suivi_amelioration extends Model
     public function action()
     {
         return $this->belongsTo(Action::class, 'action_id');
-    }
-
-    public function risque()
-    {
-        return $this->belongsTo(Risque::class, 'risque_id');
-    }
-
-    public function cause()
-    {
-        return $this->belongsTo(Cause::class, 'cause_id');
     }
 
 }

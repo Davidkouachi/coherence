@@ -135,8 +135,6 @@ class Updateamcontroller extends Controller
 
         foreach ($nature as $index => $valeur) {
 
-            $risque_id = $risque[$index];
-
             if ($nature[$index] === 'accepte') {
 
                 $rech_action = Action::find($action_id[$index]);
@@ -148,12 +146,9 @@ class Updateamcontroller extends Controller
                 $suivic = new Suivi_amelioration();
                 $suivic->type = 'action';
                 $suivic->nature = $nature[$index];
-                $suivic->trouve = $trouve[$index];
                 $suivic->statut = 'non-realiser';
                 $suivic->amelioration_id = $am->id;
                 $suivic->action_id = $action_id[$index];
-                if ($trouve[$index] === 'cause') {$suivic->cause_id = $trouve_id[$index];}
-                if ($trouve[$index] === 'risque') {$suivic->risque_id = $trouve_id[$index];}
                 $suivic->commentaire_am = $commentaire[$index];
                 $suivic->save();
 
@@ -173,12 +168,9 @@ class Updateamcontroller extends Controller
                 $suivic = new Suivi_amelioration();
                 $suivic->type = 'action_am';
                 $suivic->nature = $nature[$index];
-                $suivic->trouve = $trouve[$index];
                 $suivic->statut = 'non-realiser';
                 $suivic->amelioration_id = $am->id;
                 $suivic->action_id = $actionn->id;
-                if ($trouve[$index] === 'cause') {$suivic->cause_id = $trouve_id[$index];}
-                if ($trouve[$index] === 'risque') {$suivic->risque_id = $trouve_id[$index];}
                 $suivic->commentaire_am = $commentaire[$index];
                 $suivic->save();
 
@@ -211,7 +203,6 @@ class Updateamcontroller extends Controller
                 $suivic = new Suivi_amelioration();
                 $suivic->type = 'action_am';
                 $suivic->nature = $nature[$index];
-                $suivic->trouve = 'new_risque';
                 $suivic->statut = 'non-realiser';
                 $suivic->amelioration_id = $am->id;
                 $suivic->action_id = $actionn->id;

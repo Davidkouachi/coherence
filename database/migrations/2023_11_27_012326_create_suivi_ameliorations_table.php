@@ -19,7 +19,6 @@ class CreateSuiviAmeliorationsTable extends Migration
             $table->string('nature')->nullable();
             $table->string('type')->nullable();
             $table->text('commentaire')->nullable();
-            $table->text('trouve')->nullable();
             $table->text('commentaire_am')->nullable();
             $table->date('date_action')->nullable();
             $table->dateTime('date_suivi')->nullable();
@@ -28,10 +27,6 @@ class CreateSuiviAmeliorationsTable extends Migration
             $table->foreign('amelioration_id')->references('id')->on('ameliorations');
             $table->unsignedBigInteger('action_id');
             $table->foreign('action_id')->references('id')->on('actions');
-            $table->unsignedBigInteger('risque_id')->nullable();
-            $table->foreign('risque_id')->references('id')->on('risques');
-            $table->unsignedBigInteger('cause_id')->nullable();
-            $table->foreign('cause_id')->references('id')->on('causes');
             $table->timestamps();
         });
     }

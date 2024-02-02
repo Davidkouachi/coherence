@@ -257,7 +257,7 @@
                                                     <div class="col-lg-6">
                                                         <div class="form-group">
                                                             <div class="form-control-wrap">
-                                                                <select class="form-select js-select2 select_rech" id="causeSelect" data-search="on" data-placeholder="Recherche Cause">
+                                                                <select class="form-select js-select2 select_rech" id="causeSelect" data-search="on" data-placeholder="Recherche Cause" name="causeSelect_id">
                                                                     <option value="">
                                                                     </option>
                                                                     @foreach($causes_selects as $causes_select)
@@ -272,7 +272,7 @@
                                                     <div class="col-lg-6">
                                                         <div class="form-group">
                                                             <div class="form-control-wrap">
-                                                                <select class="form-select js-select2 select_rech" id="risqueSelect" data-search="on" data-placeholder="Recherche Risque">
+                                                                <select class="form-select js-select2 select_rech" id="risqueSelect" data-search="on" data-placeholder="Recherche Risque" name="risqueSelect_id">
                                                                     <option value="">
                                                                     </option>
                                                                     @foreach($risques as $risque)

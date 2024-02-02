@@ -264,6 +264,9 @@ class AmeliorationController extends Controller
         $trouve = $request->input('trouve');
         $trouve_id = $request->input('trouve_id');
 
+        $causeSelect_id = $request->input('causeSelect_id');
+        $risqueSelect_id = $request->input('risqueSelect_id');
+
         $nature = $request->input('nature');
         $processus_id = $request->input('processus_id');
         $risque = $request->input('risque');
@@ -289,11 +292,11 @@ class AmeliorationController extends Controller
         $am->cause = $cause;
         $am->choix_select = $choix_select;
         $am->statut = 'soumis';
+        if ($choix_select === 'cause') {$am->cause_id = $causeSelect_id;}
+        if ($choix_select === 'risque') {$am->risque_id = $risqueSelect_id;}
         $am->save();
 
         foreach ($nature as $index => $valeur) {
-
-            $risque_id = $risque[$index];
 
             if ($nature[$index] === 'accepte') {
 
@@ -306,12 +309,9 @@ class AmeliorationController extends Controller
                 $suivic = new Suivi_amelioration();
                 $suivic->type = 'action';
                 $suivic->nature = $nature[$index];
-                $suivic->trouve = $trouve[$index];
                 $suivic->statut = 'non-realiser';
                 $suivic->amelioration_id = $am->id;
                 $suivic->action_id = $action_id[$index];
-                if ($trouve[$index] === 'cause') {$suivic->cause_id = $trouve_id[$index];}
-                if ($trouve[$index] === 'risque') {$suivic->risque_id = $trouve_id[$index];}
                 $suivic->commentaire_am = $commentaire[$index];
                 $suivic->save();
 
@@ -331,12 +331,9 @@ class AmeliorationController extends Controller
                 $suivic = new Suivi_amelioration();
                 $suivic->type = 'action_am';
                 $suivic->nature = $nature[$index];
-                $suivic->trouve = $trouve[$index];
                 $suivic->statut = 'non-realiser';
                 $suivic->amelioration_id = $am->id;
                 $suivic->action_id = $actionn->id;
-                if ($trouve[$index] === 'cause') {$suivic->cause_id = $trouve_id[$index];}
-                if ($trouve[$index] === 'risque') {$suivic->risque_id = $trouve_id[$index];}
                 $suivic->commentaire_am = $commentaire[$index];
                 $suivic->save();
 
@@ -369,7 +366,6 @@ class AmeliorationController extends Controller
                 $suivic = new Suivi_amelioration();
                 $suivic->type = 'action_am';
                 $suivic->nature = $nature[$index];
-                $suivic->trouve = 'new_risque';
                 $suivic->statut = 'non-realiser';
                 $suivic->amelioration_id = $am->id;
                 $suivic->action_id = $actionn->id;
