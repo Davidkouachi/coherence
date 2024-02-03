@@ -40,7 +40,8 @@ class ProcessusController extends Controller
     public function index_add_processus()
     {
         $pdfFiles = Pdf_file_processus::all();
-        return view('add.processus',['pdfFiles' => $pdfFiles]);
+        $pdfFiles2 = Pdf_file::all();
+        return view('add.processus',['pdfFiles' => $pdfFiles,'pdfFiles2' => $pdfFiles2]);
     }
 
     public function add_processus(Request $request)

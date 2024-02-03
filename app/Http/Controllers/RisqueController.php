@@ -51,6 +51,7 @@ class RisqueController extends Controller
         $color_interval_nbre = count($color_intervals);
 
         $pdfFiles = Pdf_file::all();
+        $pdfFiles2 = Pdf_file_processus::all();
 
         return view('add.processuseva', [
             'processuses' => $processuses,
@@ -59,6 +60,7 @@ class RisqueController extends Controller
             'color_intervals' => $color_intervals,
             'color_interval_nbre' => $color_interval_nbre,
             'pdfFiles' => $pdfFiles,
+            'pdfFiles2' => $pdfFiles2,
         ]);
     }
 

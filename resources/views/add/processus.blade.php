@@ -123,28 +123,6 @@
             </div>
 
     <script>
-        var pdfFiles = @json($pdfFiles);
-
-        document.addEventListener("DOMContentLoaded", function() {
-            var fileInput = document.getElementById("fileInput");
-
-            fileInput.addEventListener("change", function() {
-                var selectedFileName = this.value.split('\\').pop(); // Récupérer le nom du fichier sélectionné
-
-                // Parcourir la liste des fichiers
-                pdfFiles.forEach(function(pdfFile) {
-                    if (selectedFileName === pdfFile.pdf_nom) {
-                        toastr.error("Ce fichier PDF existe déjà.");
-                        fileInput.value = ''; // Vider l'input
-                    }
-                });
-            });
-        });
-    </script>
-
-
-
-    <script>
         document.getElementById('ajouter-objectif').addEventListener('click', function(event) {
             event.preventDefault();
             const container = document.getElementById('objectifs-container');
@@ -186,37 +164,61 @@
 
     <script>
         const fileInput = document.getElementById('fileInput');
-
-        const pdfPreviewmodal = document.getElementById('pdfPreviewmodal');
-        const fileSizeElementmodal = document.getElementById('fileSizemodal');
-
+        const pdfPreview = document.getElementById('pdfPreview');
+        const fileSizeElement = document.getElementById('fileSize');
+        var pdfFiles = @json($pdfFiles);
+        var pdfFiles2 = @json($pdfFiles2);
         fileInput.addEventListener('change', function() {
-            // Obtenez le fichier PDF sélectionné
-            const fichier = fileInput.files[0];
-
-            // Vérifiez si un fichier a été sélectionné
-            if (fichier) {
-                // Créez un élément d'incorporation pour le fichier PDF
-                const embedElementmodal = document.createElement('embed');
-                embedElementmodal.src = URL.createObjectURL(fichier);
-                embedElementmodal.type = 'application/pdf';
-                embedElementmodal.style.width = '100%';
-                embedElementmodal.style.height = '100%';
-                // Affichez l'élément d'incorporation dans la div de prévisualisation
-                pdfPreviewmodal.innerHTML = '';
-                pdfPreviewmodal.appendChild(embedElementmodal);
-                pdfPreviewmodal.style.height = '1000px';
-                // Affichez la taille du fichier
-                const fileSizemodal = fichier.size; // Taille du fichier en octets
-                const fileSizemodalInKB = fileSizemodal / 1024; // Taille du fichier en kilo-octets
-                fileSizeElementmodal.textContent = `Taille du fichier : ${fileSizemodalInKB.toFixed(2)} Ko`;
-            } else {
-                // Si aucun fichier n'est sélectionné, videz la div de prévisualisation et l'élément de la taille du fichier
-                pdfPreviewmodal.innerHTML = '';
-                fileSizeElementmodal.textContent = '';
+            // Initialiser la variable trouver
+            let trouver = 0;
+            var selectedFileName = this.value.split('\\').pop(); // Récupérer le nom du fichier sélectionné
+            // Parcourir la liste des fichiers
+            pdfFiles.forEach(function(pdfFile) {
+                if (selectedFileName === pdfFile.pdf_nom) {
+                    toastr.error("Ce fichier PDF existe déjà.");
+                    fileInput.value = ''; // Vider l'input
+                    trouver = 1;
+                    
+                    pdfPreview.innerHTML = '';
+                    fileSizeElement.textContent = '';
+                }
+            });
+            pdfFiles2.forEach(function(pdfFile2) {
+                if (selectedFileName === pdfFile2.pdf_nom) {
+                    toastr.error("Ce fichier PDF existe déjà.");
+                    fileInput.value = ''; // Vider l'input
+                    trouver = 1;
+                    
+                    pdfPreview.innerHTML = '';
+                    fileSizeElement.textContent = '';
+                }
+            });
+            // Vérifier la valeur de trouver avant de procéder
+            if (trouver === 0) {
+                // Obtenez le fichier PDF sélectionné
+                const fichier = fileInput.files[0];
+                // Vérifiez si un fichier a été sélectionné
+                if (fichier) {
+                    // Créez un élément d'incorporation pour le fichier PDF
+                    const embedElement = document.createElement('embed');
+                    embedElement.src = URL.createObjectURL(fichier);
+                    embedElement.type = 'application/pdf';
+                    embedElement.style.width = '100%';
+                    embedElement.style.height = '100%';
+                    // Affichez l'élément d'incorporation dans la div de prévisualisation
+                    pdfPreview.innerHTML = '';
+                    pdfPreview.appendChild(embedElement);
+                    // Affichez la taille du fichier
+                    const fileSize = fichier.size; // Taille du fichier en octets
+                    const fileSizeInKB = fileSize / 1024; // Taille du fichier en kilo-octets
+                    fileSizeElement.textContent = `Taille du fichier : ${fileSizeInKB.toFixed(2)} Ko`;
+                } else {
+                    // Si aucun fichier n'est sélectionné, videz la div de prévisualisation et l'élément de la taille du fichier
+                    pdfPreview.innerHTML = '';
+                    fileSizeElement.textContent = '';
+                }
             }
         });
-
     </script>
 
 

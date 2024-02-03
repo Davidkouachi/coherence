@@ -892,6 +892,7 @@
     const pdfPreview = document.getElementById('pdfPreview');
     const fileSizeElement = document.getElementById('fileSize');
     var pdfFiles = @json($pdfFiles);
+    var pdfFiles2 = @json($pdfFiles2);
 
     fileInput.addEventListener('change', function() {
         // Initialiser la variable trouver
@@ -908,6 +909,16 @@
 
                 trouver = 1;
                 
+                pdfPreview.innerHTML = '';
+                fileSizeElement.textContent = '';
+            }
+        });
+        pdfFiles2.forEach(function(pdfFile2) {
+            if (selectedFileName === pdfFile2.pdf_nom) {
+                toastr.error("Ce fichier PDF existe déjà.");
+                fileInput.value = ''; // Vider l'input
+                trouver = 1;
+                    
                 pdfPreview.innerHTML = '';
                 fileSizeElement.textContent = '';
             }
