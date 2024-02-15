@@ -55,7 +55,6 @@ class ListeactionController extends Controller
         return view('liste.actionpreventive', ['actions' => $actions ]); // Utilisez $action->id au lieu de $request->id
     }
 
-
     public function index_ac_eff()
     {
         $actions = Suivi_amelioration::join('ameliorations', 'suivi_ameliorations.amelioration_id', 'ameliorations.id')

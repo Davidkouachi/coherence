@@ -41,10 +41,6 @@ use PHPMailer\PHPMailer\Exception;
 
 class Updateamcontroller extends Controller
 {
-    public function amup_traitement(Request $request)
-    {
-        
-    }
 
     public function amup2_traitement(Request $request)
     {
@@ -252,4 +248,5 @@ class Updateamcontroller extends Controller
             ->back()
             ->with('error', 'Validation de la mise à jour a échoué.');
     }
+    
 }

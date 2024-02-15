@@ -95,41 +95,15 @@
                                 @csrf
                                 <div class="row g-gs">
 
-                                    <div class="col-lg-12 col-xxl-12">
-                                        <div class="card card-bordered card-preview">
+                                    <div class="col-lg-6 col-xxl-6">
+                                        <div class="card card-bordered">
                                             <div class="card-inner">
                                                 <div class="card-head">
                                                     <h5 class="card-title">
-                                                        Notification
+                                                        Type 
+                                                        <em class="ni ni-block-over" ></em>
                                                     </h5>
                                                 </div>
-                                                <div class="row g-gs">
-                                                    <div class="col-lg-4 text-left">
-                                                        <div class="custom-control custom-checkbox">
-                                                            <input name="choix_alert_alert" value="alert" required type="checkbox" checked class="custom-control-input" id="customCheck1">
-                                                            <label class="custom-control-label" for="customCheck1">Alert à l'écran</label>
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-lg-4 text-left">
-                                                        <div class="custom-control custom-checkbox">
-                                                            <input name="choix_alert_email" value="email" type="checkbox" class="custom-control-input" id="customCheck2">
-                                                            <label class="custom-control-label" for="customCheck2">Par Email</label>
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-lg-4 text-left">
-                                                        <div class="custom-control custom-checkbox">
-                                                            <input name="choix_alert_sms" value="sms" disabled type="checkbox" class="custom-control-input" id="customCheck3">
-                                                            <label class="custom-control-label" for="customCheck3">Par Sms</label>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <div class="col-md-12 col-xxl-12" id="groupesContainer">
-                                        <div class="card card-bordered">
-                                            <div class="card-inner">
                                                 <div class="row g-4 ">
                                                     <div class="col-lg-4">
                                                         <div class="form-group text-center">
@@ -166,7 +140,7 @@
                                         </div>
                                     </div>
 
-                                    <div class="col-md-12 col-xxl-12" id="groupesContainer">
+                                    <div class="col-lg-6 col-xxl-6">
                                         <div class="card card-bordered">
                                             <div class="card-inner">
                                                 <div class="row g-4">
@@ -327,21 +301,53 @@
 
                                     </div>
 
-                                    <div class="col-md-12 col-xxl-12" id="btn_enrg" style="display: none;">
-                                        <div class="card card-bordered card-preview">
-                                            <div class="card-inner row g-gs">
-                                                <div class="col-12">
-                                                    <div class="form-group text-center">
-                                                        <button type="submit" class="btn btn-lg btn-success btn-dim ">
-                                                            <em class="ni ni-check me-2"></em>
-                                                            <em>Soumettre</em>
-                                                        </button>
+                                    <div class="row g-gs" id="btn_enrg" style="display: none;">
+                                        <div class="col-lg-12 col-xxl-12">
+                                            <div class="card card-bordered card-preview">
+                                                <div class="card-inner">
+                                                    <div class="card-head">
+                                                        <h5 class="card-title">
+                                                            Notification
+                                                        </h5>
+                                                    </div>
+                                                    <div class="row g-gs">
+                                                        <div class="col-lg-4 text-left">
+                                                            <div class="custom-control custom-checkbox">
+                                                                <input name="choix_alert_alert" value="alert" required type="checkbox" checked class="custom-control-input" id="customCheck1">
+                                                                <label class="custom-control-label" for="customCheck1">Alert à l'écran</label>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-lg-4 text-left">
+                                                            <div class="custom-control custom-checkbox">
+                                                                <input name="choix_alert_email" value="email" type="checkbox" class="custom-control-input" id="customCheck2">
+                                                                <label class="custom-control-label" for="customCheck2">Par Email</label>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-lg-4 text-left">
+                                                            <div class="custom-control custom-checkbox">
+                                                                <input name="choix_alert_sms" value="sms" disabled type="checkbox" class="custom-control-input" id="customCheck3">
+                                                                <label class="custom-control-label" for="customCheck3">Par Sms</label>
+                                                            </div>
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
-                                    </div>
-
+                                        <div class="col-lg-12 col-xxl-12">
+                                            <div class="card card-bordered card-preview">
+                                                <div class="card-inner row g-gs">
+                                                    <div class="col-lg-12 col-xxl-12">
+                                                        <div class="form-group text-center">
+                                                            <button type="submit" class="btn btn-lg btn-success btn-dim ">
+                                                                <em class="ni ni-check me-2"></em>
+                                                                <em>Soumettre</em>
+                                                            </button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div> 
                                 </div>
                             </form>
                         @endif

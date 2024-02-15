@@ -36,7 +36,7 @@ use PHPMailer\PHPMailer\Exception;
 
 class ListeuserController extends Controller
 {
-    public function index ()
+    public function index()
     {
 
         $users = User::join('postes', 'users.poste_id', 'postes.id')

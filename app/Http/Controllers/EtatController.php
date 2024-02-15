@@ -84,8 +84,7 @@ class EtatController extends Controller
             }
         }
 
-        return view('etat.amelioration', ['am' => $am, 'actionsData' => $actionsData ]);
-        
+        return view('etat.amelioration', ['am' => $am, 'actionsData' => $actionsData ]);   
     }
 
     public function index_etat_risque(Request $request)
@@ -246,14 +245,5 @@ class EtatController extends Controller
 
         return view('etat.actionc', ['action' => $action]);
     }
-
-    /*public function generatePDF()
-    {
-        $pdf = Pdf::loadView('pdf');
-
-        return $pdf->download('mon_pdf.pdf');
-    }*/
-
-
 
 }

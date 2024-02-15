@@ -75,7 +75,7 @@
                                             <a class="nk-menu-link" href="{{ route('index_user') }}">
                                                 <em class="icon ni ni-user-add me-1"></em>
                                                 <span class="nk-menu-text ">
-                                                    Nouveau utilisateur
+                                                    Nouvel utilisateur
                                                 </span>
                                             </a>
                                         </li>

@@ -48,10 +48,7 @@ class AuthController extends Controller
         $request->session()->regenerateToken();
 
         return redirect()->route('login')->with('info', 'Vous avez été déconnecté avec succès.');
-
     }
-
-
 
     public function auth_user(Request $request)
     {

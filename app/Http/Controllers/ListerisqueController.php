@@ -207,7 +207,6 @@ class ListerisqueController extends Controller
             ]);
             
         }
-
     }
 
     public function index_risque_actionup2_traitement(Request $request)
@@ -455,6 +454,5 @@ class ListerisqueController extends Controller
             return redirect()->route('index_risque_actionup')->with('success', 'Modification éffectuée.');
 
         }
-
     }
 }

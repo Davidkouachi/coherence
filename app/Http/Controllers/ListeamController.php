@@ -394,7 +394,7 @@ class ListeamController extends Controller
         return view('traitement.amup_add', 
             ['risques' => $risques, 'causesData' => $causesData, 'actionsData' => $actionsData, 
             'causes_selects' => $causes_selects, 'causesData2' => $causesData2, 'actionsData2' => $actionsData2, 'postes' => $postes, 'processuss' => $processuss, 'am_id' => $am_id,'color_para' => $color_para,'color_intervals' => $color_intervals,'color_interval_nbre' => $color_interval_nbre,'am' => $am,]);
-   }
+    }
 
     public function am_valider($id)
     {

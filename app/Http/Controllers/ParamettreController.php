@@ -73,7 +73,6 @@ class ParamettreController extends Controller
         return redirect()->back()->with(['error' => 'Échec de la mise à jour.']);
     }
 
-
     public function color_interval_add_traitement(Request $request)
     {
 
@@ -148,4 +147,5 @@ class ParamettreController extends Controller
 
         return redirect()->back()->with(['error' => 'Echec de la suppression.']);
     }
+    
 }

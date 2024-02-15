@@ -122,5 +122,4 @@ class ProfilController extends Controller
        return view('historique.historique_profil', ['historiques' => $historiques]);
     }
 
-
 }

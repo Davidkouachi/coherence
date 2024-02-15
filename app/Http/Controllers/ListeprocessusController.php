@@ -144,13 +144,5 @@ class ListeprocessusController extends Controller
 
         return redirect()->back()->with('error', 'Echec de la mise à jour.');
     }
-
-    public function suppr_processus($id)
-    {
-        return redirect()
-            ->back()
-            ->with('info', 'Aucun code.');
-
-        
-    }
+    
 }
