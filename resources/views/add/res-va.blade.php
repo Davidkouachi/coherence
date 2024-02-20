@@ -49,7 +49,7 @@
                                                                 </div>
                                                             </div>
                                                         </div>
-                                                        <div class="col-lg-12">
+                                                        <div class="col-lg-6">
                                                             <div class="form-group">
                                                                 <label class="form-label" for="Cause">
                                                                     Nom et Prénoms
@@ -59,7 +59,7 @@
                                                                 </div>
                                                             </div>
                                                         </div>
-                                                        <div class="col-lg-12">
+                                                        <div class="col-lg-6">
                                                             <div class="form-group">
                                                                 <label class="form-label" for="corectif">
                                                                     Email
@@ -69,7 +69,7 @@
                                                                 </div>
                                                             </div>
                                                         </div>
-                                                        <div class="col-lg-12">
+                                                        <div class="col-lg-4">
                                                             <div class="form-group">
                                                                 <div class="form-label-group">
                                                                     <label class="form-label" for="password">
@@ -77,16 +77,16 @@
                                                                     </label>
                                                                 </div>
                                                                 <div class="form-control-wrap">
-                                                                    <a tabindex="-1" href="#" class="form-icon form-icon-right passcode-switch lg" data-target="password">
+                                                                    <a tabindex="-1" href="#" class="form-icon form-icon-right passcode-switch " data-target="password">
                                                                         <em class="passcode-icon icon-show icon ni ni-eye"></em>
                                                                         <em class="passcode-icon icon-hide icon ni ni-eye-off">
                                                                         </em>
                                                                     </a>
-                                                                    <input name="mdp" autocomplete="new-password" type="password" class="form-control form-control-lg" required="" id="password" value="12345">
+                                                                    <input name="mdp" autocomplete="new-password" type="password" class="form-control " required="" id="password" value="12345">
                                                                 </div>
                                                             </div>
                                                         </div>
-                                                        <div class="col-lg-6">
+                                                        <div class="col-lg-4">
                                                             <div class="form-group">
                                                                 <label class="form-label" for="preventif">
                                                                     Contact
@@ -108,15 +108,13 @@
                                                                 </script>
                                                             </div>
                                                         </div>
-                                                        <div class="col-lg-6">
+                                                        <div class="col-lg-4">
                                                             <div class="form-group">
                                                                 <label class="form-label" for="email-address-1">
                                                                     Poste
                                                                 </label>
-                                                                <select required name="poste_id" class="form-select ">
-                                                                    <option value="">
-                                                                        Choisir
-                                                                    </option>
+                                                                <select required name="poste_id" class="form-select js-select2">
+                                                                    <option value="" > Choisir </option>
                                                                     @foreach ($postes as $poste)
                                                                     <option value="{{ $poste->id }}">
                                                                        {{ $poste->nom }}

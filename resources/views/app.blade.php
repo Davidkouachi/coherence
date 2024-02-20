@@ -237,6 +237,24 @@
                                     </ul>
                                 </li>
                                 @endif
+                                <li class="nk-menu-item has-sub">
+                                    <a class="nk-menu-toggle btn " >
+                                        <em class="ni ni-alert me-2"></em>
+                                        <span class="nk-menu-text text-dark">
+                                            Causes
+                                        </span>
+                                    </a>
+                                    <ul class="nk-menu-sub">
+                                        <li >
+                                            <a class="nk-menu-link" href="{{ route("liste_cause") }}">
+                                                <em class="icon ni ni-property-add me-1"></em>
+                                                <span class="nk-menu-text ">
+                                                    Liste des causes
+                                                </span>
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </li>
                                 @if (session('user_auto')->suivi_actp === 'oui' || session('user_auto')->list_actp === 'oui' || session('user_auto')->suivi_actc === 'oui' || session('user_auto')->list_actc_eff === 'oui' || session('user_auto')->list_actc === 'oui')
                                 <li class="nk-menu-item has-sub">
                                     <a class="nk-menu-toggle btn " >
@@ -439,14 +457,14 @@
                                                         </span>
                                                     </a>
                                                 </li>
-                                                <li>
-                                                    <a href="{{ route('index_historique_profil')}}">
+                                                <!--<li>
+                                                    <a>
                                                         <em class="icon ni ni-activity-alt"></em>
                                                         <span>
                                                             Activité
                                                         </span>
                                                     </a>
-                                                </li>
+                                                </li>-->
                                             </ul>
                                         </div>
                                         <div class="dropdown-inner">

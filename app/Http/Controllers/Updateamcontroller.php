@@ -76,13 +76,16 @@ class Updateamcontroller extends Controller
 
             foreach ($suivi_id as $index => $value) {
 
-                $rech = action::join('suivi_ameliorations', 'actions.id', 'suivi_ameliorations.action_id')
-                                ->where('suivi_ameliorations.id', $suivi_id[$index])
-                                ->first();
+                $rech = suivi_amelioration::find($suivi_id[$index]);
                 if ($rech) {
-                    $rech->date = $delai[$index];
                     $rech->commentaire_am = $commentaire_am[$index];
                     $rech->update();
+
+                    $rech2 = action::find($rech->action_id);
+                    if ($rech2) {
+                        $rech2->date = $delai[$index];
+                        $rech2->update();
+                    }
                 }                           
             }
 

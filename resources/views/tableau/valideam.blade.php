@@ -298,8 +298,10 @@
     @foreach ($ams as $am)
         <div class="modal fade" tabindex="-1" id="modalConfirme{{ $am->id }}" aria-modal="true" role="dialog">
             <div class="modal-dialog" role="document">
-                <div class="modal-content"><a href="#" class="close" data-bs-dismiss="modal"><em
-                            class="icon ni ni-cross"></em></a>
+                <div class="modal-content">
+                    <a href="#" class="close" data-bs-dismiss="modal">
+                        <em class="icon ni ni-cross"></em>
+                    </a>
                     <div class="modal-body modal-body-lg text-center">
                         <div class="nk-modal"><em
                                 class="nk-modal-icon icon icon-circle icon-circle-xxl ni ni-check bg-success"></em>

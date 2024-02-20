@@ -12,6 +12,7 @@ use App\Http\Controllers\ProfilController;
 use App\Http\Controllers\StatistiqueController;
 use App\Http\Controllers\ListeprocessusController;
 use App\Http\Controllers\ListerisqueController;
+use App\Http\Controllers\ListecauseController;
 use App\Http\Controllers\ListeactionController;
 use App\Http\Controllers\EtatController;
 use App\Http\Controllers\ListeamController;
@@ -51,7 +52,6 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/suiviactivenon', [ProfilController::class, 'suivi_non']);
         Route::get('/mdp_update', [ProfilController::class, 'mdp_update']);
         Route::get('/info_update', [ProfilController::class, 'info_update']);
-        Route::get('/Historique Profil', [ProfilController::class, 'index_historique_profil'])->name('index_historique_profil');
     /*----------------------------------------------------------------------------------------------------------------------------*/
 
     /*--Utilisateur-------------------------------------------------------------------------------------------------------------------*/
@@ -93,10 +93,16 @@ Route::middleware(['auth'])->group(function () {
         Route::post('/Mise a jour risque traitement', [ListerisqueController::class, 'index_risque_actionup2_traitement'])->name('index_risque_actionup2_traitement');
     /*----------------------------------------------------------------------------------------------------------------------------*/
 
+    /*--Cause---------------------------------------------------------------------------------------------------------------------*/
+        Route::get('/Liste des causes', [ListecauseController::class, 'index'])->name('liste_cause');
+        Route::post('/cause_modif', [ListecauseController::class, 'cause_modif'])->name('cause_modif');
+    /*----------------------------------------------------------------------------------------------------------------------------*/
+
     /*--Acton preventive---------------------------------------------------------------------------------------------------------*/
         Route::get('/Liste Action Preventive', [ListeactionController::class, 'index_ap'])->name('index_ap');
         Route::get('/Suivi des actions preventives', [SuiviactionController::class, 'index_suiviaction'])->name('index_suiviaction');
         Route::post('/Suivi_action/{id}', [SuiviactionController::class, 'add_suivi_action'])->name('add_suivi_action');
+        Route::post('/actionp_modif', [ListeactionController::class, 'actionp_modif'])->name('actionp_modif');
     /*---------------------------------------------------------------------------------------------------------------------------*/
 
     /*--Acton corrective-------------------------------------------------------------------------------------------------------------*/
@@ -104,6 +110,7 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/Liste Action Corrective effectuée', [ListeactionController::class, 'index_ac_eff'])->name('index_ac_eff');
         Route::get('/Suivi des actions correctives', [SuiviactionController::class, 'index_suiviactionc'])->name('index_suiviactionc');
         Route::post('/Suivi_actionc/{id}', [SuiviactionController::class, 'add_suivi_actionc'])->name('add_suivi_actionc');
+        Route::post('/actionc_modif', [ListeactionController::class, 'actionc_modif'])->name('actionc_modif');
     /*----------------------------------------------------------------------------------------------------------------------------*/
 
     /*--Incident-------------------------------------------------------------------------------------------------------------*/
@@ -139,6 +146,7 @@ Route::middleware(['auth'])->group(function () {
     /*--Etat---------------------------------------------------------------------------------------------------------------*/
         Route::post('/Etat am', [EtatController::class, 'index_etat_am'])->name('index_etat_am');
         Route::post('/Etat risque', [EtatController::class, 'index_etat_risque'])->name('index_etat_risque');
+        Route::post('/Etat cause', [EtatController::class, 'index_etat_cause'])->name('index_etat_cause');
         Route::post('/Etat processus', [EtatController::class, 'index_etat_processus'])->name('index_etat_processus');
         Route::post('/Etat actionp', [EtatController::class, 'index_etat_actionp'])->name('index_etat_actionp');
         Route::post('/Etat actionc', [EtatController::class, 'index_etat_actionc'])->name('index_etat_actionc');

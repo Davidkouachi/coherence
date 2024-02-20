@@ -156,18 +156,19 @@
 
     <div class="modal fade zoom" tabindex="-1" id="modalDetail">
         <div class="modal-dialog modal-lg" role="document">
-            <div class="modal-content text-center" id="pdfPreviewmodal" data-simplebar>
-                Acucun fichier sélectionner
+            <div class="modal-content" id="pdfPreviewmodal" style="height:700px;" data-simplebar>
+                <p class="text-center mt-2">Aucun fichier</p>
             </div>
         </div>
     </div>
 
     <script>
         const fileInput = document.getElementById('fileInput');
-        const pdfPreview = document.getElementById('pdfPreview');
-        const fileSizeElement = document.getElementById('fileSize');
+        const pdfPreview = document.getElementById('pdfPreviewmodal');
+
         var pdfFiles = @json($pdfFiles);
         var pdfFiles2 = @json($pdfFiles2);
+
         fileInput.addEventListener('change', function() {
             // Initialiser la variable trouver
             let trouver = 0;
@@ -208,14 +209,6 @@
                     // Affichez l'élément d'incorporation dans la div de prévisualisation
                     pdfPreview.innerHTML = '';
                     pdfPreview.appendChild(embedElement);
-                    // Affichez la taille du fichier
-                    const fileSize = fichier.size; // Taille du fichier en octets
-                    const fileSizeInKB = fileSize / 1024; // Taille du fichier en kilo-octets
-                    fileSizeElement.textContent = `Taille du fichier : ${fileSizeInKB.toFixed(2)} Ko`;
-                } else {
-                    // Si aucun fichier n'est sélectionné, videz la div de prévisualisation et l'élément de la taille du fichier
-                    pdfPreview.innerHTML = '';
-                    fileSizeElement.textContent = '';
                 }
             }
         });

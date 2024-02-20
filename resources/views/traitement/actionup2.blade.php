@@ -46,14 +46,6 @@
                         </span>
                     </a>
                 </li>
-                <li class="mt-2">
-                    <a href="{{ asset('storage/pdf/' . $risque->pdf_nom) }}" class="btn btn-md btn-primary text-white">
-                        <em class="icon ni ni-file"></em>
-                        <span>
-                            Voir le Ficher PDF
-                        </span>
-                    </a>
-                </li>
             </ul>
         </div>
     </div>
@@ -156,24 +148,23 @@
                                 <div class="row g-gs">
 
                                     <div class="col-lg-4 col-xxl-4 row g-2" style="margin-left:1px;">
-                                        <div class="form-group col-lg-12">
+                                        <div class="form-group col-md-12">
                                             <div class="card card-bordered h-100">
                                                 <div class="card-inner">
                                                     <span id="fileSize"> </span>
                                                     <div class="card " id="pdfPreview" style="height: 500px; " data-simplebar>
-                                                        
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="form-group col-lg-12" style="margin-top: -10px">
+                                        <div class="form-group col-md-12" style="margin-top: -10px">
                                             <div class="card card-bordered h-100">
                                                 <div class="card-inner">
                                                     <div class="form-group">
                                                         <label class="form-label" for="cf-full-name">
                                                             Fichier ( .pdf )
                                                         </label>
-                                                        <input autocomplete="off" id="fileInput" name="pdfFile" accept=".pdf" type="file" class="form-control">
+                                                        <input autocomplete="off" id="fileInput" name="pdfFile" accept=".pdf" type="file" class="form-control" id="">
                                                     </div>
                                                 </div>
                                             </div>
@@ -959,40 +950,6 @@
 </script>
 
 <script>
-    const fileInput = document.getElementById('fileInput');
-
-    const pdfPreview = document.getElementById('pdfPreview');
-    const fileSizeElement = document.getElementById('fileSize');
-
-    fileInput.addEventListener('change', function() {
-        // Obtenez le fichier PDF sélectionné
-        const fichier = fileInput.files[0];
-
-        // Vérifiez si un fichier a été sélectionné
-        if (fichier) {
-            // Créez un élément d'incorporation pour le fichier PDF
-            const embedElement = document.createElement('embed');
-            embedElement.src = URL.createObjectURL(fichier);
-            embedElement.type = 'application/pdf';
-            embedElement.style.width = '100%';
-            embedElement.style.height = '100%';
-            // Affichez l'élément d'incorporation dans la div de prévisualisation
-            pdfPreview.innerHTML = '';
-            pdfPreview.appendChild(embedElement);
-            // Affichez la taille du fichier
-            const fileSize = fichier.size; // Taille du fichier en octets
-            const fileSizeInKB = fileSize / 1024; // Taille du fichier en kilo-octets
-            fileSizeElement.textContent = `Taille du fichier : ${fileSizeInKB.toFixed(2)} Ko`;
-
-        } else {
-            // Si aucun fichier n'est sélectionné, videz la div de prévisualisation et l'élément de la taille du fichier
-            pdfPreview.innerHTML = '';
-            fileSizeElement.textContent = '';
-        }
-    });
-</script>
-
-<script>
     document.addEventListener("DOMContentLoaded", function() {
         const checkboxesCause = document.querySelectorAll('input[name^="suppr_c["]');
 
@@ -1049,12 +1006,68 @@
     });
 </script>
 
+<script>
+    const fileInput = document.getElementById('fileInput');
+    const pdfPreview = document.getElementById('pdfPreview');
+    const fileSizeElement = document.getElementById('fileSize');
 
+    var pdfFiles = @json($pdfFiles);
+    var pdfFiles2 = @json($pdfFiles2);
 
+    fileInput.addEventListener('change', function() {
+        // Initialiser la variable trouver
+        let trouver = 0;
 
+        var selectedFileName = this.value.split('\\').pop(); // Récupérer le nom du fichier sélectionné
 
+        // Parcourir la liste des fichiers
+        pdfFiles.forEach(function(pdfFile) {
+            if (selectedFileName === pdfFile.pdf_nom) {
+                toastr.error("Ce fichier PDF existe déjà.");
 
+                fileInput.value = ''; // Vider l'input
 
+                trouver = 1;
+                
+                pdfPreview.innerHTML = '';
+                fileSizeElement.textContent = '';
+            }
+        });
+        pdfFiles2.forEach(function(pdfFile2) {
+            if (selectedFileName === pdfFile2.pdf_nom) {
+                toastr.error("Ce fichier PDF existe déjà.");
+                fileInput.value = ''; // Vider l'input
+                trouver = 1;
+                    
+                pdfPreview.innerHTML = '';
+                fileSizeElement.textContent = '';
+            }
+        });
+
+        // Vérifier la valeur de trouver avant de procéder
+        if (trouver === 0) {
+            // Obtenez le fichier PDF sélectionné
+            const fichier = fileInput.files[0];
+
+            // Vérifiez si un fichier a été sélectionné
+            if (fichier) {
+                // Créez un élément d'incorporation pour le fichier PDF
+                const embedElement = document.createElement('embed');
+                embedElement.src = URL.createObjectURL(fichier);
+                embedElement.type = 'application/pdf';
+                embedElement.style.width = '100%';
+                embedElement.style.height = '100%';
+                // Affichez l'élément d'incorporation dans la div de prévisualisation
+                pdfPreview.innerHTML = '';
+                pdfPreview.appendChild(embedElement);
+                // Affichez la taille du fichier
+                const fileSize = fichier.size; // Taille du fichier en octets
+                const fileSizeInKB = fileSize / 1024; // Taille du fichier en kilo-octets
+                fileSizeElement.textContent = `Taille du fichier : ${fileSizeInKB.toFixed(2)} Ko`;
+            }
+        }
+    });
+</script>
 
 @endsection
 

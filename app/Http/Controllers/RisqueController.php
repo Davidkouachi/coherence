@@ -41,10 +41,7 @@ class RisqueController extends Controller
     {
 
         $processuses = Processuse::all();
-        $postes = Poste::join('users', 'users.poste_id', 'postes.id')
-                        ->select('postes.*') // Sélectionne les colonnes de la table 'postes'
-                        ->distinct() // Rend les résultats uniques
-                        ->get();
+        $postes = Poste::where('occupe', 'oui')->get();
                         
         $color_para = Color_para::where('nbre0', '=', '0')->first();
         $color_intervals = Color_interval::orderBy('nbre1', 'asc')->get();

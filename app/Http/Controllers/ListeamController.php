@@ -156,7 +156,7 @@ class ListeamController extends Controller
 
                     $action= null;
 
-                    if ($suivis->choix_select === 'cause') {
+                    if ($am->choix_select === 'cause') {
 
                         $action = Action::join('postes', 'actions.poste_id', 'postes.id')
                                     ->join('risques', 'actions.risque_id', 'risques.id')
@@ -202,7 +202,7 @@ class ListeamController extends Controller
                             ];
                         }
 
-                    } else if ($suivis->choix_select === 'new_risque') {
+                    } else if ($suivis->choix_select === 'cause_risque_nt') {
 
                         $action = Action::join('postes', 'actions.poste_id', 'postes.id')
                                     ->join('risques', 'actions.risque_id', 'risques.id')

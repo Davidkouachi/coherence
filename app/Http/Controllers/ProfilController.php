@@ -110,16 +110,4 @@ class ProfilController extends Controller
         return response()->json(['error' => true]);
     }
 
-    public function index_historique_profil()
-    {
-        $historiques = Historique_action::join('users', 'historique_actions.user_id', '=', 'users.id')
-                ->join('poste', 'users.poste_id', '=', 'postes.id')
-                ->orderBy('historique_actions.created_at', 'desc')
-                ->where('historique_actions.user_id', Auth::user()->id)
-                ->select('historique_actions.*', 'postes.nom as poste', 'users.name as nom', 'users.matricule as matricule')
-                ->get();
-
-       return view('historique.historique_profil', ['historiques' => $historiques]);
-    }
-
 }

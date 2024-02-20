@@ -70,7 +70,7 @@ class EtatController extends Controller
                     $actionsData[$am->id][] = [
                         'action' => $action->action,
                         'responsable' => $action->poste,
-                        'delai' => $suivis->delai,
+                        'delai' => $action->date,
                         'date_action' => $suivis->date_action,
                         'date_suivi' => $suivis->date_suivi,
                         'statut' => $suivis->statut,
@@ -214,6 +214,17 @@ class EtatController extends Controller
         }
 
         return view('etat.processus', ['processu' => $processu, 'objectifData' => $objectifData]);
+    }
+
+    public function index_etat_cause(Request $request)
+    {
+        $cause = cause::join('risques', 'causes.risque_id', 'risques.id')
+                        ->join('processuses', 'risques.processus_id', 'processuses.id')
+                        ->where('causes.id', $request->id)
+                        ->select('causes.*','risques.nom as risque', 'processuses.nom as processus')
+                        ->first();
+
+        return view('etat.cause', ['cause' => $cause]);
     }
 
     public function index_etat_actionp(Request $request)

@@ -52,7 +52,9 @@ class ListeactionController extends Controller
             }
         }
 
-        return view('liste.actionpreventive', ['actions' => $actions ]); // Utilisez $action->id au lieu de $request->id
+        $postes = Poste::where('occupe', 'oui')->get();
+
+        return view('liste.actionpreventive', ['actions' => $actions,  'postes' => $postes ]); // Utilisez $action->id au lieu de $request->id
     }
 
     public function index_ac_eff()
@@ -73,10 +75,65 @@ class ListeactionController extends Controller
     {
         $actions = Action::join('risques', 'actions.risque_id', 'risques.id')
                         ->join('processuses', 'risques.processus_id', 'processuses.id')
+                        ->join('postes', 'postes.id', 'actions.poste_id')
                         ->where('actions.type', 'corrective')
-                        ->select('actions.*', 'processuses.nom as processus', 'risques.nom as risque')
+                        ->select('actions.*', 'processuses.nom as processus', 'risques.nom as risque', 'postes.nom as poste')
                         ->get();
+        $postes = Poste::where('occupe', 'oui')->get();
 
-        return view('liste.actioncorrective', ['actions' => $actions]);
+        return view('liste.actioncorrective', ['actions' => $actions, 'postes' => $postes]);
     }
+
+    public function actionc_modif(Request $request)
+    {
+
+        $action = $request->input('action');
+        $poste_id = $request->input('poste_id');
+
+        $rech = Action::find($request->id);
+
+        if ($rech)
+        {
+            $rech->action = $action;
+            $rech->poste_id = $poste_id;
+            $rech->update();
+
+            $his = new Historique_action();
+            $his->nom_formulaire = 'Liste des Actions correctives';
+            $his->nom_action = 'Mise à jour';
+            $his->user_id = Auth::user()->id;
+            $his->save();
+
+            return redirect()->back()->with('success', 'Mise à jour éffectuée.');
+        }
+
+        return redirect()->back()->with('error', 'Echec de la mise à jour.');
+    }
+
+    public function actionp_modif(Request $request)
+    {
+
+        $action = $request->input('action');
+        $poste_id = $request->input('poste_id');
+
+        $rech = Action::find($request->id);
+
+        if ($rech)
+        {
+            $rech->action = $action;
+            $rech->poste_id = $poste_id;
+            $rech->update();
+
+            $his = new Historique_action();
+            $his->nom_formulaire = 'Liste des Actions Preventives';
+            $his->nom_action = 'Mise à jour';
+            $his->user_id = Auth::user()->id;
+            $his->save();
+
+            return redirect()->back()->with('success', 'Mise à jour éffectuée.');
+        }
+
+        return redirect()->back()->with('error', 'Echec de la mise à jour.');
+    }
+
 }

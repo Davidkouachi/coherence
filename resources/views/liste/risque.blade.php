@@ -134,7 +134,7 @@
                                                                 
                                                                     @if($color_interval->nbre1 <= $risque->evaluation_residuel && $color_interval->nbre2 >= $risque->evaluation_residuel)
                                                                         <td>
-                                                                            <div class="user-avatar" style="background-color:{{$color_interval->code_color}}" ></div>
+                                                                            <div class="user-avatar sm" style="background-color:{{$color_interval->code_color}}" ></div>
                                                                         </td>
                                                                         @php
                                                                             $colorMatchFound = true;
@@ -149,7 +149,7 @@
                                                                 @if(!$colorMatchFound)
                                                                     <!-- Afficher un message si aucune correspondance n'a été trouvée -->
                                                                     <td>
-                                                                        <div class="user-avatar" style="background-color:#8e8e8e;"></div>
+                                                                        <div class="user-avatar sm" style="background-color:#8e8e8e;"></div>
                                                                     </td>
                                                                 @endif
 

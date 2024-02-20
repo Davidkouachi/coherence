@@ -44,7 +44,6 @@ class StatistiqueController extends Controller
             $statistics[$type]['causes_risques_nt'] = Amelioration::where('ameliorations.type', $type)->where('choix_select', 'cause_risque_nt')->count();
         }
 
-
         $processus = Processuse::all();
         $nbre_processus = $processus->count();
         $nbre_risque = Risque::all()->count();

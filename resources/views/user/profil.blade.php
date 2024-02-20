@@ -183,30 +183,6 @@
                                                             <div class="card card-bordered">
                                                                 <div class="card-inner-group">
                                                                     <div class="card-inner">
-                                                                        <div class="between-center flex-wrap flex-md-nowrap g-3">
-                                                                            <div class="nk-block-text">
-                                                                                <h6>Enregistrer mes activitées</h6>
-                                                                                <p>Vous pouvez enregistrer toutes vos activitées, y compris les activités inhabituelles détectées.</p>
-                                                                            </div>
-                                                                            <div class="nk-block-actions">
-                                                                                <ul class="align-center gx-3">
-                                                                                    <li class="order-md-last">
-                                                                                        <div class="custom-control custom-switch me-n2">
-                                                                                            <input type="checkbox" class="custom-control-input"
-                                                                                            @php
-                                                                                                if (Auth::user()->suivi_active === 'oui') {
-                                                                                                    echo "checked";
-                                                                                                }
-                                                                                            @endphp
-                                                                                            id="activity-log">
-                                                                                            <label class="custom-control-label" for="activity-log"></label>
-                                                                                        </div>
-                                                                                    </li>
-                                                                                </ul>
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
-                                                                    <div class="card-inner">
                                                                         <div class="between-center flex-wrap g-3">
                                                                             <div class="nk-block-text">
                                                                                 <h6>Changer le mot de passe</h6>
@@ -232,6 +208,42 @@
                                                                         <div class="between-center flex-wrap flex-md-nowrap g-3">
                                                                             <div class="nk-block-text">
                                                                                 <h6>
+                                                                                    Suivis des activitées
+                                                                                    @if (Auth::user()->suivi_active === 'non' ) 
+                                                                                    <span class="text-soft">
+                                                                                        (Fonctionnalité indisponible)
+                                                                                    </span>
+                                                                                    @endif
+                                                                                    @if (Auth::user()->suivi_active === 'oui' )
+                                                                                    <span class="text-soft">
+                                                                                        (Fonctionnalité indisponible)
+                                                                                    </span>
+                                                                                    @endif
+                                                                                </h6>
+                                                                                <p>Vous pouvez enregistrer toutes vos activitées, y compris les activités inhabituelles détectées.</p>
+                                                                            </div>
+                                                                            <div class="nk-block-actions">
+                                                                                <ul class="align-center gx-3">
+                                                                                    <li class="order-md-last">
+                                                                                        <div class="custom-control custom-switch me-n2">
+                                                                                            <input disabled type="checkbox" class="custom-control-input"
+                                                                                            @php
+                                                                                                if (Auth::user()->suivi_active === 'oui') {
+                                                                                                    echo "checked";
+                                                                                                }
+                                                                                            @endphp
+                                                                                            id="activity-log">
+                                                                                            <label class="custom-control-label" for="activity-log"></label>
+                                                                                        </div>
+                                                                                    </li>
+                                                                                </ul>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="card-inner">
+                                                                        <div class="between-center flex-wrap flex-md-nowrap g-3">
+                                                                            <div class="nk-block-text">
+                                                                                <h6>
                                                                                     Authentification à 2 facteurs &nbsp;
                                                                                     @if (Auth::user()->fa === 'non' ) 
                                                                                     <span class="text-soft">
@@ -243,7 +255,8 @@
                                                                                         (Fonctionnalité indisponible)
                                                                                     </span>
                                                                                     @endif
-                                                                                    <span class="badge badge-success ms-0">Enabled</span></h6>
+                                                                                    <span class="badge badge-success ms-0">Enabled</span>
+                                                                                </h6>
                                                                                 <p>Sécurisez votre compte avec la sécurité 2FA. Lorsqu'il est activé, vous devrez saisir non seulement votre mot de passe, mais également saisir le code qui vous sera envoyé par email. </p>
                                                                             </div>
                                                                             <div class="nk-block-actions">

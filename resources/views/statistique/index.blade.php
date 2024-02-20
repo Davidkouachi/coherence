@@ -115,7 +115,7 @@
                                         <div class="card-amount">
                                             <span class="amount">
                                                 @if ($type === 'non_conformite_interne')
-                                                    Non Conformité Interne
+                                                    Non Conformité  
                                                 @endif
                                                 @if ($type === 'reclamation')
                                                     Réclamation
@@ -164,7 +164,7 @@
                                         <script>
                                             var ctx{{ $type }} = document.getElementById('myChart{{ $type }}').getContext('2d');
                                             var myChart{{ $type }} = new Chart(ctx{{ $type }}, {
-                                                type: 'bar', // Ou 'line', 'pie', etc., selon le type de diagramme que vous souhaitez
+                                                type: 'bar',
                                                 data: {
                                                     labels: ['Causes', 'Risques', 'Néant'],
                                                     datasets: [{
