@@ -111,6 +111,7 @@
                                                             <th>Evaluation</th>
                                                             <th>Coût</th>
                                                             <th>Statut</th>
+                                                            <th>Pourcentage</th>
                                                             <th>Date de crèation</th>
                                                             <th></th>
                                                         </tr>
@@ -189,6 +190,16 @@
                                                                         </span>
                                                                     </td>
                                                                 @endif
+                                                                <td>
+                                                                    <div class="project-list-progress">
+                                                                        <div class="progress progress-pill progress-md bg-light">
+                                                                            <div class="progress-bar" data-progress="{{$risque->progess}}" style="width: 100%;"></div>
+                                                                        </div>
+                                                                        <div class="project-progress-percent">
+                                                                            {{$risque->progess}}%
+                                                                        </div>
+                                                                    </div>
+                                                                </td>
                                                                 <td>{{ \Carbon\Carbon::parse($risque->created_at)->translatedFormat('j F Y'.' à '.'H:i:s') }}</td>
                                                                 <td>
                                                                     <div class="d-flex" >

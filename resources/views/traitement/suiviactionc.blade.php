@@ -42,6 +42,7 @@
                                                     <th>Responsable</th>
                                                     <th>Risque</th>
                                                     <th>Processus</th>
+                                                    <th>Fiche d'incident</th>
                                                     <th></th>
                                                 </tr>
                                             </thead>
@@ -53,6 +54,7 @@
                                                         <td>{{ $am->poste }}</td>
                                                         <td>{{ $am->risque }}</td>
                                                         <td>{{ $am->processus }}</td>
+                                                        <td>{{ $am->nbre_am }}</td>
                                                         <td>
                                                             <a data-bs-toggle="modal"
                                                                 data-bs-target="#modalAm{{ $am->id }}"

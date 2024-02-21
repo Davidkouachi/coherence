@@ -361,7 +361,6 @@
 </script>
 
 <script>
-
     document.addEventListener('DOMContentLoaded', function() {
         // Écouteur pour le changement de sélection
         document.getElementById('btn_rech').addEventListener('click', function() {

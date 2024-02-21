@@ -35,6 +35,8 @@ class ListeactionController extends Controller
                         ->join('risques', 'actions.risque_id', 'risques.id')
                         ->join('processuses', 'risques.processus_id', 'processuses.id')
                         ->where('actions.type', 'preventive')
+                        ->where('risques.statut', 'valider')
+                        ->where('risques.page', 'risk')
                         ->select('actions.*', 'processuses.nom as processus', 'risques.nom as risque','postes.nom as poste')
                         ->get();
 
@@ -77,6 +79,8 @@ class ListeactionController extends Controller
                         ->join('processuses', 'risques.processus_id', 'processuses.id')
                         ->join('postes', 'postes.id', 'actions.poste_id')
                         ->where('actions.type', 'corrective')
+                        ->where('risques.statut', 'valider')
+                        ->where('risques.page', 'risk')
                         ->select('actions.*', 'processuses.nom as processus', 'risques.nom as risque', 'postes.nom as poste')
                         ->get();
         $postes = Poste::where('occupe', 'oui')->get();

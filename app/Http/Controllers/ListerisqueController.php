@@ -23,6 +23,7 @@ use App\Models\Historique_action;
 use App\Models\Poste;
 use App\Models\Color_para;
 use App\Models\Color_interval;
+use App\Models\Amelioration;
 
 use Illuminate\Support\Facades\Validator;
 use Carbon\Carbon;
@@ -44,8 +45,15 @@ class ListerisqueController extends Controller
         $actionsDatap = [];
         $actionsDatac = [];
 
+        $nbre_total = Amelioration::all()->count();
+
         foreach($risques as $risque)
         {
+            $risque->nbre = Amelioration::where('risque_id', $risque->id)->where('choix_select', 'risque')->count();
+
+            $risque->progess = ($risque->nbre / $nbre_total) * 100;
+            $risque->progess = number_format($risque->progess, 2);
+
             $risque_pdf = Pdf_file::where('risque_id', $risque->id)->first();
             if ($risque_pdf) {
                 $risque->pdf_nom = $risque_pdf->pdf_nom;

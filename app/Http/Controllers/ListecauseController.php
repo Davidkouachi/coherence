@@ -38,8 +38,23 @@ class ListecauseController extends Controller
     {
         $causes = cause::join('risques', 'causes.risque_id', 'risques.id')
                         ->join('processuses', 'risques.processus_id', 'processuses.id')
+                        ->where('risques.statut', 'valider')
+                        ->where('causes.page', 'risk')
                         ->select('causes.*','risques.nom as risque', 'risques.statut as statut', 'processuses.nom as processus')
                         ->get();
+
+        $nbre_total = Amelioration::all()->count();
+
+        $nbreData = [];
+
+        foreach ($causes as $key => $cause) {
+
+            $cause->nbre = Amelioration::where('cause_id', $cause->id)->where('choix_select', 'cause')->count();;
+
+            $cause->progess = ($cause->nbre / $nbre_total) * 100;
+            $cause->progess = number_format($cause->progess, 2);
+
+        }
 
         return view('liste.cause', ['causes' => $causes]);
     }

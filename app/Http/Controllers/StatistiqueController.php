@@ -52,24 +52,28 @@ class StatistiqueController extends Controller
         
         $nbre_ap = Action::where('type', 'preventive')->count();
         $nbre_ed_ap = Suivi_action::join('actions', 'actions.id', '=', 'suivi_actions.action_id')
-                                    ->whereNotNull('suivi_actions.date_action')
-                                    ->whereColumn('actions.date', '>=', 'suivi_actions.date_action')
+                                    ->join('risques', 'risques.id', '=', 'actions.risque_id')
+                                    ->where('suivi_actions.statut', 'realiser')
+                                    ->where('actions.date', '>=', 'suivi_actions.date_action')
                                     ->count();
         $nbre_ehd_ap = Suivi_action::join('actions', 'actions.id', '=', 'suivi_actions.action_id')
-                                    ->whereNotNull('suivi_actions.date_action')
-                                    ->whereColumn('actions.date', '<', 'suivi_actions.date_action')
+                                    ->join('risques', 'risques.id', '=', 'actions.risque_id')
+                                    ->where('suivi_actions.statut', 'realiser')
+                                    ->where('actions.date', '>=', 'suivi_actions.date_action')
                                     ->count();
         $nbre_hd_ap = Suivi_action::where('statut', '=', 'non-realiser')->count();
 
 
         $nbre_ac = Action::where('type', 'corrective')->count();
         $nbre_ed_ac = Suivi_amelioration::join('actions', 'actions.id', '=', 'suivi_ameliorations.action_id')
-                                    ->whereNotNull('suivi_ameliorations.date_action')
-                                    ->whereColumn('actions.date', '>=', 'suivi_ameliorations.date_action')
+                                    ->join('ameliorations', 'ameliorations.id', '=', 'suivi_ameliorations.amelioration_id')
+                                    ->where('suivi_ameliorations.statut', 'realiser')
+                                    ->where('ameliorations.date_limite', '>=', 'suivi_ameliorations.date_action')
                                     ->count();
         $nbre_ehd_ac = Suivi_amelioration::join('actions', 'actions.id', '=', 'suivi_ameliorations.action_id')
-                                    ->whereNotNull('suivi_ameliorations.date_action')
-                                    ->whereColumn('actions.date', '<', 'suivi_ameliorations.date_action')
+                                    ->join('ameliorations', 'ameliorations.id', '=', 'suivi_ameliorations.amelioration_id')
+                                    ->where('suivi_ameliorations.statut', 'realiser')
+                                    ->where('ameliorations.date_limite', '<', 'suivi_ameliorations.date_action')
                                     ->count();
         $nbre_hd_ac = Suivi_amelioration::where('statut', '=', 'non-realiser')->count();
 

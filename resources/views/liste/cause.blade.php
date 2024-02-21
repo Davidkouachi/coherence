@@ -42,6 +42,7 @@
                                                     <th>Cause probable</th>
                                                     <th>Risque</th>
                                                     <th>Processus</th>
+                                                    <th>Prourcentage</th>
                                                     <th>Date de Création</th>
                                                     <th></th>
                                                 </tr>
@@ -53,6 +54,16 @@
                                                         <td>{{ $cause->nom}}</td>
                                                         <td>{{ $cause->risque}}</td>
                                                         <td>{{ $cause->processus}}</td>
+                                                        <td>
+                                                            <div class="project-list-progress">
+                                                                <div class="progress progress-pill progress-md bg-light">
+                                                                    <div class="progress-bar" data-progress="{{$cause->progess}}" style="width: 100%;"></div>
+                                                                </div>
+                                                                <div class="project-progress-percent">
+                                                                    {{$cause->progess}}%
+                                                                </div>
+                                                            </div>
+                                                        </td>
                                                         <td>{{ \Carbon\Carbon::parse($cause->created_at)->translatedFormat('j F Y '.' à '.' h:i:s') }}</td>
                                                         <td>
                                                             <div class="d-flex" >
