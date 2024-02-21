@@ -139,7 +139,7 @@
                                     <div class="">
                                         <div class="card-inner">
                                             <div class="row g-4">
-                                                <div class="col-lg-6">
+                                                <div class="col-lg-12">
                                                     <div class="form-group">
                                                         <label class="form-label" for="Cause">
                                                             Type
@@ -158,13 +158,33 @@
                                                         </div>
                                                     </div>
                                                 </div>
-                                                <div class="col-lg-6">
+                                                <div class="col-lg-4">
                                                     <div class="form-group">
                                                         <label class="form-label" for="Cause">
-                                                            Date
+                                                            Date de reception
                                                         </label>
                                                         <div class="form-control-wrap">
-                                                            <input value="{{ $am->date_fiche }}" readonly type="date" class="form-control" id="Cause">
+                                                            <input value="{{ \Carbon\Carbon::parse($am->date_fiche)->translatedFormat('j F Y ') }}" readonly type="text" class="form-control" id="Cause">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-4">
+                                                    <div class="form-group">
+                                                        <label class="form-label" for="Cause">
+                                                            Date Limite de traitement
+                                                        </label>
+                                                        <div class="form-control-wrap">
+                                                            <input value="{{ \Carbon\Carbon::parse($am->date_limite)->translatedFormat('j F Y ') }}" readonly type="text" class="form-control" id="Cause">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-4">
+                                                    <div class="form-group">
+                                                        <label class="form-label" for="Cause">
+                                                            Nombres de jours
+                                                        </label>
+                                                        <div class="form-control-wrap">
+                                                            <input value="{{ $am->nbre_jour }}" readonly type="text" class="form-control" id="Cause">
                                                         </div>
                                                     </div>
                                                 </div>
@@ -259,16 +279,6 @@
                                                         </label>
                                                         <div class="form-control-wrap">
                                                             <input value="{{ $actions['processus'] }}" readonly type="text" class="form-control " id="Cause">
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="col-lg-12">
-                                                    <div class="form-group ">
-                                                        <label class="form-label" for="Cause">
-                                                            Délai
-                                                        </label>
-                                                        <div class="form-control-wrap">
-                                                            <input value="{{ \Carbon\Carbon::parse($actions['delai'])->translatedFormat('j F Y ') }}" readonly type="text" class="form-control " id="Cause">
                                                         </div>
                                                     </div>
                                                 </div>

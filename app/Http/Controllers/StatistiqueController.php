@@ -86,9 +86,7 @@ class StatistiqueController extends Controller
         $nbres = [];
 
         foreach ($types as $type) {
-            $nbres[$type] = Suivi_amelioration::join('ameliorations', 'suivi_ameliorations.amelioration_id', 'ameliorations.id')
-                                            ->join('actions', 'actions.id', 'suivi_ameliorations.action_id')
-                                            ->join('risques', 'actions.risque_id', 'risques.id')
+            $nbres[$type] = amelioration::join('risques', 'ameliorations.risque_id', 'risques.id')
                                             ->join('processuses', 'risques.processus_id', 'processuses.id')
                                             ->where('ameliorations.type', $type)
                                             ->where('processuses.id', $id)

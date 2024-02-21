@@ -71,7 +71,6 @@ class Updateamcontroller extends Controller
         if ($am) {
 
             $suivi_id = $request->input('suivi_id');
-            $delai = $request->input('delai');
             $commentaire_am = $request->input('commentaire_am');
 
             foreach ($suivi_id as $index => $value) {
@@ -80,12 +79,6 @@ class Updateamcontroller extends Controller
                 if ($rech) {
                     $rech->commentaire_am = $commentaire_am[$index];
                     $rech->update();
-
-                    $rech2 = action::find($rech->action_id);
-                    if ($rech2) {
-                        $rech2->date = $delai[$index];
-                        $rech2->update();
-                    }
                 }                           
             }
 
@@ -98,6 +91,52 @@ class Updateamcontroller extends Controller
                         $delete_action = Suivi_amelioration::where('id', $valeur)->delete();
                     }
                 }
+            }
+
+            $nature1 = $request->input('nature1');
+            $processus_id1 = $request->input('processus_id1');
+            $risque1 = $request->input('risque1');
+            $resume1 = $request->input('resume1');
+            $action1 = $request->input('action1');
+            $poste_id1 = $request->input('poste_id1');
+            $commentaire1 = $request->input('commentaire1');
+
+            if(isset($nature1)) {
+
+                foreach ($nature1 as $index => $valeur) {
+
+                    $risquee = new Risque();
+                    $risquee->nom = $risque1[$index];
+                    $risquee->page = 'am';
+                    $risquee->processus_id = $processus_id1[$index];
+                    $risquee->poste_id = $poste_id1[$index];
+                    $risquee->save();
+
+                    $cause = new Cause();
+                    $cause->nom = $resume1[$index];
+                    $cause->page = 'am';
+                    $cause->risque_id = $risquee->id;
+                    $cause->save();
+
+                    $actionn = new Action();
+                    $actionn->action = $action1[$index];
+                    $actionn->page = 'am';
+                    $actionn->type = 'corrective';
+                    $actionn->poste_id = $poste_id1[$index];
+                    $actionn->risque_id = $risquee->id;
+                    $actionn->save();
+
+                    $suivic = new Suivi_amelioration();
+                    $suivic->type = 'action_am';
+                    $suivic->nature = $nature1[$index];
+                    $suivic->statut = 'non-realiser';
+                    $suivic->amelioration_id = $am->id;
+                    $suivic->action_id = $actionn->id;
+                    $suivic->commentaire_am = $commentaire1[$index];
+                    $suivic->save();
+
+                }
+
             }
             
             $his = new Historique_action();
@@ -121,26 +160,32 @@ class Updateamcontroller extends Controller
         $processus_id = $request->input('processus_id');
         $risque = $request->input('risque');
         $resume = $request->input('resume');
+        $choix_select = $request->input('choix_select');
         $action = $request->input('action');
         $naction = $request->input('naction');
         $action_id = $request->input('action_id');
         $poste_id = $request->input('poste_id');
         $date_action = $request->input('date_action');
         $commentaire = $request->input('commentaire');
+        $causeSelect_id = $request->input('causeSelect_id');
+        $risqueSelect_id = $request->input('risqueSelect_id');
 
         $am = Amelioration::where('id', '=', $request->amelioration_id)->first();
         $am->statut = 'modif';
+        $am->choix_select = $choix_select;
+        if ($choix_select === 'cause') {
+            $am->cause_id = $causeSelect_id;
+            $am->risque_id = $risqueSelect_id;
+        }
+        if ($choix_select === 'risque') {
+            $am->cause_id = null;
+            $am->risque_id = $risqueSelect_id;
+        }
         $am->update();
 
         foreach ($nature as $index => $valeur) {
 
             if ($nature[$index] === 'accepte') {
-
-                $rech_action = Action::find($action_id[$index]);
-                if ($rech_action) {
-                    $rech_action->date = $date_action[$index];
-                    $rech_action->save();
-                }
 
                 $suivic = new Suivi_amelioration();
                 $suivic->type = 'action';
@@ -151,15 +196,12 @@ class Updateamcontroller extends Controller
                 $suivic->commentaire_am = $commentaire[$index];
                 $suivic->save();
 
-            }
-
-            if ($nature[$index] === 'non-accepte') {
+            } else if ($nature[$index] === 'non-accepte') {
 
                 $actionn = new Action();
                 $actionn->action = $naction[$index];
                 $actionn->page = 'am';
                 $actionn->type = 'corrective';
-                $actionn->date = $date_action[$index];
                 $actionn->poste_id = $poste_id[$index];
                 $actionn->risque_id = $risque[$index];
                 $actionn->save();
@@ -173,40 +215,6 @@ class Updateamcontroller extends Controller
                 $suivic->commentaire_am = $commentaire[$index];
                 $suivic->save();
 
-            }
-
-            if ($nature[$index] === 'new') {
-
-                $risquee = new Risque();
-                $risquee->nom = $risque[$index];
-                $risquee->page = 'am';
-                $risquee->processus_id = $processus_id[$index];
-                $risquee->poste_id = $poste_id[$index];
-                $risquee->save();
-
-                $cause = new Cause();
-                $cause->nom = $resume[$index];
-                $cause->page = 'am';
-                $cause->risque_id = $risquee->id;
-                $cause->save();
-
-                $actionn = new Action();
-                $actionn->action = $action[$index];
-                $actionn->page = 'am';
-                $actionn->type = 'corrective';
-                $actionn->date = $date_action[$index];
-                $actionn->poste_id = $poste_id[$index];
-                $actionn->risque_id = $risquee->id;
-                $actionn->save();
-
-                $suivic = new Suivi_amelioration();
-                $suivic->type = 'action_am';
-                $suivic->nature = $nature[$index];
-                $suivic->statut = 'non-realiser';
-                $suivic->amelioration_id = $am->id;
-                $suivic->action_id = $actionn->id;
-                $suivic->commentaire_am = $commentaire[$index];
-                $suivic->save();
             }
 
         }

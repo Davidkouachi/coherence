@@ -198,6 +198,38 @@
                                                                 </div>
                                                             </div>
                                                             <div class="col-lg-12 row">
+                                                                <div class="col-lg-3" >
+                                                                    <div class="form-group ">
+                                                                        <label class="form-label" style="font-size: 14px;">
+                                                                            Date limite de traitement :
+                                                                        </label>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-lg-9">
+                                                                    <div class="form-group ">
+                                                                        <span class="fw-normal text-dark" style="font-size: 14px;">
+                                                                            {{ \Carbon\Carbon::parse($am->date_limite)->translatedFormat('j F Y ') }}
+                                                                        </span>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-lg-12 row">
+                                                                <div class="col-lg-3" >
+                                                                    <div class="form-group ">
+                                                                        <label class="form-label" style="font-size: 14px;">
+                                                                            Nombres de jours :
+                                                                        </label>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-lg-9">
+                                                                    <div class="form-group ">
+                                                                        <span class="fw-normal text-dark" style="font-size: 14px;">
+                                                                            {{ $am->nbre_jour }} Jour(s)
+                                                                        </span>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-lg-12 row">
                                                                 <div class="col-lg-3">
                                                                     <div class="form-group ">
                                                                         <label class="form-label" style="font-size: 14px;">
@@ -378,23 +410,6 @@
                                                                         </div>
                                                                     </div>
                                                                 </div>
-                                                                <div class="col-lg-12 row">
-                                                                    <div class="col-lg-3">
-                                                                        <div class="form-group ">
-                                                                            <label class="form-label" style="font-size: 14px;">
-                                                                                Délai de traitement :
-                                                                            </label>
-                                                                        </div>
-                                                                    </div>
-                                                                    <div class="col-lg-9">
-                                                                        <div class="form-group ">
-                                                                            <span class="fw-normal text-dark" style="font-size: 14px;">
-                                                                                {{ \Carbon\Carbon::parse($actions['delai'])->translatedFormat('j F Y ') }}
-                                                                            </span>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-
                                                                 <div class="col-lg-12 row">
                                                                 @if($actions['statut'] === 'realiser')
                                                                 <div class="col-lg-3">

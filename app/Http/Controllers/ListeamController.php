@@ -145,16 +145,13 @@ class ListeamController extends Controller
                 $am->motif = $motif->motif;
             }
 
-            $suivi = Suivi_amelioration::join('ameliorations', 'suivi_ameliorations.amelioration_id', 'ameliorations.id')
-                                        ->where('ameliorations.id', '=', $am->id)
-                                        ->select('suivi_ameliorations.*','ameliorations.choix_select as choix_select')
-                                        ->get();
+            $suivi = Suivi_amelioration::where('amelioration_id', '=', $am->id)->get();
 
             $actionsDatam[$am->id] = [];
 
             foreach ($suivi as $suivis) {
 
-                    $action= null;
+                    $action = null;
 
                     if ($am->choix_select === 'cause') {
 
@@ -170,8 +167,7 @@ class ListeamController extends Controller
                             $actionsDatam[$am->id][] = [
                                 'action' => $action->action,
                                 'poste_id' => $action->poste_id,
-                                'delai' => $action->date,
-                                'trouve' => $suivis->trouve,
+                                'trouve' => $am->choix_select,
                                 'processus_id' => $action->processus_id,
                                 'risque' => $action->risque,
                                 'cause' => $action->cause,
@@ -180,7 +176,7 @@ class ListeamController extends Controller
                             ];
                         }
 
-                    } else if ($suivis->choix_select === 'risque') {
+                    } else if ($am->choix_select === 'risque') {
 
                         $action = Action::join('postes', 'actions.poste_id', 'postes.id')
                                     ->join('risques', 'actions.risque_id', 'risques.id')
@@ -193,8 +189,7 @@ class ListeamController extends Controller
                             $actionsDatam[$am->id][] = [
                                 'action' => $action->action,
                                 'poste_id' => $action->poste_id,
-                                'delai' => $action->date,
-                                'trouve' => $suivis->trouve,
+                                'trouve' => $am->choix_select,
                                 'processus_id' => $action->processus_id,
                                 'risque' => $action->risque,
                                 'commentaire_am' => $suivis->commentaire_am,
@@ -202,7 +197,7 @@ class ListeamController extends Controller
                             ];
                         }
 
-                    } else if ($suivis->choix_select === 'cause_risque_nt') {
+                    } else if ($am->choix_select === 'cause_risque_nt') {
 
                         $action = Action::join('postes', 'actions.poste_id', 'postes.id')
                                     ->join('risques', 'actions.risque_id', 'risques.id')
@@ -216,8 +211,7 @@ class ListeamController extends Controller
                             $actionsDatam[$am->id][] = [
                                 'action' => $action->action,
                                 'poste_id' => $action->poste_id,
-                                'delai' => $action->date,
-                                'trouve' => $suivis->trouve,
+                                'trouve' => 'Néant',
                                 'processus_id' => $action->processus_id,
                                 'risque' => $action->risque,
                                 'cause' => $action->cause,
@@ -240,7 +234,7 @@ class ListeamController extends Controller
                         ->get();
         $processuss = Processuse::all();
 
-        return view('traitement.amup2', ['postes' => $postes, 'processuss' => $processuss, 'actionsDatam' => $actionsDatam, 'am' => $am]);
+        return view('traitement.amup2', ['postes' => $postes, 'processuss' => $processuss, 'actionsDatam' => $actionsDatam, 'am' => $am]);  
     }
 
     public function index_amup_add(Request $request)

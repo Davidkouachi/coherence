@@ -25,6 +25,7 @@ class Autorisation extends Model
         'val_risk',
         'act_n_val',
         'color_para',
+        'list_cause',
         'suivi_actp',
         'list_actp',
         'suivi_actc',

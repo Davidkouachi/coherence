@@ -199,7 +199,6 @@
 		                                                <div class="col-lg-6">
 		                                                    <div class="form-group align-items-center justify-content-center">
 		                                                        <span class="preview-title overline-title text-right">
-		                                                        	Nouveau Utilisateur
 		                                                        	@if ($user->new_user === 'oui')
 		                                                        	<a class="btn btn-sm btn-success">
 		                                                                <em class="icon ni ni-check"></em>
@@ -210,13 +209,13 @@
 		                                                                <em class="icon ni ni-cross"></em>
 		                                                            </a>
 		                                                            @endif
+		                                                        	Nouveau Utilisateur
 		                                                        </span>
 		                                                    </div>
 		                                                </div>
 		                                                <div class="col-lg-6">
 		                                                    <div class="form-group align-items-center justify-content-center">
 		                                                        <span class="preview-title overline-title">
-		                                                        	Liste des Utilisateurs
 		                                                        	@if ($user->list_user === 'oui')
 		                                                        	<a class="btn btn-sm btn-success">
 		                                                                <em class="icon ni ni-check"></em>
@@ -227,13 +226,14 @@
 		                                                                <em class="icon ni ni-cross"></em>
 		                                                            </a>
 		                                                            @endif
+		                                                            Liste des Utilisateurs
 		                                                        </span>
 		                                                    </div>
 		                                                </div>
 		                                                <div class="col-lg-6">
 		                                                    <div class="form-group align-items-center justify-content-center">
 		                                                        <span class="preview-title overline-title">
-		                                                        	Nouveau Poste
+		                                                        	
 		                                                        	@if ($user->new_poste === 'oui')
 		                                                        	<a class="btn btn-sm btn-success">
 		                                                                <em class="icon ni ni-check"></em>
@@ -244,13 +244,14 @@
 		                                                                <em class="icon ni ni-cross"></em>
 		                                                            </a>
 		                                                            @endif
+		                                                            Nouveau Poste
 		                                                        </span>
 		                                                    </div>
 		                                                </div>
 		                                                <div class="col-lg-6">
 		                                                    <div class="form-group align-items-center justify-content-center">
 		                                                        <span class="preview-title overline-title">
-		                                                        	Liste des Postes
+		                                                        	
 		                                                        	@if ($user->list_poste === 'oui')
 		                                                        	<a class="btn btn-sm btn-success">
 		                                                                <em class="icon ni ni-check"></em>
@@ -261,13 +262,14 @@
 		                                                                <em class="icon ni ni-cross"></em>
 		                                                            </a>
 		                                                            @endif
+		                                                            Liste des Postes
 		                                                        </span>
 		                                                    </div>
 		                                                </div>
 		                                                <div class="col-lg-6">
 		                                                    <div class="form-group align-items-center justify-content-center">
 		                                                        <span class="preview-title overline-title">
-		                                                        	Historique
+		                                                        	
 		                                                        	@if ($user->historiq === 'oui')
 		                                                        	<a class="btn btn-sm btn-success">
 		                                                                <em class="icon ni ni-check"></em>
@@ -278,13 +280,14 @@
 		                                                                <em class="icon ni ni-cross"></em>
 		                                                            </a>
 		                                                            @endif
+		                                                            Historique
 		                                                        </span>
 		                                                    </div>
 		                                                </div>
 		                                                <div class="col-lg-6">
 		                                                    <div class="form-group align-items-center justify-content-center">
 		                                                        <span class="preview-title overline-title">
-		                                                        	Statistique
+		                                                        	
 		                                                        	@if ($user->stat === 'oui')
 		                                                        	<a class="btn btn-sm btn-success">
 		                                                                <em class="icon ni ni-check"></em>
@@ -295,6 +298,7 @@
 		                                                                <em class="icon ni ni-cross"></em>
 		                                                            </a>
 		                                                            @endif
+		                                                            Statistique
 		                                                        </span>
 		                                                    </div>
 		                                                </div>
@@ -308,7 +312,7 @@
 		                                                <div class="col-lg-6">
 		                                                    <div class="form-group align-items-center justify-content-center">
 		                                                        <span class="preview-title overline-title">
-			                                                        Nouveau Processus
+			                                                        
 			                                                        @if ($user->new_proces === 'oui')
 		                                                        	<a class="btn btn-sm btn-success">
 		                                                                <em class="icon ni ni-check"></em>
@@ -319,13 +323,14 @@
 		                                                                <em class="icon ni ni-cross"></em>
 		                                                            </a>
 		                                                            @endif
+		                                                            Nouveau Processus
 			                                                    </span>
 		                                                    </div>
 		                                                </div>
 		                                                <div class="col-lg-6">
 		                                                    <div class="form-group align-items-center justify-content-center">
 		                                                        <span class="preview-title overline-title">
-		                                                        	Liste des Processus
+		                                                        	
 		                                                        	@if ($user->list_proces === 'oui')
 		                                                        	<a class="btn btn-sm btn-success">
 		                                                                <em class="icon ni ni-check"></em>
@@ -336,13 +341,14 @@
 		                                                                <em class="icon ni ni-cross"></em>
 		                                                            </a>
 		                                                            @endif
+		                                                            Liste des Processus
 		                                                        </span>
 		                                                    </div>
 		                                                </div>
 		                                                <div class="col-lg-6">
 		                                                    <div class="form-group align-items-center justify-content-center">
 		                                                        <span class="preview-title overline-title">
-		                                                        	Evaluation des Processus
+		                                                        	
 		                                                        	@if ($user->eva_proces === 'oui')
 		                                                        	<a class="btn btn-sm btn-success">
 		                                                                <em class="icon ni ni-check"></em>
@@ -353,6 +359,7 @@
 		                                                                <em class="icon ni ni-cross"></em>
 		                                                            </a>
 		                                                            @endif
+		                                                            Evaluation des Processus
 		                                                        </span>
 		                                                    </div>
 		                                                </div>
@@ -366,7 +373,7 @@
 		                                                <div class="col-lg-6">
 		                                                    <div class="form-group align-items-center justify-content-center">
 		                                                        <span class="preview-title overline-title">
-		                                                        	Nouveau Risque
+		                                                        	
 		                                                        	@if ($user->new_risk === 'oui')
 		                                                        	<a class="btn btn-sm btn-success">
 		                                                                <em class="icon ni ni-check"></em>
@@ -377,13 +384,14 @@
 		                                                                <em class="icon ni ni-cross"></em>
 		                                                            </a>
 		                                                            @endif
+		                                                            Nouveau Risque
 		                                                        </span>
 		                                                    </div>
 		                                                </div>
 		                                                <div class="col-lg-6">
 		                                                    <div class="form-group align-items-center justify-content-center">
 		                                                        <span class="preview-title overline-title">
-		                                                        	Liste des Risques
+		                                                        	
 		                                                        	@if ($user->list_risk === 'oui')
 		                                                        	<a class="btn btn-sm btn-success">
 		                                                                <em class="icon ni ni-check"></em>
@@ -394,13 +402,14 @@
 		                                                                <em class="icon ni ni-cross"></em>
 		                                                            </a>
 		                                                            @endif
+		                                                            Liste des Risques
 		                                                        </span>
 		                                                    </div>
 		                                                </div>
 		                                                <div class="col-lg-6">
 		                                                    <div class="form-group align-items-center justify-content-center">
 		                                                        <span class="preview-title overline-title">
-		                                                        	Validation des Risques
+		                                                        	
 		                                                        	@if ($user->val_risk === 'oui')
 		                                                        	<a class="btn btn-sm btn-success">
 		                                                                <em class="icon ni ni-check"></em>
@@ -411,13 +420,14 @@
 		                                                                <em class="icon ni ni-cross"></em>
 		                                                            </a>
 		                                                            @endif
+		                                                            Validation des Risques
 		                                                        </span>
 		                                                    </div>
 		                                                </div>
 		                                                <div class="col-lg-6">
 		                                                    <div class="form-group align-items-center justify-content-center">
 		                                                        <span class="preview-title overline-title">
-		                                                        	Risques non validés
+		                                                        	
 		                                                        	@if ($user->act_n_val === 'oui')
 		                                                        	<a class="btn btn-sm btn-success">
 		                                                                <em class="icon ni ni-check"></em>
@@ -428,13 +438,14 @@
 		                                                                <em class="icon ni ni-cross"></em>
 		                                                            </a>
 		                                                            @endif
+		                                                            Risques non validés
 		                                                        </span>
 		                                                    </div>
 		                                                </div>
 		                                                <div class="col-lg-6">
 		                                                    <div class="form-group align-items-center justify-content-center">
 		                                                        <span class="preview-title overline-title">
-		                                                        	Paramettrage des couleurs
+		                                                        	
 		                                                        	@if ($user->color_para === 'oui')
 		                                                        	<a class="btn btn-sm btn-success">
 		                                                                <em class="icon ni ni-check"></em>
@@ -445,6 +456,32 @@
 		                                                                <em class="icon ni ni-cross"></em>
 		                                                            </a>
 		                                                            @endif
+		                                                            Paramettrage des couleurs
+		                                                        </span>
+		                                                    </div>
+		                                                </div>
+		                                                <div class="col-lg-12">
+		                                                    <div class="form-group">
+		                                                        <label class="form-label" for="Cause">
+		                                                            CAUSES
+		                                                        </label>
+		                                                    </div>
+		                                                </div>
+		                                                <div class="col-lg-6">
+		                                                    <div class="form-group align-items-center justify-content-center">
+		                                                        <span class="preview-title overline-title">
+		                                                        	
+		                                                        	@if ($user->list_cause === 'oui')
+		                                                        	<a class="btn btn-sm btn-success">
+		                                                                <em class="icon ni ni-check"></em>
+		                                                            </a>
+		                                                            @endif
+		                                                            @if ($user->list_cause === 'non')
+		                                                            <a class="btn btn-sm btn-danger">
+		                                                                <em class="icon ni ni-cross"></em>
+		                                                            </a>
+		                                                            @endif
+		                                                            Liste des causes
 		                                                        </span>
 		                                                    </div>
 		                                                </div>
@@ -458,7 +495,7 @@
 		                                                <div class="col-lg-6">
 		                                                    <div class="form-group align-items-center justify-content-center">
 		                                                        <span class="preview-title overline-title">
-		                                                        	Suivis des actions préventives
+		                                                        	
 		                                                        	@if ($user->suivi_actp === 'oui')
 		                                                        	<a class="btn btn-sm btn-success">
 		                                                                <em class="icon ni ni-check"></em>
@@ -469,13 +506,14 @@
 		                                                                <em class="icon ni ni-cross"></em>
 		                                                            </a>
 		                                                            @endif
+		                                                            Suivis des actions préventives
 		                                                        </span>
 		                                                    </div>
 		                                                </div>
 		                                                <div class="col-lg-6">
 		                                                    <div class="form-group align-items-center justify-content-center">
 		                                                        <span class="preview-title overline-title">
-		                                                        	Liste des actions préventives
+		                                                        	
 		                                                        	@if ($user->list_actp === 'oui')
 		                                                        	<a class="btn btn-sm btn-success">
 		                                                                <em class="icon ni ni-check"></em>
@@ -486,13 +524,14 @@
 		                                                                <em class="icon ni ni-cross"></em>
 		                                                            </a>
 		                                                            @endif
+		                                                            Liste des actions préventives
 		                                                        </span>
 		                                                    </div>
 		                                                </div>
 		                                                <div class="col-lg-6">
 		                                                    <div class="form-group align-items-center justify-content-center">
 		                                                        <span class="preview-title overline-title">
-		                                                        	Suivis des actions correctives
+		                                                        	
 		                                                        	@if ($user->suivi_actc === 'oui')
 		                                                        	<a class="btn btn-sm btn-success">
 		                                                                <em class="icon ni ni-check"></em>
@@ -503,13 +542,14 @@
 		                                                                <em class="icon ni ni-cross"></em>
 		                                                            </a>
 		                                                            @endif
+		                                                            Suivis des actions correctives
 		                                                        </span>
 		                                                    </div>
 		                                                </div>
 		                                                <div class="col-lg-6">
 		                                                    <div class="form-group align-items-center justify-content-center">
 		                                                        <span class="preview-title overline-title">
-		                                                        	Liste des actions correctives
+		                                                        	
 		                                                        	@if ($user->list_actc === 'oui')
 		                                                        	<a class="btn btn-sm btn-success">
 		                                                                <em class="icon ni ni-check"></em>
@@ -520,10 +560,11 @@
 		                                                                <em class="icon ni ni-cross"></em>
 		                                                            </a>
 		                                                            @endif
+		                                                            Liste des actions correctives
 		                                                        </span>
 		                                                    </div>
 		                                                </div>
-		                                                <div class="col-lg-6">
+		                                                <!--<div class="col-lg-6">
 		                                                    <div class="form-group align-items-center justify-content-center">
 		                                                        <span class="preview-title overline-title">
 		                                                        	Actions correctives éffectuées
@@ -539,7 +580,7 @@
 		                                                            @endif
 		                                                        </span>
 		                                                    </div>
-		                                                </div>
+		                                                </div>-->
 		                                                <div class="col-lg-12">
 		                                                    <div class="form-group">
 		                                                        <label class="form-label" for="Cause">
@@ -550,7 +591,7 @@
 		                                                <div class="col-lg-6">
 		                                                    <div class="form-group align-items-center justify-content-center">
 		                                                        <span class="preview-title overline-title">
-		                                                        	Nouvel incident
+		                                                        	
 		                                                        	@if ($user->fiche_am === 'oui')
 		                                                        	<a class="btn btn-sm btn-success">
 		                                                                <em class="icon ni ni-check"></em>
@@ -561,13 +602,14 @@
 		                                                                <em class="icon ni ni-cross"></em>
 		                                                            </a>
 		                                                            @endif
+		                                                            Nouvel incident
 		                                                        </span>
 		                                                    </div>
 		                                                </div>
 		                                                <div class="col-lg-6">
 		                                                    <div class="form-group align-items-center justify-content-center">
 		                                                        <span class="preview-title overline-title">
-		                                                        	Suivis des incidents
+		                                                        	
 		                                                        	@if ($user->list_am === 'oui')
 		                                                        	<a class="btn btn-sm btn-success">
 		                                                                <em class="icon ni ni-check"></em>
@@ -578,13 +620,14 @@
 		                                                                <em class="icon ni ni-cross"></em>
 		                                                            </a>
 		                                                            @endif
+		                                                            Suivis des incidents
 		                                                        </span>
 		                                                    </div>
 		                                                </div>
 		                                                <div class="col-lg-6">
 		                                                    <div class="form-group align-items-center justify-content-center">
 		                                                        <span class="preview-title overline-title">
-		                                                        	Validation des incidents
+		                                                        	
 		                                                        	@if ($user->val_am === 'oui')
 		                                                        	<a class="btn btn-sm btn-success">
 		                                                                <em class="icon ni ni-check"></em>
@@ -595,13 +638,14 @@
 		                                                                <em class="icon ni ni-cross"></em>
 		                                                            </a>
 		                                                            @endif
+		                                                            Validation des incidents
 		                                                        </span>
 		                                                    </div>
 		                                                </div>
 		                                                <div class="col-lg-6">
 		                                                    <div class="form-group align-items-center justify-content-center">
 		                                                        <span class="preview-title overline-title">
-		                                                        	Incidents non validés
+		                                                        	
 		                                                        	@if ($user->am_n_val === 'oui')
 		                                                        	<a class="btn btn-sm btn-success">
 		                                                                <em class="icon ni ni-check"></em>
@@ -612,6 +656,7 @@
 		                                                                <em class="icon ni ni-cross"></em>
 		                                                            </a>
 		                                                            @endif
+		                                                            Incidents non validés
 		                                                        </span>
 		                                                    </div>
 		                                                </div>

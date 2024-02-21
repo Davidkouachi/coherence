@@ -38,7 +38,7 @@ class ListecauseController extends Controller
     {
         $causes = cause::join('risques', 'causes.risque_id', 'risques.id')
                         ->join('processuses', 'risques.processus_id', 'processuses.id')
-                        ->select('causes.*','risques.nom as risque', 'processuses.nom as processus')
+                        ->select('causes.*','risques.nom as risque', 'risques.statut as statut', 'processuses.nom as processus')
                         ->get();
 
         return view('liste.cause', ['causes' => $causes]);

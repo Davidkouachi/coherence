@@ -237,6 +237,7 @@
                                     </ul>
                                 </li>
                                 @endif
+                                @if (session('user_auto')->list_cause === 'oui' )
                                 <li class="nk-menu-item has-sub">
                                     <a class="nk-menu-toggle btn " >
                                         <em class="ni ni-alert me-2"></em>
@@ -255,6 +256,7 @@
                                         </li>
                                     </ul>
                                 </li>
+                                @endif
                                 @if (session('user_auto')->suivi_actp === 'oui' || session('user_auto')->list_actp === 'oui' || session('user_auto')->suivi_actc === 'oui' || session('user_auto')->list_actc_eff === 'oui' || session('user_auto')->list_actc === 'oui')
                                 <li class="nk-menu-item has-sub">
                                     <a class="nk-menu-toggle btn " >
@@ -315,7 +317,7 @@
                                                     </a>
                                                 </li>
                                                 @endif
-                                                @if (session('user_auto')->list_actc_eff === 'oui')
+                                                <!--@if (session('user_auto')->list_actc_eff === 'oui')
                                                 <li class="nk-menu-item">
                                                     <a class="nk-menu-link" href="{{ route('index_ac_eff') }}">
                                                         <em class="ni ni-list-index me-1"></em>
@@ -324,7 +326,7 @@
                                                         </span>
                                                     </a>
                                                 </li>
-                                                @endif
+                                                @endif-->
                                                 @if (session('user_auto')->list_actc === 'oui')
                                                 <li class="nk-menu-item">
                                                     <a class="nk-menu-link" href="{{ route('index_ac') }}">

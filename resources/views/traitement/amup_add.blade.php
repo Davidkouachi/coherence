@@ -21,8 +21,8 @@
                     <div class="nk-block-between">
                         <div class="nk-block-head-content" style="margin:0px auto;">
                             <h3 class="text-center">
-                                <span>Ajouter une action</span>
-                                <em class="ni ni-plus" ></em>
+                                <span>Nouvelle Recherche</span>
+                                <em class="ni ni-search" ></em>
                             </h3>
                         </div>
                         <div class="nk-block-head-content">
@@ -104,7 +104,8 @@
                                 @csrf
                                 <div class="row g-gs">
                                     <input type="text" name="amelioration_id" value="{{ $am_id }}" style="display: none;">
-                                    <div class="col-md-12 col-xxl-12" id="groupesContainer">
+
+                                    <div class="col-lg-12 col-xxl-12">
                                         <div class="card card-bordered">
                                             <div class="card-inner">
                                                 <div class="row g-4">
@@ -122,7 +123,8 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="col-md-12 col-xxl-12" id="groupesContainer">
+
+                                    <div class="col-lg-12 col-xxl-12">
                                         <div class="card card-bordered">
                                             <div class="card-inner">
                                                 <div class="card-head">
@@ -135,7 +137,7 @@
                                                     <div class="col-lg-6">
                                                         <div class="form-group">
                                                             <div class="form-control-wrap">
-                                                                <select class="form-select js-select2 select_rech" id="causeSelect" data-search="on" data-placeholder="Recherche Cause">
+                                                                <select class="form-select js-select2 select_rech" id="causeSelect" data-search="on" data-placeholder="Recherche Cause" name="causeSelect_id">
                                                                     <option value="">
                                                                     </option>
                                                                     @foreach($causes_selects as $causes_select)
@@ -150,7 +152,7 @@
                                                     <div class="col-lg-6">
                                                         <div class="form-group">
                                                             <div class="form-control-wrap">
-                                                                <select class="form-select js-select2 select_rech" id="risqueSelect" data-search="on" data-placeholder="Recherche Risque">
+                                                                <select class="form-select js-select2 select_rech" id="risqueSelect" data-search="on" data-placeholder="Recherche Risque" name="risqueSelect_id">
                                                                     <option value="">
                                                                     </option>
                                                                     @foreach($risques as $risque)
@@ -164,7 +166,7 @@
                                                     </div>
                                                     <div class="col-lg-12" id="div_choix">
                                                         <div class="row g-2">
-                                                            <div class="col-md-4">
+                                                            <div class="col-lg-6">
                                                                 <div class="form-group text-center">
                                                                     <div class="custom-control custom-radio">
                                                                         <input required type="radio" class="custom-control-input choix_select" name="choix_select" id="choixcause" value="cause">
@@ -174,17 +176,7 @@
                                                                     </div>
                                                                 </div>
                                                             </div>
-                                                            <div class="col-md-4">
-                                                                <div class="form-group text-center">
-                                                                    <div class="custom-control custom-radio">
-                                                                        <input required type="radio" class="custom-control-input choix_select" name="choix_select" id="choixnt" value="cause_risque_nt">
-                                                                        <label class="custom-control-label" for="choixnt">
-                                                                            Cause / Risque non-trouvé
-                                                                        </label>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                            <div class="col-md-4">
+                                                            <div class="col-lg-6">
                                                                 <div class="form-group text-center">
                                                                     <div class="custom-control custom-radio">
                                                                         <input required type="radio" class="custom-control-input choix_select" name="choix_select" id="choixrisque" value="risque">
@@ -233,12 +225,6 @@
     <li class="demo-thumb" id="btn-afficher" style="display: none;">
         <a data-type="afficher" class="toggle tipinfo action-afficher" aria-label="Aficher les actions" data-bs-original-title="Aficher les actions">
             <em class="icon ni ni-eye">
-            </em>
-        </a>
-    </li>
-    <li class="demo-settings" id="btn-new-action" style="display: none;"> 
-        <a class="toggle tipinfo action-new" aria-label="Nouvelle Action" data-bs-original-title="Nouvelle Action" data-type="nouvelle-action">
-            <em class="icon ni ni-plus">
             </em>
         </a>
     </li>
@@ -946,135 +932,6 @@
 
 <script>
     document.addEventListener("DOMContentLoaded", function() {
-        document.querySelectorAll(".action-new").forEach(function(button) {
-            button.addEventListener("click", function() {
-                var type_new = this.getAttribute("data-type");
-                addGroup(type_new);
-            });
-        });
-    });
-
-    function addGroup(type_new) {
-
-        document.getElementById("btn_enrg").style.display = "block";
-
-        var groupe = document.createElement("div");
-        groupe.className = "card card-bordered";
-        groupe.innerHTML = `
-                                        <div class="card-inner">
-                                            <div class="row g-4">
-                                                <div class="col-lg-12 col-xxl-12" >
-                                                    <div class="card">
-                                                        <div class="card-inner">
-                                                            <div class="card-head">
-                                                                <span class="badge badge-dot bg-primary">
-                                                                    Nouveau
-                                                                </span>
-                                                            </div>
-                                                                <div class="row g-4">
-                                                                    <div class="col-lg-6">
-                                                                        <div class="form-group">
-                                                                            <label class="form-label" for="Cause">
-                                                                                Processus
-                                                                            </label>
-                                                                            <input required style="display:none;" name="nature[]" value="new" type="text" >
-                                                                            <select required id="responsable_idc" required name="processus_id[]" class="form-select">
-                                                                                <option selected value="">
-                                                                                    Choisir un responsable
-                                                                                </option>
-                                                                                ${processuss.map(processus => `<option value="${processus.id}">${processus.nom}</option>`).join('')}
-                                                                            </select>
-                                                                        </div>
-                                                                    </div>
-                                                                    <div class="col-lg-6">
-                                                                        <div class="form-group">
-                                                                            <label class="form-label" for="controle">
-                                                                                Risque
-                                                                            </label>
-                                                                            <div class="form-control-wrap">
-                                                                                <input required placeholder="Saisie obligatoire" name="risque[]" type="text" class="form-control" >
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
-                                                                    <div class="col-lg-12">
-                                                                        <div class="form-group">
-                                                                            <label class="form-label" for="controle">
-                                                                                Résumé des causes
-                                                                            </label>
-                                                                            <div class="form-control-wrap">
-                                                                                <input required placeholder="Saisie obligatoire" name="resume[]" type="text" class="form-control" >
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
-                                                                    <div class="col-lg-12">
-                                                                        <div class="form-group">
-                                                                            <label class="form-label" for="controle">
-                                                                                Action Corrective
-                                                                            </label>
-                                                                            <div class="form-control-wrap">
-                                                                                <input required placeholder="Saisie obligatoire" name="action[]" type="text" class="form-control" >
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
-                                                                    <div class="col-lg-4">
-                                                                                <div class="form-group">
-                                                                                    <label class="form-label" for="Coût">
-                                                                                        Responsable
-                                                                                    </label>
-                                                                                    <select required id="responsable_idc" required name="poste_id[]" class="form-select">
-                                                                                        <option selected value="">
-                                                                                            Choisir un responsable
-                                                                                        </option>
-                                                                                        ${postes.map(poste => `<option value="${poste.id}">${poste.nom}</option>`).join('')}
-                                                                                    </select>
-                                                                                </div>
-                                                                                <div class="form-group">
-                                                                                    <label class="form-label" for="Coût">
-                                                                                        Date prévisionnelle de réalisation
-                                                                                    </label>
-                                                                                    <div class="form-control-wrap">
-                                                                                        <input required name="date_action[]" type="date" class="form-control" min="{{ \Carbon\Carbon::now()->toDateString() }}" value="{{ \Carbon\Carbon::now()->toDateString() }}">
-                                                                                    </div>
-                                                                                </div>
-                                                                    </div>
-                                                                    <div class="col-lg-8">
-                                                                        <div class="form-group text-center">
-                                                                            <label class="form-label" for="description">
-                                                                                Commentaire
-                                                                            </label>
-                                                                            <div class="form-control-wrap">
-                                                                                <textarea required name="commentaire[]" class="form-control no-resize" id="default-textarea"></textarea>
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
-                                                                    <div class="col-lg-12">
-                                                                        <div class="form-group text-center">
-                                                                            <a class="btn btn-outline-danger btn-dim " id="suppr_nouvelle_action" >
-                                                                                Supprimer
-                                                                            </a>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                `;
-
-        groupe.querySelector("#suppr_nouvelle_action").addEventListener("click", function(event) {
-            event.preventDefault();
-            groupe.remove();
-
-            checkAndHideSubmitButton();
-        });
-
-        document.getElementById("dynamic-fields").appendChild(groupe);
-    }
-</script>
-
-<script>
-    document.addEventListener("DOMContentLoaded", function() {
         document.querySelectorAll(".action-afficher").forEach(function(button) {
             button.addEventListener("click", function() {
                 var type = this.getAttribute("data-type");
@@ -1196,7 +1053,7 @@
                                                                         </div>
                                                                     </div>
                                                                     <input required style="display:none;" name="resume[]" value="0" type="text" >
-                                                                    <div class="col-lg-12">
+                                                                    <div class="col-lg-7">
                                                                         <div class="form-group">
                                                                             <label class="form-label" for="controle">
                                                                                 Action Corrective
@@ -1207,8 +1064,6 @@
                                                                                 <input style="display:none;" name="action_id[]" value="${action.id}" type="int" class="form-control" >
                                                                             </div>
                                                                         </div>
-                                                                    </div>
-                                                                    <div class="col-lg-4">
                                                                                 <div class="form-group">
                                                                                     <label class="form-label" for="Coût">
                                                                                         Responsable
@@ -1217,16 +1072,8 @@
                                                                                         ${postes.map(poste => `<option value="${poste.id}" ${action.poste_id == poste.id ? 'selected' : ''}>${poste.nom}</option>`).join('')}
                                                                                     </select>
                                                                                 </div>
-                                                                                <div class="form-group">
-                                                                                    <label class="form-label" for="Coût">
-                                                                                        Date prévisionnelle de réalisation
-                                                                                    </label>
-                                                                                    <div class="form-control-wrap">
-                                                                                        <input required name="date_action[]" type="date" class="form-control" min="{{ \Carbon\Carbon::now()->toDateString() }}" value="{{ \Carbon\Carbon::now()->toDateString() }}">
-                                                                                    </div>
-                                                                                </div>
                                                                     </div>
-                                                                    <div class="col-lg-8">
+                                                                    <div class="col-lg-5">
                                                                         <div class="form-group text-center">
                                                                             <label class="form-label" for="description">
                                                                                 Commentaire
@@ -1297,7 +1144,6 @@
                 if (selectedValue === "cause" || selectedValue === "risque") {
 
                     document.getElementById("btn-afficher").style.display = "block";
-                    document.getElementById("btn-new-action").style.display = "block";
                     document.getElementById("btn_enrg").style.display = "none";
 
                     var dynamicFields = document.getElementById("dynamic-fields");
@@ -1309,7 +1155,6 @@
                 } else if (selectedValue === "cause_risque_nt") {
 
                     document.getElementById("btn-afficher").style.display = "none";
-                    document.getElementById("btn-new-action").style.display = "block";
                     document.getElementById("btn_enrg").style.display = "none";
 
                     var dynamicFields = document.getElementById("dynamic-fields");

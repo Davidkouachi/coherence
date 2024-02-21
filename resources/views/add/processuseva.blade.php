@@ -218,7 +218,7 @@
                                             <div class="card card-bordered h-100" id="divToChange">
                                                 <div class="card-inner">
                                                     <div class="row g-gs">
-                                                        <div class="col-md-12">
+                                                        <div class="col-lg-12">
                                                             <div class="card-head">
                                                                 <h5 class="card-title">Evaluation risque sans dispositif de contrôle interne ou dispositif antérieur</h5>
                                                             </div>

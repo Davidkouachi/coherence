@@ -369,7 +369,7 @@
                                     </div>
                                 </div>
                                 @foreach ($causesData[$risque->id] as $key => $causesDatas)
-                                <div class="col-md-12 col-xxl-122" id="groupesContainer">
+                                <div class="col-md-12 col-xxl-12" id="groupesContainer">
                                     <div class="card card-bordered">
                                         <div class="card-inner">
                                                 <div class="row g-4">

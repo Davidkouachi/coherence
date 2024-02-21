@@ -79,6 +79,8 @@ class UserController extends Controller
                 $auto->act_n_val = $request->act_n_val;
                 $auto->color_para = $request->color_para;
 
+                $auto->list_cause = $request->list_cause;
+
                 $auto->suivi_actp = $request->suivi_actp;
                 $auto->list_actp = $request->list_actp;
 

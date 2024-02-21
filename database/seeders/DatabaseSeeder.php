@@ -52,6 +52,8 @@ class DatabaseSeeder extends Seeder
             'act_n_val' => 'oui',
             'color_para' => 'oui',
 
+            'list_cause' => 'oui',
+
             'suivi_actp' => 'oui',
             'list_actp' => 'oui',
 

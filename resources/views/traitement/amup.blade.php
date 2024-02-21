@@ -93,7 +93,7 @@
                                                                 @csrf
                                                                     <input type="text" name="id" value="{{ $am->id }}" style="display: none;">
                                                                     <button type="submit" class="btn btn-icon btn-white btn-dim btn-sm btn-warning border border-1 border-white rounded">
-                                                                        <em class="icon ni ni-plus"></em>
+                                                                        <em class="icon ni ni-search"></em>
                                                                     </button>
                                                                 </form>
                                                                 @if ($am->statut !== 'non-valider')

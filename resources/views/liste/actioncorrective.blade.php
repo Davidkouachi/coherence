@@ -66,11 +66,11 @@
                                                                         href="#" class="btn btn-icon btn-white btn-dim btn-sm btn-warning border border-1 border-white rounded">
                                                                         <em class="icon ni ni-eye"></em>
                                                                     </a>
-                                                                    <a data-bs-toggle="modal"
+                                                                    <!--<a data-bs-toggle="modal"
                                                                         data-bs-target="#modalModif{{$action->id}}"
                                                                         href="#" class="btn btn-icon btn-white btn-dim btn-sm btn-info border border-1 border-white rounded">
                                                                         <em class="icon ni ni-edit"></em>
-                                                                    </a>
+                                                                    </a>-->
                                                                     <button class="btn btn-icon btn-white btn-dim btn-sm btn-primary">
                                                                         <em class="icon ni ni-printer-fill"></em>
                                                                     </button>

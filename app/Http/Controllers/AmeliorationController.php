@@ -250,9 +250,12 @@ class AmeliorationController extends Controller
     {
         $type = $request->input('type');
 
-        $date_fichee = $request->input('date_fiche');
-        $dateCarbon = Carbon::createFromFormat('Y-m-d', $date_fichee);
-        $date_fiche = $dateCarbon->format('Y-m-d');
+        $date_fiche = $request->input('date_fiche');
+        $nbre_jour = $request->input('nbre_jour');
+
+        $date2 = $request->input('date_limite');
+        $dateObj2 = \DateTime::createFromFormat('d/m/Y', $date2);
+        $date_limite = $dateObj2->format('Y-m-d');
 
         $lieu = $request->input('lieu');
         $detecteur = $request->input('detecteur');
@@ -285,6 +288,8 @@ class AmeliorationController extends Controller
         $am = new Amelioration();
         $am->type = $type;
         $am->date_fiche = $date_fiche;
+        $am->date_limite = $date_limite;
+        $am->nbre_jour = $nbre_jour;
         $am->lieu =$lieu;
         $am->detecteur = $detecteur;
         $am->non_conformite = $non_conformite;
@@ -292,19 +297,18 @@ class AmeliorationController extends Controller
         $am->cause = $cause;
         $am->choix_select = $choix_select;
         $am->statut = 'soumis';
-        if ($choix_select === 'cause') {$am->cause_id = $causeSelect_id;}
-        if ($choix_select === 'risque') {$am->risque_id = $risqueSelect_id;}
+        if ($choix_select === 'cause') {
+            $am->cause_id = $causeSelect_id;
+            $am->risque_id = $risqueSelect_id;
+        }
+        if ($choix_select === 'risque') {
+            $am->risque_id = $risqueSelect_id;
+        }
         $am->save();
 
         foreach ($nature as $index => $valeur) {
 
             if ($nature[$index] === 'accepte') {
-
-                $rech_action = Action::find($action_id[$index]);
-                if ($rech_action) {
-                    $rech_action->date = $date_action[$index];
-                    $rech_action->save();
-                }
 
                 $suivic = new Suivi_amelioration();
                 $suivic->type = 'action';
@@ -323,7 +327,6 @@ class AmeliorationController extends Controller
                 $actionn->action = $naction[$index];
                 $actionn->page = 'am';
                 $actionn->type = 'corrective';
-                $actionn->date = $date_action[$index];
                 $actionn->poste_id = $poste_id[$index];
                 $actionn->risque_id = $risque[$index];
                 $actionn->save();
@@ -358,7 +361,6 @@ class AmeliorationController extends Controller
                 $actionn->action = $action[$index];
                 $actionn->page = 'am';
                 $actionn->type = 'corrective';
-                $actionn->date = $date_action[$index];
                 $actionn->poste_id = $poste_id[$index];
                 $actionn->risque_id = $risquee->id;
                 $actionn->save();

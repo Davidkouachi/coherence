@@ -146,15 +146,50 @@
                                                 <div class="row g-4">
                                                     <div class="col-lg-4">
                                                         <div class="form-group">
-                                                            <label class="form-label" for="Cause">
-                                                                Date
+                                                            <label class="form-label">
+                                                                Date 
                                                             </label>
                                                             <div class="form-control-wrap">
-                                                                <input required name="date_fiche" type="date" class="form-control" value="{{ \Carbon\Carbon::now()->toDateString() }}" max="{{ \Carbon\Carbon::now()->toDateString() }}">
+                                                                <input id="date" name="date_fiche" type="date" class="form-control" value="{{ \Carbon\Carbon::now()->toDateString() }}" onchange="checkDate()" max="{{ \Carbon\Carbon::now()->toDateString() }}">
                                                             </div>
                                                         </div>
                                                     </div>
                                                     <div class="col-lg-4">
+                                                        <div class="form-group">
+                                                            <label class="form-label">
+                                                                Nombre de jours
+                                                            </label>
+                                                            <div class="form-control-wrap">
+                                                                <select id="nbre_jour" required name="nbre_jour" class="form-select " >
+                                                                    @for ($i = 1; $i <= 31; $i++)
+                                                                        <option {{ $i === 5 ? 'selected' : '' }} value="{{ $i }}" >
+                                                                            {{ $i }}
+                                                                        </option>
+                                                                    @endfor
+                                                                </select>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-lg-4">
+                                                        <div class="form-group">
+                                                            <label class="form-label">
+                                                                Date limite
+                                                            </label>
+                                                            <div class="form-control-wrap">
+                                                                <input readonly id="date_limite" name="date_limite" type="text" class="form-control">
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-lg-12 col-xxl-12">
+                                        <div class="card card-bordered">
+                                            <div class="card-inner">
+                                                <div class="row g-4">
+                                                    <div class="col-lg-6">
                                                         <div class="form-group">
                                                             <label class="form-label" for="controle">
                                                                 Lieu
@@ -164,7 +199,7 @@
                                                             </div>
                                                         </div>
                                                     </div>
-                                                    <div class="col-lg-4">
+                                                    <div class="col-lg-6">
                                                         <div class="form-group">
                                                             <label class="form-label" for="controle">
                                                                 Détecteur (Agent / Client)
@@ -1155,8 +1190,8 @@
                                                                             </div>
                                                                         </div>
                                                                     </div>
-                                                                    <div class="col-lg-12">
-                                                                        <div class="form-group">
+                                                                    <div class="col-lg-7">
+                                                                            <div class="form-group">
                                                                             <label class="form-label" for="controle">
                                                                                 Action Corrective
                                                                             </label>
@@ -1164,8 +1199,6 @@
                                                                                 <input required placeholder="Saisie obligatoire" name="action[]" type="text" class="form-control" >
                                                                             </div>
                                                                         </div>
-                                                                    </div>
-                                                                    <div class="col-lg-4">
                                                                                 <div class="form-group">
                                                                                     <label class="form-label" for="Coût">
                                                                                         Responsable
@@ -1177,16 +1210,8 @@
                                                                                         ${postes.map(poste => `<option value="${poste.id}">${poste.nom}</option>`).join('')}
                                                                                     </select>
                                                                                 </div>
-                                                                                <div class="form-group">
-                                                                                    <label class="form-label" for="Coût">
-                                                                                        Date prévisionnelle de réalisation
-                                                                                    </label>
-                                                                                    <div class="form-control-wrap">
-                                                                                        <input required name="date_action[]" type="date" class="form-control" min="{{ \Carbon\Carbon::now()->toDateString() }}" value="{{ \Carbon\Carbon::now()->toDateString() }}">
-                                                                                    </div>
-                                                                                </div>
                                                                     </div>
-                                                                    <div class="col-lg-8">
+                                                                    <div class="col-lg-5">
                                                                         <div class="form-group text-center">
                                                                             <label class="form-label" for="description">
                                                                                 Commentaire
@@ -1346,7 +1371,7 @@
                                                                         </div>
                                                                     </div>
                                                                     <input required style="display:none;" name="resume[]" value="0" type="text" >
-                                                                    <div class="col-lg-12">
+                                                                    <div class="col-lg-7">
                                                                         <div class="form-group">
                                                                             <label class="form-label" for="controle">
                                                                                 Action Corrective
@@ -1357,8 +1382,6 @@
                                                                                 <input style="display:none;" name="action_id[]" value="${action.id}" type="int" class="form-control" >
                                                                             </div>
                                                                         </div>
-                                                                    </div>
-                                                                    <div class="col-lg-4">
                                                                                 <div class="form-group">
                                                                                     <label class="form-label" for="Coût">
                                                                                         Responsable
@@ -1367,16 +1390,8 @@
                                                                                         ${postes.map(poste => `<option value="${poste.id}" ${action.poste_id == poste.id ? 'selected' : ''}>${poste.nom}</option>`).join('')}
                                                                                     </select>
                                                                                 </div>
-                                                                                <div class="form-group">
-                                                                                    <label class="form-label" for="Coût">
-                                                                                        Date prévisionnelle de réalisation
-                                                                                    </label>
-                                                                                    <div class="form-control-wrap">
-                                                                                        <input required name="date_action[]" type="date" class="form-control" min="{{ \Carbon\Carbon::now()->toDateString() }}" value="{{ \Carbon\Carbon::now()->toDateString() }}">
-                                                                                    </div>
-                                                                                </div>
                                                                     </div>
-                                                                    <div class="col-lg-8">
+                                                                    <div class="col-lg-5">
                                                                         <div class="form-group text-center">
                                                                             <label class="form-label" for="description">
                                                                                 Commentaire
@@ -1488,5 +1503,38 @@
     }
 }
 </script>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            // Écoute des changements sur le champ de date et le champ du nombre de jours
+            document.getElementById('date').addEventListener('change', updateDateLimite);
+            document.getElementById('nbre_jour').addEventListener('change', updateDateLimite);
+
+            function updateDateLimite() {
+                var dateDebut = document.getElementById('date').value;
+                var nbreJours = parseInt(document.getElementById('nbre_jour').value);
+
+                // Vérification si la date de début est sélectionnée et le nombre de jours est valide
+                if (dateDebut && !isNaN(nbreJours)) {
+                    var dateLimite = new Date(dateDebut);
+                    dateLimite.setDate(dateLimite.getDate() + nbreJours);
+
+                    // Extraction des éléments de date individuels
+                    var jour = ('0' + dateLimite.getDate()).slice(-2); // Jour
+                    var mois = ('0' + (dateLimite.getMonth() + 1)).slice(-2); // Mois (ajouter +1 car les mois commencent à 0)
+                    var annee = dateLimite.getFullYear(); // Année
+
+                    // Formatage de la date au format dd/mm/aaaa
+                    var formattedDate = jour + '/' + mois + '/' + annee;
+
+                    // Mettre à jour la valeur du champ "Date limite de traitement"
+                    document.getElementById('date_limite').value = formattedDate;
+                }
+            }
+
+            // Appel initial pour mettre à jour la date limite lors du chargement de la page
+            updateDateLimite();
+        });
+    </script>
 
 @endsection

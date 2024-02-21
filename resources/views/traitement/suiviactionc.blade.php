@@ -38,33 +38,27 @@
                                         <table class="datatable-init table">
                                             <thead>
                                                 <tr>
-                                                    <th></th>
-                                                    <th>Type</th>
-                                                    <th>Non Conformité</th>
                                                     <th>Action</th>
-                                                    <th>Délai</th>
+                                                    <th>Responsable</th>
+                                                    <th>Risque</th>
+                                                    <th>Processus</th>
                                                     <th></th>
                                                 </tr>
                                             </thead>
                                             <tbody>
                                                 @foreach ($ams as $key => $am)
+                                                    @if($am->nbre_am > 0)
                                                     <tr>
-                                                        <td>{{ $key+1 }}</td>
-                                                        <td>
-                                                            @if ($am->type === 'contentieux')
-                                                                Contentieux
-                                                            @endif
-                                                            @if ($am->type === 'reclamation')
-                                                                Réclamation
-                                                            @endif
-                                                            @if ($am->type === 'non_conformite_interne')
-                                                                Non conformité
-                                                            @endif
-                                                        </td>
-                                                        <td>{{ $am->non_conformite }}</td>
                                                         <td>{{ $am->action }}</td>
-                                                        <td>{{ \Carbon\Carbon::parse($am->delai)->translatedFormat('j F Y ') }}</td>
+                                                        <td>{{ $am->poste }}</td>
+                                                        <td>{{ $am->risque }}</td>
+                                                        <td>{{ $am->processus }}</td>
                                                         <td>
+                                                            <a data-bs-toggle="modal"
+                                                                data-bs-target="#modalAm{{ $am->id }}"
+                                                                href="#" class="btn btn-icon btn-white btn-dim btn-sm btn-info border border-1 border-white rounded">
+                                                                <em class="icon ni ni-notice"></em>
+                                                            </a>
                                                             <a data-bs-toggle="modal"
                                                                 data-bs-target="#modalDetail{{ $am->id }}"
                                                                 href="#" class="btn btn-icon btn-white btn-dim btn-sm btn-warning border border-1 border-white rounded">
@@ -72,6 +66,7 @@
                                                             </a>
                                                         </td>
                                                     </tr>
+                                                    @endif
                                                 @endforeach
                                             </tbody>
                                         </table>
@@ -84,6 +79,136 @@
             </div>
         </div>
     </div>
+
+    @foreach ($ams as $am)
+        <div class="modal fade zoom" tabindex="-1" id="modalAm{{ $am->id }}">
+            <div class="modal-dialog modal-lg" role="document" style="width: 100%;">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Fiche(s) d'incident(s)</h5>
+                        <a href="#" class="close" data-bs-dismiss="modal" aria-label="Close"><em
+                                class="icon ni ni-cross"></em></a>
+                    </div>
+                    <div class="modal-body">
+                        <form class="nk-block">
+                            <div class="row g-gs">
+                                @foreach($amData[$am->id] as $key => $amDatas)
+                                <div class="col-md-12 col-xxl-12">
+                                    <div class="card card-bordered">
+                                        <div class="card-inner">
+                                            <div class="row g-4">
+                                                <div class="col-lg-12">
+                                                    <div class="card-head">
+                                                        <h5 class="card-title">{{ $key+1 }}</h5>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label class="form-label" for="Cause">
+                                                            Type
+                                                        </label>
+                                                        <div class="form-control-wrap">
+                                                            <input @if ($amDatas['type'] === 'contentieux')
+                                                                value="Contentieux"
+                                                            @elseif ($amDatas['type'] === 'reclamation')
+                                                                value="Réclamation"
+                                                            @elseif ($amDatas['type'] === 'non_conformite_interne')
+                                                                value="Non conformité"
+                                                            @endif
+                                                            readonly type="text" class="form-control" id="Cause">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-4">
+                                                    <div class="form-group">
+                                                        <label class="form-label" for="Cause">
+                                                            Date de reception
+                                                        </label>
+                                                        <div class="form-control-wrap">
+                                                            <input value="{{ \Carbon\Carbon::parse($amDatas['date_fiche'])->translatedFormat('j F Y ') }}" readonly type="text" class="form-control" id="Cause">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-4">
+                                                    <div class="form-group">
+                                                        <label class="form-label" for="Cause">
+                                                            Date Limite de traitement
+                                                        </label>
+                                                        <div class="form-control-wrap">
+                                                            <input value="{{ \Carbon\Carbon::parse($amDatas['date_limite'])->translatedFormat('j F Y ') }}" readonly type="text" class="form-control" id="Cause">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-4">
+                                                    <div class="form-group">
+                                                        <label class="form-label" for="Cause">
+                                                            Nombres de jours
+                                                        </label>
+                                                        <div class="form-control-wrap">
+                                                            <input value="{{ $amDatas['nbre_jour'] }}" readonly type="text" class="form-control" id="Cause">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-6">
+                                                    <div class="form-group">
+                                                        <label class="form-label" for="Cause">
+                                                            Lieu
+                                                        </label>
+                                                        <div class="form-control-wrap">
+                                                            <input value="{{ $amDatas['lieu'] }}" readonly type="text" class="form-control" id="Cause">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-6">
+                                                    <div class="form-group">
+                                                        <label class="form-label" for="Cause">
+                                                            Détecteur
+                                                        </label>
+                                                        <div class="form-control-wrap">
+                                                            <input value="{{ $amDatas['detecteur'] }}" readonly type="text" class="form-control" id="Cause">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-12">
+                                                    <div class="form-group">
+                                                        <label class="form-label" for="Cause">
+                                                            Non-conformité
+                                                        </label>
+                                                        <div class="form-control-wrap">
+                                                            <input value="{{ $amDatas['non_conformite'] }}" readonly type="text" class="form-control" id="Cause">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-6">
+                                                    <div class="form-group">
+                                                        <label class="form-label">
+                                                            Conséquences
+                                                        </label>
+                                                        <div class="form-control-wrap">
+                                                            <textarea readonly required name="causes" class="form-control no-resize" id="default-textarea">{{ $amDatas['consequence'] }}</textarea>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-6">
+                                                    <div class="form-group">
+                                                        <label class="form-label">
+                                                            Causes
+                                                        </label>
+                                                        <div class="form-control-wrap">
+                                                            <textarea readonly required name="causes" class="form-control no-resize" id="default-textarea">{{ $amDatas['cause'] }}</textarea>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                @endforeach
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    @endforeach
 
     @foreach ($ams as $am)
         <div class="modal fade zoom" tabindex="-1" id="modalDetail{{ $am->id }}">
@@ -114,21 +239,11 @@
                                                     </div>
                                                     <div class="col-lg-12">
                                                         <div class="form-group">
-                                                            <label class="form-label" for="controle">
-                                                                Délai
-                                                            </label>
-                                                            <div class="form-control-wrap">
-                                                                <input disabled value="{{ \Carbon\Carbon::parse($am->delai)->translatedFormat('j F Y ') }}" type="text" class="form-control" readonly>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-lg-12">
-                                                        <div class="form-group">
                                                             <label class="form-label" for="Coût">
                                                                 Responsable
                                                             </label>
                                                             <div class="form-control-wrap">
-                                                                <input disabled value="{{ $am->responsable }}" type="text" class="form-control" readonly>
+                                                                <input disabled value="{{ $am->poste }}" type="text" class="form-control" readonly>
                                                             </div>
                                                         </div>
                                                     </div>

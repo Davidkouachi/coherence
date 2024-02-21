@@ -24,6 +24,7 @@ class CreateAutorisationsTable extends Migration
             $table->string('val_risk');
             $table->string('act_n_val');
             $table->string('color_para');
+            $table->string('list_cause');
             $table->string('suivi_actp');
             $table->string('list_actp');
             $table->string('suivi_actc');

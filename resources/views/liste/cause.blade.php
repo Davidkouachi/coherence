@@ -59,9 +59,9 @@
                                                                 <form method="post" action="{{ route('index_etat_cause') }}">
                                                                     @csrf
                                                                     <input type="text" name="id" value="{{$cause->id}}" style="display: none;">
-                                                                    <a data-bs-toggle="modal" data-bs-target="#modalModif{{ $cause->id }}" class="btn btn-icon btn-white btn-dim btn-sm btn-info">
+                                                                    <!--<a data-bs-toggle="modal" data-bs-target="#modalModif{{ $cause->id }}" class="btn btn-icon btn-white btn-dim btn-sm btn-info">
                                                                         <em class="icon ni ni-edit"></em>
-                                                                    </a>
+                                                                    </a>-->
                                                                     <button class="btn btn-icon btn-white btn-dim btn-sm btn-primary">
                                                                         <em class="icon ni ni-printer-fill"></em>
                                                                     </button>
@@ -86,40 +86,59 @@
         <div class="modal fade zoom" tabindex="-1" id="modalModif{{ $cause->id }}">
             <div class="modal-dialog modal-lg" role="document" style="width: 100%;">
                 <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title">Mise à jour </h5>
-                        <a href="#" class="close" data-bs-dismiss="modal" aria-label="Close">
-                            <em class="icon ni ni-cross"></em>
-                        </a>
-                    </div>
-                    <div class="modal-body">
-                        <form method="post" action="{{ route('cause_modif') }}">
-                            @csrf
-                            <div class="row g-4 mb-4" >
-                                <div class="col-lg-12">
-                                    <div class="form-group">
-                                        <label class="form-label" >
-                                            Cause probable
-                                        </label>
-                                        <div class="form-control-wrap">
-                                            <input placeholder="Saisie obligatoire" required type="text" class="form-control" value="{{ $cause->nom }}" name="cause" >
-                                            <input type="text" name="id" value="{{ $cause->id }}" style="display: none;">
+                    @if($cause->suivi != 'valider')
+                        <div class="modal-body modal-body-lg text-center">
+                            <div class="nk-modal">
+                                <em class="nk-modal-icon icon icon-circle icon-circle-xxl ni ni-alert bg-warning"></em>
+                                <h4 class="nk-modal-title">Mise à jour impossible</h4>
+                                <div class="nk-modal-text">
+                                    <div class="caption-text">
+                                        <span>La cause que vous essayez de mettre a jour a déjà été valider</span>
+                                    </div>
+                                </div>
+                                <div class="nk-modal-action">
+                                    <a href="#" class="btn btn-lg btn-mw btn-warning"data-bs-dismiss="modal">
+                                        ok
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    @else
+                        <div class="modal-header">
+                            <h5 class="modal-title">Mise à jour </h5>
+                            <a href="#" class="close" data-bs-dismiss="modal" aria-label="Close">
+                                <em class="icon ni ni-cross"></em>
+                            </a>
+                        </div>
+                        <div class="modal-body">
+                            <form method="post" action="{{ route('cause_modif') }}">
+                                @csrf
+                                <div class="row g-4 mb-4" >
+                                    <div class="col-lg-12">
+                                        <div class="form-group">
+                                            <label class="form-label" >
+                                                Cause probable
+                                            </label>
+                                            <div class="form-control-wrap">
+                                                <input placeholder="Saisie obligatoire" required type="text" class="form-control" value="{{ $cause->nom }}" name="cause" >
+                                                <input type="text" name="id" value="{{ $cause->id }}" style="display: none;">
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
-                            <div class="row g-gs">
-                                <div class="col-lg-12">
-                                    <div class="form-group text-center">
-                                        <button type="submit" class="btn btn-lg btn-primary btn-dim">
-                                            <em class="ni ni-edit me-2"></em>
-                                            <em>Mise à jour</em>
-                                        </button>
+                                <div class="row g-gs">
+                                    <div class="col-lg-12">
+                                        <div class="form-group text-center">
+                                            <button type="submit" class="btn btn-lg btn-primary btn-dim">
+                                                <em class="ni ni-edit me-2"></em>
+                                                <em>Mise à jour</em>
+                                            </button>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                        </form>
-                    </div>
+                            </form>
+                        </div>
+                    @endif
                 </div>
             </div>
         </div>

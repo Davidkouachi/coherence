@@ -59,9 +59,15 @@
                             </div>
                         </div>
 
-                        <div class="col-md-12 col-xxl-12" id="groupesContainer">
+                        <div class="col-lg-6 col-xxl-6">
                             <div class="card card-bordered">
                                 <div class="card-inner">
+                                    <div class="card-head">
+                                        <h5 class="card-title">
+                                            Type 
+                                            <em class="ni ni-block-over" ></em>
+                                        </h5>
+                                    </div>
                                     <div class="row g-4 ">
                                         <div class="col-lg-4">
                                             <div class="form-group text-center">
@@ -97,21 +103,58 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="col-md-12 col-xxl-12" id="groupesContainer">
-                            <div class="card card-bordered">
-                                <div class="card-inner">
-                                    <div class="row g-4">
-                                        <div class="col-lg-4">
-                                            <div class="form-group">
-                                                <label class="form-label" for="Cause">
-                                                    Date
-                                                </label>
-                                                <div class="form-control-wrap">
-                                                    <input required name="date_fiche" type="date" class="form-control" value="{{ $am->date_fiche }}"  max="{{ \Carbon\Carbon::now()->toDateString() }}">
+
+                                    <div class="col-lg-6 col-xxl-6">
+                                        <div class="card card-bordered">
+                                            <div class="card-inner">
+                                                <div class="row g-4">
+                                                    <div class="col-lg-4">
+                                                        <div class="form-group">
+                                                            <label class="form-label">
+                                                                Date de reception
+                                                            </label>
+                                                            <div class="form-control-wrap">
+                                                                <input id="date" name="date_fiche" type="date" class="form-control" value="{{ $am->date_fiche }}" onchange="checkDate()" max="{{ \Carbon\Carbon::now()->toDateString() }}">
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-lg-4">
+                                                        <div class="form-group">
+                                                            <label class="form-label">
+                                                                Nombre de jours
+                                                            </label>
+                                                            <div class="form-control-wrap">
+                                                                <select id="nbre_jour" required name="nbre_jour" class="form-select " >
+                                                                    <?php $nbre = intval($am->nbre_jour); ?>
+                                                                    @for ($i = 1; $i <= 31; $i++)
+                                                                        <option {{ $i === $nbre ? 'selected' : '' }} value="{{ $i }}" >
+                                                                            {{ $i }}
+                                                                        </option>
+                                                                    @endfor
+                                                                </select>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-lg-4">
+                                                        <div class="form-group">
+                                                            <label class="form-label">
+                                                                Date limite de traitement
+                                                            </label>
+                                                            <div class="form-control-wrap">
+                                                                <input readonly id="date_limite" name="date_limite" type="text" class="form-control">
+                                                            </div>
+                                                        </div>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="col-lg-4">
+                                    </div>
+
+                        <div class="col-lg-12 col-xxl-12" id="groupesContainer">
+                            <div class="card card-bordered">
+                                <div class="card-inner">
+                                    <div class="row g-4">
+                                        <div class="col-lg-6">
                                             <div class="form-group">
                                                 <label class="form-label" for="controle">
                                                     Lieu
@@ -121,7 +164,7 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="col-lg-4">
+                                        <div class="col-lg-6">
                                             <div class="form-group">
                                                 <label class="form-label" for="controle">
                                                     Détecteur (Agent / Client)
@@ -227,7 +270,7 @@
                                                                                 </div>
                                                                             </div>
                                                                         </div>
-                                                                        @if($actions['trouve'] !== 'risque')
+                                                                        @if($actions['trouve'] === 'cause')
                                                                         <div class="col-lg-12">
                                                                             <div class="form-group">
                                                                                 <label class="form-label" for="controle">
@@ -239,7 +282,7 @@
                                                                             </div>
                                                                         </div>
                                                                         @endif
-                                                                        <div class="col-lg-12">
+                                                                        <div class="col-lg-7">
                                                                             <div class="form-group">
                                                                                 <label class="form-label" for="controle">
                                                                                     Action Corrective
@@ -248,8 +291,6 @@
                                                                                     <input disabled value="{{ $actions['action'] }}" type="text" class="form-control">
                                                                                 </div>
                                                                             </div>
-                                                                        </div>
-                                                                        <div class="col-lg-4">
                                                                             <div class="form-group">
                                                                                 <label class="form-label" for="Coût">
                                                                                     Responsable
@@ -262,16 +303,8 @@
                                                                                     @endforeach
                                                                                 </select>
                                                                             </div>
-                                                                            <div class="form-group">
-                                                                                <label class="form-label" for="Coût">
-                                                                                    Date prévisionnelle de réalisation
-                                                                                </label>
-                                                                                <div class="form-control-wrap">
-                                                                                    <input required name="delai[]" value="{{ $actions['delai'] }}" type="date" class="form-control">
-                                                                                </div>
-                                                                            </div>
                                                                         </div>
-                                                                        <div class="col-lg-8">
+                                                                        <div class="col-lg-5">
                                                                             <div class="form-group text-center">
                                                                                 <label class="form-label" for="description">
                                                                                     Commentaire
@@ -304,6 +337,10 @@
                             </div>
                         </div>
 
+                        <div id="dynamic-fields">
+
+                        </div>
+
                         <div class="col-md-12 col-xxl-12">
                             <div class="card card-bordered card-preview">
                                 <div class="card-inner row g-gs">
@@ -324,6 +361,15 @@
         </div>
     </div>
 </div>
+
+<ul class="nk-sticky-toolbar" >
+    <li class="demo-settings" id="btn-new-action"> 
+        <a class="toggle tipinfo action_new" aria-label="Nouvelle Action" data-bs-original-title="Nouvelle Action" data-type="new">
+            <em class="icon ni ni-plus">
+            </em>
+        </a>
+    </li>
+</ul>
 
 <script>
     var postes = @json($postes);
@@ -348,5 +394,154 @@
             });
         });
     </script>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            // Écoute des changements sur le champ de date et le champ du nombre de jours
+            document.getElementById('date').addEventListener('change', updateDateLimite);
+            document.getElementById('nbre_jour').addEventListener('change', updateDateLimite);
+
+            function updateDateLimite() {
+                var dateDebut = document.getElementById('date').value;
+                var nbreJours = parseInt(document.getElementById('nbre_jour').value);
+
+                // Vérification si la date de début est sélectionnée et le nombre de jours est valide
+                if (dateDebut && !isNaN(nbreJours)) {
+                    var dateLimite = new Date(dateDebut);
+                    dateLimite.setDate(dateLimite.getDate() + nbreJours);
+
+                    // Extraction des éléments de date individuels
+                    var jour = ('0' + dateLimite.getDate()).slice(-2); // Jour
+                    var mois = ('0' + (dateLimite.getMonth() + 1)).slice(-2); // Mois (ajouter +1 car les mois commencent à 0)
+                    var annee = dateLimite.getFullYear(); // Année
+
+                    // Formatage de la date au format dd/mm/aaaa
+                    var formattedDate = jour + '/' + mois + '/' + annee;
+
+                    // Mettre à jour la valeur du champ "Date limite de traitement"
+                    document.getElementById('date_limite').value = formattedDate;
+                }
+            }
+
+            // Appel initial pour mettre à jour la date limite lors du chargement de la page
+            updateDateLimite();
+        });
+    </script>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        document.querySelectorAll(".action_new").forEach(function(button) {
+            button.addEventListener("click", function() {
+                var type = this.getAttribute("data-type");
+                addGroup(type);
+            });
+        });
+    });
+
+    function addGroup(type_new) {
+
+        var groupe = document.createElement("div");
+        groupe.className = "card card-bordered";
+        groupe.innerHTML = `
+                                        <div class="card-inner">
+                                            <div class="row g-4">
+                                                <div class="col-lg-12 col-xxl-12" >
+                                                    <div class="card">
+                                                        <div class="card-inner">
+                                                            <div class="card-head">
+                                                                <span class="badge badge-dot bg-primary">
+                                                                    Nouveau
+                                                                </span>
+                                                            </div>
+                                                                <div class="row g-4">
+                                                                    <div class="col-lg-6">
+                                                                        <div class="form-group">
+                                                                            <label class="form-label" for="Cause">
+                                                                                Processus
+                                                                            </label>
+                                                                            <input required style="display:none;" name="nature1[]" value="new" type="text" >
+                                                                            <select required id="responsable_idc" required name="processus_id1[]" class="form-select">
+                                                                                <option selected value="">
+                                                                                    Choisir un responsable
+                                                                                </option>
+                                                                                ${processuss.map(processus => `<option value="${processus.id}">${processus.nom}</option>`).join('')}
+                                                                            </select>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="col-lg-6">
+                                                                        <div class="form-group">
+                                                                            <label class="form-label" for="controle">
+                                                                                Risque
+                                                                            </label>
+                                                                            <div class="form-control-wrap">
+                                                                                <input required placeholder="Saisie obligatoire" name="risque1[]" type="text" class="form-control" >
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="col-lg-12">
+                                                                        <div class="form-group">
+                                                                            <label class="form-label" for="controle">
+                                                                                Résumé des causes
+                                                                            </label>
+                                                                            <div class="form-control-wrap">
+                                                                                <input required placeholder="Saisie obligatoire" name="resume1[]" type="text" class="form-control" >
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="col-lg-7">
+                                                                            <div class="form-group">
+                                                                            <label class="form-label" for="controle">
+                                                                                Action Corrective
+                                                                            </label>
+                                                                            <div class="form-control-wrap">
+                                                                                <input required placeholder="Saisie obligatoire" name="action1[]" type="text" class="form-control" >
+                                                                            </div>
+                                                                        </div>
+                                                                                <div class="form-group">
+                                                                                    <label class="form-label" for="Coût">
+                                                                                        Responsable
+                                                                                    </label>
+                                                                                    <select required id="responsable_idc" required name="poste_id1[]" class="form-select">
+                                                                                        <option selected value="">
+                                                                                            Choisir un responsable
+                                                                                        </option>
+                                                                                        ${postes.map(poste => `<option value="${poste.id}">${poste.nom}</option>`).join('')}
+                                                                                    </select>
+                                                                                </div>
+                                                                    </div>
+                                                                    <div class="col-lg-5">
+                                                                        <div class="form-group text-center">
+                                                                            <label class="form-label" for="description">
+                                                                                Commentaire
+                                                                            </label>
+                                                                            <div class="form-control-wrap">
+                                                                                <textarea required name="commentaire1[]" class="form-control no-resize" id="default-textarea"></textarea>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="col-lg-12">
+                                                                        <div class="form-group text-center">
+                                                                            <a class="btn btn-outline-danger btn-dim " id="suppr_nouvelle_action" >
+                                                                                Supprimer
+                                                                            </a>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                `;
+
+        groupe.querySelector("#suppr_nouvelle_action").addEventListener("click", function(event) {
+            event.preventDefault();
+
+            groupe.remove();
+        });
+
+        document.getElementById("dynamic-fields").appendChild(groupe);
+    }
+</script>
 
 @endsection

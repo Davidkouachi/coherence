@@ -356,7 +356,6 @@
                                                                 </div>
                                                             </div>
                                                         </div>
-
                                                         <div class="col-lg-12">
                                                             <div class="form-group">
                                                                 <label class="form-label" for="Cause">
@@ -519,7 +518,44 @@
                                                                 </div>
                                                             </div>
                                                         </div>
-
+                                                        <div class="col-lg-12">
+                                                            <div class="form-group">
+                                                                <label class="form-label" for="Cause">
+                                                                    Cause
+                                                                </label>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-lg-3">
+                                                            <div class="form-group align-items-center justify-content-center">
+                                                                <span class="preview-title overline-title">Liste des causes</span>
+                                                                <div class="row gy-4">
+                                                                    <div class="col-md-3 col-sm-6">
+                                                                        <div class="preview-block">
+                                                                            <div class="custom-control custom-radio">
+                                                                                <input type="radio" id="customRadio17lc" @php 
+                                                                                    if ($user->list_cause === 'oui') {
+                                                                                        echo "checked";
+                                                                                    }
+                                                                                @endphp name="list_cause" class="custom-control-input" value="oui" >
+                                                                                <label class="custom-control-label" for="customRadio17lc">Oui</label>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="col-md-3 col-sm-6">
+                                                                        <div class="preview-block">
+                                                                            <div class="custom-control custom-radio">
+                                                                                <input type="radio" id="customRadio18lc" name="list_cause" @php 
+                                                                                    if ($user->list_cause === 'non') {
+                                                                                        echo "checked";
+                                                                                    }
+                                                                                @endphp class="custom-control-input" value="non">
+                                                                                <label class="custom-control-label" for="customRadio18lc">Non</label>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
                                                         <div class="col-lg-12">
                                                             <div class="form-group">
                                                                 <label class="form-label" for="Cause">
@@ -620,7 +656,7 @@
                                                                 </div>
                                                             </div>
                                                         </div>
-                                                        <div class="col-lg-3">
+                                                        <!--<div class="col-lg-3">
                                                             <div class="form-group align-items-center justify-content-center">
                                                                 <span class="preview-title overline-title">Actions correctives éffectuées</span>
                                                                 <div class="row gy-4">
@@ -650,7 +686,7 @@
                                                                     </div>
                                                                 </div>
                                                             </div>
-                                                        </div>
+                                                        </div>-->
                                                         <div class="col-lg-3">
                                                             <div class="form-group align-items-center justify-content-center">
                                                                 <span class="preview-title overline-title">Liste des actions correctives</span>

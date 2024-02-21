@@ -13,6 +13,8 @@ class Amelioration extends Model
         'id',
         'type',
         'date_fiche',
+        'date_limite',
+        'nbre_jour',
         'date_cloture1',
         'lieu',
         'detecteur',
