@@ -84,8 +84,6 @@ class StatistiqueController extends Controller
 
     public function get_processus($id)
     {
-        $processus = Processuse::find($id);
-
         $types = ['non_conformite_interne', 'reclamation', 'contentieux'];
         $nbres = [];
 

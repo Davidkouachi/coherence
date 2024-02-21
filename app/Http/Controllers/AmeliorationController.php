@@ -299,7 +299,10 @@ class AmeliorationController extends Controller
         $am->statut = 'soumis';
         if ($choix_select === 'cause') {
             $am->cause_id = $causeSelect_id;
-            $am->risque_id = $risqueSelect_id;
+
+            $rech_cause = Cause::find($causeSelect_id);
+
+            $am->risque_id = $rech_cause->risque_id;
         }
         if ($choix_select === 'risque') {
             $am->risque_id = $risqueSelect_id;
