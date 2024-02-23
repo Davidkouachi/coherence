@@ -59,27 +59,16 @@ class StatistiqueController extends Controller
         $nbre_ehd_ap = Suivi_action::join('actions', 'actions.id', '=', 'suivi_actions.action_id')
                                     ->join('risques', 'risques.id', '=', 'actions.risque_id')
                                     ->where('suivi_actions.statut', 'realiser')
-                                    ->where('actions.date', '>=', 'suivi_actions.date_action')
+                                    ->where('actions.date', '<', 'suivi_actions.date_action')
                                     ->count();
         $nbre_hd_ap = Suivi_action::where('statut', '=', 'non-realiser')->count();
 
 
+        $nbre_am = Amelioration::all()->count();
         $nbre_ac = Action::where('type', 'corrective')->count();
-        $nbre_ed_ac = Suivi_amelioration::join('actions', 'actions.id', '=', 'suivi_ameliorations.action_id')
-                                    ->join('ameliorations', 'ameliorations.id', '=', 'suivi_ameliorations.amelioration_id')
-                                    ->where('suivi_ameliorations.statut', 'realiser')
-                                    ->where('ameliorations.date_limite', '>=', 'suivi_ameliorations.date_action')
-                                    ->count();
-        $nbre_ehd_ac = Suivi_amelioration::join('actions', 'actions.id', '=', 'suivi_ameliorations.action_id')
-                                    ->join('ameliorations', 'ameliorations.id', '=', 'suivi_ameliorations.amelioration_id')
-                                    ->where('suivi_ameliorations.statut', 'realiser')
-                                    ->where('ameliorations.date_limite', '<', 'suivi_ameliorations.date_action')
-                                    ->count();
-        $nbre_hd_ac = Suivi_amelioration::where('statut', '=', 'non-realiser')->count();
+        $nbre_poste = Poste::all()->count();
 
-
-
-        return view('statistique.index', ['statistics' => $statistics, 'processus' => $processus, 'nbre_processus' => $nbre_processus, 'nbre_risque' => $nbre_risque, 'nbre_cause' => $nbre_cause, 'nbre_ap' => $nbre_ap, 'nbre_ac' => $nbre_ac, 'nbre_ed_ap' => $nbre_ed_ap,'nbre_ehd_ap' => $nbre_ehd_ap,'nbre_hd_ap' => $nbre_hd_ap , 'nbre_ed_ac' => $nbre_ed_ac,'nbre_ehd_ac' => $nbre_ehd_ac,'nbre_hd_ac' => $nbre_hd_ac]);
+        return view('statistique.index', ['statistics' => $statistics, 'processus' => $processus, 'nbre_processus' => $nbre_processus, 'nbre_risque' => $nbre_risque, 'nbre_cause' => $nbre_cause, 'nbre_ap' => $nbre_ap, 'nbre_am' => $nbre_am, 'nbre_ed_ap' => $nbre_ed_ap,'nbre_ehd_ap' => $nbre_ehd_ap,'nbre_hd_ap' => $nbre_hd_ap , 'nbre_ac' => $nbre_ac,'nbre_poste' => $nbre_poste]);
     }
 
     public function get_processus($id)

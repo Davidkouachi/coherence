@@ -82,6 +82,9 @@
                                                         @endif
                                                         <td >
                                                             <div class="d-flex" >
+                                                                <a data-bs-toggle="modal" data-bs-target="#modalMotif{{ $am->id }}" href="#" class="btn btn-icon btn-white btn-dim btn-sm btn-danger">
+                                                                    <em class="icon ni ni-cc-alt"></em>
+                                                                </a>
                                                                 <form method="post" action="{{ route('index_amup2') }}">
                                                                 @csrf
                                                                     <input type="text" name="id" value="{{ $am->id }}" style="display: none;">
@@ -103,6 +106,9 @@
                                                                         <em class="icon ni ni-check"></em>
                                                                     </a>
                                                                 @endif
+                                                                <a data-bs-toggle="modal" data-bs-target="#modalDelete{{ $am->id }}" href="#" class="btn btn-icon btn-white btn-dim btn-sm btn-danger">
+                                                                    <em class="icon ni ni-trash"></em>
+                                                                </a>
                                                             </div>
                                                         </td>
                                                     </tr>
@@ -148,18 +154,56 @@
         </div>
     @endforeach
 
+    @foreach ($ams as $am)
+        <div class="modal fade" tabindex="-1" id="modalDelete{{ $am->id }}" aria-modal="true" role="dialog">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content"><a href="#" class="close" data-bs-dismiss="modal"><em
+                            class="icon ni ni-cross"></em></a>
+                    <div class="modal-body modal-body-lg text-center">
+                        <div class="nk-modal">
+                            <em class="nk-modal-icon icon icon-circle icon-circle-xxl ni ni-trash bg-danger"></em>
+                            <h4 class="nk-modal-title">Confirmation</h4>
+                            <div class="nk-modal-text">
+                                <div class="caption-text">
+                                    <span> Voulez-vous vraiment supprimer cet incident ?</span>
+                                </div>
+                            </div>
+                            <div class="nk-modal-action">
+                                <a href="/am_delete/{{ $am->id }}" class="btn btn-lg btn-mw btn-success me-2">
+                                    oui
+                                </a>
+                                <a href="#" class="btn btn-lg btn-mw btn-danger"data-bs-dismiss="modal">
+                                    non
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    @endforeach
+
     @foreach($ams as $am)
-        <div class="modal fade zoom" tabindex="-1" id="modalAjouter{{ $am->id }}">
+        <div class="modal fade zoom" tabindex="-1" id="modalMotif{{ $am->id }}">
             <div class="modal-dialog modal-lg" role="document" style="width: 100%;">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title">Détails</h5>
+                        <h5 class="modal-title">Détails Motif</h5>
                         <a href="#" class="close" data-bs-dismiss="modal" aria-label="Close"><em class="icon ni ni-cross"></em></a>
                     </div>
                     <div class="modal-body">
                         <form class="nk-block">
-                            <div class="row g-gs">
-                                
+                            <div class="row g-4">
+                                <div class="col-lg-12">
+                                    <div class="form-group">
+                                        <label class="form-label" for="Cause">
+                                            Motif(s)
+                                        </label>
+                                        <div class="form-control-wrap">
+                                            <textarea disabled  class="form-control no-resize" id="default-textarea">{{ $am->motif }}</textarea>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </form>
                     </div>

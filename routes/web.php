@@ -131,6 +131,7 @@ Route::middleware(['auth'])->group(function () {
         Route::post('/traitement_date', [AmeliorationController::class, 'date_recla'])->name('date_recla');
         Route::post('/traitement_eff', [AmeliorationController::class, 'eff_recla'])->name('eff_recla');
         Route::get('/am_update/{id}', [Updateamcontroller::class, 'am_update'])->name('am_update');
+        Route::get('/am_delete/{id}', [Updateamcontroller::class, 'am_delete'])->name('am_delete');
     /*----------------------------------------------------------------------------------------------------------------------------*/   
 
     /*--Statistique---------------------------------------------------------------------------------------------------------------*/

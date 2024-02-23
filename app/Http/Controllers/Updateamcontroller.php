@@ -175,13 +175,17 @@ class Updateamcontroller extends Controller
         $am->choix_select = $choix_select;
         if ($choix_select === 'cause') {
             $am->cause_id = $causeSelect_id;
-            $am->risque_id = $risqueSelect_id;
+
+            $rech_cause = Cause::find($causeSelect_id);
+            $am->risque_id = $rech_cause->risque_id;
         }
         if ($choix_select === 'risque') {
             $am->cause_id = null;
             $am->risque_id = $risqueSelect_id;
         }
         $am->update();
+
+        $suppr_suivi = Suivi_amelioration::where('amelioration_id', $am->id)->delete();
 
         foreach ($nature as $index => $valeur) {
 
@@ -258,6 +262,22 @@ class Updateamcontroller extends Controller
         return redirect()
             ->back()
             ->with('error', 'Validation de la mise à jour a échoué.');
+    }
+
+    public function am_delete($id)
+    {
+        $delete1 = rejet_am::where('amelioration_id', '=', $id)->delete();
+
+        $delete2 = suivi_amelioration::where('amelioration_id', '=', $id)->delete();
+
+        $delete3 = amelioration::where('id', '=', $id)->delete();
+
+        if($delete1 && $delete2 && $delete3 )
+        {
+            return redirect()->back()->with('success', 'Suppression éffectuée.');
+        }
+
+        return redirect()->back()->with('error', 'Echec de la Suppression.');
     }
     
 }

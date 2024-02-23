@@ -98,6 +98,12 @@ class ListeamController extends Controller
         $actionsData = [];
 
         foreach ($ams as $am) {
+
+            $rech = rejet_am::where('amelioration_id', '=', $am->id)->first();
+            if ($rech) {
+                $am->motif = $rech->motif;
+            }
+
             $am->nbre_action = Suivi_amelioration::where('amelioration_id', '=', $am->id)->count();
 
             $suivi = Suivi_amelioration::where('amelioration_id', '=', $am->id)->get();

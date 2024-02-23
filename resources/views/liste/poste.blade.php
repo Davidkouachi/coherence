@@ -40,6 +40,7 @@
                                                 <tr>
                                                     <th></th>
                                                     <th>Poste</th>
+                                                    <th>Disponibilité</th>
                                                     <th>Date de Création</th>
                                                     <th></th>
                                                 </tr>
@@ -49,6 +50,15 @@
                                                     <tr>
                                                         <td>{{ $key+1}}</td>
                                                         <td>{{ $poste->nom}}</td>
+                                                        <td class="
+                                                        @php
+                                                            if($poste->occupe === 'oui'){
+                                                                echo 'text-success';
+                                                            }else{
+                                                                echo 'text-danger';
+                                                            }
+                                                        @endphp
+                                                        " >{{ $poste->occupe }}</td>
                                                         <td>{{ \Carbon\Carbon::parse($poste->created_at)->translatedFormat('j F Y '.' à '.' h:i:s') }}</td>
                                                         <td>
                                                             <a data-bs-toggle="modal"

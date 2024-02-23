@@ -33,6 +33,10 @@ class ListeprocessusController extends Controller
         $processus = Processuse::all();
 
         $objectifData = [];
+        $risqueData = [];
+
+
+        $nbre_total = Amelioration::all()->count();
 
         foreach ($processus as $processu) {
 
@@ -46,7 +50,9 @@ class ListeprocessusController extends Controller
                 $processu->pdf_chemin = null; // Ou définissez-le comme vous le souhaitez
             }
 
+            $processu->nbre_risque = Risque::where('processus_id', $processu->id)->where('page', 'risk')->count();
             $processu->nbre = Objectif::where('processus_id', $processu->id)->count();
+
             $objectifs = Objectif::where('processus_id', $processu->id)->get();
 
             $objectifData[$processu->id] = [];
@@ -57,9 +63,32 @@ class ListeprocessusController extends Controller
                     'id' => $objectif->id,
                 ];
             }
+
+            $risques = Risque::where('processus_id', $processu->id)->where('page', 'risk')->get();
+
+            $risqueData[$processu->id] = [];
+            foreach($risques as $risque)
+            {
+                $risqueData[$processu->id][] = [
+                    'risque' => $risque->nom,
+                ];
+            }
+
+            $processu->nbre = Amelioration::join('risques', 'ameliorations.risque_id', 'risques.id')
+                                        ->join('processuses', 'risques.processus_id', 'processuses.id')
+                                        ->where('processuses.id', $processu->id)                                        
+                                        ->count();
+
+            if ($nbre_total != 0) {
+                $processu->progress = ($processu->nbre / $nbre_total) * 100;
+                $processu->progress = number_format($processu->progress, 2);
+            } else {
+                // Handle the case where $nbre_total is zero (optional)
+                $processu->progress = 0; // Set progress to zero or any other appropriate value
+            }
         }
 
-        return view('liste.processus', ['processus' => $processus, 'objectifData' => $objectifData]);
+        return view('liste.processus', ['processus' => $processus, 'objectifData' => $objectifData, 'risqueData' => $risqueData]);
     }
 
     public function processus_modif(Request $request)

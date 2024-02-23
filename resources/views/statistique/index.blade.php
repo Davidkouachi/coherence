@@ -67,16 +67,16 @@
                                     <div class="invest-data">
                                         <div class="invest-data-amount g-2">
                                             <div class="invest-data-history">
-                                                <div class="title text-center">Dans les délais</div>
-                                                <div class="amount text-center">{{ $nbre_ed_ap }}</div>
+                                                <div class="title text-center text-success">Dans les délais</div>
+                                                <div class="amount text-center text-success">{{ $nbre_ed_ap }}</div>
                                             </div>
                                             <div class="invest-data-history">
-                                                <div class="title text-center">Hors délais</div>
-                                                <div class="amount text-center">{{ $nbre_ehd_ap }}</div>
+                                                <div class="title text-center text-warning">Hors délais</div>
+                                                <div class="amount text-center text-warning">{{ $nbre_ehd_ap }}</div>
                                             </div>
                                             <div class="invest-data-history">
-                                                <div class="title text-center">Non Réaliser</div>
-                                                <div class="amount text-center">{{ $nbre_hd_ap }}</div>
+                                                <div class="title text-center text-danger">Non Réaliser</div>
+                                                <div class="amount text-center text-danger">{{ $nbre_hd_ap }}</div>
                                             </div>
                                         </div>
                                     </div>
@@ -87,21 +87,21 @@
                             <div class="card card-bordered  card-full">
                                 <div class="card-inner">
                                     <div class="card-amount">
-                                        <span class="amount">Action Corrective ({{ $nbre_ac }})</span>
+                                        <span class="amount">Données Statistiques</span>
                                     </div>
                                     <div class="invest-data">
                                         <div class="invest-data-amount g-2">
                                             <div class="invest-data-history">
-                                                <div class="title text-center">Dans les délais</div>
-                                                <div class="amount text-center">{{ $nbre_ed_ac }}</div>
+                                                <div class="title text-center">Incidents</div>
+                                                <div class="amount text-center">{{ $nbre_am }}</div>
                                             </div>
                                             <div class="invest-data-history">
-                                                <div class="title text-center">Hors délais</div>
-                                                <div class="amount text-center">{{ $nbre_ehd_ac }}</div>
+                                                <div class="title text-center">Actions correctives</div>
+                                                <div class="amount text-center">{{ $nbre_ac }}</div>
                                             </div>
                                             <div class="invest-data-history">
-                                                <div class="title text-center">Non Réaliser</div>
-                                                <div class="amount text-center">{{ $nbre_hd_ac }}</div>
+                                                <div class="title text-center">Postes</div>
+                                                <div class="amount text-center">{{ $nbre_poste }}</div>
                                             </div>
                                         </div>
                                     </div>
@@ -238,7 +238,7 @@
                                             <div class="form-control-wrap">
                                                 <div class="input-daterange date-picker-range input-group">
                                                     <input data-date-format="yyyy-mm-dd" name="date1" id="date1" type="text" class="form-control" />
-                                                    <div class="input-group-addon">TO</div>
+                                                    <div class="input-group-addon">au</div>
                                                     <input data-date-format="yyyy-mm-dd" name="date2" id="date2" type="text" class="form-control me-2" />
                                                     <button id="btn_rech" class="btn btn-outline-success" >
                                                         <em class="ni ni-search" ></em>
@@ -337,7 +337,7 @@
             var myChart = new Chart(ctx, {
                 type: 'doughnut',
                 data: {
-                    labels: ['non_conformite_interne', 'reclamation', 'contentieux'],
+                    labels: ['Non conformite interne', 'Réclamation', 'Contentieux'],
                     datasets: [{
                         data: data.data,
                         backgroundColor: ['orange', 'skyblue', 'red'],
@@ -432,7 +432,7 @@
             var myChart = new Chart(ctx, {
                 type: 'doughnut',
                 data: {
-                    labels: ['non_conformite_interne', 'reclamation', 'contentieux'],
+                    labels: ['Non conformite interne', 'Réclamation', 'Contentieux'],
                     datasets: [{
                         data: [data.data[0],data.data[1],data.data[2]],
                         backgroundColor: ['orange', 'skyblue', 'red'],

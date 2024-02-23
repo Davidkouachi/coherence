@@ -42,8 +42,10 @@
                                                 <tr>
                                                     <th></th>
                                                     <th>Approvisionnement</th>
-                                                    <th>Finalié</th>
-                                                    <th>nombre d'objectif</th>
+                                                    <!--<th>Finalié</th>-->
+                                                    <th>Nombre de risques</th>
+                                                    <th>Nombre d'objectif</th>
+                                                    <th>Pourcentage</th>
                                                     <th>Date de création</th>
                                                     <th></th>
                                                 </tr>
@@ -53,8 +55,19 @@
                                                     <tr>
                                                         <td>{{ $key+1}}</td>
                                                         <td>{{ $processu->nom}}</td>
-                                                        <td>{{ $processu->finalite}}</td>
+                                                        <!--<td>{{ $processu->finalite}}</td>-->
+                                                        <td>{{ $processu->nbre_risque}}</td>
                                                         <td>{{ $processu->nbre}}</td>
+                                                        <td>
+                                                            <div class="project-list-progress">
+                                                                <div class="progress progress-pill progress-md bg-light">
+                                                                    <div class="progress-bar" data-progress="{{$processu->progress}}" style="width: 100%;"></div>
+                                                                </div>
+                                                                <div class="project-progress-percent">
+                                                                    {{$processu->progress}}%
+                                                                </div>
+                                                            </div>
+                                                        </td>
                                                         <td>{{ \Carbon\Carbon::parse($processu->created_at)->translatedFormat('j F Y '.' à '.' H:i:s') }}</td>
                                                         <td>
                                                             <div class="d-flex" >
@@ -66,6 +79,13 @@
                                                                         href="#" class="btn btn-icon btn-white btn-dim btn-sm btn-warning border border-1 border-white rounded">
                                                                         <em class="icon ni ni-eye"></em>
                                                                     </a>
+                                                                    @if($processu->nbre_risque > 0)
+                                                                    <a data-bs-toggle="modal"
+                                                                        data-bs-target="#modalRisque{{$processu->id}}"
+                                                                        href="#" class="btn btn-icon btn-white btn-dim btn-sm btn-danger border border-1 border-white rounded">
+                                                                        <em class="icon ni ni-list-thumb"></em>
+                                                                    </a>
+                                                                    @endif
                                                                     <a data-bs-toggle="modal"
                                                                         data-bs-target="#modalModif{{$processu->id}}"
                                                                         href="#" class="btn btn-icon btn-white btn-dim btn-sm btn-info border border-1 border-white rounded">
@@ -155,6 +175,46 @@
                                                             </div>
                                                         </div>
                                                     </div>
+                                                </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    @endforeach
+
+    @foreach ($processus as $processu)
+        <div class="modal fade zoom" tabindex="-1" id="modalRisque{{ $processu->id }}">
+            <div class="modal-dialog modal-lg" role="document" style="width: 100%;">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Risques</h5>
+                        <a href="#" class="close" data-bs-dismiss="modal" aria-label="Close"><em
+                                class="icon ni ni-cross"></em></a>
+                    </div>
+                    <div class="modal-body">
+                        <form class="nk-block" >
+                            <div class="row g-gs">
+                                <div class="col-md-12 col-xxl-12">
+                                    <div class="">
+                                        <div class="card-inner">
+                                                <div class="row g-4">
+                                                    @foreach ($risqueData[$processu->id] as $key => $risqueDat)
+                                                    <div class="col-lg-12">
+                                                        <div class="form-group">
+                                                            <label class="form-label" for="Cause">
+                                                                Risque {{ $key+1 }}
+                                                            </label>
+                                                            <div class="form-control-wrap">
+                                                                <input value="{{ $risqueDat['risque'] }}" readonly type="text" class="form-control" id="Cause">
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    @endforeach
                                                 </div>
                                         </div>
                                     </div>
