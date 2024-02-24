@@ -49,10 +49,17 @@ class ListecauseController extends Controller
 
         foreach ($causes as $key => $cause) {
 
-            $cause->nbre = Amelioration::where('cause_id', $cause->id)->where('choix_select', 'cause')->count();;
+            if($nbre_total > 0){
 
-            $cause->progess = ($cause->nbre / $nbre_total) * 100;
-            $cause->progess = number_format($cause->progess, 2);
+                $cause->nbre = Amelioration::where('cause_id', $cause->id)->where('choix_select', 'cause')->count();;
+                $cause->progess = ($cause->nbre / $nbre_total) * 100;
+                $cause->progess = number_format($cause->progess, 2);
+
+            }else{
+                
+                $cause->progess = 0;
+
+            }
 
         }
 

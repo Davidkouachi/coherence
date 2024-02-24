@@ -53,7 +53,7 @@
                                                         <td>{{ $am->action }}</td>
                                                         <td>{{ $am->poste }}</td>
                                                         <td>{{ $am->risque }}</td>
-                                                        <td>{{ $am->processus }}</td>
+                                                        <td>{{ $am->delai }}</td>
                                                         <td>{{ $am->nbre_am }}</td>
                                                         <td>
                                                             <a data-bs-toggle="modal"

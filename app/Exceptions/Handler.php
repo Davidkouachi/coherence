@@ -38,4 +38,13 @@ class Handler extends ExceptionHandler
             //
         });
     }
+
+    public function render($request, Throwable $e)
+    {
+        if ($e instanceof QueryException) {
+            return response()->view('errorData.blade.php', [], 500);
+        }
+
+        return parent::render($request, $e);
+    }
 }

@@ -33,6 +33,7 @@
                 </div>
                 <div class="nk-block">
                     <div class="row g-gs">
+
                         <div class="col-lg-4 col-xxl-4 ">
                             <div class="card card-bordered  card-full">
                                 <div class="card-inner">
@@ -58,6 +59,7 @@
                                 </div>
                             </div>
                         </div>
+
                         <div class="col-lg-4 col-xxl-4 ">
                             <div class="card card-bordered  card-full">
                                 <div class="card-inner">
@@ -83,6 +85,7 @@
                                 </div>
                             </div>
                         </div>
+
                         <div class="col-lg-4 col-xxl-4 ">
                             <div class="card card-bordered  card-full">
                                 <div class="card-inner">
@@ -108,6 +111,17 @@
                                 </div>
                             </div>
                         </div>
+
+                        @php 
+                            $maxProgress = 0;
+                        @endphp
+
+                        @foreach ($statistics as $type => $stat)
+                            @php 
+                                $maxProgress = max($maxProgress, $stat['progres']);
+                            @endphp
+                        @endforeach
+
                         @foreach ($statistics as $type => $stat)
                             <div class="col-lg-4">
                                 <div class="card card-bordered card-full">
@@ -123,8 +137,11 @@
                                                 @if ($type === 'contentieux')
                                                      Contentieux
                                                 @endif
-                                                <span class="currency currency-usd">
-                                                    ({{ $stat['total'] }})
+                                                <span class="currency currency-usd ">
+                                                    {{ $stat['total'] }} 
+                                                    (<span class="{{ $stat['progres'] === $maxProgress ? 'text-danger' : 'text-success' }} " >
+                                                        {{ $stat['progres'] }} %
+                                                    </span>)
                                                 </span>
                                             </span>
                                         </div>
@@ -206,7 +223,8 @@
                                 </div>
                             </div>
                         @endforeach
-                            <div class="col-lg-6">
+
+                            <div class="col-lg-4">
                                 <div class="card card-bordered card-full">
                                     <div class="card-inner" >
                                         <div class="form-group text-center">
@@ -230,7 +248,33 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-lg-6">
+
+                            <div class="col-lg-4">
+                                <div class="card card-bordered card-full">
+                                    <div class="card-inner" >
+                                        <div class="form-group text-center">
+                                            <label class="form-label" for="cf-full-name">Risque</label>
+                                            <select name="risque_id" class="form-select text-center" id="selectRisque">
+                                                <option value="">
+                                                    Choisir un risque
+                                                </option>
+                                                @foreach ($risques as $risque)
+                                                <option value="{{$risque->id}}">
+                                                    {{$risque->nom}}
+                                                </option>
+                                                @endforeach
+                                            </select>
+                                        </div>
+
+                                        <div id="camenber_risk">
+
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-lg-4">
                                 <div class="card card-bordered card-full">
                                     <div class="card-inner">
                                         <div class="form-group text-center">
@@ -254,7 +298,130 @@
                                     </div>
                                 </div>
                             </div>
+
+                        <div class="col-lg-6">
+                            <div class="card card-bordered card-full">
+                                <div class="card-inner">
+                                    <div class="card-title-group">
+                                        <div class="card-title">
+                                            <h6 class="title">
+                                                <span class="me-2">
+                                                Quelques Risques
+                                                </span>
+                                                <!--<a href="{{ route('index_liste_risque') }}" class="btn btn-outline-warning btn-dim">
+                                                    <em class="me-1" >Voir Plus</em>
+                                                    <em class="ni ni-eye"></em>
+                                                </a>-->
+                                            </h6>
+                                        </div>
+                                        <div class="card-tools">
+                                            <ul class="card-tools-nav">
+                                                <li>
+                                                    <div class="form-group text-center">
+                                                        <select class="form-select" id="device">
+                                                            <option selected value="Fcfa">Fcfa</option>
+                                                            <option value="Euro">Euro</option>
+                                                            <option value="Dollar">Dollar</option>
+                                                        </select>
+                                                        <script>
+                                                            const selectDevice = document.getElementById('device');
+
+                                                            selectDevice.addEventListener('change', function() {
+                                                                // Récupérez la valeur sélectionnée
+                                                                document.getElementById('device_data').textContent  = selectDevice.value;
+                                                               
+                                                            });
+                                                        </script>
+                                                    </div>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="card-inner p-0 border-top">
+                                    <div class="nk-tb-list nk-tb-orders">
+                                        <div class="nk-tb-item nk-tb-head">
+                                            <div class="nk-tb-col"><span>Risque</span></div>
+                                            <div class="nk-tb-col "><span>Evaluation</span></div>
+                                            <div class="nk-tb-col "><span>Coût</span></div>
+                                            <div class="nk-tb-col "><span>Statut</span></div>
+                                            <div class="nk-tb-col "><span>Taux</span></div>
+                                        </div>
+                                        @foreach($risques_limit as $risque_limit)
+                                        <div class="nk-tb-item">
+                                            <div class="nk-tb-col">
+                                                <span class="tb-lead">{{$risque_limit->nom}}</span>
+                                            </div>
+                                            <div class="nk-tb-col ">
+                                                @php $colorMatchFound = false; @endphp
+
+                                                @foreach($color_intervals as $color_interval)
+                                                                
+                                                    @if($color_interval->nbre1 <= $risque_limit->evaluation_residuel && $color_interval->nbre2 >= $risque_limit->evaluation_residuel)
+                                                        <div class="user-avatar sm" style="background-color:{{$color_interval->code_color}}" ></div>
+                                                        @php
+                                                            $colorMatchFound = true;
+                                                        @endphp
+
+                                                        @break
+
+                                                    @endif
+
+                                                @endforeach
+
+                                                @if(!$colorMatchFound)
+                                                    <div class="user-avatar sm" style="background-color:#8e8e8e;"></div>
+                                                @endif
+                                            </div>
+                                            <div class="nk-tb-col ">
+                                                <span class="tb-sub tb-amount">
+                                                    @php
+                                                        $cout = $risque_limit->cout_residuel;
+                                                        $formatcommande = number_format($cout, 0, '.', '.');
+                                                    @endphp             
+                                                    {{ $formatcommande }} <span id="device_data"></span>
+                                                </span>
+                                            </div>
+                                            <div class="nk-tb-col ">
+                                                @if ($risque_limit->statut === 'soumis')
+                                                    <span class="badge badge-dim bg-warning">
+                                                        <em class="icon ni ni-stop-circle"></em>
+                                                        <span class="fs-12px">En attente de validation</span>
+                                                    </span>
+                                                @elseif ($risque_limit->statut === 'valider')
+                                                    <span class="badge badge-dim bg-success">
+                                                        <em class="icon ni ni-check"></em>
+                                                        <span class="fs-12px">Validé</span>
+                                                    </span>
+                                                @elseif ($risque_limit->statut === 'non_valider')
+                                                    <span class="badge badge-dim bg-danger">
+                                                        <em class="icon ni ni-alert"></em>
+                                                        <span class="fs-12px">Non Validé</span>
+                                                    </span>
+                                                @elseif ($risque_limit->statut === 'update')
+                                                    <span class="badge badge-dim bg-info">
+                                                        <em class="icon ni ni-info"></em>
+                                                        <span class="fs-12px">Modification éffectuée</span>
+                                                    </span>
+                                                @endif
+                                            </div>
+                                            <div class="nk-tb-col ">
+                                                <div class="project-list-progress">
+                                                    <div class="progress progress-pill progress-md bg-light">
+                                                        <div class="progress-bar" data-progress="{{$risque_limit->progess}}" style="width: 100%;"></div>
+                                                    </div>
+                                                    <div class="project-progress-percent">
+                                                        {{$risque_limit->progess}}%
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        @endforeach
+                                    </div>
+                                </div>
+                            </div>
                         </div>
+
                     </div>
                 </div>
             </div>
@@ -335,6 +502,104 @@
 
             var ctx = document.getElementById('myChart').getContext('2d');
             var myChart = new Chart(ctx, {
+                type: 'doughnut',
+                data: {
+                    labels: ['Non conformite interne', 'Réclamation', 'Contentieux'],
+                    datasets: [{
+                        data: data.data,
+                        backgroundColor: ['orange', 'skyblue', 'red'],
+                        borderColor: 'white',
+                        borderWidth: 1
+                    }],
+                    hoverOffset: 4
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            position: 'top',
+                        },
+                    }
+                }
+            });
+        }
+    });
+</script>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+
+        // Écouteur pour le changement de sélection
+        document.getElementById('selectRisque').addEventListener('change', function() {
+            var selectRisque = this.value;
+            if (selectRisque !== '') {
+                $.ajax({
+                    url: '/get_risque/' + selectRisque,
+                    method: 'GET',
+                    success: function (data) {
+                        addGroups(selectRisque, data);
+                    },
+                    error: function () {
+                        toastr.info("Aucune données n'a été trouver.");
+                    }
+                });
+            } else {
+                toastr.warning("Veuillez selectionner un risque.");
+            }
+        });
+
+        function addGroups(selectRisque, data) {
+
+            var dynamicFields = document.getElementById("camenber_risk");
+
+            // Supprimer le contenu existant
+            while (dynamicFields.firstChild) {
+                dynamicFields.removeChild(dynamicFields.firstChild);
+            }
+
+            var groupe = document.createElement("div");
+            groupe.className = "";
+            groupe.innerHTML = `
+                <canvas id="myChart_risk"></canvas>
+            `;
+
+            var groupe2 = document.createElement("div");
+            groupe2.className = "invest-data mt-2";
+            groupe2.innerHTML = `
+                <div class="invest-data-amount g-2">
+                                                <div class="invest-data-history">
+                                                    <div class="title text-center">
+                                                        Non conformité interne
+                                                    </div>
+                                                    <div class="amount text-center">
+                                                        ${data.data[0]}
+                                                    </div>
+                                                </div>
+                                                <div class="invest-data-history">
+                                                    <div class="title text-center">
+                                                        Réclamation
+                                                    </div>
+                                                    <div class="amount text-center">
+                                                        ${data.data[1]}
+                                                    </div>
+                                                </div>
+                                                <div class="invest-data-history">
+                                                    <div class="title text-center">
+                                                        Contentieux
+                                                    </div>
+                                                    <div class="amount text-center">
+                                                        ${data.data[2]}
+                                                    </div>
+                                                </div>
+                                            </div>
+            `;
+
+            document.getElementById("camenber_risk").appendChild(groupe);
+            document.getElementById("camenber_risk").appendChild(groupe2);
+
+            var ctx = document.getElementById('myChart_risk').getContext('2d');
+            var myChart_risk = new Chart(ctx, {
                 type: 'doughnut',
                 data: {
                     labels: ['Non conformite interne', 'Réclamation', 'Contentieux'],
@@ -454,6 +719,12 @@
         }
     });
 </script>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            document.getElementById('device_data').textContent  = document.getElementById('device').value;
+        });
+    </script>
 
 @endsection
 

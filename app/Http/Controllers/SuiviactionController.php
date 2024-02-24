@@ -66,6 +66,8 @@ class SuiviactionController extends Controller
 
             $amData[$am->id] = [];
 
+            $maxDateLimite = null;
+
             foreach($rech as $rec)
             {
                 $amData[$am->id][] = [
@@ -80,8 +82,20 @@ class SuiviactionController extends Controller
                     'cause' => $rec->cause,
                     'choix_select' => $rec->choix_select,
                 ];
-               
+
+                // Parcourir les données de chaque AM
+                foreach ($amData[$am->id] as $detail) {
+                    // Convertir la date limite en objet DateTime pour la comparaison
+                    $dateLimite = Carbon::createFromFormat('Y-m-d', $detail['date_limite']);
+                    
+                    // Comparer la date limite actuelle avec la date limite maximale
+                    if ($maxDateLimite === null || $dateLimite < $maxDateLimite) {
+                        $maxDateLimite = $dateLimite;
+                    }
+                }               
             }
+
+            $am->delai = $maxDateLimite !== null ? $maxDateLimite->format('d-m-Y') : null;
 
         }
 

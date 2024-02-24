@@ -142,7 +142,10 @@
                                                                     </td>
                                                                 @endif
                                                                 <td>{{ \Carbon\Carbon::parse($risque->updated_at)->translatedFormat('j F Y'.' à '.' H:i') }}</td>
-                                                                <td>
+                                                                <td class="d-flex" >
+                                                                    <a data-bs-toggle="modal" data-bs-target="#modalMotif{{ $risque->id }}" href="#" class="btn btn-icon btn-white btn-dim btn-sm btn-danger">
+                                                                        <em class="icon ni ni-cc-alt"></em>
+                                                                    </a>
                                                                     <form method="post" action="{{ route('index_risque_actionup2') }}">
                                                                     @csrf
                                                                         <input type="text" name="id" value="{{ $risque->id }}" style="display: none;">
@@ -150,6 +153,9 @@
                                                                             <em class="icon ni ni-edit"></em>
                                                                         </button>
                                                                     </form>
+                                                                    <a data-bs-toggle="modal" data-bs-target="#modalDelete{{ $risque->id }}" href="#" class="btn btn-icon btn-white btn-dim btn-sm btn-danger">
+                                                                    <em class="icon ni ni-trash"></em>
+                                                                </a>
                                                                 </td>
                                                             </tr>
                                                         @endforeach
@@ -166,6 +172,64 @@
             </div>
         </div>
     </div>
+
+    @foreach ($risques as $risque)
+        <div class="modal fade" tabindex="-1" id="modalDelete{{ $risque->id }}" aria-modal="true" role="dialog">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content"><a href="#" class="close" data-bs-dismiss="modal"><em
+                            class="icon ni ni-cross"></em></a>
+                    <div class="modal-body modal-body-lg text-center">
+                        <div class="nk-modal">
+                            <em class="nk-modal-icon icon icon-circle icon-circle-xxl ni ni-trash bg-danger"></em>
+                            <h4 class="nk-modal-title">Confirmation</h4>
+                            <div class="nk-modal-text">
+                                <div class="caption-text">
+                                    <span> Voulez-vous vraiment supprimer cet incident ?</span>
+                                </div>
+                            </div>
+                            <div class="nk-modal-action">
+                                <a href="/risque_delete/{{ $risque->id }}" class="btn btn-lg btn-mw btn-success me-2">
+                                    oui
+                                </a>
+                                <a href="#" class="btn btn-lg btn-mw btn-danger"data-bs-dismiss="modal">
+                                    non
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    @endforeach
+
+    @foreach($risques as $risque)
+        <div class="modal fade zoom" tabindex="-1" id="modalMotif{{ $risque->id }}">
+            <div class="modal-dialog modal-lg" role="document" style="width: 100%;">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Détails Motif</h5>
+                        <a href="#" class="close" data-bs-dismiss="modal" aria-label="Close"><em class="icon ni ni-cross"></em></a>
+                    </div>
+                    <div class="modal-body">
+                        <form class="nk-block">
+                            <div class="row g-4">
+                                <div class="col-lg-12">
+                                    <div class="form-group">
+                                        <label class="form-label" for="Cause">
+                                            Motif(s)
+                                        </label>
+                                        <div class="form-control-wrap">
+                                            <textarea disabled  class="form-control no-resize" id="default-textarea">{{ $risque->motif }}</textarea>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    @endforeach
 
     <script>
         Pusher.logToConsole = true;

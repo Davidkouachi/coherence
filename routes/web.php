@@ -24,10 +24,14 @@ use App\Http\Controllers\RisqueController;
 use App\Http\Controllers\HistoriqueController;
 
 
-/*--Connexion-------------------------------------------------------------------------------------------------------------------*/
+/*--Connexion---------------------------------------------------------------------------------------------------------------*/
     Route::get('/Login', [AuthController::class, 'view_login'])->name('login');
     Route::post('/auth_user', [AuthController::class, 'auth_user']);
 /*----------------------------------------------------------------------------------------------------------------------------*/
+
+/*--Erreur---------------------------------------------------------------------------------------------------------------*/
+    Route::get('/Erreur', [Controller::class, 'errorData'])->name('errorData');
+/*------------------------------------------------------------------------------------------------------------------------*/
 
 Route::middleware(['auth'])->group(function () {
 
@@ -91,6 +95,7 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/Mise a jour', [ListerisqueController::class, 'index_risque_actionup'])->name('index_risque_actionup');
         Route::post('/Mise a jour risque', [ListerisqueController::class, 'index_risque_actionup2'])->name('index_risque_actionup2');
         Route::post('/Mise a jour risque traitement', [ListerisqueController::class, 'index_risque_actionup2_traitement'])->name('index_risque_actionup2_traitement');
+        Route::get('/risque_delete/{id}', [ListerisqueController::class, 'risque_delete'])->name('risque_delete');
     /*----------------------------------------------------------------------------------------------------------------------------*/
 
     /*--Cause---------------------------------------------------------------------------------------------------------------------*/
@@ -137,6 +142,7 @@ Route::middleware(['auth'])->group(function () {
     /*--Statistique---------------------------------------------------------------------------------------------------------------*/
         Route::get('/Statistique', [StatistiqueController::class, 'index_stat'])->name('index_stat');
         Route::get('/get_processus/{id}', [StatistiqueController::class, 'get_processus'])->name('get_processus');
+        Route::get('/get_risque/{id}', [StatistiqueController::class, 'get_risque'])->name('get_risque');
         Route::get('/get_date', [StatistiqueController::class, 'get_date'])->name('get_date');  
     /*----------------------------------------------------------------------------------------------------------------------------*/  
 

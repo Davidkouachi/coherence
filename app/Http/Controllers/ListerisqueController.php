@@ -49,10 +49,17 @@ class ListerisqueController extends Controller
 
         foreach($risques as $risque)
         {
-            $risque->nbre = Amelioration::where('risque_id', $risque->id)->where('choix_select', 'risque')->count();
+            if($nbre_total > 0){
 
-            $risque->progess = ($risque->nbre / $nbre_total) * 100;
-            $risque->progess = number_format($risque->progess, 2);
+                $risque->nbre = Amelioration::where('risque_id', $risque->id)->where('choix_select', 'risque')->count();
+                $risque->progess = ($risque->nbre / $nbre_total) * 100;
+                $risque->progess = number_format($risque->progess, 2);
+                
+            }else{
+
+                $risque->progess = 0;
+
+            }
 
             $risque_pdf = Pdf_file::where('risque_id', $risque->id)->first();
             if ($risque_pdf) {
@@ -140,6 +147,13 @@ class ListerisqueController extends Controller
                 ->where('page', '!=', 'am')
                 ->select('risques.*','processuses.nom as processus', 'rejets.motif as motif')
                 ->get();
+
+        foreach ($risques as $risque) {
+            $rech = rejet::where('risque_id', '=', $risque->id)->first();
+            if ($rech) {
+                $risque->motif = $rech->motif;
+            }
+        }
 
         $color_para = Color_para::where('nbre0', '=', '0')->first();
         $color_intervals = Color_interval::orderBy('nbre1', 'asc')->get();
@@ -463,5 +477,23 @@ class ListerisqueController extends Controller
             return redirect()->route('index_risque_actionup')->with('success', 'Modification éffectuée.');
 
         }
+    }
+
+    public function risque_delete($id)
+    {
+        $delete1 = rejet::where('risque_id', '=', $id)->delete();
+
+        $delete2 = Action::where('risque_id', '=', $id)->delete();
+
+        $delete3 = Cause::where('risque_id', '=', $id)->delete();
+
+        $delete4 = Risque::where('id', '=', $id)->delete();
+
+        if($delete1 && $delete2 && $delete3 && $delete4)
+        {
+            return redirect()->back()->with('success', 'Suppression éffectuée.');
+        }
+
+        return redirect()->back()->with('error', 'Echec de la Suppression.');
     }
 }

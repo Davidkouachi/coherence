@@ -46,4 +46,9 @@ class Controller extends BaseController
         return view('menu');
     }
 
+    public function errorData()
+    {
+        return view('errorData');
+    }
+
 }
