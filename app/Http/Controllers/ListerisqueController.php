@@ -487,9 +487,11 @@ class ListerisqueController extends Controller
 
         $delete3 = Cause::where('risque_id', '=', $id)->delete();
 
-        $delete4 = Risque::where('id', '=', $id)->delete();
+        $delete4 = Pdf_file::where('risque_id', '=', $id)->delete();
 
-        if($delete1 && $delete2 && $delete3 && $delete4)
+        $delete5 = Risque::where('id', '=', $id)->delete();
+
+        if($delete1 && $delete2 && $delete3 && $delete4 && $delete5)
         {
             return redirect()->back()->with('success', 'Suppression éffectuée.');
         }

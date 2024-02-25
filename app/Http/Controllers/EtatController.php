@@ -70,7 +70,7 @@ class EtatController extends Controller
                     $actionsData[$am->id][] = [
                         'action' => $action->action,
                         'responsable' => $action->poste,
-                        'delai' => $action->date,
+                        'delai' => $am->date_limite,
                         'date_action' => $suivis->date_action,
                         'date_suivi' => $suivis->date_suivi,
                         'statut' => $suivis->statut,

@@ -33,8 +33,8 @@ class StatistiqueController extends Controller
         $processus = Processuse::all();
         $risques = Risque::where('page', 'risk')->get();
         $nbre_processus = $processus->count();
-        $nbre_risque = Risque::all()->count();
-        $nbre_cause = Cause::all()->count();
+        $nbre_risque = Risque::where('page', 'risk')->count();
+        $nbre_cause = Cause::where('page', 'risk')->count();
 
         $nbre_am = Amelioration::all()->count();
         $nbre_am_nci = Amelioration::where('type', '=', 'non_conformite_interne')->count();
@@ -89,7 +89,7 @@ class StatistiqueController extends Controller
 
 
 
-        $nbre_ac = Action::where('type', 'corrective')->count();
+        $nbre_ac = Action::where('type', 'corrective')->where('page', 'risk')->count();
         $nbre_poste = Poste::all()->count();
 
         $risques_limit = Risque::where('page', '=', 'risk')
@@ -138,6 +138,7 @@ class StatistiqueController extends Controller
         foreach ($types as $type) {
             $nbres[$type] = amelioration::join('risques', 'ameliorations.risque_id', 'risques.id')
                                             ->join('processuses', 'risques.processus_id', 'processuses.id')
+                                            ->where('risques.page', 'risk')
                                             ->where('ameliorations.type', $type)
                                             ->where('processuses.id', $id)
                                             ->count();
