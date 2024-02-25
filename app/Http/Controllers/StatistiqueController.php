@@ -35,7 +35,11 @@ class StatistiqueController extends Controller
         $nbre_processus = $processus->count();
         $nbre_risque = Risque::all()->count();
         $nbre_cause = Cause::all()->count();
+
         $nbre_am = Amelioration::all()->count();
+        $nbre_am_nci = Amelioration::where('type', '=', 'non_conformite_interne')->count();
+        $nbre_am_r = Amelioration::where('type', '=', 'reclamation')->count();
+        $nbre_am_c = Amelioration::where('type', '=', 'contentieux')->count();
 
         $types = ['non_conformite_interne', 'reclamation', 'contentieux'];
 
@@ -66,25 +70,32 @@ class StatistiqueController extends Controller
 
             }
         }
-
         
         $nbre_ap = Action::where('type', 'preventive')->count();
+
         $nbre_ed_ap = Suivi_action::join('actions', 'actions.id', '=', 'suivi_actions.action_id')
                                     ->join('risques', 'risques.id', '=', 'actions.risque_id')
                                     ->where('suivi_actions.statut', 'realiser')
                                     ->where('actions.date', '>=', 'suivi_actions.date_action')
                                     ->count();
+
         $nbre_ehd_ap = Suivi_action::join('actions', 'actions.id', '=', 'suivi_actions.action_id')
                                     ->join('risques', 'risques.id', '=', 'actions.risque_id')
                                     ->where('suivi_actions.statut', 'realiser')
                                     ->where('actions.date', '<', 'suivi_actions.date_action')
                                     ->count();
+
         $nbre_hd_ap = Suivi_action::where('statut', '=', 'non-realiser')->count();
+
+
 
         $nbre_ac = Action::where('type', 'corrective')->count();
         $nbre_poste = Poste::all()->count();
 
-        $risques_limit = Risque::where('page', '=', 'risk')->inRandomOrder()->limit(3)->get();
+        $risques_limit = Risque::where('page', '=', 'risk')
+                                ->inRandomOrder()
+                                ->limit(3)
+                                ->get();
 
         foreach ($risques_limit as $risque_limit) {        
 
@@ -102,11 +113,21 @@ class StatistiqueController extends Controller
 
         }
 
+        $risques_limit = $risques_limit->sortByDesc('progess');
+
+        $users = User::join('postes', 'users.poste_id', '=', 'postes.id')
+                    ->select('users.*', 'postes.nom as poste')
+                    ->inRandomOrder()
+                    ->limit(4)
+                    ->get();
+
+        $nbre_user = User::all()->count();
+
         $color_para = Color_para::where('nbre0', '=', '0')->first();
         $color_intervals = Color_interval::orderBy('nbre1', 'asc')->get();
         $color_interval_nbre = count($color_intervals);
 
-        return view('statistique.index', ['statistics' => $statistics, 'processus' => $processus, 'nbre_processus' => $nbre_processus, 'nbre_risque' => $nbre_risque, 'nbre_cause' => $nbre_cause, 'nbre_ap' => $nbre_ap, 'nbre_am' => $nbre_am, 'nbre_ed_ap' => $nbre_ed_ap,'nbre_ehd_ap' => $nbre_ehd_ap,'nbre_hd_ap' => $nbre_hd_ap , 'nbre_ac' => $nbre_ac,'nbre_poste' => $nbre_poste, 'risques' => $risques, 'risques_limit' => $risques_limit, 'color_para' => $color_para, 'color_intervals' => $color_intervals, 'color_interval_nbre' => $color_interval_nbre,]);
+        return view('statistique.index', ['statistics' => $statistics, 'processus' => $processus, 'nbre_processus' => $nbre_processus, 'nbre_risque' => $nbre_risque, 'nbre_cause' => $nbre_cause, 'nbre_ap' => $nbre_ap, 'nbre_am' => $nbre_am, 'nbre_ed_ap' => $nbre_ed_ap,'nbre_ehd_ap' => $nbre_ehd_ap,'nbre_hd_ap' => $nbre_hd_ap , 'nbre_ac' => $nbre_ac,'nbre_poste' => $nbre_poste, 'risques' => $risques, 'risques_limit' => $risques_limit, 'color_para' => $color_para, 'color_intervals' => $color_intervals, 'color_interval_nbre' => $color_interval_nbre, 'users' => $users, 'nbre_am_nci' => $nbre_am_nci, 'nbre_am_r' => $nbre_am_r, 'nbre_am_c' => $nbre_am_c, 'nbre_user' => $nbre_user,]);
     }
 
     public function get_processus($id)

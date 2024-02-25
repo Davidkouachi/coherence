@@ -48,6 +48,16 @@
                                                 </tr>
                                             </thead>
                                             <tbody>
+                                                @php 
+                                                    $maxProgress = 0;
+                                                @endphp
+
+                                                @foreach ($causes as $cause)
+                                                    @php 
+                                                        $maxProgress = max($maxProgress, $cause->progess);
+                                                    @endphp
+                                                @endforeach
+
                                                 @foreach ($causes as $key => $cause)
                                                     <tr>
                                                         <td>{{ $key+1}}</td>
@@ -57,9 +67,9 @@
                                                         <td>
                                                             <div class="project-list-progress">
                                                                 <div class="progress progress-pill progress-md bg-light">
-                                                                    <div class="progress-bar" data-progress="{{$cause->progess}}" style="width: 100%;"></div>
+                                                                    <div class="progress-bar {{$cause->progess === $maxProgress ? 'bg-danger' : '' }}" data-progress="{{$cause->progess}}" style="width: 100%;"></div>
                                                                 </div>
-                                                                <div class="project-progress-percent">
+                                                                <div class="project-progress-percent {{$cause->progess === $maxProgress ? 'text-danger' : '' }}">
                                                                     {{$cause->progess}}%
                                                                 </div>
                                                             </div>

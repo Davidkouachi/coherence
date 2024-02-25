@@ -117,6 +117,16 @@
                                                         </tr>
                                                     </thead>
                                                     <tbody>
+                                                        @php 
+                                                            $maxProgress = 0;
+                                                        @endphp
+
+                                                        @foreach ($risques as $risque)
+                                                            @php 
+                                                                $maxProgress = max($maxProgress, $risque->progess);
+                                                            @endphp
+                                                        @endforeach
+
                                                         @foreach ($risques as $key => $risque)
                                                             <tr>
                                                                 <td>{{ $key+1 }}</td>
@@ -193,9 +203,9 @@
                                                                 <td>
                                                                     <div class="project-list-progress">
                                                                         <div class="progress progress-pill progress-md bg-light">
-                                                                            <div class="progress-bar" data-progress="{{$risque->progess}}" style="width: 100%;"></div>
+                                                                            <div class="progress-bar {{$risque->progess === $maxProgress ? 'bg-danger' : '' }}" data-progress="{{$risque->progess}}" style="width: 100%;"></div>
                                                                         </div>
-                                                                        <div class="project-progress-percent">
+                                                                        <div class="project-progress-percent {{$risque->progess === $maxProgress ? 'text-danger' : '' }}">
                                                                             {{$risque->progess}}%
                                                                         </div>
                                                                     </div>
