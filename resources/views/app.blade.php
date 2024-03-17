@@ -496,7 +496,7 @@
                 <div class="container-fluid">
                     <div class="nk-footer-wrap">
                         <div class="nk-footer-copyright">
-                            © 2023 Cohérence.
+                            © 2024 Cohérence.
                             <img height="30" width="30" src="/images/logo.png" alt="">
                         </div>
                     </div>

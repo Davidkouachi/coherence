@@ -50,15 +50,13 @@
                                                     <tr>
                                                         <td>{{ $key+1}}</td>
                                                         <td>{{ $poste->nom}}</td>
-                                                        <td class="
-                                                        @php
-                                                            if($poste->occupe === 'oui'){
-                                                                echo 'text-success';
-                                                            }else{
-                                                                echo 'text-danger';
-                                                            }
-                                                        @endphp
-                                                        " >{{ $poste->occupe }}</td>
+                                                        <td class=" @php  if($poste->occupe === 'oui'){ echo 'text-danger'; } else{ echo 'text-success'; } @endphp " > 
+                                                            @if($poste->occupe === 'oui')
+                                                                Non
+                                                            @else
+                                                                Oui
+                                                            @endif
+                                                        </td>
                                                         <td>{{ \Carbon\Carbon::parse($poste->created_at)->translatedFormat('j F Y '.' à '.' h:i:s') }}</td>
                                                         <td>
                                                             <a data-bs-toggle="modal"

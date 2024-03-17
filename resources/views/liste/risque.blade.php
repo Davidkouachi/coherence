@@ -111,7 +111,7 @@
                                                             <th>Evaluation</th>
                                                             <th>Coût</th>
                                                             <th>Statut</th>
-                                                            <th>Pourcentage</th>
+                                                            <th>Taux</th>
                                                             <th>Date de crèation</th>
                                                             <th></th>
                                                         </tr>

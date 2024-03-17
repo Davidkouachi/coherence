@@ -42,7 +42,7 @@
                                                     <th>Cause probable</th>
                                                     <th>Risque</th>
                                                     <th>Processus</th>
-                                                    <th>Prourcentage</th>
+                                                    <th>Taux</th>
                                                     <th>Date de Création</th>
                                                     <th></th>
                                                 </tr>
