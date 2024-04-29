@@ -8,8 +8,8 @@
     <meta name="description" content="A powerful and conceptual apps base dashboard template that especially build for developers and programmers.">
     <link href="images/logo.png" rel="shortcut icon">
     <title>Login</title>
-    <link rel="stylesheet" href="{{asset('../../assets/css/dashlite0226.css')}}">
-    <link id="skin-default" rel="stylesheet" href="{{asset('../../assets/css/theme0226.css')}}">
+    <link rel="stylesheet" href="{{asset('assets/css/dashlite0226.css')}}">
+    <link id="skin-default" rel="stylesheet" href="{{asset('.assets/css/theme0226.css')}}">
 
 </head>
 
@@ -20,13 +20,15 @@
                 <div class="nk-content ">
                     <div class="nk-block nk-block-middle nk-auth-body  wide-xs">
                         <div class="brand-logo pb-0 text-center">
-                            <em class="nk-modal-icon icon icon-circle icon-circle-xxl ni ni-user bg-primary"></em>
+                            <div class="card-inner text-center">
+                                <img height="35%" width="35%" src="{{asset('images/logo.png')}}" alt="">
+                            </div>
                         </div>
                         <div class="card pt-0">
-                            <div class="card-inner card-inner-lg">
-                                <div class="nk-block-head text-center">
+                            <div class="card-inner card-inner-sm">
+                                <div class="nk-block-head text-center mt-0">
                                     <div class="nk-block-head-content">
-                                        <h4 class="nk-block-title">Utilisateur</h4>
+                                        <h4 class="nk-block-title">Se connecter</h4>
                                     </div>
                                 </div>
                                 <form id="login" action="/auth_user" method="post">
@@ -62,79 +64,98 @@
         </div>
     </div>
 
+    <div class="modal fade" tabindex="-1" id="modalL" aria-modal="true" style="position: fixed;" role="dialog" data-bs-backdrop="static" data-bs-keyboard="false">
+        <div class="modal-dialog modal-sm" role="document">
+            <div class="modal-content">
+                <div class="modal-body modal-body-lg text-center">
+                    <div class="nk-modal">
+                        <h5 class="nk-modal-title text-success">Connexion en cours</h5>
+                        <div class="nk-modal-text">
+                            <div class="text-center">
+                                <div class="spinner-border text-success" role="status"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="{{asset('assets/js/bundle0226.js')}}"></script>
+    <script src="{{asset('assets/js/scripts0226.js')}}"></script>
+    <script src="{{asset('assets/js/demo-settings0226.js')}}"></script>
+    <script src="{{asset('assets/js/example-toastr0226.js') }}"></script>
+
     <script>
         document.getElementById("login").addEventListener("submit", function(event) {
-            event.preventDefault(); // Empêche la soumission par défaut du formulaire
+            event.preventDefault(); 
 
-            // Récupération des valeurs des champs
             var email = document.getElementById("email").value;
-            var password = document.getElementById("password").value;
+            var password1 = document.getElementById("password").value;
 
-            var emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/; // Expression régulière pour valider l'e-mail
+            if (!email || !password1 ) {
+                NioApp.Toast("<h5>Alert</h5><p>Veuillez remplir tous les champs.", "warning", {position: "top-right"});
+                return false;
+            }
+
+            var emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
             if (!emailRegex.test(email)) {
-                toastr.info("Veuillez saisir une adresse e-mail valide.");
+                NioApp.Toast("<h5>Information</h5><p>Veuillez saisir une adresse e-mail valide.", "info", {position: "top-right"});
                 return false;
             }
 
-            // Vérification si le mot de passe satisfait les critères
+            var password = document.getElementById("password").value;
             if (!verifierMotDePasse(password)) {
-                // Empêcher la soumission du formulaire si le mot de passe est invalide
                 event.preventDefault();
-                // Afficher un message d'erreur
-                toastr.info("Le mot de passe doit comporter au moins 8 caractères, une lettre majuscule, une lettre minuscule et un chiffre.");
+                NioApp.Toast("<h5>Erreur</h5><p>Le mot de passe doit comporter au moins 8 caractères, une lettre majuscule, une lettre minuscule et un chiffre.", "error", {position: "top-right"});
                 return false;
             }
 
-            // Si toutes les validations passent, soumettre le formulaire
+            $('.modal').modal('hide');
+            $(`#modalL`).modal('hide');
+            $(`#modalL`).modal('show');
+
             this.submit();
 
             function verifierMotDePasse(motDePasse) {
-                // Vérification de la longueur
                 if (motDePasse.length < 8) {
                     return false;
                 }
-                // Vérification s'il contient au moins une lettre majuscule
+
                 if (!/[A-Z]/.test(motDePasse)) {
                     return false;
                 }
-                // Vérification s'il contient au moins une lettre minuscule
+
                 if (!/[a-z]/.test(motDePasse)) {
                     return false;
                 }
-                // Vérification s'il contient au moins un chiffre
+
                 if (!/\d/.test(motDePasse)) {
                     return false;
                 }
-                // Si toutes les conditions sont satisfaites, le mot de passe est valide
+
                 return true;
             }
         });
     </script>
 
-    <script src="{{asset('assets/js/bundle0226.js')}}"></script>
-    <script src="{{asset('assets/js/scripts0226.js')}}"></script>
-    <script src="{{asset('assets/js/demo-settings0226.js')}}"></script>
-
-    <link href="{{asset('notification/toastr.min.css')}}" rel="stylesheet">
-    <script src="{{asset('notification/toastr.min.js')}}"></script>
-
     @if (session('error_login'))
         <script>
-            toastr.error("{{ session('error_login') }}"," ",
-            {positionClass:"toast-top-left",timeOut:5e3,debug:!1,newestOnTop:!0,
-            preventDuplicates:!0,showDuration:"300",hideDuration:"1000",extendedTimeOut:"1000",
-            showEasing:"swing",showMethod:"fadeIn",hideMethod:"fadeOut"})
+            NioApp.Toast("<h5>Erreur</h5><p>{{ session('error_login') }}.", "error", {position: "top-right"});
         </script>
         {{ session()->forget('error_login') }}
     @endif
     @if (session('info'))
         <script>
-            toastr.info("{{ session('info') }}"," ",
-            {positionClass:"toast-top-left",timeOut:5e3,debug:!1,newestOnTop:!0,
-            preventDuplicates:!0,showDuration:"300",hideDuration:"1000",extendedTimeOut:"1000",
-            showEasing:"swing",showMethod:"fadeIn",hideMethod:"fadeOut"})
+            NioApp.Toast("<h5>Information</h5><p>{{ session('info') }}.", "info", {position: "top-right"});
         </script>
         {{ session()->forget('info') }}
+    @endif
+    @if (session('success'))
+        <script>
+            NioApp.Toast("<h5>Succès</h5><p>{{ session('success') }}.", "success", {position: "top-right"});
+        </script>
+        {{ session()->forget('success') }}
     @endif
 
 </html>

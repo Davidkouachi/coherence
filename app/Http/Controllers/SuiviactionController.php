@@ -137,40 +137,51 @@ class SuiviactionController extends Controller
     public function add_suivi_actionc(Request $request, $id)
     {
             // Récupérer tous les suivis pour cette action
-            $suivis = Suivi_amelioration::where('action_id', $id)->get();
+            $suivis = Suivi_amelioration::join('ameliorations', 'suivi_ameliorations.amelioration_id', 
+                                                'ameliorations.id')
+                                        ->where('ameliorations.statut', 'valider')
+                                        ->where('suivi_ameliorations.action_id', $id)
+                                        ->select('suivi_ameliorations.*')
+                                        ->get();
 
-            foreach ($suivis as $suivi) {
-                // Mettre à jour chaque suivi avec les nouvelles données
-                $suivi->efficacite = $request->input('efficacite');
-                $suivi->commentaire = $request->input('commentaire');
-                $suivi->date_action = $request->input('date_action');
-                $suivi->date_suivi = now()->format('Y-m-d\TH:i');
-                $suivi->statut = 'realiser';
-                $suivi->update();
+            if($suivis) 
+            {
+                foreach ($suivis as $suivi) {
+                    
+                    $suivi1 = Suivi_amelioration::find($suivi->id);
+                    $suivi1->efficacite = $request->input('efficacite');
+                    $suivi1->commentaire = $request->input('commentaire');
+                    $suivi1->date_action = $request->input('date_action');
+                    $suivi1->date_suivi = now()->format('Y-m-d\TH:i');
+                    $suivi1->statut = 'realiser';
+                    $suivi1->update();
 
-                // Compter les suivis non réalisés pour cette amélioration
-                $suivi2 = Suivi_amelioration::where('amelioration_id', $suivi->amelioration_id)
-                    ->where('statut', 'non-realiser')
-                    ->count();
+                    // Compter les suivis non réalisés pour cette amélioration
+                    $suivi2 = Suivi_amelioration::where('amelioration_id', $suivi->amelioration_id)
+                        ->where('statut', 'non-realiser')
+                        ->count();
 
-                // S'il n'y a aucun suivi non réalisé, mettre à jour l'amélioration correspondante
-                if ($suivi2 === 0) {
-                    $am = Amelioration::where('id', $suivi->amelioration_id)->first();
-                    $am->date_cloture1 = $request->input('date_action');
-                    $am->statut = 'date_efficacite';
-                    $am->update();
+                    // S'il n'y a aucun suivi non réalisé, mettre à jour l'amélioration correspondante
+                    if ($suivi2 === 0) {
+                        $am = Amelioration::where('id', $suivi->amelioration_id)->first();
+                        $am->date_cloture1 = $request->input('date_action');
+                        $am->statut = 'date_efficacite';
+                        $am->update();
+                    }
+
+                    // Enregistrer l'historique de l'action
+                    $historique = new Historique_action();
+                    $historique->nom_formulaire = 'Suivi des actions corrective';
+                    $historique->nom_action = 'Suivi effectué';
+                    $historique->user_id = Auth::user()->id;
+                    $historique->save();
+
                 }
 
-                // Enregistrer l'historique de l'action
-                $historique = new Historique_action();
-                $historique->nom_formulaire = 'Suivi des actions corrective';
-                $historique->nom_action = 'Suivi effectué';
-                $historique->user_id = Auth::user()->id;
-                $historique->save();
-
+                return back()->with('success', 'Suivi éffectué.');
             }
 
-        return back()->with('success', 'Suivi éffectué.');
+        return back()->with('error', 'Echec du suivi .');
     }  
 
 }

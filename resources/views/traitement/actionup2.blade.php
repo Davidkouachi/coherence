@@ -742,7 +742,7 @@
 
         if (nom_cause.value === '' || dispositif.value === '') {
 
-            toastr.info("Veuillez saisir une cause.");
+            NioApp.Toast("<h5>Information</h5><p>Veuillez saisir une cause.", "info", {position: "top-right"});
 
         } else { 
 
@@ -806,7 +806,7 @@
 
         if (actionp.value === '' || delai.value === '' || responsable_idp.value === '') {
 
-            toastr.info("Veuillez saisir une action preventive.");
+            NioApp.Toast("<h5>Information</h5><p>Veuillez saisir une action preventive.", "info", {position: "top-right"});
 
         } else {
 
@@ -888,7 +888,7 @@
 
         if (actionc.value === '' || responsable_idc.value === '') {
 
-            toastr.info("Veuillez saisir une action corrective.");
+            NioApp.Toast("<h5>Information</h5><p>Veuillez saisir une action corrective.", "info", {position: "top-right"});
 
         } else {
 
@@ -961,7 +961,7 @@
                     // Si toutes les cases sont cochées, décocher la dernière case cochée
                     checkbox.checked = false;
 
-                    toastr.info(`Impossible de supprimer cette cause`);
+                    NioApp.Toast("<h5>Erreur</h5><p>Impossible de supprimer cette cause.", "error", {position: "top-right"});
                 }
             });
         });
@@ -980,7 +980,7 @@
                     // Si toutes les cases sont cochées, décocher la dernière case cochée
                     checkbox.checked = false;
 
-                    toastr.info(`Impossible de supprimer cette Action préventive`);
+                    NioApp.Toast("<h5>Erreur</h5><p>Impossible de supprimer cette Action préventive.", "error", {position: "top-right"});
                 }
             });
         });
@@ -999,7 +999,7 @@
                     // Si toutes les cases sont cochées, décocher la dernière case cochée
                     checkbox.checked = false;
 
-                    toastr.info(`Impossible de supprimer cette Action corrective`);
+                    NioApp.Toast("<h5>Erreur</h5><p>Impossible de supprimer cette Action corrective.", "error", {position: "top-right"});
                 }
             });
         });
@@ -1023,7 +1023,7 @@
         // Parcourir la liste des fichiers
         pdfFiles.forEach(function(pdfFile) {
             if (selectedFileName === pdfFile.pdf_nom) {
-                toastr.error("Ce fichier PDF existe déjà.");
+                NioApp.Toast("<h5>Erreur</h5><p>Ce fichier PDF existe déjà.", "error", {position: "top-right"});
 
                 fileInput.value = ''; // Vider l'input
 
@@ -1035,7 +1035,9 @@
         });
         pdfFiles2.forEach(function(pdfFile2) {
             if (selectedFileName === pdfFile2.pdf_nom) {
-                toastr.error("Ce fichier PDF existe déjà.");
+
+                NioApp.Toast("<h5>Erreur</h5><p>Ce fichier PDF existe déjà.", "error", {position: "top-right"});
+
                 fileInput.value = ''; // Vider l'input
                 trouver = 1;
                     

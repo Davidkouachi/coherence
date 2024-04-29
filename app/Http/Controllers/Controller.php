@@ -51,4 +51,9 @@ class Controller extends BaseController
         return view('errorData');
     }
 
+    public function index_propos()
+    {
+        return view('autre.propos');
+    }
+
 }

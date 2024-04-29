@@ -130,6 +130,14 @@
                                             </a>
                                         </li>
                                         @endif
+                                        <li>
+                                            <a class="nk-menu-link" href="{{ route('index_propos') }}">
+                                                <em class="icon ni ni-file me-1"></em>
+                                                <span class="nk-menu-text " >
+                                                    A propos
+                                                </span>
+                                            </a>
+                                        </li>
                                     </ul>
                                 </li>
                                 @endif
@@ -506,22 +514,23 @@
         </div>
     </div>
 
-<div class="modal fade" tabindex="-1" id="modalt" aria-modal="true" style="position: fixed;" role="dialog" data-bs-backdrop="static" data-bs-keyboard="false">
-    <div class="modal-dialog modal-sm" role="document">
-        <div class="modal-content">
-            <div class="modal-body modal-body-lg text-center">
-                <div class="nk-modal">
-                    <h5 class="nk-modal-title">Traitement en cours</h5>
-                    <div class="nk-modal-text">
-                        <div class="text-center">
-                            <div class="spinner-border text-warning" role="status"></div>
+    <div class="modal fade" tabindex="-1" id="modalt" aria-modal="true" style="position: fixed;" role="dialog" data-bs-backdrop="static" data-bs-keyboard="false">
+        <div class="modal-dialog modal-sm" role="document">
+            <div class="modal-content">
+                <div class="modal-body modal-body-lg text-center">
+                    <div class="nk-modal">
+                        <h5 class="nk-modal-title text-warning">Traitement en cours</h5>
+                        <div class="nk-modal-text">
+                            <div class="text-center">
+                                <div class="spinner-border text-warning" role="status"></div>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
+    
     <script>
         document.getElementById("form").addEventListener("submit", function(event) {
             event.preventDefault(); // Empêche la soumission par défaut du formulaire
@@ -668,43 +677,30 @@
     <script src="{{asset('assets/js/scripts0226.js')}}"></script>
     <script src="{{asset('assets/js/demo-settings0226.js')}}"></script>
     <script src="{{asset('assets/js/libs/datatable-btns0226.js')}}"></script>
-
-    <link href="{{asset('notification/toastr.min.css')}}" rel="stylesheet">
-    <script src="{{asset('notification/toastr.min.js')}}"></script>
+    <script src="{{asset('assets/js/example-toastr0226.js') }}"></script>
+    <script src="{{asset('assets/js/example-sweetalert0226.js') }}"></script>
 
     @if (session('success'))
         <script>
-            toastr.success("{{ session('success') }}"," ",
-            {positionClass:"toast-top-left",timeOut:5e3,debug:!1,newestOnTop:!0,
-            preventDuplicates:!0,showDuration:"300",hideDuration:"1000",extendedTimeOut:"1000",
-            showEasing:"swing",showMethod:"fadeIn",hideMethod:"fadeOut"})
+            NioApp.Toast("<h5>Succès</h5><p>{{ session('success') }}.", "success", {position: "top-right"});
         </script>
         {{ session()->forget('success') }}
     @endif
     @if (session('error'))
         <script>
-            toastr.error("{{ session('error') }}"," ",
-            {positionClass:"toast-top-left",timeOut:5e3,debug:!1,newestOnTop:!0,
-            preventDuplicates:!0,showDuration:"300",hideDuration:"1000",extendedTimeOut:"1000",
-            showEasing:"swing",showMethod:"fadeIn",hideMethod:"fadeOut"})
+            NioApp.Toast("<h5>Erreur</h5><p>{{ session('error') }}.", "error", {position: "top-right"});
         </script>
         {{ session()->forget('error') }}
     @endif
     @if (session('warning'))
         <script>
-            toastr.warning("{{ session('warning') }}"," ",
-            {positionClass:"toast-top-left",timeOut:5e3,debug:!1,newestOnTop:!0,
-            preventDuplicates:!0,showDuration:"300",hideDuration:"1000",extendedTimeOut:"1000",
-            showEasing:"swing",showMethod:"fadeIn",hideMethod:"fadeOut"})
+            NioApp.Toast("<h5>Alert</h5><p>{{ session('warning') }}.", "warning", {position: "top-right"});
         </script>
         {{ session()->forget('warning') }}
     @endif
     @if (session('info'))
         <script>
-            toastr.info("{{ session('info') }}"," ",
-            {positionClass:"toast-top-left",timeOut:5e3,debug:!1,newestOnTop:!0,
-            preventDuplicates:!0,showDuration:"300",hideDuration:"1000",extendedTimeOut:"1000",
-            showEasing:"swing",showMethod:"fadeIn",hideMethod:"fadeOut"})
+            NioApp.Toast("<h5>Information</h5><p>{{ session('info') }}.", "info", {position: "top-right"});
         </script>
         {{ session()->forget('info') }}
     @endif

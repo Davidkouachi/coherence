@@ -948,15 +948,15 @@
                                 method: 'GET',
                                 success: function(data) {
                                     var nbre = data.nbre;
-                                    toastr.info(nbre + " Action(s) trouvée(s).");
+                                    NioApp.Toast("<h5>Information</h5><p>" + nbre + " Action(s) trouvée(s).", "info", {position: "top-right"});
                                     addGroups_non_accepte(type, data);
                                 },
                                 error: function() {
-                                    toastr.error("Une erreur s'est produite lors de la récupération des informations.");
+                                    NioApp.Toast("<h5>Erreur</h5><p>Une erreur s'est produite lors de la récupération des informations.", "error", {position: "top-right"});
                                 }
                             });
                         } else {
-                            toastr.warning("Veuillez sélectionner une cause.");
+                            NioApp.Toast("<h5>Alert</h5><p>Veuillez sélectionner une cause.", "warning", {position: "top-right"});
                         }
                     } else if (choixSelect === "risque") {
                         if (selectedRisque !== '') {
@@ -965,19 +965,19 @@
                                 method: 'GET',
                                 success: function(data) {
                                     var nbre = data.nbre;
-                                    toastr.info(nbre + " Action(s) trouvée(s).");
+                                    NioApp.Toast("<h5>Information</h5><p>"+nbre+" Action(s) trouvée(s).", "info", {position: "top-right"});
                                     addGroups_non_accepte(type, data);
                                 },
                                 error: function() {
-                                    toastr.error("Une erreur s'est produite lors de la récupération des informations.");
+                                    NioApp.Toast("<h5>Erreur</h5><p>Une erreur s'est produite lors de la récupération des informations.", "error", {position: "top-right"});
                                 }
                             });
                         } else {
-                            toastr.warning("Veuillez sélectionner un risque.");
+                            NioApp.Toast("<h5>Alert</h5><p>Veuillez sélectionner un risque.", "warning", {position: "top-right"});
                         }
                     }
                 } else {
-                    toastr.error("Veuillez préciser le choix de sélection.");
+                    NioApp.Toast("<h5>Erreur</h5><p>Veuillez préciser le choix de sélection.", "error", {position: "top-right"});
                 }
             });
         });
@@ -1069,7 +1069,7 @@
                                                                                         Responsable
                                                                                     </label>
                                                                                     <select required id="responsable_idc" required name="poste_id[]" class="form-select" >
-                                                                                        ${postes.map(poste => `<option value="${poste.id}" ${action.poste_id == poste.id ? 'selected' : ''}>${poste.nom}</option>`).join('')}
+                                                                                        ${postes.filter(poste => poste.id == action.poste_id).map(poste => `<option value="${poste.id}" selected>${poste.nom}</option>`).join('')}
                                                                                     </select>
                                                                                 </div>
                                                                     </div>

@@ -127,7 +127,55 @@ class StatistiqueController extends Controller
         $color_intervals = Color_interval::orderBy('nbre1', 'asc')->get();
         $color_interval_nbre = count($color_intervals);
 
-        return view('statistique.index', ['statistics' => $statistics, 'processus' => $processus, 'nbre_processus' => $nbre_processus, 'nbre_risque' => $nbre_risque, 'nbre_cause' => $nbre_cause, 'nbre_ap' => $nbre_ap, 'nbre_am' => $nbre_am, 'nbre_ed_ap' => $nbre_ed_ap,'nbre_ehd_ap' => $nbre_ehd_ap,'nbre_hd_ap' => $nbre_hd_ap , 'nbre_ac' => $nbre_ac,'nbre_poste' => $nbre_poste, 'risques' => $risques, 'risques_limit' => $risques_limit, 'color_para' => $color_para, 'color_intervals' => $color_intervals, 'color_interval_nbre' => $color_interval_nbre, 'users' => $users, 'nbre_am_nci' => $nbre_am_nci, 'nbre_am_r' => $nbre_am_r, 'nbre_am_c' => $nbre_am_c, 'nbre_user' => $nbre_user,]);
+        $his = Historique_action::orderBy('created_at', 'desc')
+                                ->limit(10)
+                                ->get();
+
+        $ams = Amelioration::all();
+
+        $actionsData = [];
+
+        foreach ($ams as $am) {
+            $am->nbre_action = Suivi_amelioration::where('amelioration_id', '=', $am->id)->count();
+            $am->nbre_action_eff = Suivi_amelioration::where('amelioration_id', '=', $am->id)
+                                                ->where('statut', 'realiser')
+                                                ->count();
+            $am->nbre_action_non = Suivi_amelioration::where('amelioration_id', '=', $am->id)
+                                                ->where('statut', 'non-realiser')
+                                                ->count();
+
+            $suivi = Suivi_amelioration::where('amelioration_id', '=', $am->id)->get();
+            $actionsData[$am->id] = [];
+            foreach ($suivi as $suivis) {
+
+                $action = Suivi_amelioration::join('actions', 'suivi_ameliorations.action_id', 'actions.id')
+                                            ->join('postes', 'actions.poste_id', 'postes.id')
+                                            ->join('risques', 'actions.risque_id', 'risques.id')
+                                            ->join('processuses', 'risques.processus_id', 'processuses.id')
+                                            ->where('actions.id', '=', $suivis->action_id)
+                                            ->where('suivi_ameliorations.amelioration_id', '=', $am->id)
+                                            ->select('suivi_ameliorations.*', 'actions.action as action', 'actions.date as date', 'postes.nom as poste', 'processuses.nom as processus', 'risques.nom as risque')
+                                            ->first();
+
+                if ($action) {
+                    $actionsData[$am->id][] = [
+                        'action' => $action->action,
+                        'responsable' => $action->poste,
+                        'delai' => $action->date,
+                        'date_action' => $action->date_action,
+                        'date_suivi' => $action->date_suivi,
+                        'statut' => $action->statut,
+                        'processus' => $action->processus,
+                        'risque' => $action->risque,
+                        'commentaire' => $action->commentaire_am,
+                        'efficacite' => $action->efficacite,
+                    ];
+                }
+
+            }
+        }
+
+        return view('statistique.index', ['statistics' => $statistics, 'processus' => $processus, 'nbre_processus' => $nbre_processus, 'nbre_risque' => $nbre_risque, 'nbre_cause' => $nbre_cause, 'nbre_ap' => $nbre_ap, 'nbre_am' => $nbre_am, 'nbre_ed_ap' => $nbre_ed_ap,'nbre_ehd_ap' => $nbre_ehd_ap,'nbre_hd_ap' => $nbre_hd_ap , 'nbre_ac' => $nbre_ac,'nbre_poste' => $nbre_poste, 'risques' => $risques, 'risques_limit' => $risques_limit, 'color_para' => $color_para, 'color_intervals' => $color_intervals, 'color_interval_nbre' => $color_interval_nbre, 'users' => $users, 'nbre_am_nci' => $nbre_am_nci, 'nbre_am_r' => $nbre_am_r, 'nbre_am_c' => $nbre_am_c, 'nbre_user' => $nbre_user,'his' => $his,'ams' => $ams, 'actionsData' => $actionsData,]);
     }
 
     public function get_processus($id)

@@ -138,11 +138,11 @@
                         @endforeach
 
                         @foreach ($statistics as $type => $stat)
-                            <div class="col-lg-3">
+                            <div class="col-lg-4">
                                 <div class="card card-bordered card-full">
                                     <div class="card-inner">
                                         <div class="card-amount">
-                                            <span class="amount">
+                                            <h5 class="">
                                                 @if ($type === 'non_conformite_interne')
                                                     Non conformité.I
                                                 @endif
@@ -158,7 +158,7 @@
                                                         ({{$stat['progres']}}%)
                                                     </span>
                                                 </span>
-                                            </span>
+                                            </h5>
                                         </div>
                                         <div class="invest-data">
                                             <div class="invest-data-amount g-2">
@@ -222,33 +222,21 @@
                                                 }
                                             });
                                         </script>
-
-                                        <!--<div class="card-amount">
-                                            <div >
-                                                <a class="btn btn-outline-warning btn-dim">
-                                                    <span  class="me-2" >Détails</span>
-                                                    <span>
-                                                        <em class="ni ni-chevron-right-circle" > </em>
-                                                    </span>
-                                                </a>
-                                            </div>
-                                        </div>-->
-
                                     </div>
                                 </div>
                             </div>
                         @endforeach
 
-                        <div class="col-lg-3">
+                        <div class="col-lg-4">
                             <div class="card card-bordered card-full">
                                 <div class="card-inner">
                                     <div class="card-amount">
-                                        <span class="amount">
+                                        <h5>
                                             Incidents
                                             <span class="currency currency-usd ">
                                                 {{ $nbre_am }}
                                             </span>
-                                        </span>
+                                        </h5>
                                     </div>
                                     <div class="invest-data">
                                             <div class="invest-data-amount g-2">
@@ -326,19 +314,49 @@
                         </div>
 
                         <div class="col-lg-4">
-                            <div class="card card-bordered card-full">
-                                <div class="card-inner">
-                                    <div class="form-group text-center">
-                                        <label class="form-label" for="cf-full-name">Processus</label>
-                                        <select name="processus_id" class="form-select text-center" id="selectProcessus">
-                                            @foreach ($processus as $processus)
-                                            <option value="{{$processus->id}}">
-                                                {{$processus->nom}}
-                                            </option>
-                                            @endforeach
-                                        </select>
+                            <div class="card card-bordered h-100">
+                                <div class="card-inner border-bottom">
+                                    <div class="card-title-group">
+                                        <div class="card-title">
+                                            <h6 class="title">
+                                                Historiques
+                                            </h6>
+                                        </div>
                                     </div>
-                                    <div id="camenber"></div>
+                                </div>
+                                <div class="card-inner">
+                                    <div class="timeline">
+                                        <h6 class="timeline-head">
+                                            03 dernières actions
+                                        </h6>
+                                        <ul class="timeline-list" style="height: 250px;" data-simplebar="" >
+                                            @foreach ($his as $hi)
+                                            <li class="timeline-item">
+                                                <em class="icon ni ni-calendar-alt"></em>
+                                                <div class="timeline-date">
+                                                    {{ \Carbon\Carbon::parse($hi->created_at)->translatedFormat('j F Y') }}
+                                                </div>
+                                                <div class="timeline-data">
+                                                    <h6 class="timeline-title">
+                                                        {{$hi->nom_formulaire}}
+                                                    </h6>
+                                                    <div class="timeline-des">
+                                                        <p>
+                                                            <span class="timeline-title" >
+                                                                Action :
+                                                            </span>
+                                                            {{$hi->nom_action}}.
+                                                        </p>
+                                                        <span class="time">
+                                                            <em class="icon ni ni-alarm-alt"></em>
+                                                            {{ \Carbon\Carbon::parse($hi->created_at)->translatedFormat('H:i:s') }}
+                                                        </span>
+                                                    </div>
+                                                </div>
+                                            </li>
+                                            @endforeach
+                                        </ul>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -346,39 +364,343 @@
                         <div class="col-lg-4">
                             <div class="card card-bordered card-full">
                                 <div class="card-inner">
-                                    <div class="form-group text-center">
-                                        <label class="form-label" for="cf-full-name">Risque</label>
-                                        <select name="risque_id" class="form-select text-center" id="selectRisque">
-                                            @foreach ($risques as $risque)
-                                            <option value="{{$risque->id}}">
-                                                {{$risque->nom}}
-                                            </option>
-                                            @endforeach
-                                        </select>
+                                    <div class="card-title-group mb-1">
+                                        <div class="card-title">
+                                            <h6 class="title">
+                                                Vue d'ensemble
+                                            </h6>
+                                        </div>
                                     </div>
-                                    <div id="camenber_risk">
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="col-lg-4">
-                            <div class="card card-bordered card-full">
-                                <div class="card-inner">
-                                    <div class="form-group text-center">
-                                        <label class="form-label">Choisir un interval de date</label>
-                                        <div class="form-control-wrap">
-                                            <div class="input-daterange date-picker-range input-group">
-                                                <input data-date-format="yyyy-mm-dd" name="date1" id="date1" type="text" class="form-control"  value="{{ \Carbon\Carbon::now()->subMonth()->format('m/d/Y') }}"/>
-                                                <div class="input-group-addon">au</div>
-                                                <input data-date-format="yyyy-mm-dd" name="date2" id="date2" type="text" class="form-control me-2"  value="{{ \Carbon\Carbon::now()->format('m/d/Y') }}"/>
-                                                <button id="btn_rech" class="btn btn-outline-success">
-                                                    <em class="ni ni-search"></em>
-                                                </button>
+                                    <ul class="nav nav-tabs nav-tabs-card nav-tabs-xs">
+                                        <li class="nav-item">
+                                            <a class="nav-link active" data-bs-toggle="tab" href="#risque">
+                                                Risques
+                                            </a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a class="nav-link" data-bs-toggle="tab" href="#incident">
+                                                Incidents
+                                            </a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a class="nav-link" data-bs-toggle="tab" href="#action">
+                                                Actions
+                                            </a>
+                                        </li>
+                                    </ul>
+                                    <div class="tab-content mt-0">
+                                        <div class="tab-pane active" id="risque">
+                                            <div class="invest-ov gy-2">
+                                                <div class="subtitle">
+                                                    Currently Actived Investment
+                                                </div>
+                                                <div class="invest-ov-details">
+                                                    <div class="invest-ov-info">
+                                                        <div class="amount">
+                                                            49,395.395
+                                                            <span class="currency currency-usd">
+                                                                USD
+                                                            </span>
+                                                        </div>
+                                                        <div class="title">
+                                                            Amount
+                                                        </div>
+                                                    </div>
+                                                    <div class="invest-ov-stats">
+                                                        <div>
+                                                            <span class="amount">
+                                                                56
+                                                            </span>
+                                                            <span class="change up text-danger">
+                                                                <em class="icon ni ni-arrow-long-up">
+                                                                </em>
+                                                                1.93%
+                                                            </span>
+                                                        </div>
+                                                        <div class="title">
+                                                            Plans
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="invest-ov-details">
+                                                    <div class="invest-ov-info">
+                                                        <div class="amount">
+                                                            49,395.395
+                                                            <span class="currency currency-usd">
+                                                                USD
+                                                            </span>
+                                                        </div>
+                                                        <div class="title">
+                                                            Paid Profit
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="invest-ov gy-2">
+                                                <div class="subtitle">
+                                                    Investment in this Month
+                                                </div>
+                                                <div class="invest-ov-details">
+                                                    <div class="invest-ov-info">
+                                                        <div class="amount">
+                                                            49,395.395
+                                                            <span class="currency currency-usd">
+                                                                USD
+                                                            </span>
+                                                        </div>
+                                                        <div class="title">
+                                                            Amount
+                                                        </div>
+                                                    </div>
+                                                    <div class="invest-ov-stats">
+                                                        <div>
+                                                            <span class="amount">
+                                                                23
+                                                            </span>
+                                                            <span class="change down text-danger">
+                                                                <em class="icon ni ni-arrow-long-down">
+                                                                </em>
+                                                                1.93%
+                                                            </span>
+                                                        </div>
+                                                        <div class="title">
+                                                            Plans
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="tab-pane" id="incident">
+                                            <div class="invest-ov gy-2">
+                                                <div class="subtitle">
+                                                    Currently Actived Investment
+                                                </div>
+                                                <div class="invest-ov-details">
+                                                    <div class="invest-ov-info">
+                                                        <div class="amount">
+                                                            89,395.395
+                                                            <span class="currency currency-usd">
+                                                                USD
+                                                            </span>
+                                                        </div>
+                                                        <div class="title">
+                                                            Amount
+                                                        </div>
+                                                    </div>
+                                                    <div class="invest-ov-stats">
+                                                        <div>
+                                                            <span class="amount">
+                                                                96
+                                                            </span>
+                                                            <span class="change up text-danger">
+                                                                <em class="icon ni ni-arrow-long-up">
+                                                                </em>
+                                                                1.93%
+                                                            </span>
+                                                        </div>
+                                                        <div class="title">
+                                                            Plans
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="invest-ov-details">
+                                                    <div class="invest-ov-info">
+                                                        <div class="amount">
+                                                            99,395.395
+                                                            <span class="currency currency-usd">
+                                                                USD
+                                                            </span>
+                                                        </div>
+                                                        <div class="title">
+                                                            Paid Profit
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="invest-ov gy-2">
+                                                <div class="subtitle">
+                                                    Investment in this Month
+                                                </div>
+                                                <div class="invest-ov-details">
+                                                    <div class="invest-ov-info">
+                                                        <div class="amount">
+                                                            149,395.395
+                                                            <span class="currency currency-usd">
+                                                                USD
+                                                            </span>
+                                                        </div>
+                                                        <div class="title">
+                                                            Amount
+                                                        </div>
+                                                    </div>
+                                                    <div class="invest-ov-stats">
+                                                        <div>
+                                                            <span class="amount">
+                                                                83
+                                                            </span>
+                                                            <span class="change down text-danger">
+                                                                <em class="icon ni ni-arrow-long-down">
+                                                                </em>
+                                                                1.93%
+                                                            </span>
+                                                        </div>
+                                                        <div class="title">
+                                                            Plans
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="tab-pane" id="action">
+                                            <div class="invest-ov gy-2">
+                                                <div class="subtitle">
+                                                    Currently Actived Investment
+                                                </div>
+                                                <div class="invest-ov-details">
+                                                    <div class="invest-ov-info">
+                                                        <div class="amount">
+                                                            249,395.395
+                                                            <span class="currency currency-usd">
+                                                                USD
+                                                            </span>
+                                                        </div>
+                                                        <div class="title">
+                                                            Amount
+                                                        </div>
+                                                    </div>
+                                                    <div class="invest-ov-stats">
+                                                        <div>
+                                                            <span class="amount">
+                                                                556
+                                                            </span>
+                                                            <span class="change up text-danger">
+                                                                <em class="icon ni ni-arrow-long-up">
+                                                                </em>
+                                                                1.93%
+                                                            </span>
+                                                        </div>
+                                                        <div class="title">
+                                                            Plans
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="invest-ov-details">
+                                                    <div class="invest-ov-info">
+                                                        <div class="amount">
+                                                            149,395.395
+                                                            <span class="currency currency-usd">
+                                                                USD
+                                                            </span>
+                                                        </div>
+                                                        <div class="title">
+                                                            Paid Profit
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="invest-ov gy-2">
+                                                <div class="subtitle">
+                                                    Investment in this Month
+                                                </div>
+                                                <div class="invest-ov-details">
+                                                    <div class="invest-ov-info">
+                                                        <div class="amount">
+                                                            249,395.395
+                                                            <span class="currency currency-usd">
+                                                                USD
+                                                            </span>
+                                                        </div>
+                                                        <div class="title">
+                                                            Amount
+                                                        </div>
+                                                    </div>
+                                                    <div class="invest-ov-stats">
+                                                        <div>
+                                                            <span class="amount">
+                                                                223
+                                                            </span>
+                                                            <span class="change down text-danger">
+                                                                <em class="icon ni ni-arrow-long-down">
+                                                                </em>
+                                                                1.93%
+                                                            </span>
+                                                        </div>
+                                                        <div class="title">
+                                                            Plans
+                                                        </div>
+                                                    </div>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
-                                    <div id="camenber2">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-12">
+                            <div class="card card-bordered card-full">
+                                <div class="card-inner row g-gs">
+                                    <div class="card-amount">
+                                        <h5>
+                                            <span class="me-2" >
+                                                Recherche
+                                            </span>
+                                            <em class="ni ni-search"></em>
+                                        </h5>
+                                    </div>
+                                    <div class="col-lg-4">
+                                        <div class="card card-bordered card-full">
+                                            <div class="card-inner">
+                                                <div class="form-group text-center">
+                                                    <label class="form-label" for="cf-full-name">Processus</label>
+                                                    <select name="processus_id" class="form-select text-center" id="selectProcessus">
+                                                        @foreach ($processus as $processus)
+                                                        <option value="{{$processus->id}}">
+                                                            {{$processus->nom}}
+                                                        </option>
+                                                        @endforeach
+                                                    </select>
+                                                </div>
+                                                <div id="camenber"></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-4">
+                                        <div class="card card-bordered card-full">
+                                            <div class="card-inner">
+                                                <div class="form-group text-center">
+                                                    <label class="form-label" for="cf-full-name">Risque</label>
+                                                    <select name="risque_id" class="form-select text-center" id="selectRisque">
+                                                        @foreach ($risques as $risque)
+                                                        <option value="{{$risque->id}}">
+                                                            {{$risque->nom}}
+                                                        </option>
+                                                        @endforeach
+                                                    </select>
+                                                </div>
+                                                <div id="camenber_risk"></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-4">
+                                        <div class="card card-bordered card-full">
+                                            <div class="card-inner">
+                                                <div class="form-group text-center">
+                                                    <label class="form-label">Choisir un interval de date</label>
+                                                    <div class="form-control-wrap">
+                                                        <div class="input-daterange date-picker-range input-group">
+                                                            <input data-date-format="yyyy-mm-dd" name="date1" id="date1" type="text" class="form-control"  value="{{ \Carbon\Carbon::now()->subMonth()->format('m/d/Y') }}"/>
+                                                            <div class="input-group-addon">au</div>
+                                                            <input data-date-format="yyyy-mm-dd" name="date2" id="date2" type="text" class="form-control me-2"  value="{{ \Carbon\Carbon::now()->format('m/d/Y') }}"/>
+                                                            <button id="btn_rech" class="btn btn-outline-success">
+                                                                <em class="ni ni-search"></em>
+                                                            </button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div id="camenber2"></div>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -573,12 +895,504 @@
                             </div>
                         </div>
 
+                        <div class="col-lg-12">
+                            <div class="card card-bordered card-full">
+                                <div class="card-inner">
+                                    <div class="card-amount mb-2">
+                                        <h5>
+                                            Tableau des incidents
+                                        </h5>
+                                    </div>
+                                    <table class="datatable-init table">
+                                        <thead>
+                                            <tr>
+                                                <th></th>
+                                                <th>Type</th>
+                                                <th>Date de réception</th>
+                                                <th>Non conformité</th>
+                                                <!--<th>Nombre d'actions</th>-->
+                                                <th>Statut</th>
+                                                <th>Date de création</th>
+                                                <th></th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @foreach($ams as $key => $am)
+                                            <tr>
+                                                <td>{{ $key+1 }}</td>
+                                                <td>
+                                                    @if ($am->type === 'contentieux')
+                                                    Contentieux
+                                                    @endif
+                                                    @if ($am->type === 'reclamation')
+                                                    Réclamation
+                                                    @endif
+                                                    @if ($am->type === 'non_conformite_interne')
+                                                    Non conformité
+                                                    @endif
+                                                </td>
+                                                <td>{{ \Carbon\Carbon::parse($am->date_fiche)->translatedFormat('j F Y ') }}</td>
+                                                <td>{{ $am->non_conformite }}</td>
+                                                <!--<td>{{ $am->nbre_action }}</td>-->
+                                                @if ($am->statut === 'soumis')
+                                                <td>
+                                                    <span class="badge badge-dim bg-warning">
+                                                        <em class="icon ni ni-stop-circle"></em>
+                                                        <span class="fs-12px">En attente de validation</span>
+                                                    </span>
+                                                </td>
+                                                @elseif ($am->statut === 'valider')
+                                                <td>
+                                                    <span class="badge badge-dim bg-primary">
+                                                        <em class="icon ni ni-check"></em>
+                                                        <span class="fs-12px">Validé</span>
+                                                    </span>
+                                                </td>
+                                                @elseif ($am->statut === 'non-valider' || $am->statut === 'modif' || $am->statut === 'update')
+                                                <td>
+                                                    <span class="badge badge-dim bg-danger">
+                                                        <em class="icon ni ni-alert"></em>
+                                                        <span class="fs-12px">Non Validé</span>
+                                                    </span>
+                                                </td>
+                                                @elseif ($am->statut === 'date_efficacite' )
+                                                <td>
+                                                    <span class="badge badge-dim bg-warning">
+                                                        <em class="icon ni ni-stop-circle"></em>
+                                                        <span class="fs-12px">
+                                                            En attente de l'évaluation de l'éfficacité
+                                                        </span>
+                                                    </span>
+                                                </td>
+                                                @elseif ($am->statut === 'cloturer' )
+                                                <td>
+                                                    <span class="badge badge-dim bg-success">
+                                                        <em class="icon ni ni-check"></em>
+                                                        <span class="fs-12px">
+                                                            Clôturer
+                                                        </span>
+                                                    </span>
+                                                </td>
+                                                @endif
+                                                <td>{{ \Carbon\Carbon::parse($am->created_at)->translatedFormat('j F Y '.' à '.' H:i:s') }}</td>
+                                                <td>
+                                                    <a data-bs-toggle="modal" data-bs-target="#modalDetail{{ $am->id }}" class="btn btn-icon btn-white btn-dim btn-sm btn-warning">
+                                                        <em class="icon ni ni-eye"></em>
+                                                    </a>
+                                                </td>
+                                            </tr>
+                                            @endforeach
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
 </div>
+
+    @foreach($ams as $am)
+        <div class="modal fade zoom" tabindex="-1" id="modalDetail{{ $am->id }}">
+            <div class="modal-dialog modal-lg" role="document" style="width: 100%;">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">
+                            Détails
+                            @if ($am->statut === 'soumis')
+                                <span class="text-warning"> ( En attente de validation )</span>
+                            @elseif ($am->statut === 'valider' )
+                                <span class="text-primary"> ( Validé )</span>
+                            @elseif ($am->statut === 'non-valider' || $am->statut === 'update' || $am->statut === 'modif')
+                                <span class="text-danger"> (Non Validé )</span>
+                            @elseif ($am->statut === 'date_efficacite' )
+                                <span class="text-warning"> ( En attente de l'évaluation de l'éfficacité )</span>
+                            @elseif ($am->statut === 'cloturer' )
+                                <span class="text-success"> ( Clôturer )</span>
+                            @endif
+                        </h5>
+                        <a href="#" class="close" data-bs-dismiss="modal" aria-label="Close"><em class="icon ni ni-cross"></em></a>
+                    </div>
+                    <div class="modal-body">
+                        <form class="nk-block">
+                            <div class="row g-gs">
+                                <div class="col-md-12 col-xxl-12" id="groupesContainer">
+                                    <div class="">
+                                        <div class="card-inner">
+                                            <div class="row g-4">
+                                                <div class="col-lg-12">
+                                                    <div class="form-group">
+                                                        <label class="form-label" for="Cause">
+                                                            Type
+                                                        </label>
+                                                        <div class="form-control-wrap">
+                                                            <input @if ($am->type === 'contentieux')
+                                                                value="Contentieux"
+                                                            @endif
+                                                            @if ($am->type === 'reclamation')
+                                                                value="Réclamation"
+                                                            @endif
+                                                            @if ($am->type === 'non_conformite_interne')
+                                                                value="Non conformité"
+                                                            @endif
+                                                            readonly type="text" class="form-control" id="Cause">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-4">
+                                                    <div class="form-group">
+                                                        <label class="form-label" for="Cause">
+                                                            Date de reception
+                                                        </label>
+                                                        <div class="form-control-wrap">
+                                                            <input value="{{ \Carbon\Carbon::parse($am->date_fiche)->translatedFormat('j F Y ') }}" readonly type="text" class="form-control" id="Cause">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-4">
+                                                    <div class="form-group">
+                                                        <label class="form-label" for="Cause">
+                                                            Date Limite de traitement
+                                                        </label>
+                                                        <div class="form-control-wrap">
+                                                            <input value="{{ \Carbon\Carbon::parse($am->date_limite)->translatedFormat('j F Y ') }}" readonly type="text" class="form-control" id="Cause">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-4">
+                                                    <div class="form-group">
+                                                        <label class="form-label" for="Cause">
+                                                            Nombres de jours
+                                                        </label>
+                                                        <div class="form-control-wrap">
+                                                            <input value="{{ $am->nbre_jour }}" readonly type="text" class="form-control" id="Cause">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-6">
+                                                    <div class="form-group">
+                                                        <label class="form-label" for="Cause">
+                                                            Lieu
+                                                        </label>
+                                                        <div class="form-control-wrap">
+                                                            <input value="{{ $am->lieu }}" readonly type="text" class="form-control" id="Cause">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-6">
+                                                    <div class="form-group">
+                                                        <label class="form-label" for="Cause">
+                                                            Détecteur
+                                                        </label>
+                                                        <div class="form-control-wrap">
+                                                            <input value="{{ $am->detecteur }}" readonly type="text" class="form-control" id="Cause">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-12">
+                                                    <div class="form-group">
+                                                        <label class="form-label" for="Cause">
+                                                            Non-conformité
+                                                        </label>
+                                                        <div class="form-control-wrap">
+                                                            <input value="{{ $am->non_conformite }}" readonly type="text" class="form-control" id="Cause">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-6">
+                                                    <div class="form-group">
+                                                        <label class="form-label">
+                                                            Conséquences
+                                                        </label>
+                                                        <div class="form-control-wrap">
+                                                            <textarea readonly required name="causes" class="form-control no-resize" id="default-textarea">{{ $am->consequence }}</textarea>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-6">
+                                                    <div class="form-group">
+                                                        <label class="form-label">
+                                                            Causes
+                                                        </label>
+                                                        <div class="form-control-wrap">
+                                                            <textarea readonly required name="causes" class="form-control no-resize" id="default-textarea">{{ $am->cause }}</textarea>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            @foreach($actionsData[$am->id] as $key => $actions)
+                                            <div class="card-head mt-3">
+                                                <h5 class="card-title">
+                                                    Action Corrective {{ $key+1 }}
+                                                </h5>
+                                            </div>
+                                            <div class="row g-4">
+                                                <div class="col-lg-12">
+                                                    <div class="form-group ">
+                                                        <label class="form-label" for="Cause">
+                                                            Action
+                                                        </label>
+                                                        <div class="form-control-wrap">
+                                                            <input value="{{ $actions['action'] }}" readonly type="text" class="form-control " id="Cause">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-12">
+                                                    <div class="form-group ">
+                                                        <label class="form-label" for="Cause">
+                                                            risque
+                                                        </label>
+                                                        <div class="form-control-wrap">
+                                                            <input value="{{ $actions['risque'] }}" readonly type="text" class="form-control " id="Cause">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-12">
+                                                    <div class="form-group ">
+                                                        <label class="form-label" for="Cause">
+                                                            Processus
+                                                        </label>
+                                                        <div class="form-control-wrap">
+                                                            <input value="{{ $actions['processus'] }}" readonly type="text" class="form-control " id="Cause">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                
+                                                @if ($actions['statut'] === 'realiser')
+                                                <div class="col-lg-4">
+                                                    <div class="form-group ">
+                                                        <label class="form-label" for="Cause">
+                                                            Délai
+                                                        </label>
+                                                        <div class="form-control-wrap">
+                                                            <input value="{{ \Carbon\Carbon::parse($actions['delai'])->translatedFormat('j F Y ') }}" readonly type="text" class="form-control " id="Cause">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-4">
+                                                    <div class="form-group ">
+                                                        <label class="form-label" for="Cause">
+                                                            Date de realisation
+                                                        </label>
+                                                        <div class="form-control-wrap">
+                                                            <input value="{{ \Carbon\Carbon::parse($actions['date_action'])->translatedFormat('j F Y ') }}" readonly type="text" class="form-control " id="Cause">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-4">
+                                                    <div class="form-group ">
+                                                        <label class="form-label" for="Cause">
+                                                            Date du Suivi
+                                                        </label>
+                                                        <div class="form-control-wrap">
+                                                            <input value="{{ \Carbon\Carbon::parse($actions['date_suivi'])->translatedFormat('j F Y '.' à '.' H:i:s') }}" readonly type="text" class="form-control " id="Cause">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-6">
+                                                    <div class="form-group ">
+                                                        <label class="form-label" for="Cause">
+                                                            Statut
+                                                        </label>
+                                                        <div class="form-control-wrap">
+                                                            <input value="Action Réaliser" readonly type="text" class="form-control text-center bg-success" id="Cause">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                    @if($actions['efficacite'] === 'oui')
+                                                    <div class="col-lg-6">
+                                                        <div class="form-group">
+                                                            <label class="form-label" for="Cause">
+                                                                Efficacité
+                                                            </label>
+                                                            <div class="form-control-wrap">
+                                                                <input value="Oui" readonly type="text" class="form-control text-center bg-success" id="Cause">
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    @else
+                                                    <div class="col-lg-6">
+                                                        <div class="form-group">
+                                                            <label class="form-label" for="Cause">
+                                                                Efficacité
+                                                            </label>
+                                                            <div class="form-control-wrap">
+                                                                <input value="Non" readonly type="text" class="form-control text-center bg-danger" id="Cause">
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    @endif
+                                                @else
+                                                <div class="col-lg-6">
+                                                    <div class="form-group">
+                                                        <label class="form-label" for="Cause">
+                                                            Délai
+                                                        </label>
+                                                        <div class="form-control-wrap">
+                                                            <input value="{{ \Carbon\Carbon::parse($actions['delai'])->translatedFormat('j F Y ') }}" readonly type="text" class="form-control " id="Cause">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-6">
+                                                    <div class="form-group">
+                                                        <label class="form-label" for="Cause">
+                                                            Statut
+                                                        </label>
+                                                        <div class="form-control-wrap">
+                                                            <input value="Action non réaliser" readonly type="text" class="form-control text-center bg-danger" id="Cause">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                @endif
+                                                <div class="col-lg-12">
+                                                    <div class="form-group">
+                                                        <label class="form-label">
+                                                            Commentaire
+                                                        </label>
+                                                        <div class="form-control-wrap">
+                                                            <textarea readonly required name="causes" class="form-control no-resize" id="default-textarea">{{ $actions['commentaire'] }}</textarea>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            @endforeach
+                                            <div class="row g-4" >
+                                                @if($am->date1 !== null)
+                                                    <div class="col-md-12 col-xxl-122" id="groupesContainer">
+                                                        <div class="card ">
+                                                            <div class="card-inner">
+                                                                <div class="card-head">
+                                                                    <h5 class="card-title">
+                                                                        Efficacité
+                                                                    </h5>
+                                                                </div>
+                                                                <div class="row g-4">
+                                                                    @if($am->date1 !== null)
+                                                                    <div class="col-lg-4">
+                                                                        <div class="form-group">
+                                                                            <label class="form-label" for="Cause">
+                                                                                Du
+                                                                            </label>
+                                                                            <div class="form-control-wrap">
+                                                                                <input value="{{ \Carbon\Carbon::parse($am->date1)->translatedFormat('j F Y ') }}" readonly type="text" class="form-control" id="Cause">
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="col-lg-4">
+                                                                        <div class="form-group">
+                                                                            <label class="form-label" for="Cause">
+                                                                                au
+                                                                            </label>
+                                                                            <div class="form-control-wrap">
+                                                                                <input value="{{ \Carbon\Carbon::parse($am->date2)->translatedFormat('j F Y ') }}" readonly type="text" class="form-control" id="Cause">
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    @php
+                                                                        $startDate = \Carbon\Carbon::parse($am->date1);
+                                                                        $endDate = \Carbon\Carbon::parse($am->date2);
+                                                                        $daysDifference = $startDate->diffInDays($endDate);
+                                                                    @endphp
+                                                                    <div class="col-lg-4">
+                                                                        <div class="form-group">
+                                                                            <label class="form-label" for="Cause">
+                                                                                Nombre de jour(S)
+                                                                            </label>
+                                                                            <div class="form-control-wrap">
+                                                                                <input value="{{ $daysDifference }}" readonly type="text" class="form-control">
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    @endif
+                                                                    @if($am->efficacite !== null)
+                                                                    <div class="col-lg-6">
+                                                                        <div class="form-group">
+                                                                            <label class="form-label" for="Cause">
+                                                                                Action efficace
+                                                                            </label>
+                                                                            @if ($am->efficacite === 'oui')
+                                                                            <div class="form-control-wrap">
+                                                                                <input value="{{ $am->efficacite }}" readonly type="text" class="form-control bg-success text-center" id="Cause">
+                                                                            </div>
+                                                                            @endif
+                                                                            @if ($am->efficacite === 'non')
+                                                                            <div class="form-control-wrap">
+                                                                                <input value="{{ $am->efficacite }}" readonly type="text" class="form-control bg-danger text-center" id="Cause">
+                                                                            </div>
+                                                                            @endif
+                                                                        </div>
+                                                                        @if ($am->date_eff !== null)
+                                                                        <div class="form-group">
+                                                                            <label class="form-label" for="Cause">
+                                                                                Date de verification de l'éfficacité
+                                                                            </label>
+                                                                            @if ($am->date1 <= $am->date_eff && $am->date2 >= $am->date_eff)
+                                                                                <div class="form-control-wrap">
+                                                                                    <input value="{{ \Carbon\Carbon::parse($am->eff)->translatedFormat('j F Y ') }}" readonly type="text" class="form-control text-center bg-success" id="Cause">
+                                                                                </div>
+                                                                            @elseif ($am->date1 > $am->date_eff && $am->date2 >= $am->date_eff || $am->date1 <= $am->date_eff && $am->date2 < $am->date_eff)
+                                                                                <div class="form-control-wrap">
+                                                                                    <input value="{{ \Carbon\Carbon::parse($am->eff)->translatedFormat('j F Y ') }}" readonly type="text" class="form-control text-center bg-danger" id="Cause">
+                                                                                </div>
+                                                                            @endif
+                                                                        </div>
+                                                                        @else
+                                                                        <div class="form-group">
+                                                                            <label class="form-label" for="Cause">
+                                                                                Date de verification de l'éfficacité
+                                                                            </label>
+                                                                            <div class="form-control-wrap">
+                                                                                <input value="Néant" readonly type="text" class="form-control" id="Cause">
+                                                                            </div>
+                                                                        </div>
+                                                                        @endif
+                                                                    </div>
+                                                                    <div class="col-lg-6">
+                                                                        <div class="form-group">
+                                                                            <label class="form-label" for="Cause">
+                                                                                Commentaire
+                                                                            </label>
+                                                                            <div class="form-control-wrap">
+                                                                                <textarea readonly required name="causes" class="form-control no-resize" id="default-textarea">{{ $am->commentaire_eff }}</textarea>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    @if ($am->date1 <= $am->date_eff && $am->date2 >= $am->date_eff)
+                                                                        <div class="col-lg-12">
+                                                                            <div class="form-group text-center">
+                                                                                <div class="form-control-wrap">
+                                                                                    <input value="Vérification éffectuée dans les delais" readonly type="text" class="form-control text-center bg-success" id="Cause">
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    @elseif ($am->date1 > $am->date_eff && $am->date2 >= $am->date_eff || $am->date1 <= $am->date_eff && $am->date2 < $am->date_eff)
+                                                                        <div class="col-lg-12">
+                                                                            <div class="form-group text-center">
+                                                                                <div class="form-control-wrap">
+                                                                                    <input value="Vérification éffectuée hors delais" readonly type="text" class="form-control text-center bg-warning" id="Cause">
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    @endif
+                                                                    @endif
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    @endif
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    @endforeach
 
 <script>
     document.addEventListener('DOMContentLoaded', function() {

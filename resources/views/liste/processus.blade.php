@@ -87,7 +87,7 @@
                                                                     </a>
                                                                     @endif
                                                                     @if($processu->pdf_nom != null)
-                                                                    <a href="{{ asset('storage/pdf/'.$processu->pdf_nom) }}" 
+                                                                    <a href="{{ asset('/storage/app/'.$processu->pdf_chemin) }}" 
                                                                         target="_bank" class="btn btn-icon btn-white btn-dim btn-sm btn-info border border-1 border-white rounded">
                                                                         <em class="icon ni ni-download"></em>
                                                                     </a>

@@ -457,6 +457,7 @@ class AmeliorationController extends Controller
                                             ->join('risques', 'actions.risque_id', 'risques.id')
                                             ->join('processuses', 'risques.processus_id', 'processuses.id')
                                             ->where('actions.id', '=', $suivis->action_id)
+                                            ->where('suivi_ameliorations.amelioration_id', '=', $am->id)
                                             ->select('suivi_ameliorations.*', 'actions.action as action', 'actions.date as date', 'postes.nom as poste', 'processuses.nom as processus', 'risques.nom as risque')
                                             ->first();
 

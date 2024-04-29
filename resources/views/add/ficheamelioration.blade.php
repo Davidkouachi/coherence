@@ -91,7 +91,7 @@
                                 </div>
                             </div>
                         @else
-                            <form id="form" class="nk-block" method="post" action="{{ route('index_add') }}">
+                            <form class="nk-block" id="form" method="post" action="{{ route('index_add') }}">
                                 @csrf
                                 <div class="row g-gs">
 
@@ -336,52 +336,59 @@
 
                                     </div>
 
-                                    <div class="row g-gs" id="btn_enrg" style="display: none;">
-                                        <div class="col-lg-12 col-xxl-12">
-                                            <div class="card card-bordered card-preview">
-                                                <div class="card-inner">
-                                                    <div class="card-head">
-                                                        <h5 class="card-title">
-                                                            Notification
-                                                        </h5>
+                                    <div class="col-lg-12 col-xxl-12 " id="btn_enrg" style="display: none;">
+                                        
+                                        <div class="row g-gs" >
+
+                                            <div class="col-lg-12 col-xxl-12">
+                                                <div class="card card-bordered card-preview">
+                                                    <div class="card-inner">
+                                                        <div class="card-head">
+                                                            <h5 class="card-title">
+                                                                <span>Notification</span>
+                                                            </h5>
+                                                        </div>
+                                                        <div class="row g-gs">
+                                                            <div class="col-lg-4 text-left">
+                                                                <div class="custom-control custom-checkbox">
+                                                                    <input name="choix_alert_alert" value="alert" required type="checkbox" checked class="custom-control-input" id="customCheck1">
+                                                                    <label class="custom-control-label" for="customCheck1">Alert à l'écran</label>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-lg-4 text-left">
+                                                                <div class="custom-control custom-checkbox">
+                                                                    <input name="choix_alert_email" value="email" type="checkbox" class="custom-control-input" id="customCheck2">
+                                                                    <label class="custom-control-label" for="customCheck2">Par Email</label>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-lg-4 text-left">
+                                                                <div class="custom-control custom-checkbox">
+                                                                    <input name="choix_alert_sms" value="sms" disabled type="checkbox" class="custom-control-input" id="customCheck3">
+                                                                    <label class="custom-control-label" for="customCheck3">Par Sms</label>
+                                                                </div>
+                                                            </div>
+                                                        </div>
                                                     </div>
-                                                    <div class="row g-gs">
-                                                        <div class="col-lg-4 text-left">
-                                                            <div class="custom-control custom-checkbox">
-                                                                <input name="choix_alert_alert" value="alert" required type="checkbox" checked class="custom-control-input" id="customCheck1">
-                                                                <label class="custom-control-label" for="customCheck1">Alert à l'écran</label>
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-lg-4 text-left">
-                                                            <div class="custom-control custom-checkbox">
-                                                                <input name="choix_alert_email" value="email" type="checkbox" class="custom-control-input" id="customCheck2">
-                                                                <label class="custom-control-label" for="customCheck2">Par Email</label>
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-lg-4 text-left">
-                                                            <div class="custom-control custom-checkbox">
-                                                                <input name="choix_alert_sms" value="sms" disabled type="checkbox" class="custom-control-input" id="customCheck3">
-                                                                <label class="custom-control-label" for="customCheck3">Par Sms</label>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-lg-12 col-xxl-12">
+                                                <div class="card card-bordered card-preview">
+                                                    <div class="card-inner row g-gs">
+                                                        <div class="col-lg-12 col-xxl-12">
+                                                            <div class="form-group text-center">
+                                                                <button type="submit" class="btn btn-lg btn-success btn-dim ">
+                                                                    <em class="ni ni-check me-2"></em>
+                                                                    <em>Soumettre</em>
+                                                                </button>
                                                             </div>
                                                         </div>
                                                     </div>
                                                 </div>
                                             </div>
+
                                         </div>
-                                        <div class="col-lg-12 col-xxl-12">
-                                            <div class="card card-bordered card-preview">
-                                                <div class="card-inner row g-gs">
-                                                    <div class="col-lg-12 col-xxl-12">
-                                                        <div class="form-group text-center">
-                                                            <button type="submit" class="btn btn-lg btn-success btn-dim ">
-                                                                <em class="ni ni-check me-2"></em>
-                                                                <em>Soumettre</em>
-                                                            </button>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
+
                                     </div> 
                                 </div>
                             </form>
@@ -1083,6 +1090,13 @@
             $(`#modalVurisque${selectedValue}`).modal('hide');
             // Ouvrez le modal correspondant à la valeur sélectionnée
             $(`#modalVurisque${selectedValue}`).modal('show');
+
+            var dynamicFields = document.getElementById("dynamic-fields");
+            // Supprimer le contenu existant
+            while (dynamicFields.firstChild) {
+                dynamicFields.removeChild(dynamicFields.firstChild);
+            }
+            document.getElementById("btn_enrg").style.display = "none";
         });
     });
 </script>
@@ -1098,6 +1112,13 @@
             $(`#modalVucause${selectedValu}`).modal('hide');
             // Ouvrez le modal correspondant à la valeur sélectionnée
             $(`#modalVucause${selectedValu}`).modal('show');
+
+            var dynamicFields = document.getElementById("dynamic-fields");
+            // Supprimer le contenu existant
+            while (dynamicFields.firstChild) {
+                dynamicFields.removeChild(dynamicFields.firstChild);
+            }
+            document.getElementById("btn_enrg").style.display = "none";
         });
     });
 </script>
@@ -1118,14 +1139,14 @@
 
                     if (choixSelect === "cause") {
                         if (selectedCause === '') {
-                            toastr.warning("Veuillez sélectionner une cause.");
+                            NioApp.Toast("<h5>Alert</h5><p>Veuillez sélectionner une cause.</p>.", "warning", {position: "top-right"});
                         }else{
                             var type_new = this.getAttribute("data-type");
                             addGroup(type_new);
                         }
                     } else if (choixSelect === "risque") {
                         if (selectedRisque === '') {
-                            toastr.warning("Veuillez sélectionner un risque.");
+                            NioApp.Toast("<h5>Alert</h5><p>Veuillez sélectionner un risque.</p>.", "warning", {position: "top-right"});
                         }else{
                             var type_new = this.getAttribute("data-type");
                             addGroup(type_new);
@@ -1164,7 +1185,7 @@
                                                                             <input required style="display:none;" name="nature[]" value="new" type="text" >
                                                                             <select required id="responsable_idc" required name="processus_id[]" class="form-select">
                                                                                 <option selected value="">
-                                                                                    Choisir un responsable
+                                                                                    Choisir un processus
                                                                                 </option>
                                                                                 ${processuss.map(processus => `<option value="${processus.id}">${processus.nom}</option>`).join('')}
                                                                             </select>
@@ -1266,15 +1287,15 @@
                                 method: 'GET',
                                 success: function(data) {
                                     var nbre = data.nbre;
-                                    toastr.info(nbre + " Action(s) trouvée(s).");
+                                    NioApp.Toast("<h5>Information</h5><p>" + nbre + " Action(s) trouvée(s).", "info", {position: "top-right"});
                                     addGroups_non_accepte(type, data);
                                 },
                                 error: function() {
-                                    toastr.error("Une erreur s'est produite lors de la récupération des informations.");
+                                    NioApp.Toast("<h5>Erreur</h5><p>Une erreur s'est produite lors de la récupération des informations.", "error", {position: "top-right"});
                                 }
                             });
                         } else {
-                            toastr.warning("Veuillez sélectionner une cause.");
+                            NioApp.Toast("<h5>Alert</h5><p>Veuillez sélectionner une cause.", "warning", {position: "top-right"});
                         }
                     } else if (choixSelect === "risque") {
                         if (selectedRisque !== '') {
@@ -1283,19 +1304,19 @@
                                 method: 'GET',
                                 success: function(data) {
                                     var nbre = data.nbre;
-                                    toastr.info(nbre + " Action(s) trouvée(s).");
+                                    NioApp.Toast("<h5>Information</h5><p>"+nbre+" Action(s) trouvée(s).", "info", {position: "top-right"});
                                     addGroups_non_accepte(type, data);
                                 },
                                 error: function() {
-                                    toastr.error("Une erreur s'est produite lors de la récupération des informations.");
+                                    NioApp.Toast("<h5>Erreur</h5><p>Une erreur s'est produite lors de la récupération des informations.", "error", {position: "top-right"});
                                 }
                             });
                         } else {
-                            toastr.warning("Veuillez sélectionner un risque.");
+                            NioApp.Toast("<h5>Alert</h5><p>Veuillez sélectionner un risque.", "warning", {position: "top-right"});
                         }
                     }
                 } else {
-                    toastr.error("Veuillez préciser le choix de sélection.");
+                    NioApp.Toast("<h5>Erreur</h5><p>Veuillez préciser le choix de sélection.", "error", {position: "top-right"});
                 }
             });
         });
@@ -1386,10 +1407,11 @@
                                                                                     <label class="form-label" for="Coût">
                                                                                         Responsable
                                                                                     </label>
-                                                                                    <select required id="responsable_idc" required name="poste_id[]" class="form-select" >
-                                                                                        ${postes.map(poste => `<option value="${poste.id}" ${action.poste_id == poste.id ? 'selected' : ''}>${poste.nom}</option>`).join('')}
+                                                                                    <select required id="responsable_idc" required name="poste_id[]" class="form-select">
+                                                                                        ${postes.filter(poste => poste.id == action.poste_id).map(poste => `<option value="${poste.id}" selected>${poste.nom}</option>`).join('')}
                                                                                     </select>
-                                                                                </div>
+                                                                                </div>  
+
                                                                     </div>
                                                                     <div class="col-lg-5">
                                                                         <div class="form-group text-center">

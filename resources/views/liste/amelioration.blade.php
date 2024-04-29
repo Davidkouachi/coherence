@@ -326,6 +326,16 @@
                                                 <div class="col-lg-4">
                                                     <div class="form-group ">
                                                         <label class="form-label" for="Cause">
+                                                            Délai
+                                                        </label>
+                                                        <div class="form-control-wrap">
+                                                            <input value="{{ \Carbon\Carbon::parse($actions['delai'])->translatedFormat('j F Y ') }}" readonly type="text" class="form-control " id="Cause">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-4">
+                                                    <div class="form-group ">
+                                                        <label class="form-label" for="Cause">
                                                             Date de realisation
                                                         </label>
                                                         <div class="form-control-wrap">
@@ -343,35 +353,57 @@
                                                         </div>
                                                     </div>
                                                 </div>
-                                                <div class="col-lg-8">
-                                                    <div class="form-group text-center">
+                                                <div class="col-lg-6">
+                                                    <div class="form-group ">
+                                                        <label class="form-label" for="Cause">
+                                                            Statut
+                                                        </label>
                                                         <div class="form-control-wrap">
                                                             <input value="Action Réaliser" readonly type="text" class="form-control text-center bg-success" id="Cause">
                                                         </div>
                                                     </div>
                                                 </div>
                                                     @if($actions['efficacite'] === 'oui')
-                                                    <div class="col-lg-4">
-                                                        <div class="form-group text-center">
+                                                    <div class="col-lg-6">
+                                                        <div class="form-group">
+                                                            <label class="form-label" for="Cause">
+                                                                Efficacité
+                                                            </label>
                                                             <div class="form-control-wrap">
-                                                                <input value="Action éfficace" readonly type="text" class="form-control text-center bg-success" id="Cause">
+                                                                <input value="Oui" readonly type="text" class="form-control text-center bg-success" id="Cause">
                                                             </div>
                                                         </div>
                                                     </div>
                                                     @else
-                                                    <div class="col-lg-4">
-                                                        <div class="form-group text-center">
+                                                    <div class="col-lg-6">
+                                                        <div class="form-group">
+                                                            <label class="form-label" for="Cause">
+                                                                Efficacité
+                                                            </label>
                                                             <div class="form-control-wrap">
-                                                                <input value="Action non éfficace" readonly type="text" class="form-control text-center bg-danger" id="Cause">
+                                                                <input value="Non" readonly type="text" class="form-control text-center bg-danger" id="Cause">
                                                             </div>
                                                         </div>
                                                     </div>
                                                     @endif
                                                 @else
-                                                <div class="col-lg-12">
-                                                    <div class="form-group text-center">
+                                                <div class="col-lg-6">
+                                                    <div class="form-group">
+                                                        <label class="form-label" for="Cause">
+                                                            Délai
+                                                        </label>
                                                         <div class="form-control-wrap">
-                                                            <input value="Action Non Réaliser" readonly type="text" class="form-control text-center bg-danger" id="Cause">
+                                                            <input value="{{ \Carbon\Carbon::parse($actions['delai'])->translatedFormat('j F Y ') }}" readonly type="text" class="form-control " id="Cause">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-6">
+                                                    <div class="form-group">
+                                                        <label class="form-label" for="Cause">
+                                                            Statut
+                                                        </label>
+                                                        <div class="form-control-wrap">
+                                                            <input value="Action non réaliser" readonly type="text" class="form-control text-center bg-danger" id="Cause">
                                                         </div>
                                                     </div>
                                                 </div>

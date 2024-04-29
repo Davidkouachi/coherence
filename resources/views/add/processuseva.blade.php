@@ -665,7 +665,7 @@
                 const objectifs = data.objectifs;
                 const nbre = data.nbre;
 
-                toastr.info(nbre + " Objectif(s) trouvé(s).");
+                NioApp.Toast("<h5>Information</h5><p>" + nbre + " Objectif(s) trouvé(s).", "info", {position: "top-right"});
 
                 listeObjectifs.innerHTML = "";
                 objectifs.forEach(objectif => {
@@ -687,7 +687,7 @@
 
         if (nom_cause.value === '' || dispositif.value === '') {
 
-            toastr.info("Veuillez saisir une cause.");
+            NioApp.Toast("<h5>Information</h5><p>Veuillez saisir une cause.", "info", {position: "top-right"});
 
         } else {
 
@@ -748,7 +748,7 @@
 
         if (actionp.value === '' || delai.value === '' || responsable_idp.value === '') {
 
-            toastr.info("Veuillez saisir une action preventive.");
+            NioApp.Toast("<h5>Information</h5><p>Veuillez saisir une action preventive.", "info", {position: "top-right"});
 
         } else {
 
@@ -829,7 +829,7 @@
 
         if (actionc.value === '' || responsable_idc.value === '') {
 
-            toastr.info("Veuillez saisir une action corrective.");
+            NioApp.Toast("<h5>Information</h5><p>Veuillez saisir une action corrective.", "info", {position: "top-right"});
 
         } else {
 
@@ -903,7 +903,8 @@
         // Parcourir la liste des fichiers
         pdfFiles.forEach(function(pdfFile) {
             if (selectedFileName === pdfFile.pdf_nom) {
-                toastr.error("Ce fichier PDF existe déjà.");
+
+                NioApp.Toast("<h5>Erreur</h5><p>Ce fichier PDF existe déjà.", "error", {position: "top-right"});
 
                 fileInput.value = ''; // Vider l'input
 
@@ -915,7 +916,9 @@
         });
         pdfFiles2.forEach(function(pdfFile2) {
             if (selectedFileName === pdfFile2.pdf_nom) {
-                toastr.error("Ce fichier PDF existe déjà.");
+
+                NioApp.Toast("<h5>Erreur</h5><p>Ce fichier PDF existe déjà.", "error", {position: "top-right"});
+
                 fileInput.value = ''; // Vider l'input
                 trouver = 1;
                     
