@@ -267,29 +267,24 @@
                                     <div class="card-title-group mb-1">
                                         <div class="card-title">
                                             <h6 class="title">
-                                                Vue d'ensemble
+                                                Vue d'ensemble des incidents ({{ $nbre_am }})
                                             </h6>
                                         </div>
                                     </div>
                                     <ul class="nav nav-tabs nav-tabs-card nav-tabs-xs">
                                         <li class="nav-item">
-                                            <a class="nav-link active" data-bs-toggle="tab" href="#action">
-                                                Types d'incidents
-                                            </a>
-                                        </li>
-                                        <li class="nav-item">
-                                            <a class="nav-link " data-bs-toggle="tab" href="#risque">
-                                                Risques ({{ $nbre_risque }})
+                                            <a class="nav-link active" data-bs-toggle="tab" href="#type">
+                                                Type 
                                             </a>
                                         </li>
                                         <li class="nav-item">
                                             <a class="nav-link" data-bs-toggle="tab" href="#incident">
-                                                Incidents ({{ $nbre_am }})
+                                                Statuts 
                                             </a>
                                         </li>
                                     </ul>
                                     <div class="tab-content mt-0">
-                                        <div class="tab-pane active" id="action" >
+                                        <div class="tab-pane active" id="type" >
                                             <div class="invest-data mt-3">
                                                 <div class="invest-data-amount g-2">
                                                     <div class="invest-data-history">
@@ -352,166 +347,295 @@
                                                 });
                                             </script>
                                         </div>
-                                        <div class="tab-pane " id="risque">
-                                            <div class="invest-ov gy-2">
-                                                <h5>
-                                                    Statuts
-                                                </h5>
-                                                <div class="invest-ov-details">
-                                                    <div class="invest-ov-stats">
-                                                        <div>
-                                                            <span class="amount text-warning">
-                                                                Soumis 
-                                                            </span>
-                                                            <span class="amount">
-                                                                ({{ $nbre_ris_soumis }})
-                                                            </span>
+                                        <div class="tab-pane" id="incident" >
+                                            <div class="invest-ov gy-2" >
+                                                <div class="card-inner d-flex flex-column ">
+                                                    <div class="progress-list gy-3">
+                                                        <div class="progress-wrap">
+                                                            <div class="progress-text">
+                                                                <div class="progress-label">
+                                                                    Soumis ({{$staut_am_soumis}})
+                                                                </div>
+                                                                <div class="progress-amount">
+                                                                    @if($nbre_am != 0)
+                                                                        {{ number_format(($staut_am_soumis / $nbre_am)*100 , 2) }} %
+                                                                    @else
+                                                                        0.00 %
+                                                                    @endif
+                                                                </div>
+                                                            </div>
+                                                            <div class="progress progress-md">
+                                                                @php
+                                                                    if ($nbre_am != 0) {
+                                                                       $sam_soumis = number_format(($staut_am_soumis / $nbre_am)*100 , 0);
+                                                                    }else{ $sam_soumis = '0';  }
+                                                                @endphp
+                                                                <div class="progress-bar bg-warning" data-progress="{{$sam_soumis}}">
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="progress-wrap">
+                                                            <div class="progress-text">
+                                                                <div class="progress-label">
+                                                                    Rejeter ({{$staut_am_rejeter}})
+                                                                </div>
+                                                                <div class="progress-amount">
+                                                                    @if($nbre_am != 0)
+                                                                        {{ number_format(($staut_am_rejeter / $nbre_am)*100 , 2) }} %
+                                                                    @else
+                                                                        0.00 %
+                                                                    @endif
+                                                                </div>
+                                                            </div>
+                                                            <div class="progress progress-md">
+                                                                @php
+                                                                    if ($nbre_am != 0) {
+                                                                       $sam_rejeter = number_format(($staut_am_rejeter / $nbre_am)*100 , 0);
+                                                                    }else{ $sam_rejeter = '0';  }
+                                                                @endphp
+                                                                <div class="progress-bar bg-danger" data-progress="{{$sam_rejeter}}">
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="progress-wrap">
+                                                            <div class="progress-text">
+                                                                <div class="progress-label">
+                                                                    Valider ({{$staut_am_valider}})
+                                                                </div>
+                                                                <div class="progress-amount">
+                                                                    @if($nbre_am != 0)
+                                                                        {{ number_format(($staut_am_valider / $nbre_am)*100 , 2) }} %
+                                                                    @else
+                                                                        0.00 %
+                                                                    @endif
+                                                                </div>
+                                                            </div>
+                                                            <div class="progress progress-md">
+                                                                @php
+                                                                    if ($nbre_am != 0) {
+                                                                       $sam_valider = number_format(($staut_am_valider / $nbre_am)*100 , 0);
+                                                                    }else{ $sam_valider = '0';  }
+                                                                @endphp
+                                                                <div class="progress-bar bg-primary" data-progress="{{$sam_valider}}">
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="progress-wrap">
+                                                            <div class="progress-text">
+                                                                <div class="progress-label">
+                                                                    Evaluation éfficacitée en cours  ({{$staut_am_eff}})
+                                                                </div>
+                                                                <div class="progress-amount">
+                                                                    @if($nbre_am != 0)
+                                                                        {{ number_format(($staut_am_eff / $nbre_am)*100 , 2) }} %
+                                                                    @else
+                                                                        0.00 %
+                                                                    @endif
+                                                                </div>
+                                                            </div>
+                                                            <div class="progress progress-md">
+                                                                @php
+                                                                    if ($nbre_am != 0) {
+                                                                       $sam_eff = number_format(($staut_am_clotu / $nbre_am)*100 , 0);
+                                                                    }else{ $sam_eff = '0';  }
+                                                                @endphp
+                                                                <div class="progress-bar bg-warning" data-progress="{{$sam_eff}}">
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="progress-wrap">
+                                                            <div class="progress-text">
+                                                                <div class="progress-label">
+                                                                    Clôturé ({{$staut_am_clotu}})
+                                                                </div>
+                                                                <div class="progress-amount">
+                                                                    @if($nbre_am != 0)
+                                                                        {{ number_format(($staut_am_clotu / $nbre_am)*100 , 2) }} %
+                                                                    @else
+                                                                        0.00 %
+                                                                    @endif
+                                                                </div>
+                                                            </div>
+                                                            <div class="progress progress-md">
+                                                                @php
+                                                                    if ($nbre_am != 0) {
+                                                                       $sclotu = number_format(($staut_am_clotu / $nbre_am)*100 , 0);
+                                                                    }else{ $sclotu = '0';  }
+                                                                @endphp
+                                                                <div class="progress-bar bg-success" data-progress="{{$sclotu}}">
+                                                                </div>
+                                                            </div>
                                                         </div>
                                                     </div>
-                                                    <div class="invest-ov-stats">
-                                                        <div>
-                                                            <span class="amount text-danger">
-                                                                Rejeter 
-                                                            </span>
-                                                            <span class="amount">
-                                                                ({{ $nbre_ris_n_valider }})
-                                                            </span>
-                                                        </div>
-                                                    </div>
-                                                    <div class="invest-ov-stats">
-                                                        <div>
-                                                            <span class="amount text-success">
-                                                                Valider 
-                                                            </span>
-                                                            <span class="amount">
-                                                                ({{ $nbre_ris_valider }})
-                                                            </span>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="invest-ov gy-2">
-                                                <h5>
-                                                    Actions Préventives ({{ $nbre_ap }})
-                                                </h5>
-                                                <div class="invest-ov-details">
-                                                    <div class="invest-ov-info">
-                                                        <span class="amount">
-                                                            Non réaliser
-                                                        </span>
-                                                    </div>
-                                                    <div class="invest-ov-stats">
-                                                        <div>
-                                                            <span class="amount">
-                                                                {{ $nbre_hd_ap }}
-                                                                @if($nbre_ap != 0)
-                                                                    (<span class=" text-danger" >{{ number_format(($nbre_hd_ap / $nbre_ap)*100 , 2) }} %</span>)
-                                                                @endif
-                                                            </span>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="invest-ov-details">
-                                                    <div class="invest-ov-info">
-                                                        <span class="amount">
-                                                            Réaliser hors délai
-                                                        </span>
-                                                    </div>
-                                                    <div class="invest-ov-stats">
-                                                        <div>
-                                                            <span class="amount">
-                                                                {{ $nbre_ehd_ap }}
-                                                                @if($nbre_ap != 0)
-                                                                    (<span class=" text-warning" >{{ number_format(($nbre_ehd_ap / $nbre_ap)*100 , 2) }} %</span>)
-                                                                @endif
-                                                            </span>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="invest-ov-details">
-                                                    <div class="invest-ov-info">
-                                                        <span class="amount">
-                                                           Réaliser dans les délais
-                                                        </span>
-                                                    </div>
-                                                    <div class="invest-ov-stats">
-                                                        <div>
-                                                            <span class="amount">
-                                                                {{ $nbre_ed_ap }}
-                                                                @if($nbre_ap != 0)
-                                                                    (<span class=" text-success" >{{ number_format(($nbre_ed_ap / $nbre_ap)*100 , 2) }} %</span>)
-                                                                @endif
-                                                            </span>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
+                                                </div> 
+                                            </div>  
                                         </div>
-                                        <div class="tab-pane" id="incident">
-                                            <div class="invest-ov gy-2">
-                                                <h5>
-                                                    Statuts
-                                                </h5>
-                                                <div class="invest-ov-details">
-                                                    <div>
-                                                        <div>
-                                                            <span class="amount text-warning">
-                                                                Soumis 
-                                                            </span>
-                                                            <span class="amount">
-                                                                ({{$staut_am_soumis}})
-                                                            </span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-4">
+                            <div class="card card-bordered card-full">
+                                <div class="card-inner">
+                                    <div class="card-title-group mb-1">
+                                        <div class="card-title">
+                                            <h6 class="title">
+                                                Vue d'ensemble des risques ({{ $nbre_risque }})
+                                            </h6>
+                                        </div>
+                                    </div>
+                                    <ul class="nav nav-tabs nav-tabs-card nav-tabs-xs">
+                                        <li class="nav-item">
+                                            <a class="nav-link active" data-bs-toggle="tab" href="#statutr">
+                                                Statuts
+                                            </a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a class="nav-link " data-bs-toggle="tab" href="#ap">
+                                                Action prventives ({{ $nbre_ap }})
+                                            </a>
+                                        </li>
+                                    </ul>
+                                    <div class="tab-content mt-0">
+                                        <div class="tab-pane active" id="statutr">
+                                            <div class="invest-data mt-3">
+                                                <div class="invest-data-amount g-2">
+                                                    <div class="invest-data-history">
+                                                        <div class="title text-center">
+                                                            Soumis
+                                                        </div>
+                                                        <div class="amount text-center">
+                                                            {{ $nbre_ris_soumis }}
+                                                        </div>
+                                                    </div>
+                                                    <div class="invest-data-history">
+                                                        <div class="title text-center">
+                                                            Rejeter
+                                                        </div>
+                                                        <div class="amount text-center">
+                                                            {{ $nbre_ris_n_valider }}
+                                                        </div>
+                                                    </div>
+                                                    <div class="invest-data-history">
+                                                        <div class="title text-center">
+                                                            Valider
+                                                        </div>
+                                                        <div class="amount text-center">
+                                                            {{ $nbre_ris_valider }}
                                                         </div>
                                                     </div>
                                                 </div>
-                                                <div class="invest-ov-details">
-                                                    <div>
-                                                        <div>
-                                                            <span class="amount text-danger">
-                                                                Rejeter 
-                                                            </span>
-                                                            <span class="amount">
-                                                                ({{$staut_am_rejeter}})
-                                                            </span>
+                                            </div>
+                                            <div>
+                                                <canvas id="myChartii"></canvas>
+                                            </div>
+                                            <script>
+                                                var ctx = document.getElementById('myChartii').getContext('2d');
+                                                var myChart = new Chart(ctx, {
+                                                    type: 'bar',
+                                                    data: {
+                                                        labels: ['Soumis', 'Rejeter', 'Valider'],
+                                                        datasets: [{
+                                                            label: 'Histogramme',
+                                                            data: [ {{ $nbre_ris_soumis }}, {{ $nbre_ris_n_valider }}, {{ $nbre_ris_valider }} ],
+                                                            backgroundColor: [
+                                                                'blue',
+                                                                'red',
+                                                                'orange'
+                                                            ], // Couleur de remplissage du graphique
+                                                            borderColor: 'white', // Couleur de la bordure du graphique
+                                                            borderWidth: 1
+                                                        }]
+                                                    },
+                                                    options: {
+                                                        scales: {
+                                                            y: {
+                                                                beginAtZero: true,
+                                                                ticks: {
+                                                                    stepSize: 10 // L'intervalle entre chaque étiquette sur l'axe Y
+                                                                }
+                                                            }
+                                                        }
+                                                    }
+                                                });
+                                            </script>
+                                        </div>
+                                        <div class="tab-pane " id="ap">
+                                            <div class="invest-ov gy-2" >
+                                                <div class="card-inner d-flex flex-column ">
+                                                    <div class="progress-list gy-3">
+                                                        <div class="progress-wrap">
+                                                            <div class="progress-text">
+                                                                <div class="progress-label">
+                                                                    Soumis ({{$nbre_ris_soumis}})
+                                                                </div>
+                                                                <div class="progress-amount">
+                                                                    @if($nbre_risque != 0)
+                                                                        {{ number_format(($nbre_ris_soumis / $nbre_risque)*100 , 2) }} %
+                                                                    @else
+                                                                        0.00 %
+                                                                    @endif
+                                                                </div>
+                                                            </div>
+                                                            <div class="progress progress-md">
+                                                                @php
+                                                                    if ($nbre_risque != 0) {
+                                                                       $sris_soumis = number_format(($nbre_ris_soumis / $nbre_risque)*100 , 0);
+                                                                    }else{ $sris_soumis = '0';  }
+                                                                @endphp
+                                                                <div class="progress-bar bg-warning" data-progress="{{$sris_soumis}}">
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="progress-wrap">
+                                                            <div class="progress-text">
+                                                                <div class="progress-label">
+                                                                    Rejeter ({{$nbre_ris_n_valider}})
+                                                                </div>
+                                                                <div class="progress-amount">
+                                                                    @if($nbre_risque != 0)
+                                                                        {{ number_format(($nbre_ris_n_valider / $nbre_risque)*100 , 2) }} %
+                                                                    @else
+                                                                        0.00 %
+                                                                    @endif
+                                                                </div>
+                                                            </div>
+                                                            <div class="progress progress-md">
+                                                                @php
+                                                                    if ($nbre_risque != 0) {
+                                                                       $sris_n_valider = number_format(($nbre_ris_n_valider / $nbre_risque)*100 , 0);
+                                                                    }else{ $sris_n_valider = '0';  }
+                                                                @endphp
+                                                                <div class="progress-bar bg-danger" data-progress="{{$sris_n_valider}}">
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="progress-wrap">
+                                                            <div class="progress-text">
+                                                                <div class="progress-label">
+                                                                    Valider ({{$nbre_ris_valider}})
+                                                                </div>
+                                                                <div class="progress-amount">
+                                                                    @if($nbre_risque != 0)
+                                                                        {{ number_format(($nbre_ris_valider / $nbre_risque)*100 , 2) }} %
+                                                                    @else
+                                                                        0.00 %
+                                                                    @endif
+                                                                </div>
+                                                            </div>
+                                                            <div class="progress progress-md">
+                                                                @php
+                                                                    if ($nbre_risque != 0) {
+                                                                       $sris_valider = number_format(($nbre_ris_valider / $nbre_risque)*100 , 0);
+                                                                    }else{ $sris_valider = '0';  }
+                                                                @endphp
+                                                                <div class="progress-bar bg-success" data-progress="{{$sris_valider}}">
+                                                                </div>
+                                                            </div>
                                                         </div>
                                                     </div>
-                                                </div>
-                                                <div class="invest-ov-details">
-                                                    <div>
-                                                        <div>
-                                                            <span class="amount text-success">
-                                                                Valider 
-                                                            </span>
-                                                            <span class="amount">
-                                                                ({{$staut_am_valider}})
-                                                            </span>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="invest-ov-details">
-                                                    <div>
-                                                        <div>
-                                                            <span class="amount text-warning">
-                                                                Evaluation éfficacitée en cours 
-                                                            </span>
-                                                            <span class="amount">
-                                                                ({{$staut_am_eff}})
-                                                            </span>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="invest-ov-details">
-                                                    <div>
-                                                        <div>
-                                                            <span class="amount text-success">
-                                                                Clôturé
-                                                            </span>
-                                                            <span class="amount">
-                                                                ({{$staut_am_clotu}})
-                                                            </span>
-                                                        </div>
-                                                    </div>
-                                                </div>
+                                                </div> 
                                             </div>
                                         </div>
                                     </div>
@@ -842,6 +966,7 @@
                                 </div>
                             </div>
                         </div>
+
                     </div>
                 </div>
             </div>
