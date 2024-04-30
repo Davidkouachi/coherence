@@ -41,6 +41,12 @@ class StatistiqueController extends Controller
         $nbre_am_r = Amelioration::where('type', '=', 'reclamation')->count();
         $nbre_am_c = Amelioration::where('type', '=', 'contentieux')->count();
 
+        $nbre_ris_soumis = Risque::where('statut', 'soumis')->count();
+        $nbre_ris_n_valider = Risque::where('statut', 'non_valider')
+                                    ->Orwhere('statut', 'update')
+                                    ->count();
+        $nbre_ris_valider =Risque::where('statut', 'valider')->count();
+
         $types = ['non_conformite_interne', 'reclamation', 'contentieux'];
 
         $statistics = [];
@@ -175,7 +181,16 @@ class StatistiqueController extends Controller
             }
         }
 
-        return view('statistique.index', ['statistics' => $statistics, 'processus' => $processus, 'nbre_processus' => $nbre_processus, 'nbre_risque' => $nbre_risque, 'nbre_cause' => $nbre_cause, 'nbre_ap' => $nbre_ap, 'nbre_am' => $nbre_am, 'nbre_ed_ap' => $nbre_ed_ap,'nbre_ehd_ap' => $nbre_ehd_ap,'nbre_hd_ap' => $nbre_hd_ap , 'nbre_ac' => $nbre_ac,'nbre_poste' => $nbre_poste, 'risques' => $risques, 'risques_limit' => $risques_limit, 'color_para' => $color_para, 'color_intervals' => $color_intervals, 'color_interval_nbre' => $color_interval_nbre, 'users' => $users, 'nbre_am_nci' => $nbre_am_nci, 'nbre_am_r' => $nbre_am_r, 'nbre_am_c' => $nbre_am_c, 'nbre_user' => $nbre_user,'his' => $his,'ams' => $ams, 'actionsData' => $actionsData,]);
+        $staut_am_soumis = Amelioration::where('statut', 'soumis')->count();
+        $staut_am_rejeter = Amelioration::where('statut', 'non-valider')
+                                        ->where('statut', 'modif')
+                                        ->where('statut', 'update')
+                                        ->count();
+        $staut_am_valider = Amelioration::where('statut', 'valider')->count();
+        $staut_am_eff = Amelioration::where('statut', 'date_efficacite')->count();
+        $staut_am_clotu = Amelioration::where('statut', 'cloturer')->count();
+
+        return view('statistique.index', ['statistics' => $statistics, 'processus' => $processus, 'nbre_processus' => $nbre_processus, 'nbre_risque' => $nbre_risque, 'nbre_cause' => $nbre_cause, 'nbre_ap' => $nbre_ap, 'nbre_am' => $nbre_am, 'nbre_ed_ap' => $nbre_ed_ap,'nbre_ehd_ap' => $nbre_ehd_ap,'nbre_hd_ap' => $nbre_hd_ap , 'nbre_ac' => $nbre_ac,'nbre_poste' => $nbre_poste, 'risques' => $risques, 'risques_limit' => $risques_limit, 'color_para' => $color_para, 'color_intervals' => $color_intervals, 'color_interval_nbre' => $color_interval_nbre, 'users' => $users, 'nbre_am_nci' => $nbre_am_nci, 'nbre_am_r' => $nbre_am_r, 'nbre_am_c' => $nbre_am_c, 'nbre_user' => $nbre_user,'his' => $his,'ams' => $ams, 'actionsData' => $actionsData, 'nbre_ris_soumis' => $nbre_ris_soumis,'nbre_ris_n_valider' => $nbre_ris_n_valider,'nbre_ris_valider' => $nbre_ris_valider,'staut_am_soumis' => $staut_am_soumis, 'staut_am_rejeter' => $staut_am_rejeter, 'staut_am_valider' => $staut_am_valider, 'staut_am_eff' => $staut_am_eff, 'staut_am_clotu' => $staut_am_clotu,]);
     }
 
     public function get_processus($id)

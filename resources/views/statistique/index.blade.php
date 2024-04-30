@@ -34,93 +34,44 @@
                 <div class="nk-block">
                     <div class="row g-gs">
 
-                        <div class="col-lg-4 col-xxl-4 ">
+                        <div class="col-lg-12 ">
                             <div class="card card-bordered  card-full">
                                 <div class="card-inner">
-                                    <div class="card-amount">
-                                        <span class="amount">Processus - Risques - Causes</span>
-                                    </div>
                                     <div class="invest-data">
                                         <div class="invest-data-amount g-2">
                                             <div class="invest-data-history">
-                                                <div class="title text-center">Processus</div>
+                                                <h5 class="text-center text-primary">Processus</h5>
                                                 <div class="amount text-center">{{ $nbre_processus }}</div>
                                             </div>
                                             <div class="invest-data-history">
-                                                <div class="title text-center">Risques</div>
+                                                <h5 class="text-center text-primary">Risques</h5>
                                                 <div class="amount text-center">{{ $nbre_risque }}</div>
                                             </div>
                                             <div class="invest-data-history">
-                                                <div class="title text-center">Causes</div>
+                                                <h5 class="text-center text-primary">Causes</h5>
                                                 <div class="amount text-center">{{ $nbre_cause }}</div>
                                             </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="col-lg-4 col-xxl-4 ">
-                            <div class="card card-bordered  card-full">
-                                <div class="card-inner">
-                                    <div class="card-amount">
-                                        <span class="amount">Action Préventive ({{ $nbre_ap }})</span>
-                                    </div>
-                                    <div class="invest-data">
-                                        <div class="invest-data-amount g-2">
                                             <div class="invest-data-history">
-                                                <div class="title text-center">Dans les délais</div>
-                                                <div class="amount text-center">
-                                                    <span class="text-success" >{{ $nbre_ed_ap }}</span>
-                                                    @if($nbre_ap != 0)
-                                                        (<span>{{ number_format(($nbre_ed_ap / $nbre_ap)*100 , 2) }} %</span>)
-                                                    @endif
-                                                </div>
+                                                <h5 class="text-center text-primary">Incidents</h5>
+                                                <div class="amount text-center">{{ $nbre_am }}</div>
                                             </div>
                                             <div class="invest-data-history">
-                                                <div class="title text-center">Hors délais</div>
-                                                <div class="amount text-center">
-                                                    <span class="text-warning" >{{ $nbre_ehd_ap }}</span>
-                                                    @if($nbre_ap != 0)
-                                                        (<span>{{ number_format(($nbre_ehd_ap / $nbre_ap)*100 , 2) }} %</span>)
-                                                    @endif
-                                                </div>
+                                                <h5 class="text-center text-primary">Actions préventives</h5>
+                                                <div class="amount text-center">{{ $nbre_ap }}</div>
                                             </div>
                                             <div class="invest-data-history">
-                                                <div class="title text-center">Non Réaliser</div>
-                                                <div class="amount text-center">
-                                                    <span class="text-danger" >{{ $nbre_hd_ap }}</span>
-                                                    @if($nbre_ap != 0)
-                                                        (<span>{{ number_format(($nbre_hd_ap / $nbre_ap)*100 , 2) }} %</span>)
-                                                    @endif
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="col-lg-4 col-xxl-4 ">
-                            <div class="card card-bordered  card-full">
-                                <div class="card-inner">
-                                    <div class="card-amount">
-                                        <span class="amount">Données Statistiques</span>
-                                    </div>
-                                    <div class="invest-data">
-                                        <div class="invest-data-amount g-2">
-                                            <div class="invest-data-history">
-                                                <div class="title text-center">Actions correctives</div>
+                                                <h5 class="text-center text-primary">Actions correctives</h5>
                                                 <div class="amount text-center">{{ $nbre_ac }}</div>
                                             </div>
                                             <div class="invest-data-history">
-                                                <div class="title text-center">Utilisateurs</div>
+                                                <h5 class="text-center text-primary">Utilisateurs</h5>
                                                 <div class="amount text-center">{{ $nbre_user }}</div>
                                             </div>
                                             <div class="invest-data-history">
-                                                <div class="title text-center">Postes</div>
+                                                <h5 class="text-center text-primary">Postes</h5>
                                                 <div class="amount text-center">{{ $nbre_poste }}</div>
                                             </div>
+
                                         </div>
                                     </div>
                                 </div>
@@ -137,502 +88,106 @@
                             @endphp
                         @endforeach
 
-                        @foreach ($statistics as $type => $stat)
-                            <div class="col-lg-4">
-                                <div class="card card-bordered card-full">
-                                    <div class="card-inner">
-                                        <div class="card-amount">
-                                            <h5 class="">
-                                                @if ($type === 'non_conformite_interne')
-                                                    Non conformité.I
-                                                @endif
-                                                @if ($type === 'reclamation')
-                                                    Réclamation
-                                                @endif
-                                                @if ($type === 'contentieux')
-                                                     Contentieux
-                                                @endif
-                                                <span class="currency currency-usd ">
-                                                    {{$stat['total']}} 
-                                                    <span class="{{ $stat['progres'] === $maxProgress ? 'text-danger' : '' }} " >
-                                                        ({{$stat['progres']}}%)
-                                                    </span>
-                                                </span>
-                                            </h5>
-                                        </div>
-                                        <div class="invest-data">
-                                            <div class="invest-data-amount g-2">
-                                                <div class="invest-data-history">
-                                                    <div class="title text-center">
-                                                        Cause(s)
-                                                    </div>
-                                                    <div class="amount text-center">
-                                                        {{ $stat['causes'] }}
-                                                    </div>
-                                                </div>
-                                                <div class="invest-data-history">
-                                                    <div class="title text-center">
-                                                        Risque(s)
-                                                    </div>
-                                                    <div class="amount text-center">
-                                                        {{ $stat['risques'] }}
-                                                    </div>
-                                                </div>
-                                                <div class="invest-data-history">
-                                                    <div class="title text-center">
-                                                        Néant
-                                                    </div>
-                                                    <div class="amount text-center">
-                                                        {{ $stat['causes_risques_nt'] }}
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        
-                                        <div>
-                                            <canvas id="myChart{{$type}}"></canvas>
-                                        </div>
-
-                                        <script>
-                                            var ctx{{ $type }} = document.getElementById('myChart{{ $type }}').getContext('2d');
-                                            var myChart{{ $type }} = new Chart(ctx{{ $type }}, {
-                                                type: 'bar',
-                                                data: {
-                                                    labels: ['Causes', 'Risques', 'Néant'],
-                                                    datasets: [{
-                                                       label: 'Histogramme',
-                                                        data: [{{ $stat['causes'] }}, {{ $stat['risques'] }}, {{ $stat['causes_risques_nt'] }}],
-                                                        backgroundColor: [
-                                                            'blue',
-                                                            'red',
-                                                            'orange'], // Couleur de remplissage du graphique
-                                                        borderColor: 'white', // Couleur de la bordure du graphique
-                                                        borderWidth: 1
-                                                    }]
-                                                },
-                                                options: {
-                                                    scales: {
-                                                        y: {
-                                                            beginAtZero: true,
-                                                            ticks: {
-                                                                stepSize: 10 // L'intervalle entre chaque étiquette sur l'axe Y
-                                                            }
-                                                        }
-                                                    }
-                                                }
-                                            });
-                                        </script>
-                                    </div>
-                                </div>
-                            </div>
-                        @endforeach
-
-                        <div class="col-lg-4">
+                        <div class="col-lg-12">
                             <div class="card card-bordered card-full">
-                                <div class="card-inner">
+                                <div class="card-inner row g-gs">
                                     <div class="card-amount">
                                         <h5>
-                                            Incidents
-                                            <span class="currency currency-usd ">
-                                                {{ $nbre_am }}
+                                            <span class="me-2" >
+                                                Type d'incidents
                                             </span>
+                                            <em class="ni ni-share-alt"></em>
                                         </h5>
                                     </div>
-                                    <div class="invest-data">
-                                            <div class="invest-data-amount g-2">
-                                                <div class="invest-data-history">
-                                                    <div class="title text-center">
-                                                        Non C.I
-                                                    </div>
-                                                    <div class="amount text-center">
-                                                        {{ $nbre_am_nci }}
-                                                    </div>
-                                                </div>
-                                                <div class="invest-data-history">
-                                                    <div class="title text-center">
-                                                        Réclamations
-                                                    </div>
-                                                    <div class="amount text-center">
-                                                        {{ $nbre_am_r }}
-                                                    </div>
-                                                </div>
-                                                <div class="invest-data-history">
-                                                    <div class="title text-center">
-                                                        Contentieux
-                                                    </div>
-                                                    <div class="amount text-center">
-                                                        {{ $nbre_am_c }}
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    <div>
-                                        <canvas id="myCharti"></canvas>
-                                    </div>
-                                    <script>
-                                        var ctx = document.getElementById('myCharti').getContext('2d');
-                                        var myChart = new Chart(ctx, {
-                                            type: 'bar',
-                                            data: {
-                                                labels: ['Non conformité.I', 'Réclamations', 'Contentieux'],
-                                                datasets: [{
-                                                    label: 'Histogramme',
-                                                    data: [ {{ $nbre_am_nci }}, {{ $nbre_am_r }}, {{ $nbre_am_c }} ],
-                                                    backgroundColor: [
-                                                        'blue',
-                                                        'red',
-                                                        'orange'
-                                                    ], // Couleur de remplissage du graphique
-                                                    borderColor: 'white', // Couleur de la bordure du graphique
-                                                    borderWidth: 1
-                                                }]
-                                            },
-                                            options: {
-                                                scales: {
-                                                    y: {
-                                                        beginAtZero: true,
-                                                        ticks: {
-                                                            stepSize: 10 // L'intervalle entre chaque étiquette sur l'axe Y
-                                                        }
-                                                    }
-                                                }
-                                            }
-                                        });
-                                    </script>
-                                    <!--<div class="card-amount">
-                                                                    <div >
-                                                                        <a class="btn btn-outline-warning btn-dim">
-                                                                            <span  class="me-2" >Détails</span>
-                                                                            <span>
-                                                                                <em class="ni ni-chevron-right-circle" > </em>
-                                                                            </span>
-                                                                        </a>
-                                                                    </div>
-                                                                </div>-->
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="col-lg-4">
-                            <div class="card card-bordered h-100">
-                                <div class="card-inner border-bottom">
-                                    <div class="card-title-group">
-                                        <div class="card-title">
-                                            <h6 class="title">
-                                                Historiques
-                                            </h6>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="card-inner">
-                                    <div class="timeline">
-                                        <h6 class="timeline-head">
-                                            03 dernières actions
-                                        </h6>
-                                        <ul class="timeline-list" style="height: 250px;" data-simplebar="" >
-                                            @foreach ($his as $hi)
-                                            <li class="timeline-item">
-                                                <em class="icon ni ni-calendar-alt"></em>
-                                                <div class="timeline-date">
-                                                    {{ \Carbon\Carbon::parse($hi->created_at)->translatedFormat('j F Y') }}
-                                                </div>
-                                                <div class="timeline-data">
-                                                    <h6 class="timeline-title">
-                                                        {{$hi->nom_formulaire}}
-                                                    </h6>
-                                                    <div class="timeline-des">
-                                                        <p>
-                                                            <span class="timeline-title" >
-                                                                Action :
+                                @foreach ($statistics as $type => $stat)
+                                    <div class="col-lg-4">
+                                        <div class="card card-bordered card-full">
+                                            <div class="card-inner">
+                                                <div class="card-amount">
+                                                    <h5 class="">
+                                                        @if ($type === 'non_conformite_interne')
+                                                            Non conformité.I
+                                                        @endif
+                                                        @if ($type === 'reclamation')
+                                                            Réclamation
+                                                        @endif
+                                                        @if ($type === 'contentieux')
+                                                             Contentieux
+                                                        @endif
+                                                        <span class="currency currency-usd ">
+                                                            {{$stat['total']}} 
+                                                            <span class="{{ $stat['progres'] === $maxProgress ? 'text-danger' : '' }} " >
+                                                                ({{$stat['progres']}}%)
                                                             </span>
-                                                            {{$hi->nom_action}}.
-                                                        </p>
-                                                        <span class="time">
-                                                            <em class="icon ni ni-alarm-alt"></em>
-                                                            {{ \Carbon\Carbon::parse($hi->created_at)->translatedFormat('H:i:s') }}
                                                         </span>
+                                                    </h5>
+                                                </div>
+                                                <div class="invest-data">
+                                                    <div class="invest-data-amount g-2">
+                                                        <div class="invest-data-history">
+                                                            <div class="title text-center">
+                                                                Cause(s)
+                                                            </div>
+                                                            <div class="amount text-center">
+                                                                {{ $stat['causes'] }}
+                                                            </div>
+                                                        </div>
+                                                        <div class="invest-data-history">
+                                                            <div class="title text-center">
+                                                                Risque(s)
+                                                            </div>
+                                                            <div class="amount text-center">
+                                                                {{ $stat['risques'] }}
+                                                            </div>
+                                                        </div>
+                                                        <div class="invest-data-history">
+                                                            <div class="title text-center">
+                                                                Néant
+                                                            </div>
+                                                            <div class="amount text-center">
+                                                                {{ $stat['causes_risques_nt'] }}
+                                                            </div>
+                                                        </div>
                                                     </div>
                                                 </div>
-                                            </li>
-                                            @endforeach
-                                        </ul>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+                                                
+                                                <div>
+                                                    <canvas id="myChart{{$type}}"></canvas>
+                                                </div>
 
-                        <div class="col-lg-4">
-                            <div class="card card-bordered card-full">
-                                <div class="card-inner">
-                                    <div class="card-title-group mb-1">
-                                        <div class="card-title">
-                                            <h6 class="title">
-                                                Vue d'ensemble
-                                            </h6>
-                                        </div>
-                                    </div>
-                                    <ul class="nav nav-tabs nav-tabs-card nav-tabs-xs">
-                                        <li class="nav-item">
-                                            <a class="nav-link active" data-bs-toggle="tab" href="#risque">
-                                                Risques
-                                            </a>
-                                        </li>
-                                        <li class="nav-item">
-                                            <a class="nav-link" data-bs-toggle="tab" href="#incident">
-                                                Incidents
-                                            </a>
-                                        </li>
-                                        <li class="nav-item">
-                                            <a class="nav-link" data-bs-toggle="tab" href="#action">
-                                                Actions
-                                            </a>
-                                        </li>
-                                    </ul>
-                                    <div class="tab-content mt-0">
-                                        <div class="tab-pane active" id="risque">
-                                            <div class="invest-ov gy-2">
-                                                <div class="subtitle">
-                                                    Currently Actived Investment
-                                                </div>
-                                                <div class="invest-ov-details">
-                                                    <div class="invest-ov-info">
-                                                        <div class="amount">
-                                                            49,395.395
-                                                            <span class="currency currency-usd">
-                                                                USD
-                                                            </span>
-                                                        </div>
-                                                        <div class="title">
-                                                            Amount
-                                                        </div>
-                                                    </div>
-                                                    <div class="invest-ov-stats">
-                                                        <div>
-                                                            <span class="amount">
-                                                                56
-                                                            </span>
-                                                            <span class="change up text-danger">
-                                                                <em class="icon ni ni-arrow-long-up">
-                                                                </em>
-                                                                1.93%
-                                                            </span>
-                                                        </div>
-                                                        <div class="title">
-                                                            Plans
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="invest-ov-details">
-                                                    <div class="invest-ov-info">
-                                                        <div class="amount">
-                                                            49,395.395
-                                                            <span class="currency currency-usd">
-                                                                USD
-                                                            </span>
-                                                        </div>
-                                                        <div class="title">
-                                                            Paid Profit
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="invest-ov gy-2">
-                                                <div class="subtitle">
-                                                    Investment in this Month
-                                                </div>
-                                                <div class="invest-ov-details">
-                                                    <div class="invest-ov-info">
-                                                        <div class="amount">
-                                                            49,395.395
-                                                            <span class="currency currency-usd">
-                                                                USD
-                                                            </span>
-                                                        </div>
-                                                        <div class="title">
-                                                            Amount
-                                                        </div>
-                                                    </div>
-                                                    <div class="invest-ov-stats">
-                                                        <div>
-                                                            <span class="amount">
-                                                                23
-                                                            </span>
-                                                            <span class="change down text-danger">
-                                                                <em class="icon ni ni-arrow-long-down">
-                                                                </em>
-                                                                1.93%
-                                                            </span>
-                                                        </div>
-                                                        <div class="title">
-                                                            Plans
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="tab-pane" id="incident">
-                                            <div class="invest-ov gy-2">
-                                                <div class="subtitle">
-                                                    Currently Actived Investment
-                                                </div>
-                                                <div class="invest-ov-details">
-                                                    <div class="invest-ov-info">
-                                                        <div class="amount">
-                                                            89,395.395
-                                                            <span class="currency currency-usd">
-                                                                USD
-                                                            </span>
-                                                        </div>
-                                                        <div class="title">
-                                                            Amount
-                                                        </div>
-                                                    </div>
-                                                    <div class="invest-ov-stats">
-                                                        <div>
-                                                            <span class="amount">
-                                                                96
-                                                            </span>
-                                                            <span class="change up text-danger">
-                                                                <em class="icon ni ni-arrow-long-up">
-                                                                </em>
-                                                                1.93%
-                                                            </span>
-                                                        </div>
-                                                        <div class="title">
-                                                            Plans
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="invest-ov-details">
-                                                    <div class="invest-ov-info">
-                                                        <div class="amount">
-                                                            99,395.395
-                                                            <span class="currency currency-usd">
-                                                                USD
-                                                            </span>
-                                                        </div>
-                                                        <div class="title">
-                                                            Paid Profit
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="invest-ov gy-2">
-                                                <div class="subtitle">
-                                                    Investment in this Month
-                                                </div>
-                                                <div class="invest-ov-details">
-                                                    <div class="invest-ov-info">
-                                                        <div class="amount">
-                                                            149,395.395
-                                                            <span class="currency currency-usd">
-                                                                USD
-                                                            </span>
-                                                        </div>
-                                                        <div class="title">
-                                                            Amount
-                                                        </div>
-                                                    </div>
-                                                    <div class="invest-ov-stats">
-                                                        <div>
-                                                            <span class="amount">
-                                                                83
-                                                            </span>
-                                                            <span class="change down text-danger">
-                                                                <em class="icon ni ni-arrow-long-down">
-                                                                </em>
-                                                                1.93%
-                                                            </span>
-                                                        </div>
-                                                        <div class="title">
-                                                            Plans
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="tab-pane" id="action">
-                                            <div class="invest-ov gy-2">
-                                                <div class="subtitle">
-                                                    Currently Actived Investment
-                                                </div>
-                                                <div class="invest-ov-details">
-                                                    <div class="invest-ov-info">
-                                                        <div class="amount">
-                                                            249,395.395
-                                                            <span class="currency currency-usd">
-                                                                USD
-                                                            </span>
-                                                        </div>
-                                                        <div class="title">
-                                                            Amount
-                                                        </div>
-                                                    </div>
-                                                    <div class="invest-ov-stats">
-                                                        <div>
-                                                            <span class="amount">
-                                                                556
-                                                            </span>
-                                                            <span class="change up text-danger">
-                                                                <em class="icon ni ni-arrow-long-up">
-                                                                </em>
-                                                                1.93%
-                                                            </span>
-                                                        </div>
-                                                        <div class="title">
-                                                            Plans
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="invest-ov-details">
-                                                    <div class="invest-ov-info">
-                                                        <div class="amount">
-                                                            149,395.395
-                                                            <span class="currency currency-usd">
-                                                                USD
-                                                            </span>
-                                                        </div>
-                                                        <div class="title">
-                                                            Paid Profit
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="invest-ov gy-2">
-                                                <div class="subtitle">
-                                                    Investment in this Month
-                                                </div>
-                                                <div class="invest-ov-details">
-                                                    <div class="invest-ov-info">
-                                                        <div class="amount">
-                                                            249,395.395
-                                                            <span class="currency currency-usd">
-                                                                USD
-                                                            </span>
-                                                        </div>
-                                                        <div class="title">
-                                                            Amount
-                                                        </div>
-                                                    </div>
-                                                    <div class="invest-ov-stats">
-                                                        <div>
-                                                            <span class="amount">
-                                                                223
-                                                            </span>
-                                                            <span class="change down text-danger">
-                                                                <em class="icon ni ni-arrow-long-down">
-                                                                </em>
-                                                                1.93%
-                                                            </span>
-                                                        </div>
-                                                        <div class="title">
-                                                            Plans
-                                                        </div>
-                                                    </div>
-                                                </div>
+                                                <script>
+                                                    var ctx{{ $type }} = document.getElementById('myChart{{ $type }}').getContext('2d');
+                                                    var myChart{{ $type }} = new Chart(ctx{{ $type }}, {
+                                                        type: 'bar',
+                                                        data: {
+                                                            labels: ['Causes', 'Risques', 'Néant'],
+                                                            datasets: [{
+                                                               label: 'Histogramme',
+                                                                data: [{{ $stat['causes'] }}, {{ $stat['risques'] }}, {{ $stat['causes_risques_nt'] }}],
+                                                                backgroundColor: [
+                                                                    'blue',
+                                                                    'red',
+                                                                    'orange'], // Couleur de remplissage du graphique
+                                                                borderColor: 'white', // Couleur de la bordure du graphique
+                                                                borderWidth: 1
+                                                            }]
+                                                        },
+                                                        options: {
+                                                            scales: {
+                                                                y: {
+                                                                    beginAtZero: true,
+                                                                    ticks: {
+                                                                        stepSize: 10 // L'intervalle entre chaque étiquette sur l'axe Y
+                                                                    }
+                                                                }
+                                                            }
+                                                        }
+                                                    });
+                                                </script>
                                             </div>
                                         </div>
                                     </div>
+                                @endforeach
                                 </div>
                             </div>
                         </div>
@@ -706,6 +261,312 @@
                             </div>
                         </div>
 
+                        <div class="col-lg-4">
+                            <div class="card card-bordered card-full">
+                                <div class="card-inner">
+                                    <div class="card-title-group mb-1">
+                                        <div class="card-title">
+                                            <h6 class="title">
+                                                Vue d'ensemble
+                                            </h6>
+                                        </div>
+                                    </div>
+                                    <ul class="nav nav-tabs nav-tabs-card nav-tabs-xs">
+                                        <li class="nav-item">
+                                            <a class="nav-link active" data-bs-toggle="tab" href="#action">
+                                                Types d'incidents
+                                            </a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a class="nav-link " data-bs-toggle="tab" href="#risque">
+                                                Risques ({{ $nbre_risque }})
+                                            </a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a class="nav-link" data-bs-toggle="tab" href="#incident">
+                                                Incidents ({{ $nbre_am }})
+                                            </a>
+                                        </li>
+                                    </ul>
+                                    <div class="tab-content mt-0">
+                                        <div class="tab-pane active" id="action" >
+                                            <div class="invest-data mt-3">
+                                                <div class="invest-data-amount g-2">
+                                                    <div class="invest-data-history">
+                                                        <div class="title text-center">
+                                                            Non Conformité.I
+                                                        </div>
+                                                        <div class="amount text-center">
+                                                            {{ $nbre_am_nci }}
+                                                        </div>
+                                                    </div>
+                                                    <div class="invest-data-history">
+                                                        <div class="title text-center">
+                                                            Réclamations
+                                                        </div>
+                                                        <div class="amount text-center">
+                                                            {{ $nbre_am_r }}
+                                                        </div>
+                                                    </div>
+                                                    <div class="invest-data-history">
+                                                        <div class="title text-center">
+                                                            Contentieux
+                                                        </div>
+                                                        <div class="amount text-center">
+                                                            {{ $nbre_am_c }}
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div>
+                                                <canvas id="myCharti"></canvas>
+                                            </div>
+                                            <script>
+                                                var ctx = document.getElementById('myCharti').getContext('2d');
+                                                var myChart = new Chart(ctx, {
+                                                    type: 'bar',
+                                                    data: {
+                                                        labels: ['Non conformité.I', 'Réclamations', 'Contentieux'],
+                                                        datasets: [{
+                                                            label: 'Histogramme',
+                                                            data: [ {{ $nbre_am_nci }}, {{ $nbre_am_r }}, {{ $nbre_am_c }} ],
+                                                            backgroundColor: [
+                                                                'blue',
+                                                                'red',
+                                                                'orange'
+                                                            ], // Couleur de remplissage du graphique
+                                                            borderColor: 'white', // Couleur de la bordure du graphique
+                                                            borderWidth: 1
+                                                        }]
+                                                    },
+                                                    options: {
+                                                        scales: {
+                                                            y: {
+                                                                beginAtZero: true,
+                                                                ticks: {
+                                                                    stepSize: 10 // L'intervalle entre chaque étiquette sur l'axe Y
+                                                                }
+                                                            }
+                                                        }
+                                                    }
+                                                });
+                                            </script>
+                                        </div>
+                                        <div class="tab-pane " id="risque">
+                                            <div class="invest-ov gy-2">
+                                                <h5>
+                                                    Statuts
+                                                </h5>
+                                                <div class="invest-ov-details">
+                                                    <div class="invest-ov-stats">
+                                                        <div>
+                                                            <span class="amount text-warning">
+                                                                Soumis 
+                                                            </span>
+                                                            <span class="amount">
+                                                                ({{ $nbre_ris_soumis }})
+                                                            </span>
+                                                        </div>
+                                                    </div>
+                                                    <div class="invest-ov-stats">
+                                                        <div>
+                                                            <span class="amount text-danger">
+                                                                Rejeter 
+                                                            </span>
+                                                            <span class="amount">
+                                                                ({{ $nbre_ris_n_valider }})
+                                                            </span>
+                                                        </div>
+                                                    </div>
+                                                    <div class="invest-ov-stats">
+                                                        <div>
+                                                            <span class="amount text-success">
+                                                                Valider 
+                                                            </span>
+                                                            <span class="amount">
+                                                                ({{ $nbre_ris_valider }})
+                                                            </span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="invest-ov gy-2">
+                                                <h5>
+                                                    Actions Préventives ({{ $nbre_ap }})
+                                                </h5>
+                                                <div class="invest-ov-details">
+                                                    <div class="invest-ov-info">
+                                                        <span class="amount">
+                                                            Non réaliser
+                                                        </span>
+                                                    </div>
+                                                    <div class="invest-ov-stats">
+                                                        <div>
+                                                            <span class="amount">
+                                                                {{ $nbre_hd_ap }}
+                                                                @if($nbre_ap != 0)
+                                                                    (<span class=" text-danger" >{{ number_format(($nbre_hd_ap / $nbre_ap)*100 , 2) }} %</span>)
+                                                                @endif
+                                                            </span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="invest-ov-details">
+                                                    <div class="invest-ov-info">
+                                                        <span class="amount">
+                                                            Réaliser hors délai
+                                                        </span>
+                                                    </div>
+                                                    <div class="invest-ov-stats">
+                                                        <div>
+                                                            <span class="amount">
+                                                                {{ $nbre_ehd_ap }}
+                                                                @if($nbre_ap != 0)
+                                                                    (<span class=" text-warning" >{{ number_format(($nbre_ehd_ap / $nbre_ap)*100 , 2) }} %</span>)
+                                                                @endif
+                                                            </span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="invest-ov-details">
+                                                    <div class="invest-ov-info">
+                                                        <span class="amount">
+                                                           Réaliser dans les délais
+                                                        </span>
+                                                    </div>
+                                                    <div class="invest-ov-stats">
+                                                        <div>
+                                                            <span class="amount">
+                                                                {{ $nbre_ed_ap }}
+                                                                @if($nbre_ap != 0)
+                                                                    (<span class=" text-success" >{{ number_format(($nbre_ed_ap / $nbre_ap)*100 , 2) }} %</span>)
+                                                                @endif
+                                                            </span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="tab-pane" id="incident">
+                                            <div class="invest-ov gy-2">
+                                                <h5>
+                                                    Statuts
+                                                </h5>
+                                                <div class="invest-ov-details">
+                                                    <div>
+                                                        <div>
+                                                            <span class="amount text-warning">
+                                                                Soumis 
+                                                            </span>
+                                                            <span class="amount">
+                                                                ({{$staut_am_soumis}})
+                                                            </span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="invest-ov-details">
+                                                    <div>
+                                                        <div>
+                                                            <span class="amount text-danger">
+                                                                Rejeter 
+                                                            </span>
+                                                            <span class="amount">
+                                                                ({{$staut_am_rejeter}})
+                                                            </span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="invest-ov-details">
+                                                    <div>
+                                                        <div>
+                                                            <span class="amount text-success">
+                                                                Valider 
+                                                            </span>
+                                                            <span class="amount">
+                                                                ({{$staut_am_valider}})
+                                                            </span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="invest-ov-details">
+                                                    <div>
+                                                        <div>
+                                                            <span class="amount text-warning">
+                                                                Evaluation éfficacitée en cours 
+                                                            </span>
+                                                            <span class="amount">
+                                                                ({{$staut_am_eff}})
+                                                            </span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="invest-ov-details">
+                                                    <div>
+                                                        <div>
+                                                            <span class="amount text-success">
+                                                                Clôturé
+                                                            </span>
+                                                            <span class="amount">
+                                                                ({{$staut_am_clotu}})
+                                                            </span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-4">
+                            <div class="card card-bordered h-100">
+                                <div class="card-inner border-bottom">
+                                    <div class="card-title-group">
+                                        <div class="card-title">
+                                            <h6 class="title">
+                                                Historiques
+                                            </h6>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="card-inner">
+                                    <div class="timeline">
+                                        <h6 class="timeline-head">
+                                            10 dernières actions
+                                        </h6>
+                                        <ul class="timeline-list" style="height: 250px;" data-simplebar="" >
+                                            @foreach ($his as $hi)
+                                            <li class="timeline-item">
+                                                <em class="icon ni ni-calendar-alt"></em>
+                                                <div class="timeline-date">
+                                                    {{ \Carbon\Carbon::parse($hi->created_at)->translatedFormat('j F Y') }}
+                                                </div>
+                                                <div class="timeline-data">
+                                                    <h6 class="timeline-title">
+                                                        {{$hi->nom_formulaire}}
+                                                    </h6>
+                                                    <div class="timeline-des">
+                                                        <p>
+                                                            <span class="timeline-title" >
+                                                                Action :
+                                                            </span>
+                                                            {{$hi->nom_action}}.
+                                                        </p>
+                                                        <span class="time">
+                                                            <em class="icon ni ni-alarm-alt"></em>
+                                                            {{ \Carbon\Carbon::parse($hi->created_at)->translatedFormat('H:i:s') }}
+                                                        </span>
+                                                    </div>
+                                                </div>
+                                            </li>
+                                            @endforeach
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
                         <div class="col-lg-6">
                             <div class="card card-bordered card-full">
                                 <div class="card-inner">
@@ -715,10 +576,6 @@
                                                 <span class="me-2">
                                                 Quelques Risques
                                                 </span>
-                                                <!--<a href="{{ route('index_liste_risque') }}" class="btn btn-outline-warning btn-dim">
-                                                    <em class="me-1" >Voir Plus</em>
-                                                    <em class="ni ni-eye"></em>
-                                                </a>-->
                                             </h6>
                                         </div>
                                         <div class="card-tools">
@@ -726,9 +583,7 @@
                                                 <li>
                                                     <div class="form-group text-center">
                                                         <select class="form-select" id="device">
-                                                            <option selected value="Fcfa">Fcfa</option>
-                                                            <option value="Euro">Euro</option>
-                                                            <option value="Dollar">Dollar</option>
+                                                            <option selected value="fcfa">Fcfa</option>
                                                         </select>
                                                         <script>
                                                             document.addEventListener("DOMContentLoaded", function() {
