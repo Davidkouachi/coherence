@@ -106,7 +106,7 @@
                                                 <div class="card-amount">
                                                     <h5 class="">
                                                         @if ($type === 'non_conformite_interne')
-                                                            Non conformité.I
+                                                            Non conformité Interne
                                                         @endif
                                                         @if ($type === 'reclamation')
                                                             Réclamation
@@ -288,15 +288,15 @@
                                             <div class="invest-data mt-3">
                                                 <div class="invest-data-amount g-2">
                                                     <div class="invest-data-history">
-                                                        <div class="title text-center">
-                                                            Non Conformité.I
+                                                        <div class="title text-center text-primary">
+                                                            Non Conformité Interne
                                                         </div>
                                                         <div class="amount text-center">
                                                             {{ $nbre_am_nci }}
                                                         </div>
                                                     </div>
                                                     <div class="invest-data-history">
-                                                        <div class="title text-center">
+                                                        <div class="title text-center text-danger">
                                                             Réclamations
                                                         </div>
                                                         <div class="amount text-center">
@@ -304,7 +304,7 @@
                                                         </div>
                                                     </div>
                                                     <div class="invest-data-history">
-                                                        <div class="title text-center">
+                                                        <div class="title text-center text-warning">
                                                             Contentieux
                                                         </div>
                                                         <div class="amount text-center">
@@ -321,7 +321,7 @@
                                                 var myChart = new Chart(ctx, {
                                                     type: 'bar',
                                                     data: {
-                                                        labels: ['Non conformité.I', 'Réclamations', 'Contentieux'],
+                                                        labels: ['Non conformité Interne', 'Réclamations', 'Contentieux'],
                                                         datasets: [{
                                                             label: 'Histogramme',
                                                             data: [ {{ $nbre_am_nci }}, {{ $nbre_am_r }}, {{ $nbre_am_c }} ],
@@ -502,7 +502,7 @@
                                             <div class="invest-data mt-3">
                                                 <div class="invest-data-amount g-2">
                                                     <div class="invest-data-history">
-                                                        <div class="title text-center">
+                                                        <div class="title text-center text-warning">
                                                             Soumis
                                                         </div>
                                                         <div class="amount text-center">
@@ -510,7 +510,7 @@
                                                         </div>
                                                     </div>
                                                     <div class="invest-data-history">
-                                                        <div class="title text-center">
+                                                        <div class="title text-center text-danger">
                                                             Rejeter
                                                         </div>
                                                         <div class="amount text-center">
@@ -518,7 +518,7 @@
                                                         </div>
                                                     </div>
                                                     <div class="invest-data-history">
-                                                        <div class="title text-center">
+                                                        <div class="title text-center text-success">
                                                             Valider
                                                         </div>
                                                         <div class="amount text-center">
@@ -540,11 +540,11 @@
                                                             label: 'Histogramme',
                                                             data: [ {{ $nbre_ris_soumis }}, {{ $nbre_ris_n_valider }}, {{ $nbre_ris_valider }} ],
                                                             backgroundColor: [
-                                                                'blue',
+                                                                'orange',
                                                                 'red',
-                                                                'orange'
-                                                            ], // Couleur de remplissage du graphique
-                                                            borderColor: 'white', // Couleur de la bordure du graphique
+                                                                'green'
+                                                            ],
+                                                            borderColor: 'white',
                                                             borderWidth: 1
                                                         }]
                                                     },
@@ -553,7 +553,7 @@
                                                             y: {
                                                                 beginAtZero: true,
                                                                 ticks: {
-                                                                    stepSize: 10 // L'intervalle entre chaque étiquette sur l'axe Y
+                                                                    stepSize: 10 
                                                                 }
                                                             }
                                                         }
@@ -662,7 +662,7 @@
                                         <ul class="timeline-list" style="height: 250px;" data-simplebar="" >
                                             @foreach ($his as $hi)
                                             <li class="timeline-item">
-                                                <em class="icon ni ni-calendar-alt"></em>
+                                                <em class="icon ni ni-calendar-alt text-primary "></em>
                                                 <div class="timeline-date">
                                                     {{ \Carbon\Carbon::parse($hi->created_at)->translatedFormat('j F Y') }}
                                                 </div>
@@ -691,137 +691,85 @@
                             </div>
                         </div>
 
-                        <div class="col-lg-6">
+                        <div class="col-lg-12">
                             <div class="card card-bordered card-full">
                                 <div class="card-inner">
-                                    <div class="card-title-group">
+                                    <div class="card-title-group mb-1">
                                         <div class="card-title">
                                             <h6 class="title">
-                                                <span class="me-2">
-                                                Quelques Risques
-                                                </span>
+                                                Vue d'ensemble des risques ({{ $nbre_risque }})
                                             </h6>
                                         </div>
-                                        <div class="card-tools">
-                                            <ul class="card-tools-nav">
-                                                <li>
-                                                    <div class="form-group text-center">
-                                                        <select class="form-select" id="device">
-                                                            <option selected value="fcfa">Fcfa</option>
-                                                        </select>
-                                                        <script>
-                                                            document.addEventListener("DOMContentLoaded", function() {
-                                                                const selectDevice = document.getElementById('device');
-                                                                
-                                                                selectDevice.addEventListener('change', function() {
-                                                                    // Récupérez la valeur sélectionnée
-                                                                    document.querySelectorAll('[id^="device_data_"]').forEach(function(element) {
-                                                                        element.textContent = selectDevice.value;
-                                                                    });
-                                                                });
-
-                                                                // Mettez à jour une fois lors du chargement initial
-                                                                document.querySelectorAll('[id^="device_data_"]').forEach(function(element) {
-                                                                    element.textContent = selectDevice.value;
-                                                                });
-                                                            });
-                                                        </script>
-                                                    </div>
-                                                </li>
-                                            </ul>
-                                        </div>
                                     </div>
-                                </div>
-                                <div class="card-inner p-0 border-top">
-                                    <div class="nk-tb-list nk-tb-orders">
-                                        <div class="nk-tb-item nk-tb-head">
-                                            <div class="nk-tb-col"><span>Risque</span></div>
-                                            <div class="nk-tb-col "><span>Evaluation</span></div>
-                                            <div class="nk-tb-col "><span>Coût</span></div>
-                                            <div class="nk-tb-col "><span>Statut</span></div>
-                                            <div class="nk-tb-col "><span>Taux</span></div>
-                                        </div>
-
-                                        @php 
-                                            $max = 0;
-                                        @endphp
-
-                                        @foreach ($risques_limit as $risque_limit)
-                                            @php 
-                                                $max = max($max, $risque_limit->progess);
-                                            @endphp
-                                        @endforeach
-
-                                        @foreach($risques_limit as $risque_limit)
-                                        <div class="nk-tb-item">
-                                            <div class="nk-tb-col">
-                                                <span class="tb-lead">{{$risque_limit->nom}}</span>
-                                            </div>
-                                            <div class="nk-tb-col ">
-                                                @php $colorMatchFound = false; @endphp
-
-                                                @foreach($color_intervals as $color_interval)
-                                                                
-                                                    @if($color_interval->nbre1 <= $risque_limit->evaluation_residuel && $color_interval->nbre2 >= $risque_limit->evaluation_residuel)
-                                                        <div class="user-avatar sm" style="background-color:{{$color_interval->code_color}}" ></div>
-                                                        @php
-                                                            $colorMatchFound = true;
-                                                        @endphp
-
-                                                        @break
-
-                                                    @endif
-
-                                                @endforeach
-
-                                                @if(!$colorMatchFound)
-                                                    <div class="user-avatar sm" style="background-color:#8e8e8e;"></div>
-                                                @endif
-                                            </div>
-                                            <div class="nk-tb-col ">
-                                                <span class="tb-sub tb-amount">
-                                                    @php
-                                                        $cout = $risque_limit->cout_residuel;
-                                                        $formatcommande = number_format($cout, 0, '.', '.');
-                                                    @endphp             
-                                                    {{ $formatcommande }} <span id="device_data_{{$risque_limit->id}}"></span>
-                                                </span>
-                                            </div>
-                                            <div class="nk-tb-col ">
-                                                @if ($risque_limit->statut === 'soumis')
-                                                    <span class="badge badge-dim bg-warning">
-                                                        <em class="icon ni ni-stop-circle"></em>
-                                                        <span class="fs-12px">En attente de validation</span>
-                                                    </span>
-                                                @elseif ($risque_limit->statut === 'valider')
-                                                    <span class="badge badge-dim bg-success">
-                                                        <em class="icon ni ni-check"></em>
-                                                        <span class="fs-12px">Validé</span>
-                                                    </span>
-                                                @elseif ($risque_limit->statut === 'non_valider')
-                                                    <span class="badge badge-dim bg-danger">
-                                                        <em class="icon ni ni-alert"></em>
-                                                        <span class="fs-12px">Non Validé</span>
-                                                    </span>
-                                                @elseif ($risque_limit->statut === 'update')
-                                                    <span class="badge badge-dim bg-info">
-                                                        <em class="icon ni ni-info"></em>
-                                                        <span class="fs-12px">Modification éffectuée</span>
-                                                    </span>
-                                                @endif
-                                            </div>
-                                            <div class="nk-tb-col ">
-                                                <div class="project-list-progress">
-                                                    <div class="progress progress-pill progress-md bg-light">
-                                                        <div class="progress-bar {{$risque_limit->progess === $max ? 'bg-danger' : '' }}" data-progress="{{$risque_limit->progess}}" style="width: 100%;"></div>
-                                                    </div>
-                                                    <div class="project-progress-percent {{$risque_limit->progess === $max ? 'text-danger' : '' }}">
-                                                        {{$risque_limit->progess}}%
-                                                    </div>
-                                                </div>
+                                    <ul class="nav nav-tabs nav-tabs-card nav-tabs-xs">
+                                        <li class="nav-item">
+                                            <a class="nav-link active" data-bs-toggle="tab" href="#pro">
+                                                Processus
+                                            </a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a class="nav-link" data-bs-toggle="tab" href="#ris">
+                                                Risques
+                                            </a>
+                                        </li>
+                                    </ul>
+                                    <div class="tab-content mt-0">
+                                        <div class="tab-pane active" id="pro">
+                                            <div class="card-inner">
+                                                <table class="datatable-init table">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>Name</th>
+                                                            <th>Position</th>
+                                                            <th>Office</th>
+                                                            <th>Age</th>
+                                                            <th>Start date</th>
+                                                            <th>Salary</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        @foreach($types_processus as $value)
+                                                        <tr>
+                                                            <td>{{$value->nom}}</td>
+                                                            <td>{{$value->nbre_nci}}</td>
+                                                            <td>{{$value->nbre_r}}</td>
+                                                            <td>{{$value->nbre_c}}</td>
+                                                            <td>2011/04/25</td>
+                                                            <td>$320,800</td>
+                                                        </tr>
+                                                        @endforeach
+                                                    </tbody>
+                                                </table>
                                             </div>
                                         </div>
-                                        @endforeach
+                                        <div class="tab-pane" id="ris">
+                                            <div class="card-inner">
+                                                <table class="datatable-init table">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>Name</th>
+                                                            <th>Position</th>
+                                                            <th>Office</th>
+                                                            <th>Age</th>
+                                                            <th>Start date</th>
+                                                            <th>Salary</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        @foreach($types_risque as $value)
+                                                        <tr>
+                                                            <td>{{$value->nom}}</td>
+                                                            <td>{{$value->nbre_nci}}</td>
+                                                            <td>{{$value->nbre_r}}</td>
+                                                            <td>{{$value->nbre_c}}</td>
+                                                            <td>2011/04/25</td>
+                                                            <td>$320,800</td>
+                                                        </tr>
+                                                        @endforeach
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -874,505 +822,12 @@
                             </div>
                         </div>
 
-                        <div class="col-lg-12">
-                            <div class="card card-bordered card-full">
-                                <div class="card-inner">
-                                    <div class="card-amount mb-2">
-                                        <h5>
-                                            Tableau des incidents
-                                        </h5>
-                                    </div>
-                                    <table class="datatable-init table">
-                                        <thead>
-                                            <tr>
-                                                <th></th>
-                                                <th>Type</th>
-                                                <th>Date de réception</th>
-                                                <th>Non conformité</th>
-                                                <!--<th>Nombre d'actions</th>-->
-                                                <th>Statut</th>
-                                                <th>Date de création</th>
-                                                <th></th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            @foreach($ams as $key => $am)
-                                            <tr>
-                                                <td>{{ $key+1 }}</td>
-                                                <td>
-                                                    @if ($am->type === 'contentieux')
-                                                    Contentieux
-                                                    @endif
-                                                    @if ($am->type === 'reclamation')
-                                                    Réclamation
-                                                    @endif
-                                                    @if ($am->type === 'non_conformite_interne')
-                                                    Non conformité
-                                                    @endif
-                                                </td>
-                                                <td>{{ \Carbon\Carbon::parse($am->date_fiche)->translatedFormat('j F Y ') }}</td>
-                                                <td>{{ $am->non_conformite }}</td>
-                                                <!--<td>{{ $am->nbre_action }}</td>-->
-                                                @if ($am->statut === 'soumis')
-                                                <td>
-                                                    <span class="badge badge-dim bg-warning">
-                                                        <em class="icon ni ni-stop-circle"></em>
-                                                        <span class="fs-12px">En attente de validation</span>
-                                                    </span>
-                                                </td>
-                                                @elseif ($am->statut === 'valider')
-                                                <td>
-                                                    <span class="badge badge-dim bg-primary">
-                                                        <em class="icon ni ni-check"></em>
-                                                        <span class="fs-12px">Validé</span>
-                                                    </span>
-                                                </td>
-                                                @elseif ($am->statut === 'non-valider' || $am->statut === 'modif' || $am->statut === 'update')
-                                                <td>
-                                                    <span class="badge badge-dim bg-danger">
-                                                        <em class="icon ni ni-alert"></em>
-                                                        <span class="fs-12px">Non Validé</span>
-                                                    </span>
-                                                </td>
-                                                @elseif ($am->statut === 'date_efficacite' )
-                                                <td>
-                                                    <span class="badge badge-dim bg-warning">
-                                                        <em class="icon ni ni-stop-circle"></em>
-                                                        <span class="fs-12px">
-                                                            En attente de l'évaluation de l'éfficacité
-                                                        </span>
-                                                    </span>
-                                                </td>
-                                                @elseif ($am->statut === 'cloturer' )
-                                                <td>
-                                                    <span class="badge badge-dim bg-success">
-                                                        <em class="icon ni ni-check"></em>
-                                                        <span class="fs-12px">
-                                                            Clôturer
-                                                        </span>
-                                                    </span>
-                                                </td>
-                                                @endif
-                                                <td>{{ \Carbon\Carbon::parse($am->created_at)->translatedFormat('j F Y '.' à '.' H:i:s') }}</td>
-                                                <td>
-                                                    <a data-bs-toggle="modal" data-bs-target="#modalDetail{{ $am->id }}" class="btn btn-icon btn-white btn-dim btn-sm btn-warning">
-                                                        <em class="icon ni ni-eye"></em>
-                                                    </a>
-                                                </td>
-                                            </tr>
-                                            @endforeach
-                                        </tbody>
-                                    </table>
-                                </div>
-                            </div>
-                        </div>
-
                     </div>
                 </div>
             </div>
         </div>
     </div>
 </div>
-
-    @foreach($ams as $am)
-        <div class="modal fade zoom" tabindex="-1" id="modalDetail{{ $am->id }}">
-            <div class="modal-dialog modal-lg" role="document" style="width: 100%;">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title">
-                            Détails
-                            @if ($am->statut === 'soumis')
-                                <span class="text-warning"> ( En attente de validation )</span>
-                            @elseif ($am->statut === 'valider' )
-                                <span class="text-primary"> ( Validé )</span>
-                            @elseif ($am->statut === 'non-valider' || $am->statut === 'update' || $am->statut === 'modif')
-                                <span class="text-danger"> (Non Validé )</span>
-                            @elseif ($am->statut === 'date_efficacite' )
-                                <span class="text-warning"> ( En attente de l'évaluation de l'éfficacité )</span>
-                            @elseif ($am->statut === 'cloturer' )
-                                <span class="text-success"> ( Clôturer )</span>
-                            @endif
-                        </h5>
-                        <a href="#" class="close" data-bs-dismiss="modal" aria-label="Close"><em class="icon ni ni-cross"></em></a>
-                    </div>
-                    <div class="modal-body">
-                        <form class="nk-block">
-                            <div class="row g-gs">
-                                <div class="col-md-12 col-xxl-12" id="groupesContainer">
-                                    <div class="">
-                                        <div class="card-inner">
-                                            <div class="row g-4">
-                                                <div class="col-lg-12">
-                                                    <div class="form-group">
-                                                        <label class="form-label" for="Cause">
-                                                            Type
-                                                        </label>
-                                                        <div class="form-control-wrap">
-                                                            <input @if ($am->type === 'contentieux')
-                                                                value="Contentieux"
-                                                            @endif
-                                                            @if ($am->type === 'reclamation')
-                                                                value="Réclamation"
-                                                            @endif
-                                                            @if ($am->type === 'non_conformite_interne')
-                                                                value="Non conformité"
-                                                            @endif
-                                                            readonly type="text" class="form-control" id="Cause">
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="col-lg-4">
-                                                    <div class="form-group">
-                                                        <label class="form-label" for="Cause">
-                                                            Date de reception
-                                                        </label>
-                                                        <div class="form-control-wrap">
-                                                            <input value="{{ \Carbon\Carbon::parse($am->date_fiche)->translatedFormat('j F Y ') }}" readonly type="text" class="form-control" id="Cause">
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="col-lg-4">
-                                                    <div class="form-group">
-                                                        <label class="form-label" for="Cause">
-                                                            Date Limite de traitement
-                                                        </label>
-                                                        <div class="form-control-wrap">
-                                                            <input value="{{ \Carbon\Carbon::parse($am->date_limite)->translatedFormat('j F Y ') }}" readonly type="text" class="form-control" id="Cause">
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="col-lg-4">
-                                                    <div class="form-group">
-                                                        <label class="form-label" for="Cause">
-                                                            Nombres de jours
-                                                        </label>
-                                                        <div class="form-control-wrap">
-                                                            <input value="{{ $am->nbre_jour }}" readonly type="text" class="form-control" id="Cause">
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="col-lg-6">
-                                                    <div class="form-group">
-                                                        <label class="form-label" for="Cause">
-                                                            Lieu
-                                                        </label>
-                                                        <div class="form-control-wrap">
-                                                            <input value="{{ $am->lieu }}" readonly type="text" class="form-control" id="Cause">
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="col-lg-6">
-                                                    <div class="form-group">
-                                                        <label class="form-label" for="Cause">
-                                                            Détecteur
-                                                        </label>
-                                                        <div class="form-control-wrap">
-                                                            <input value="{{ $am->detecteur }}" readonly type="text" class="form-control" id="Cause">
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="col-lg-12">
-                                                    <div class="form-group">
-                                                        <label class="form-label" for="Cause">
-                                                            Non-conformité
-                                                        </label>
-                                                        <div class="form-control-wrap">
-                                                            <input value="{{ $am->non_conformite }}" readonly type="text" class="form-control" id="Cause">
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="col-lg-6">
-                                                    <div class="form-group">
-                                                        <label class="form-label">
-                                                            Conséquences
-                                                        </label>
-                                                        <div class="form-control-wrap">
-                                                            <textarea readonly required name="causes" class="form-control no-resize" id="default-textarea">{{ $am->consequence }}</textarea>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="col-lg-6">
-                                                    <div class="form-group">
-                                                        <label class="form-label">
-                                                            Causes
-                                                        </label>
-                                                        <div class="form-control-wrap">
-                                                            <textarea readonly required name="causes" class="form-control no-resize" id="default-textarea">{{ $am->cause }}</textarea>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            @foreach($actionsData[$am->id] as $key => $actions)
-                                            <div class="card-head mt-3">
-                                                <h5 class="card-title">
-                                                    Action Corrective {{ $key+1 }}
-                                                </h5>
-                                            </div>
-                                            <div class="row g-4">
-                                                <div class="col-lg-12">
-                                                    <div class="form-group ">
-                                                        <label class="form-label" for="Cause">
-                                                            Action
-                                                        </label>
-                                                        <div class="form-control-wrap">
-                                                            <input value="{{ $actions['action'] }}" readonly type="text" class="form-control " id="Cause">
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="col-lg-12">
-                                                    <div class="form-group ">
-                                                        <label class="form-label" for="Cause">
-                                                            risque
-                                                        </label>
-                                                        <div class="form-control-wrap">
-                                                            <input value="{{ $actions['risque'] }}" readonly type="text" class="form-control " id="Cause">
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="col-lg-12">
-                                                    <div class="form-group ">
-                                                        <label class="form-label" for="Cause">
-                                                            Processus
-                                                        </label>
-                                                        <div class="form-control-wrap">
-                                                            <input value="{{ $actions['processus'] }}" readonly type="text" class="form-control " id="Cause">
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                
-                                                @if ($actions['statut'] === 'realiser')
-                                                <div class="col-lg-4">
-                                                    <div class="form-group ">
-                                                        <label class="form-label" for="Cause">
-                                                            Délai
-                                                        </label>
-                                                        <div class="form-control-wrap">
-                                                            <input value="{{ \Carbon\Carbon::parse($actions['delai'])->translatedFormat('j F Y ') }}" readonly type="text" class="form-control " id="Cause">
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="col-lg-4">
-                                                    <div class="form-group ">
-                                                        <label class="form-label" for="Cause">
-                                                            Date de realisation
-                                                        </label>
-                                                        <div class="form-control-wrap">
-                                                            <input value="{{ \Carbon\Carbon::parse($actions['date_action'])->translatedFormat('j F Y ') }}" readonly type="text" class="form-control " id="Cause">
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="col-lg-4">
-                                                    <div class="form-group ">
-                                                        <label class="form-label" for="Cause">
-                                                            Date du Suivi
-                                                        </label>
-                                                        <div class="form-control-wrap">
-                                                            <input value="{{ \Carbon\Carbon::parse($actions['date_suivi'])->translatedFormat('j F Y '.' à '.' H:i:s') }}" readonly type="text" class="form-control " id="Cause">
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="col-lg-6">
-                                                    <div class="form-group ">
-                                                        <label class="form-label" for="Cause">
-                                                            Statut
-                                                        </label>
-                                                        <div class="form-control-wrap">
-                                                            <input value="Action Réaliser" readonly type="text" class="form-control text-center bg-success" id="Cause">
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                    @if($actions['efficacite'] === 'oui')
-                                                    <div class="col-lg-6">
-                                                        <div class="form-group">
-                                                            <label class="form-label" for="Cause">
-                                                                Efficacité
-                                                            </label>
-                                                            <div class="form-control-wrap">
-                                                                <input value="Oui" readonly type="text" class="form-control text-center bg-success" id="Cause">
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    @else
-                                                    <div class="col-lg-6">
-                                                        <div class="form-group">
-                                                            <label class="form-label" for="Cause">
-                                                                Efficacité
-                                                            </label>
-                                                            <div class="form-control-wrap">
-                                                                <input value="Non" readonly type="text" class="form-control text-center bg-danger" id="Cause">
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    @endif
-                                                @else
-                                                <div class="col-lg-6">
-                                                    <div class="form-group">
-                                                        <label class="form-label" for="Cause">
-                                                            Délai
-                                                        </label>
-                                                        <div class="form-control-wrap">
-                                                            <input value="{{ \Carbon\Carbon::parse($actions['delai'])->translatedFormat('j F Y ') }}" readonly type="text" class="form-control " id="Cause">
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="col-lg-6">
-                                                    <div class="form-group">
-                                                        <label class="form-label" for="Cause">
-                                                            Statut
-                                                        </label>
-                                                        <div class="form-control-wrap">
-                                                            <input value="Action non réaliser" readonly type="text" class="form-control text-center bg-danger" id="Cause">
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                @endif
-                                                <div class="col-lg-12">
-                                                    <div class="form-group">
-                                                        <label class="form-label">
-                                                            Commentaire
-                                                        </label>
-                                                        <div class="form-control-wrap">
-                                                            <textarea readonly required name="causes" class="form-control no-resize" id="default-textarea">{{ $actions['commentaire'] }}</textarea>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            @endforeach
-                                            <div class="row g-4" >
-                                                @if($am->date1 !== null)
-                                                    <div class="col-md-12 col-xxl-122" id="groupesContainer">
-                                                        <div class="card ">
-                                                            <div class="card-inner">
-                                                                <div class="card-head">
-                                                                    <h5 class="card-title">
-                                                                        Efficacité
-                                                                    </h5>
-                                                                </div>
-                                                                <div class="row g-4">
-                                                                    @if($am->date1 !== null)
-                                                                    <div class="col-lg-4">
-                                                                        <div class="form-group">
-                                                                            <label class="form-label" for="Cause">
-                                                                                Du
-                                                                            </label>
-                                                                            <div class="form-control-wrap">
-                                                                                <input value="{{ \Carbon\Carbon::parse($am->date1)->translatedFormat('j F Y ') }}" readonly type="text" class="form-control" id="Cause">
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
-                                                                    <div class="col-lg-4">
-                                                                        <div class="form-group">
-                                                                            <label class="form-label" for="Cause">
-                                                                                au
-                                                                            </label>
-                                                                            <div class="form-control-wrap">
-                                                                                <input value="{{ \Carbon\Carbon::parse($am->date2)->translatedFormat('j F Y ') }}" readonly type="text" class="form-control" id="Cause">
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
-                                                                    @php
-                                                                        $startDate = \Carbon\Carbon::parse($am->date1);
-                                                                        $endDate = \Carbon\Carbon::parse($am->date2);
-                                                                        $daysDifference = $startDate->diffInDays($endDate);
-                                                                    @endphp
-                                                                    <div class="col-lg-4">
-                                                                        <div class="form-group">
-                                                                            <label class="form-label" for="Cause">
-                                                                                Nombre de jour(S)
-                                                                            </label>
-                                                                            <div class="form-control-wrap">
-                                                                                <input value="{{ $daysDifference }}" readonly type="text" class="form-control">
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
-                                                                    @endif
-                                                                    @if($am->efficacite !== null)
-                                                                    <div class="col-lg-6">
-                                                                        <div class="form-group">
-                                                                            <label class="form-label" for="Cause">
-                                                                                Action efficace
-                                                                            </label>
-                                                                            @if ($am->efficacite === 'oui')
-                                                                            <div class="form-control-wrap">
-                                                                                <input value="{{ $am->efficacite }}" readonly type="text" class="form-control bg-success text-center" id="Cause">
-                                                                            </div>
-                                                                            @endif
-                                                                            @if ($am->efficacite === 'non')
-                                                                            <div class="form-control-wrap">
-                                                                                <input value="{{ $am->efficacite }}" readonly type="text" class="form-control bg-danger text-center" id="Cause">
-                                                                            </div>
-                                                                            @endif
-                                                                        </div>
-                                                                        @if ($am->date_eff !== null)
-                                                                        <div class="form-group">
-                                                                            <label class="form-label" for="Cause">
-                                                                                Date de verification de l'éfficacité
-                                                                            </label>
-                                                                            @if ($am->date1 <= $am->date_eff && $am->date2 >= $am->date_eff)
-                                                                                <div class="form-control-wrap">
-                                                                                    <input value="{{ \Carbon\Carbon::parse($am->eff)->translatedFormat('j F Y ') }}" readonly type="text" class="form-control text-center bg-success" id="Cause">
-                                                                                </div>
-                                                                            @elseif ($am->date1 > $am->date_eff && $am->date2 >= $am->date_eff || $am->date1 <= $am->date_eff && $am->date2 < $am->date_eff)
-                                                                                <div class="form-control-wrap">
-                                                                                    <input value="{{ \Carbon\Carbon::parse($am->eff)->translatedFormat('j F Y ') }}" readonly type="text" class="form-control text-center bg-danger" id="Cause">
-                                                                                </div>
-                                                                            @endif
-                                                                        </div>
-                                                                        @else
-                                                                        <div class="form-group">
-                                                                            <label class="form-label" for="Cause">
-                                                                                Date de verification de l'éfficacité
-                                                                            </label>
-                                                                            <div class="form-control-wrap">
-                                                                                <input value="Néant" readonly type="text" class="form-control" id="Cause">
-                                                                            </div>
-                                                                        </div>
-                                                                        @endif
-                                                                    </div>
-                                                                    <div class="col-lg-6">
-                                                                        <div class="form-group">
-                                                                            <label class="form-label" for="Cause">
-                                                                                Commentaire
-                                                                            </label>
-                                                                            <div class="form-control-wrap">
-                                                                                <textarea readonly required name="causes" class="form-control no-resize" id="default-textarea">{{ $am->commentaire_eff }}</textarea>
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
-                                                                    @if ($am->date1 <= $am->date_eff && $am->date2 >= $am->date_eff)
-                                                                        <div class="col-lg-12">
-                                                                            <div class="form-group text-center">
-                                                                                <div class="form-control-wrap">
-                                                                                    <input value="Vérification éffectuée dans les delais" readonly type="text" class="form-control text-center bg-success" id="Cause">
-                                                                                </div>
-                                                                            </div>
-                                                                        </div>
-                                                                    @elseif ($am->date1 > $am->date_eff && $am->date2 >= $am->date_eff || $am->date1 <= $am->date_eff && $am->date2 < $am->date_eff)
-                                                                        <div class="col-lg-12">
-                                                                            <div class="form-group text-center">
-                                                                                <div class="form-control-wrap">
-                                                                                    <input value="Vérification éffectuée hors delais" readonly type="text" class="form-control text-center bg-warning" id="Cause">
-                                                                                </div>
-                                                                            </div>
-                                                                        </div>
-                                                                    @endif
-                                                                    @endif
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    @endif
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </form>
-                    </div>
-                </div>
-            </div>
-        </div>
-    @endforeach
 
 <script>
     document.addEventListener('DOMContentLoaded', function() {

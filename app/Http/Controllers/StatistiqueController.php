@@ -98,29 +98,6 @@ class StatistiqueController extends Controller
         $nbre_ac = Action::where('type', 'corrective')->where('page', 'risk')->count();
         $nbre_poste = Poste::all()->count();
 
-        $risques_limit = Risque::where('page', '=', 'risk')
-                                ->inRandomOrder()
-                                ->limit(3)
-                                ->get();
-
-        foreach ($risques_limit as $risque_limit) {        
-
-            if($nbre_am > 0){
-
-                $risque_limit->nbre = Amelioration::where('risque_id', $risque_limit->id)->where('choix_select', 'risque')->count();
-                $risque_limit->progess = ($risque_limit->nbre / $nbre_am) * 100;
-                $risque_limit->progess = number_format($risque_limit->progess, 2);
-                
-            }else{
-
-                $risque_limit->progess = 0;
-
-            }
-
-        }
-
-        $risques_limit = $risques_limit->sortByDesc('progess');
-
         $users = User::join('postes', 'users.poste_id', '=', 'postes.id')
                     ->select('users.*', 'postes.nom as poste')
                     ->inRandomOrder()
@@ -137,50 +114,6 @@ class StatistiqueController extends Controller
                                 ->limit(10)
                                 ->get();
 
-        $ams = Amelioration::all();
-
-        $actionsData = [];
-
-        foreach ($ams as $am) {
-            $am->nbre_action = Suivi_amelioration::where('amelioration_id', '=', $am->id)->count();
-            $am->nbre_action_eff = Suivi_amelioration::where('amelioration_id', '=', $am->id)
-                                                ->where('statut', 'realiser')
-                                                ->count();
-            $am->nbre_action_non = Suivi_amelioration::where('amelioration_id', '=', $am->id)
-                                                ->where('statut', 'non-realiser')
-                                                ->count();
-
-            $suivi = Suivi_amelioration::where('amelioration_id', '=', $am->id)->get();
-            $actionsData[$am->id] = [];
-            foreach ($suivi as $suivis) {
-
-                $action = Suivi_amelioration::join('actions', 'suivi_ameliorations.action_id', 'actions.id')
-                                            ->join('postes', 'actions.poste_id', 'postes.id')
-                                            ->join('risques', 'actions.risque_id', 'risques.id')
-                                            ->join('processuses', 'risques.processus_id', 'processuses.id')
-                                            ->where('actions.id', '=', $suivis->action_id)
-                                            ->where('suivi_ameliorations.amelioration_id', '=', $am->id)
-                                            ->select('suivi_ameliorations.*', 'actions.action as action', 'actions.date as date', 'postes.nom as poste', 'processuses.nom as processus', 'risques.nom as risque')
-                                            ->first();
-
-                if ($action) {
-                    $actionsData[$am->id][] = [
-                        'action' => $action->action,
-                        'responsable' => $action->poste,
-                        'delai' => $action->date,
-                        'date_action' => $action->date_action,
-                        'date_suivi' => $action->date_suivi,
-                        'statut' => $action->statut,
-                        'processus' => $action->processus,
-                        'risque' => $action->risque,
-                        'commentaire' => $action->commentaire_am,
-                        'efficacite' => $action->efficacite,
-                    ];
-                }
-
-            }
-        }
-
         $staut_am_soumis = Amelioration::where('statut', 'soumis')->count();
         $staut_am_rejeter = Amelioration::where('statut', 'non-valider')
                                         ->where('statut', 'modif')
@@ -190,7 +123,42 @@ class StatistiqueController extends Controller
         $staut_am_eff = Amelioration::where('statut', 'date_efficacite')->count();
         $staut_am_clotu = Amelioration::where('statut', 'cloturer')->count();
 
-        return view('statistique.index', ['statistics' => $statistics, 'processus' => $processus, 'nbre_processus' => $nbre_processus, 'nbre_risque' => $nbre_risque, 'nbre_cause' => $nbre_cause, 'nbre_ap' => $nbre_ap, 'nbre_am' => $nbre_am, 'nbre_ed_ap' => $nbre_ed_ap,'nbre_ehd_ap' => $nbre_ehd_ap,'nbre_hd_ap' => $nbre_hd_ap , 'nbre_ac' => $nbre_ac,'nbre_poste' => $nbre_poste, 'risques' => $risques, 'risques_limit' => $risques_limit, 'color_para' => $color_para, 'color_intervals' => $color_intervals, 'color_interval_nbre' => $color_interval_nbre, 'users' => $users, 'nbre_am_nci' => $nbre_am_nci, 'nbre_am_r' => $nbre_am_r, 'nbre_am_c' => $nbre_am_c, 'nbre_user' => $nbre_user,'his' => $his,'ams' => $ams, 'actionsData' => $actionsData, 'nbre_ris_soumis' => $nbre_ris_soumis,'nbre_ris_n_valider' => $nbre_ris_n_valider,'nbre_ris_valider' => $nbre_ris_valider,'staut_am_soumis' => $staut_am_soumis, 'staut_am_rejeter' => $staut_am_rejeter, 'staut_am_valider' => $staut_am_valider, 'staut_am_eff' => $staut_am_eff, 'staut_am_clotu' => $staut_am_clotu,]);
+
+        $types_processus = Processuse::all();
+
+        foreach ($types_processus as $types_pro) {
+            $types_pro->nbre_nci = Amelioration::join('risques', 'ameliorations.risque_id', 'risques.id')
+                                                ->where('ameliorations.type', 'non_conformite_interne')
+                                                ->where('risques.processus_id', $types_pro->id)
+                                                ->count();
+            $types_pro->nbre_r = Amelioration::join('risques', 'ameliorations.risque_id', 'risques.id')
+                                                ->where('ameliorations.type', 'reclamation')
+                                                ->where('risques.processus_id', $types_pro->id)
+                                                ->count();
+            $types_pro->nbre_c = Amelioration::join('risques', 'ameliorations.risque_id', 'risques.id')
+                                                ->where('ameliorations.type', 'contentieux')
+                                                ->where('risques.processus_id', $types_pro->id)
+                                                ->count();
+        }
+
+        $types_risque = Risque::all();
+
+        foreach ($types_risque as $types_ris) {
+            $types_ris->nbre_nci = Amelioration::join('risques', 'ameliorations.risque_id', 'risques.id')
+                                                ->where('ameliorations.type', 'non_conformite_interne')
+                                                ->where('risques.id', $types_ris->id)
+                                                ->count();
+            $types_ris->nbre_r = Amelioration::join('risques', 'ameliorations.risque_id', 'risques.id')
+                                                ->where('ameliorations.type', 'reclamation')
+                                                ->where('risques.id', $types_ris->id)
+                                                ->count();
+            $types_ris->nbre_c = Amelioration::join('risques', 'ameliorations.risque_id', 'risques.id')
+                                                ->where('ameliorations.type', 'contentieux')
+                                                ->where('risques.id', $types_ris->id)
+                                                ->count();
+        }
+
+        return view('statistique.index', ['statistics' => $statistics, 'processus' => $processus, 'nbre_processus' => $nbre_processus, 'nbre_risque' => $nbre_risque, 'nbre_cause' => $nbre_cause, 'nbre_ap' => $nbre_ap, 'nbre_am' => $nbre_am, 'nbre_ed_ap' => $nbre_ed_ap,'nbre_ehd_ap' => $nbre_ehd_ap,'nbre_hd_ap' => $nbre_hd_ap , 'nbre_ac' => $nbre_ac,'nbre_poste' => $nbre_poste, 'risques' => $risques,'color_para' => $color_para, 'color_intervals' => $color_intervals, 'color_interval_nbre' => $color_interval_nbre, 'users' => $users, 'nbre_am_nci' => $nbre_am_nci, 'nbre_am_r' => $nbre_am_r, 'nbre_am_c' => $nbre_am_c, 'nbre_user' => $nbre_user,'his' => $his,'nbre_ris_soumis' => $nbre_ris_soumis,'nbre_ris_n_valider' => $nbre_ris_n_valider,'nbre_ris_valider' => $nbre_ris_valider,'staut_am_soumis' => $staut_am_soumis, 'staut_am_rejeter' => $staut_am_rejeter, 'staut_am_valider' => $staut_am_valider, 'staut_am_eff' => $staut_am_eff, 'staut_am_clotu' => $staut_am_clotu,'types_processus' => $types_processus, 'types_risque' => $types_risque,]);
     }
 
     public function get_processus($id)
