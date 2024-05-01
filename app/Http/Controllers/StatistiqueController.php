@@ -125,8 +125,11 @@ class StatistiqueController extends Controller
 
 
         $types_processus = Processuse::all();
+        $objectifData = [];
+        $risqsData = [];
 
         foreach ($types_processus as $types_pro) {
+
             $types_pro->nbre_nci = Amelioration::join('risques', 'ameliorations.risque_id', 'risques.id')
                                                 ->where('ameliorations.type', 'non_conformite_interne')
                                                 ->where('risques.processus_id', $types_pro->id)
@@ -139,9 +142,60 @@ class StatistiqueController extends Controller
                                                 ->where('ameliorations.type', 'contentieux')
                                                 ->where('risques.processus_id', $types_pro->id)
                                                 ->count();
+            $objectifs = Objectif::where('processus_id', $types_pro->id)->get();
+
+            $objectifData[$types_pro->id] = [];
+            foreach($objectifs as $objectif)
+            {
+                $objectifData[$types_pro->id][] = [
+                    'objectif' => $objectif->nom,
+                    'id' => $objectif->id,
+                ];
+            }
+
+            $risqs = Risque::where('processus_id', $types_pro->id)
+                            ->where('date_validation', '!=', null)
+                            ->get();
+
+            if ($risqs) {
+                $types_pro->nbre_risque = $risqs->count();
+
+                $totalEvaluation = 0;
+                $risqsData[$types_pro->id] = [];
+
+                foreach ($risqs as $ris)
+                {
+                    $totalEvaluation += $ris->evaluation_residuel;
+
+                    $risqsData[$types_pro->id][] = [
+                        'nom' => $ris->nom,
+                        'evaluation_residuel' => $ris->evaluation_residuel,
+                    ];
+                }
+
+                if ($risqs->count() > 0) {
+                    $evagg = $totalEvaluation / $risqs->count();
+                    $evag = number_format($evagg, 1);
+                } else {
+                    $evag = 0;
+                }
+
+                $types_pro->evag = $evag;
+            } else {
+                $types_pro->nbre_risque = 0;
+                $types_pro->evag = 0;
+            }
         }
 
-        $types_risque = Risque::all();
+        $types_processus = $types_processus->sortByDesc('evag');
+
+        $types_risque = Risque::join('postes', 'risques.poste_id', '=', 'postes.id')
+                            ->where('page', '!=', 'am')
+                            ->select('risques.*','postes.nom as validateur')
+                            ->get();
+        $causesData = [];
+        $actionsDatap = [];
+        $actionsDatac = [];
 
         foreach ($types_risque as $types_ris) {
             $types_ris->nbre_nci = Amelioration::join('risques', 'ameliorations.risque_id', 'risques.id')
@@ -156,9 +210,82 @@ class StatistiqueController extends Controller
                                                 ->where('ameliorations.type', 'contentieux')
                                                 ->where('risques.id', $types_ris->id)
                                                 ->count();
+
+            $process = Processuse::where('id', $types_ris->processus_id)->first();
+            $types_ris->nom_processus = $process->nom;
+
+            $actionsp = Action::join('postes', 'actions.poste_id', '=', 'postes.id')
+                ->where('actions.risque_id', $types_ris->id)
+                ->where('actions.type', 'preventive')
+                ->select('actions.*','postes.nom as responsable')
+                ->get();
+            $types_ris->nbre_actionp = count($actionsp);
+
+            $actionsDatap[$types_ris->id] = [];
+            
+            foreach ($actionsp as $actionp) {
+                $suivi = Suivi_action::where('action_id', $actionp->id)->first();
+
+                if ($suivi) {
+                    $actionsDatap[$types_ris->id][] = [
+                        'suivi' => 'oui',
+                        'action' => $actionp->action,
+                        'delai' => $actionp->date,
+                        'date_action' => $suivi->date_action,
+                        'date_suivi' => $suivi->date_suivi,
+                        'type' => $actionp->type,
+                        'responsable' => $actionp->responsable,
+                    ];
+                }else{
+                    $actionsDatap[$types_ris->id][] = [
+                        'suivi' => 'non',
+                        'action' => $actionp->action,
+                        'delai' => $actionp->date,
+                        'type' => $actionp->type,
+                        'responsable' => $actionp->responsable,
+                    ];
+                }
+            }
+
+
+            $actionsc = Action::join('postes', 'actions.poste_id', '=', 'postes.id')
+                ->where('actions.risque_id', $types_ris->id)
+                ->where('actions.type', 'corrective')
+                ->select('actions.*','postes.nom as responsable')
+                ->get();
+                $types_ris->nbre_actionc = count($actionsc);
+
+            $actionsDatac[$types_ris->id] = [];
+            
+            foreach($actionsc as $actionc)
+            {
+                $actionsDatac[$types_ris->id][] = [
+                    'action' => $actionc->action,
+                    'responsable' => $actionc->responsable,
+                ];
+            }
+
+            $causes = Cause::where('causes.risque_id', $types_ris->id)->get();
+            $types_ris->nbre_cause = count($causes);
+            
+            $causesData[$types_ris->id] = [];
+            
+            foreach($causes as $cause)
+            {
+                $causesData[$types_ris->id][] = [
+                    'cause' => $cause->nom,
+                    'dispositif' => $cause->dispositif,
+                    'validateur' => $types_ris->validateur,
+                ];
+            }
         }
 
-        $types_cause = Risque::all();
+        $types_risque = $types_risque->sortByDesc('evaluation_residuel');
+
+        $types_cause = cause::join('risques', 'causes.risque_id', 'risques.id')
+                        ->join('processuses', 'risques.processus_id', 'processuses.id')
+                        ->select('causes.*','risques.nom as risque', 'processuses.nom as processus')
+                        ->get();
 
         foreach ($types_cause as $types_cau) {
             $types_cau->nbre_nci = Amelioration::join('causes', 'ameliorations.cause_id', 'causes.id')
@@ -175,7 +302,19 @@ class StatistiqueController extends Controller
                                                 ->count();
         }
 
-        return view('statistique.index', ['statistics' => $statistics, 'processus' => $processus, 'nbre_processus' => $nbre_processus, 'nbre_risque' => $nbre_risque, 'nbre_cause' => $nbre_cause, 'nbre_ap' => $nbre_ap, 'nbre_am' => $nbre_am, 'nbre_ed_ap' => $nbre_ed_ap,'nbre_ehd_ap' => $nbre_ehd_ap,'nbre_hd_ap' => $nbre_hd_ap , 'nbre_ac' => $nbre_ac,'nbre_poste' => $nbre_poste, 'risques' => $risques,'color_para' => $color_para, 'color_intervals' => $color_intervals, 'color_interval_nbre' => $color_interval_nbre, 'users' => $users, 'nbre_am_nci' => $nbre_am_nci, 'nbre_am_r' => $nbre_am_r, 'nbre_am_c' => $nbre_am_c, 'nbre_user' => $nbre_user,'his' => $his,'nbre_ris_soumis' => $nbre_ris_soumis,'nbre_ris_n_valider' => $nbre_ris_n_valider,'nbre_ris_valider' => $nbre_ris_valider,'staut_am_soumis' => $staut_am_soumis, 'staut_am_rejeter' => $staut_am_rejeter, 'staut_am_valider' => $staut_am_valider, 'staut_am_eff' => $staut_am_eff, 'staut_am_clotu' => $staut_am_clotu,'types_processus' => $types_processus, 'types_risque' => $types_risque, 'types_cause' => $types_cause,]);
+        $nbre_action = Action::join('suivi_actions', 'suivi_actions.action_id', 'actions.id')
+                            ->where('actions.type', 'preventive')
+                            ->count();
+        $nbre_action_neff = Action::join('suivi_actions', 'suivi_actions.action_id', 'actions.id')
+                            ->where('actions.type', 'preventive')
+                            ->where('suivi_actions.statut', 'non-realiser')
+                            ->count();
+        $nbre_action_eff = Action::join('suivi_actions', 'suivi_actions.action_id', 'actions.id')
+                            ->where('actions.type', 'preventive')
+                            ->where('suivi_actions.statut', 'realiser')
+                            ->count();
+
+        return view('statistique.index', ['statistics' => $statistics, 'processus' => $processus, 'nbre_processus' => $nbre_processus, 'nbre_risque' => $nbre_risque, 'nbre_cause' => $nbre_cause, 'nbre_ap' => $nbre_ap, 'nbre_am' => $nbre_am, 'nbre_ed_ap' => $nbre_ed_ap,'nbre_ehd_ap' => $nbre_ehd_ap,'nbre_hd_ap' => $nbre_hd_ap , 'nbre_ac' => $nbre_ac,'nbre_poste' => $nbre_poste, 'risques' => $risques,'color_para' => $color_para, 'color_intervals' => $color_intervals, 'color_interval_nbre' => $color_interval_nbre, 'users' => $users, 'nbre_am_nci' => $nbre_am_nci, 'nbre_am_r' => $nbre_am_r, 'nbre_am_c' => $nbre_am_c, 'nbre_user' => $nbre_user,'his' => $his,'nbre_ris_soumis' => $nbre_ris_soumis,'nbre_ris_n_valider' => $nbre_ris_n_valider,'nbre_ris_valider' => $nbre_ris_valider,'staut_am_soumis' => $staut_am_soumis, 'staut_am_rejeter' => $staut_am_rejeter, 'staut_am_valider' => $staut_am_valider, 'staut_am_eff' => $staut_am_eff, 'staut_am_clotu' => $staut_am_clotu,'types_processus' => $types_processus, 'risqsData' => $risqsData, 'objectifData' => $objectifData ,'types_risque' => $types_risque, 'causesData' => $causesData, 'actionsDatap' => $actionsDatap, 'actionsDatac' => $actionsDatac, 'types_cause' => $types_cause, 'nbre_action' => $nbre_action, 'nbre_action_neff' => $nbre_action_neff, 'nbre_action_eff' => $nbre_action_eff,]);
     }
 
     public function get_processus($id)

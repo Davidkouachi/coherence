@@ -187,6 +187,7 @@ class EtatController extends Controller
             'causesData' => $causesData, 
             'actionsDatap' => $actionsDatap , 
             'actionsDatac' => $actionsDatac,
+            
             'color_para' => $color_para,
             'color_intervals' => $color_intervals,
             'color_interval_nbre' => $color_interval_nbre,

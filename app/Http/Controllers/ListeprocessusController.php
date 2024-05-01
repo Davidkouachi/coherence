@@ -77,7 +77,7 @@ class ListeprocessusController extends Controller
 
             $processu->nbre = Amelioration::join('risques', 'ameliorations.risque_id', 'risques.id')
                                         ->join('processuses', 'risques.processus_id', 'processuses.id')
-                                        ->where('processuses.id', $processu->id)                                        
+                                        ->where('processuses.id', $processu->id)
                                         ->count();
 
             if ($nbre_total != 0) {
