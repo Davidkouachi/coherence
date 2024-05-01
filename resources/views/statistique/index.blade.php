@@ -712,6 +712,11 @@
                                                 Risques
                                             </a>
                                         </li>
+                                        <li class="nav-item">
+                                            <a class="nav-link" data-bs-toggle="tab" href="#cau">
+                                                Causes
+                                            </a>
+                                        </li>
                                     </ul>
                                     <div class="tab-content mt-0">
                                         <div class="tab-pane active" id="pro">
@@ -757,6 +762,34 @@
                                                     </thead>
                                                     <tbody>
                                                         @foreach($types_risque as $value)
+                                                        <tr>
+                                                            <td>{{$value->nom}}</td>
+                                                            <td>{{$value->nbre_nci}}</td>
+                                                            <td>{{$value->nbre_r}}</td>
+                                                            <td>{{$value->nbre_c}}</td>
+                                                            <td>2011/04/25</td>
+                                                            <td>$320,800</td>
+                                                        </tr>
+                                                        @endforeach
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                        <div class="tab-pane" id="cau">
+                                            <div class="card-inner">
+                                                <table class="datatable-init table">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>Name</th>
+                                                            <th>Position</th>
+                                                            <th>Office</th>
+                                                            <th>Age</th>
+                                                            <th>Start date</th>
+                                                            <th>Salary</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        @foreach($types_cause as $value)
                                                         <tr>
                                                             <td>{{$value->nom}}</td>
                                                             <td>{{$value->nbre_nci}}</td>

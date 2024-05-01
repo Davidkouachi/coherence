@@ -158,7 +158,24 @@ class StatistiqueController extends Controller
                                                 ->count();
         }
 
-        return view('statistique.index', ['statistics' => $statistics, 'processus' => $processus, 'nbre_processus' => $nbre_processus, 'nbre_risque' => $nbre_risque, 'nbre_cause' => $nbre_cause, 'nbre_ap' => $nbre_ap, 'nbre_am' => $nbre_am, 'nbre_ed_ap' => $nbre_ed_ap,'nbre_ehd_ap' => $nbre_ehd_ap,'nbre_hd_ap' => $nbre_hd_ap , 'nbre_ac' => $nbre_ac,'nbre_poste' => $nbre_poste, 'risques' => $risques,'color_para' => $color_para, 'color_intervals' => $color_intervals, 'color_interval_nbre' => $color_interval_nbre, 'users' => $users, 'nbre_am_nci' => $nbre_am_nci, 'nbre_am_r' => $nbre_am_r, 'nbre_am_c' => $nbre_am_c, 'nbre_user' => $nbre_user,'his' => $his,'nbre_ris_soumis' => $nbre_ris_soumis,'nbre_ris_n_valider' => $nbre_ris_n_valider,'nbre_ris_valider' => $nbre_ris_valider,'staut_am_soumis' => $staut_am_soumis, 'staut_am_rejeter' => $staut_am_rejeter, 'staut_am_valider' => $staut_am_valider, 'staut_am_eff' => $staut_am_eff, 'staut_am_clotu' => $staut_am_clotu,'types_processus' => $types_processus, 'types_risque' => $types_risque,]);
+        $types_cause = Risque::all();
+
+        foreach ($types_cause as $types_cau) {
+            $types_cau->nbre_nci = Amelioration::join('causes', 'ameliorations.cause_id', 'causes.id')
+                                                ->where('ameliorations.type', 'non_conformite_interne')
+                                                ->where('causes.id', $types_cau->id)
+                                                ->count();
+            $types_cau->nbre_r = Amelioration::join('causes', 'ameliorations.cause_id', 'causes.id')
+                                                ->where('ameliorations.type', 'reclamation')
+                                                ->where('causes.id', $types_cau->id)
+                                                ->count();
+            $types_cau->nbre_c = Amelioration::join('causes', 'ameliorations.cause_id', 'causes.id')
+                                                ->where('ameliorations.type', 'contentieux')
+                                                ->where('causes.id', $types_cau->id)
+                                                ->count();
+        }
+
+        return view('statistique.index', ['statistics' => $statistics, 'processus' => $processus, 'nbre_processus' => $nbre_processus, 'nbre_risque' => $nbre_risque, 'nbre_cause' => $nbre_cause, 'nbre_ap' => $nbre_ap, 'nbre_am' => $nbre_am, 'nbre_ed_ap' => $nbre_ed_ap,'nbre_ehd_ap' => $nbre_ehd_ap,'nbre_hd_ap' => $nbre_hd_ap , 'nbre_ac' => $nbre_ac,'nbre_poste' => $nbre_poste, 'risques' => $risques,'color_para' => $color_para, 'color_intervals' => $color_intervals, 'color_interval_nbre' => $color_interval_nbre, 'users' => $users, 'nbre_am_nci' => $nbre_am_nci, 'nbre_am_r' => $nbre_am_r, 'nbre_am_c' => $nbre_am_c, 'nbre_user' => $nbre_user,'his' => $his,'nbre_ris_soumis' => $nbre_ris_soumis,'nbre_ris_n_valider' => $nbre_ris_n_valider,'nbre_ris_valider' => $nbre_ris_valider,'staut_am_soumis' => $staut_am_soumis, 'staut_am_rejeter' => $staut_am_rejeter, 'staut_am_valider' => $staut_am_valider, 'staut_am_eff' => $staut_am_eff, 'staut_am_clotu' => $staut_am_clotu,'types_processus' => $types_processus, 'types_risque' => $types_risque, 'types_cause' => $types_cause,]);
     }
 
     public function get_processus($id)
