@@ -192,7 +192,7 @@
                         // Si toutes les cases sont cochées, décocher la dernière case cochée
                         checkbox.checked = false;
 
-                        toastr.info(`Impossible de supprimer cet objectif`);
+                        NioApp.Toast("<h5>information</h5><p>Impossible de supprimer cet objectif.</p>", "info", {position: "top-right"});
                     }
                 });
             });
@@ -220,7 +220,7 @@
             // Parcourir la liste des fichiers
             pdfFiles.forEach(function(pdfFile) {
                 if (selectedFileName === pdfFile.pdf_nom) {
-                    toastr.error("Ce fichier PDF existe déjà.");
+                    NioApp.Toast("<h5>information</h5><p>Ce fichier PDF existe déjà.</p>", "info", {position: "top-right"});
                     fileInput.value = ''; // Vider l'input
                     trouver = 1;
                     

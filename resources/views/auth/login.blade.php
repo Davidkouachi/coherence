@@ -94,20 +94,20 @@
             var password1 = document.getElementById("password").value;
 
             if (!email || !password1 ) {
-                NioApp.Toast("<h5>Alert</h5><p>Veuillez remplir tous les champs.", "warning", {position: "top-right"});
+                NioApp.Toast("<h5>Alert</h5><p>Veuillez remplir tous les champs.</p>", "warning", {position: "top-right"});
                 return false;
             }
 
             var emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
             if (!emailRegex.test(email)) {
-                NioApp.Toast("<h5>Information</h5><p>Veuillez saisir une adresse e-mail valide.", "info", {position: "top-right"});
+                NioApp.Toast("<h5>Information</h5><p>Veuillez saisir une adresse e-mail valide.</p>", "info", {position: "top-right"});
                 return false;
             }
 
             var password = document.getElementById("password").value;
             if (!verifierMotDePasse(password)) {
                 event.preventDefault();
-                NioApp.Toast("<h5>Erreur</h5><p>Le mot de passe doit comporter au moins 8 caractères, une lettre majuscule, une lettre minuscule et un chiffre.", "error", {position: "top-right"});
+                NioApp.Toast("<h5>Erreur</h5><p>Le mot de passe doit comporter au moins 8 caractères, une lettre majuscule, une lettre minuscule et un chiffre.</p>", "error", {position: "top-right"});
                 return false;
             }
 
@@ -141,19 +141,19 @@
 
     @if (session('error_login'))
         <script>
-            NioApp.Toast("<h5>Erreur</h5><p>{{ session('error_login') }}.", "error", {position: "top-right"});
+            NioApp.Toast("<h5>Erreur</h5><p>{{ session('error_login') }}.</p>", "error", {position: "top-right"});
         </script>
         {{ session()->forget('error_login') }}
     @endif
     @if (session('info'))
         <script>
-            NioApp.Toast("<h5>Information</h5><p>{{ session('info') }}.", "info", {position: "top-right"});
+            NioApp.Toast("<h5>Information</h5><p>{{ session('info') }}.</p>", "info", {position: "top-right"});
         </script>
         {{ session()->forget('info') }}
     @endif
     @if (session('success'))
         <script>
-            NioApp.Toast("<h5>Succès</h5><p>{{ session('success') }}.", "success", {position: "top-right"});
+            NioApp.Toast("<h5>Succès</h5><p>{{ session('success') }}.</p>", "success", {position: "top-right"});
         </script>
         {{ session()->forget('success') }}
     @endif

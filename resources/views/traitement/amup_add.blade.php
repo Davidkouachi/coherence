@@ -136,8 +136,8 @@
                                                 <div class="row g-4">
                                                     <div class="col-lg-6">
                                                         <div class="form-group">
-                                                            <div class="form-control-wrap">
-                                                                <select class="form-select js-select2 select_rech" id="causeSelect" data-search="on" data-placeholder="Recherche Cause" name="causeSelect_id">
+                                                            <div class="form-control-wrap d-flex">
+                                                                <select class="form-select js-select2 select_rech " id="causeSelect" data-search="on" data-placeholder="Recherche Cause" name="causeSelect_id">
                                                                     <option value="">
                                                                     </option>
                                                                     @foreach($causes_selects as $causes_select)
@@ -146,13 +146,16 @@
                                                                     </option>
                                                                     @endforeach
                                                                 </select>
+                                                                <a class="btn btn-outline-warning " id="vue_cause">
+                                                                    <em class="icon ni ni-eye"></em>
+                                                                </a>
                                                             </div>
                                                         </div>
                                                     </div>
                                                     <div class="col-lg-6">
                                                         <div class="form-group">
-                                                            <div class="form-control-wrap">
-                                                                <select class="form-select js-select2 select_rech" id="risqueSelect" data-search="on" data-placeholder="Recherche Risque" name="risqueSelect_id">
+                                                            <div class="form-control-wrap d-flex">
+                                                                <select class="form-select js-select2 select_rech " id="risqueSelect" data-search="on" data-placeholder="Recherche Risque" name="risqueSelect_id">
                                                                     <option value="">
                                                                     </option>
                                                                     @foreach($risques as $risque)
@@ -161,6 +164,9 @@
                                                                     </option>
                                                                     @endforeach
                                                                 </select>
+                                                                <a class="btn btn-outline-warning " id="vue_risque">
+                                                                    <em class="icon ni ni-eye"></em>
+                                                                </a>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -334,12 +340,8 @@
                                                                             <label class="form-label" for="controle">
                                                                                 Coût
                                                                             </label>
-                                                                            @php
-                                                                            $cout = $risque->cout;
-                                                                            $formatcommande = number_format($cout, 0, '.', '.');
-                                                                            @endphp
                                                                             <div class="form-control-wrap">
-                                                                                <input value="{{ $formatcommande }} Fcfa" readonly type="text" class="form-control" id="controle">
+                                                                                <input value="{{ $risque->cout }} Fcfa" readonly type="text" class="form-control" id="controle">
                                                                             </div>
                                                                         </div>
                                                                     </div>
@@ -443,12 +445,8 @@
                                                                             <label class="form-label" for="controle">
                                                                                 Coût
                                                                             </label>
-                                                                            @php
-                                                                            $cout2 = $risque->cout_residuel;
-                                                                            $formatcommande2 = number_format($cout2, 0, '.', '.');
-                                                                            @endphp
                                                                             <div class="form-control-wrap">
-                                                                                <input value="{{ $formatcommande2 }} Fcfa" readonly type="text" class="form-control" id="controle">
+                                                                                <input value="{{ $risque->cout_residuel }} Fcfa" readonly type="text" class="form-control" id="controle">
                                                                             </div>
                                                                         </div>
                                                                     </div>
@@ -669,12 +667,8 @@
                                                                             <label class="form-label" for="controle">
                                                                                 Coût
                                                                             </label>
-                                                                            @php
-                                                                            $cout2 = $causes_select->cout;
-                                                                            $formatcommande2 = number_format($cout2, 0, '.', '.');
-                                                                            @endphp
                                                                             <div class="form-control-wrap">
-                                                                                <input value="{{ $formatcommande2 }} Fcfa" readonly type="text" class="form-control" id="controle">
+                                                                                <input value="{{ $causes_select->cout }} Fcfa" readonly type="text" class="form-control" id="controle">
                                                                             </div>
                                                                         </div>
                                                                     </div>
@@ -778,12 +772,8 @@
                                                                             <label class="form-label" for="controle">
                                                                                 Coût
                                                                             </label>
-                                                                            @php
-                                                                            $cout2 = $causes_select->cout_residuel;
-                                                                            $formatcommande2 = number_format($cout2, 0, '.', '.');
-                                                                            @endphp
                                                                             <div class="form-control-wrap">
-                                                                                <input value="{{ $formatcommande2 }} Fcfa" readonly type="text" class="form-control" id="controle">
+                                                                                <input value="{{ $causes_select->cout_residuel }} Fcfa" readonly type="text" class="form-control" id="controle">
                                                                             </div>
                                                                         </div>
                                                                     </div>
@@ -897,32 +887,52 @@
 
 <script>
     $(document).ready(function() {
-        // Écoutez l'événement de changement de l'élément select
         $('#risqueSelect').on('change', function() {
-            // Récupérez la valeur sélectionnée
+            
             var selectedValue = $(this).val();
-            // Fermez tous les modals existants
             $('.modal').modal('hide');
-            $(`#modalVurisque${selectedValue}`).modal('hide');
-            // Ouvrez le modal correspondant à la valeur sélectionnée
             $(`#modalVurisque${selectedValue}`).modal('show');
         });
     });
 </script>
 
 <script>
+    document.getElementById("vue_cause").addEventListener("click", function(event) {
+        event.preventDefault();
+            var id_cause = $("#causeSelect").val();
+
+            if (id_cause == '') {
+                NioApp.Toast("<h5>Alert</h5><p>Veuillez sélectionner une cause.</p>.", "warning", {position: "top-right"});
+            }else{
+                $('.modal').modal('hide');
+                $(`#modalVucause${id_cause}`).modal('show'); 
+            }
+        });
+</script>
+
+<script>
     $(document).ready(function() {
-        // Écoutez l'événement de changement de l'élément select
         $('#causeSelect').on('change', function() {
-            // Récupérez la valeur sélectionnée
+            
             var selectedValu = $(this).val();
-            // Fermez tous les modals existants
             $('.modal').modal('hide');
-            $(`#modalVucause${selectedValu}`).modal('hide');
-            // Ouvrez le modal correspondant à la valeur sélectionnée
             $(`#modalVucause${selectedValu}`).modal('show');
         });
     });
+</script>
+
+<script>
+    document.getElementById("vue_risque").addEventListener("click", function(event) {
+        event.preventDefault();
+            var id_risque = $("#risqueSelect").val();
+
+            if (id_risque == '') {
+                NioApp.Toast("<h5>Alert</h5><p>Veuillez sélectionner un risque.</p>.", "warning", {position: "top-right"});
+            }else{
+                $('.modal').modal('hide');
+                $(`#modalVurisque${id_risque}`).modal('show'); 
+            }
+        });
 </script>
 
 <script>
@@ -948,15 +958,15 @@
                                 method: 'GET',
                                 success: function(data) {
                                     var nbre = data.nbre;
-                                    NioApp.Toast("<h5>Information</h5><p>" + nbre + " Action(s) trouvée(s).", "info", {position: "top-right"});
+                                    NioApp.Toast("<h5>Information</h5><p>" + nbre + " Action(s) trouvée(s).</p>", "info", {position: "top-right"});
                                     addGroups_non_accepte(type, data);
                                 },
                                 error: function() {
-                                    NioApp.Toast("<h5>Erreur</h5><p>Une erreur s'est produite lors de la récupération des informations.", "error", {position: "top-right"});
+                                    NioApp.Toast("<h5>Erreur</h5><p>Une erreur s'est produite lors de la récupération des informations.</p>", "error", {position: "top-right"});
                                 }
                             });
                         } else {
-                            NioApp.Toast("<h5>Alert</h5><p>Veuillez sélectionner une cause.", "warning", {position: "top-right"});
+                            NioApp.Toast("<h5>Alert</h5><p>Veuillez sélectionner une cause.</p>", "warning", {position: "top-right"});
                         }
                     } else if (choixSelect === "risque") {
                         if (selectedRisque !== '') {
@@ -965,19 +975,19 @@
                                 method: 'GET',
                                 success: function(data) {
                                     var nbre = data.nbre;
-                                    NioApp.Toast("<h5>Information</h5><p>"+nbre+" Action(s) trouvée(s).", "info", {position: "top-right"});
+                                    NioApp.Toast("<h5>Information</h5><p>"+nbre+" Action(s) trouvée(s).</p>", "info", {position: "top-right"});
                                     addGroups_non_accepte(type, data);
                                 },
                                 error: function() {
-                                    NioApp.Toast("<h5>Erreur</h5><p>Une erreur s'est produite lors de la récupération des informations.", "error", {position: "top-right"});
+                                    NioApp.Toast("<h5>Erreur</h5><p>Une erreur s'est produite lors de la récupération des informations.</p>", "error", {position: "top-right"});
                                 }
                             });
                         } else {
-                            NioApp.Toast("<h5>Alert</h5><p>Veuillez sélectionner un risque.", "warning", {position: "top-right"});
+                            NioApp.Toast("<h5>Alert</h5><p>Veuillez sélectionner un risque.</p>", "warning", {position: "top-right"});
                         }
                     }
                 } else {
-                    NioApp.Toast("<h5>Erreur</h5><p>Veuillez préciser le choix de sélection.", "error", {position: "top-right"});
+                    NioApp.Toast("<h5>Erreur</h5><p>Veuillez préciser le choix de sélection.</p>", "error", {position: "top-right"});
                 }
             });
         });

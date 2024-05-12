@@ -504,7 +504,7 @@
                 <div class="container-fluid">
                     <div class="nk-footer-wrap">
                         <div class="nk-footer-copyright">
-                            <span>© 2024 Cohérence.</span>
+                            <span>© <script>document.write(new Date().getFullYear())</script> Cohérence.</span>
                             <span><img height="30" width="30" src="/images/logo.png" alt="" class="me-5"></span>
                             <span id="anime" class=" badge rounded bg-danger">Version Pro</span>
                         </div>
@@ -682,25 +682,25 @@
 
     @if (session('success'))
         <script>
-            NioApp.Toast("<h5>Succès</h5><p>{{ session('success') }}.", "success", {position: "top-right"});
+            NioApp.Toast("<h5>Succès</h5><p>{{ session('success') }}.</p>", "success", {position: "top-right"});
         </script>
         {{ session()->forget('success') }}
     @endif
     @if (session('error'))
         <script>
-            NioApp.Toast("<h5>Erreur</h5><p>{{ session('error') }}.", "error", {position: "top-right"});
+            NioApp.Toast("<h5>Erreur</h5><p>{{ session('error') }}.</p>", "error", {position: "top-right"});
         </script>
         {{ session()->forget('error') }}
     @endif
     @if (session('warning'))
         <script>
-            NioApp.Toast("<h5>Alert</h5><p>{{ session('warning') }}.", "warning", {position: "top-right"});
+            NioApp.Toast("<h5>Alert</h5><p>{{ session('warning') }}.</p>", "warning", {position: "top-right"});
         </script>
         {{ session()->forget('warning') }}
     @endif
     @if (session('info'))
         <script>
-            NioApp.Toast("<h5>Information</h5><p>{{ session('info') }}.", "info", {position: "top-right"});
+            NioApp.Toast("<h5>Information</h5><p>{{ session('info') }}.</p>", "info", {position: "top-right"});
         </script>
         {{ session()->forget('info') }}
     @endif

@@ -27,14 +27,14 @@
                             <div class="col-md-12 col-xxl-12 " >
                                 <div class="card card-preview" style="background: transparent;">
                                     <div class="card-inner text-center">
-                                        <img height="20%" width="20%" src="{{asset('images/logo.png')}}" alt="">
+                                        <img height="150px" width="185px" src="{{asset('images/logo.png')}}">
                                     </div>
                                 </div>
                             </div>
                             <div class="col-md-12 col-xxl-12 " >
                                 <div class="card card-preview" style="background: transparent;">
                                     <div class="card-inner text-center">
-                                        <label class="form-label" style="font-size: 40px;">
+                                        <label class="form-label" style="font-size: 20px;">
                                             Coherence - risk - CRM
                                         </label>
                                     </div>

@@ -218,6 +218,38 @@
                             </div>
                         </div>
 
+                        <div class="col-md-12 col-xxl-12" id="groupesContainer">
+                            <div class="card card-bordered">
+                                <div class="card-inner">
+                                    <div class="card-head">
+                                        <h5 class="card-title">
+                                            Resultat de la recherche :
+                                            @if($am->choix_select === 'cause_risque_nt')
+                                                Aucun risque ou cause trouvé
+                                            @endif
+                                            @if($am->choix_select === 'risque')
+                                                Risque trouvé
+                                            @endif
+                                            @if($am->choix_select === 'cause')
+                                                Cause trouvée
+                                            @endif
+                                        </h5>
+                                    </div>
+                                    <div class="card-head">
+                                        <h5 class="card-title">
+                                            @if($am->choix_select === 'risque')
+                                                Risque : {{$am->nom_risque}}
+                                            @elseif($am->choix_select === 'cause')
+                                                Cause : {{$am->nom_cause}}
+                                            @elseif($am->choix_select === 'cause_risque_nt')
+                                                Nouveau Risque : {{$am->nom_new_risque}}
+                                            @endif
+                                        </h5>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
                         <div class="col-md-12 col-xxl-12 ">
                             <div class="card card-bordered">
                                 <div class="card-inner">
@@ -232,17 +264,6 @@
                                                                 <div class="card-inner">
                                                                     <div class="card-head">
                                                                         {{ $key+1 }}
-                                                                        <span class="badge badge-dot bg-primary">
-                                                                            @if($actions['trouve'] === 'new_risque')
-                                                                                Nouveau risque
-                                                                            @endif
-                                                                            @if($actions['trouve'] === 'risque')
-                                                                                Risque trouvé
-                                                                            @endif
-                                                                            @if($actions['trouve'] === 'cause')
-                                                                                Cause trouvée
-                                                                            @endif
-                                                                        </span>
                                                                     </div>
                                                                     <input type="text" value="{{ $actions['suivi_id'] }}" name="suivi_id[]" style="display: none;">
                                                                     <div class="row g-4">
@@ -388,7 +409,7 @@
                         // Si toutes les cases sont cochées, décocher la dernière case cochée
                         checkbox.checked = false;
 
-                        NioApp.Toast("<h5>Alert</h5><p>Impossible de supprimé cette action.", "warning", {position: "top-right"});
+                        NioApp.Toast("<h5>Alert</h5><p>Impossible de supprimé cette action.</p>", "warning", {position: "top-right"});
                     }
                 });
             });

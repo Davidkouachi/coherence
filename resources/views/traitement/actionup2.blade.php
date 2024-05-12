@@ -302,12 +302,6 @@
                                                                     <div class="form-control-wrap ">
                                                                         <input value="{{ $risque->cout }}" name="cout" type="tel" class="form-control text-center" id="cout">
                                                                     </div>
-                                                                    <script>
-                                                                        var inputElement = document.getElementById('cout');
-                                                                                inputElement.addEventListener('input', function() {
-                                                                                    this.value = this.value.replace(/[^0-9]/g, '');
-                                                                                });
-                                                                        </script>
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -443,12 +437,6 @@
                                                                 <div class="form-control-wrap">
                                                                     <input value="{{ $risque->cout_residuel }}" name="cout_residuel" type="tel" class="form-control text-center" id="cout_residuel">
                                                                 </div>
-                                                                <script>
-                                                                    var inputElement = document.getElementById('cout_residuel');
-                                                                                    inputElement.addEventListener('input', function() {
-                                                                                    this.value = this.value.replace(/[^0-9]/g, '');
-                                                                                });
-                                                                            </script>
                                                             </div>
                                                         </div>
                                                         <div class="col-lg-3">
@@ -1070,6 +1058,36 @@
         }
     });
 </script>
+
+<script>
+        function formatPrice(input) {
+            input = input.replace(/\./g, '');
+            
+            return input.replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+        }
+
+        document.getElementById('cout').addEventListener('input', function() {
+            this.value = formatPrice(this.value);
+        });
+
+        document.getElementById('cout_residuel').addEventListener('input', function() {
+            this.value = formatPrice(this.value);
+        });
+
+        document.getElementById('cout').addEventListener('keypress', function(event) {
+            const key = event.key;
+            if (isNaN(key)) {
+                event.preventDefault();
+            }
+        });
+
+        document.getElementById('cout_residuel').addEventListener('keypress', function(event) {
+            const key = event.key;
+            if (isNaN(key)) {
+                event.preventDefault();
+            }
+        });
+    </script>
 
 @endsection
 

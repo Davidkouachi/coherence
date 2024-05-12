@@ -245,37 +245,6 @@
         </div>
     @endforeach
 
-    @foreach ($processus as $processu)
-        <div class="modal fade" tabindex="-1" id="modalConfirme{{ $processu->id }}" aria-modal="true" role="dialog">
-            <div class="modal-dialog" role="document">
-                <div class="modal-content">
-                    <a href="#" class="close" data-bs-dismiss="modal">
-                        <em class="icon ni ni-cross"></em>
-                    </a>
-                    <div class="modal-body modal-body-lg text-center">
-                        <div class="nk-modal">
-                            <em class="nk-modal-icon icon icon-circle icon-circle-xxl ni ni-trash bg-danger"></em>
-                            <h4 class="nk-modal-title">Confirmation</h4>
-                            <div class="nk-modal-text">
-                                <div class="caption-text">
-                                    <span>Voulez-vous vraiment confirmer la validation ?</span>
-                                </div>
-                            </div>
-                            <div class="nk-modal-action">
-                                <a href="/suppr_processus/{{ $processu->id }}" class="btn btn-lg btn-mw btn-success me-2">
-                                    oui
-                                </a>
-                                <a href="#" class="btn btn-lg btn-mw btn-danger"data-bs-dismiss="modal">
-                                    non
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    @endforeach
-
     <script>
         Pusher.logToConsole = true;
 
@@ -299,25 +268,5 @@
                     });
         });
     </script>
-
-    <script>
-        document.addEventListener("DOMContentLoaded", function() {
-            const checkboxesCause = document.querySelectorAll('input[name^="suppr["]');
-
-            checkboxesCause.forEach(checkbox => {
-                checkbox.addEventListener('change', function() {
-                    const checkedCount = document.querySelectorAll('input[name^="suppr["]:checked').length;
-
-                    if (checkedCount === checkboxesCause.length) {
-                        // Si toutes les cases sont cochées, décocher la dernière case cochée
-                        checkbox.checked = false;
-
-                        toastr.info(`Impossible de supprimer cet objectif`);
-                    }
-                });
-            });
-        });
-    </script>
-
 
 @endsection

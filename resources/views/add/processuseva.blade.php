@@ -267,12 +267,6 @@
                                                                             <label id="labelcolor" class="form-label">Coût</label>
                                                                             <input placeholder="Entrer le montant" id="cout" autocomplete="off" required name="cout" type="text" class="form-control ">
                                                                         </div>
-                                                                        <script>
-                                                                            var inputElement = document.getElementById('cout');
-                                                                                inputElement.addEventListener('input', function() {
-                                                                                    this.value = this.value.replace(/[^0-9]/g, '');
-                                                                                });
-                                                                        </script>
                                                                     </div>
                                                                 </div>
                                                             </form>
@@ -361,12 +355,6 @@
                                                         <div class="form-group">
                                                             <label id="labelcolor" class="form-label">Coût</label>
                                                             <input placeholder="Entrer le montant" id="cout_residuel" autocomplete="off" required name="cout_residuel" type="text" class="form-control">
-                                                            <script>
-                                                                var inputElement = document.getElementById('cout_residuel');
-                                                                    inputElement.addEventListener('input', function() {
-                                                                    this.value = this.value.replace(/[^0-9]/g, '');
-                                                                });
-                                                            </script>
                                                         </div>
                                                     </div>
                                                     <div class="col-lg-3">
@@ -534,7 +522,7 @@
                                         </div>
                                     </div>
                                     <div class="col-md-12 col-xxl-12">
-                                        <div class="card card-preview">
+                                        <div class="card card-bordered card-preview">
                                             <div class="card-inner row g-gs">
                                                 <div class="col-12">
                                                     <div class="form-group text-center">
@@ -665,7 +653,7 @@
                 const objectifs = data.objectifs;
                 const nbre = data.nbre;
 
-                NioApp.Toast("<h5>Information</h5><p>" + nbre + " Objectif(s) trouvé(s).", "info", {position: "top-right"});
+                NioApp.Toast("<h5>Information</h5><p>" + nbre + " Objectif(s) trouvé(s).</p>", "info", {position: "top-right"});
 
                 listeObjectifs.innerHTML = "";
                 objectifs.forEach(objectif => {
@@ -687,7 +675,7 @@
 
         if (nom_cause.value === '' || dispositif.value === '') {
 
-            NioApp.Toast("<h5>Information</h5><p>Veuillez saisir une cause.", "info", {position: "top-right"});
+            NioApp.Toast("<h5>Information</h5><p>Veuillez saisir une cause.</p>", "info", {position: "top-right"});
 
         } else {
 
@@ -748,7 +736,7 @@
 
         if (actionp.value === '' || delai.value === '' || responsable_idp.value === '') {
 
-            NioApp.Toast("<h5>Information</h5><p>Veuillez saisir une action preventive.", "info", {position: "top-right"});
+            NioApp.Toast("<h5>Information</h5><p>Veuillez saisir une action preventive.</p>", "info", {position: "top-right"});
 
         } else {
 
@@ -829,7 +817,7 @@
 
         if (actionc.value === '' || responsable_idc.value === '') {
 
-            NioApp.Toast("<h5>Information</h5><p>Veuillez saisir une action corrective.", "info", {position: "top-right"});
+            NioApp.Toast("<h5>Information</h5><p>Veuillez saisir une action corrective.</p>", "info", {position: "top-right"});
 
         } else {
 
@@ -904,7 +892,7 @@
         pdfFiles.forEach(function(pdfFile) {
             if (selectedFileName === pdfFile.pdf_nom) {
 
-                NioApp.Toast("<h5>Erreur</h5><p>Ce fichier PDF existe déjà.", "error", {position: "top-right"});
+                NioApp.Toast("<h5>Erreur</h5><p>Ce fichier PDF existe déjà.</p>", "error", {position: "top-right"});
 
                 fileInput.value = ''; // Vider l'input
 
@@ -917,7 +905,7 @@
         pdfFiles2.forEach(function(pdfFile2) {
             if (selectedFileName === pdfFile2.pdf_nom) {
 
-                NioApp.Toast("<h5>Erreur</h5><p>Ce fichier PDF existe déjà.", "error", {position: "top-right"});
+                NioApp.Toast("<h5>Erreur</h5><p>Ce fichier PDF existe déjà.</p>", "error", {position: "top-right"});
 
                 fileInput.value = ''; // Vider l'input
                 trouver = 1;
@@ -955,6 +943,36 @@
         }
     });
 </script>
+
+    <script>
+        function formatPrice(input) {
+            input = input.replace(/\./g, '');
+            
+            return input.replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+        }
+
+        document.getElementById('cout').addEventListener('input', function() {
+            this.value = formatPrice(this.value);
+        });
+
+        document.getElementById('cout_residuel').addEventListener('input', function() {
+            this.value = formatPrice(this.value);
+        });
+
+        document.getElementById('cout').addEventListener('keypress', function(event) {
+            const key = event.key;
+            if (isNaN(key)) {
+                event.preventDefault();
+            }
+        });
+
+        document.getElementById('cout_residuel').addEventListener('keypress', function(event) {
+            const key = event.key;
+            if (isNaN(key)) {
+                event.preventDefault();
+            }
+        });
+    </script>
 
 @endsection
 

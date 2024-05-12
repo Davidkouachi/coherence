@@ -59,20 +59,6 @@ class ListeactionController extends Controller
         return view('liste.actionpreventive', ['actions' => $actions,  'postes' => $postes ]); // Utilisez $action->id au lieu de $request->id
     }
 
-    public function index_ac_eff()
-    {
-        $actions = Suivi_amelioration::join('ameliorations', 'suivi_ameliorations.amelioration_id', 'ameliorations.id')
-                        ->join('actions', 'suivi_ameliorations.action_id', 'actions.id')
-                        ->join('risques', 'actions.risque_id', 'risques.id')
-                        ->join('processuses', 'risques.processus_id', 'processuses.id')
-                        ->join('postes', 'actions.poste_id', 'postes.id')
-                        ->where('suivi_ameliorations.statut', 'realiser')
-                        ->select('Suivi_ameliorations.*', 'processuses.nom as processus', 'ameliorations.non_conformite as non_conformite', 'ameliorations.statut as statut_am', 'ameliorations.date_validation as date_validation_am','risques.nom as risque', 'postes.nom as poste', 'actions.action as action', 'actions.date as date')
-                        ->get();
-
-        return view('liste.actioncorrectiveeff', ['actions' => $actions]);
-    }
-
     public function index_ac()
     {
         $actions = Action::join('risques', 'actions.risque_id', 'risques.id')

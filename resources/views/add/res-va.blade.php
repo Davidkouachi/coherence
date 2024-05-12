@@ -802,13 +802,13 @@
 
             var emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/; // Expression régulière pour valider l'e-mail
             if (!emailRegex.test(email)) {
-                toastr.info("Veuillez saisir une adresse e-mail valide.");
+                NioApp.Toast("<h5>Information</h5><p>Veuillez saisir une adresse e-mail valide.</p>", "info", {position: "top-right"});
                 return false;
             }
             
             if (!verifierMotDePasse(password1)) {
                 // Afficher un message d'erreur
-                toastr.info("Le mot de passe doit comporter au moins 8 caractères, une lettre majuscule, une lettre minuscule et un chiffre.");
+                NioApp.Toast("<h5>Information</h5><p>Le mot de passe doit comporter au moins 8 caractères, une lettre majuscule, une lettre minuscule et un chiffre.</p>", "info", {position: "top-right"});
                 return false;
             }
 

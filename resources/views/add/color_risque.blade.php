@@ -38,7 +38,7 @@
                                     <div class="card-title-group">
                                         <div class="card-title">
                                             <h5 class="title">
-                                                Couleurs en fonction des intervalles
+                                                Paraméttrage des intervalles
                                             </h5>
                                         </div>
                                         @if($color_para->nbre_color > $color_interval_nbre )
@@ -54,9 +54,9 @@
                                         @endif
                                     </div>
                                 </div>
-                                <div class="card-inner border-bottom">
-                                    <div class="card-title-group align-items-center justify-content-center">
-                                        <div class="row g-4 mb-0" id="objectifs-container">
+                                <div class="card-inner pt-0">
+                                    <div class="card-title-group align-items-center justify-content-center row g-gs pt-0">
+                                        <div class="row g-gs col-lg-12">
                                             <div class="col-lg-3">
                                                 <div class="form-group text-center">
                                                     <label class="form-label" for="Cause">
@@ -100,7 +100,8 @@
                                                     </div>
                                                 </div>
                                             </div>
-
+                                        </div>
+                                        <div class="row g-gs col-lg-12">
                                             @if( intval($color_para->nbre_color) > intval($color_interval_nbre) )
                                                 <div class="col-lg-12">
                                                     <div class="form-group text-center">
@@ -168,8 +169,20 @@
                                         </div>
                                     </div>
                                 </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-12 col-xxl-12">
+                            <div class="card card-bordered card-full">
+                                <div class="card-inner border-bottom">
+                                    <div class="card-title-group">
+                                        <div class="card-title">
+                                            <h5 class="title">
+                                                Couleurs et intervalles
+                                            </h5>
+                                        </div>
+                                    </div>
+                                </div>
                                 <ul class="nk-activity" style="margin: 0 auto;">
-
                                     @if( $color_interval_nbre > 0 )
                                         @foreach($color_intervals as $key => $color_interval )
                                         <li class="nk-activity-item border-0">
@@ -298,7 +311,6 @@
         </div>
     </div>
 </div>
-
 
 <div class="modal fade zoom" tabindex="-1" id="modalColor_interval_plus">
     <div class="modal-dialog modal-lg" role="document" style="width: 100%;">

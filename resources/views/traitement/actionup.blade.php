@@ -103,7 +103,6 @@
                                                     <thead>
                                                         <tr>
                                                             <th></th>
-                                                            <th>Processus</th>
                                                             <th>Risque</th>
                                                             <th>Evaluation</th>
                                                             <th>Date de création</th>
@@ -114,7 +113,6 @@
                                                         @foreach ($risques as $key => $risque)
                                                             <tr>
                                                                 <td>{{ $key+1 }}</td>
-                                                                <td>{{ $risque->processus }}</td>
                                                                 <td>{{ $risque->nom }}</td>
                                                                 @php
                                                                     $colorMatchFound = false;

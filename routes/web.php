@@ -118,7 +118,6 @@ Route::middleware(['auth'])->group(function () {
 
     /*--Acton corrective-------------------------------------------------------------------------------------------------------------*/
         Route::get('/Liste Action Corrective', [ListeactionController::class, 'index_ac'])->name('index_ac');
-        Route::get('/Liste Action Corrective effectuée', [ListeactionController::class, 'index_ac_eff'])->name('index_ac_eff');
         Route::get('/Suivi des actions correctives', [SuiviactionController::class, 'index_suiviactionc'])->name('index_suiviactionc');
         Route::post('/Suivi_actionc/{id}', [SuiviactionController::class, 'add_suivi_actionc'])->name('add_suivi_actionc');
         Route::post('/actionc_modif', [ListeactionController::class, 'actionc_modif'])->name('actionc_modif');

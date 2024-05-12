@@ -106,7 +106,7 @@
                                                 </div>
                                                 <div class="row g-4 ">
                                                     <div class="col-lg-4">
-                                                        <div class="form-group text-center">
+                                                        <div class="form-group ">
                                                             <div class="custom-control custom-radio">
                                                                 <input required type="radio" class="custom-control-input" name="type" id="customRadio7" value="non_conformite_interne">
                                                                 <label class="custom-control-label" for="customRadio7">
@@ -116,7 +116,7 @@
                                                         </div>
                                                     </div>
                                                     <div class="col-lg-4">
-                                                        <div class="form-group text-center">
+                                                        <div class="form-group ">
                                                             <div class="custom-control custom-radio">
                                                                 <input required type="radio" class="custom-control-input" name="type" id="customRadio6" value="reclamation">
                                                                 <label class="custom-control-label" for="customRadio6">
@@ -126,7 +126,7 @@
                                                         </div>
                                                     </div>
                                                     <div class="col-lg-4">
-                                                        <div class="form-group text-center">
+                                                        <div class="form-group ">
                                                             <div class="custom-control custom-radio">
                                                                 <input required type="radio" class="custom-control-input" name="type" id="customRadio5" value="contentieux">
                                                                 <label class="custom-control-label" for="customRadio5">
@@ -253,7 +253,7 @@
                                         </div>
                                     </div>
 
-                                    <div class="col-md-12 col-xxl-12" id="groupesContainer">
+                                    <div class="col-md-12 col-xxl-12" >
                                         <div class="card card-bordered">
                                             <div class="card-inner">
                                                 <div class="card-head">
@@ -265,8 +265,8 @@
                                                 <div class="row g-4">
                                                     <div class="col-lg-6">
                                                         <div class="form-group">
-                                                            <div class="form-control-wrap">
-                                                                <select class="form-select js-select2 select_rech" id="causeSelect" data-search="on" data-placeholder="Recherche Cause" name="causeSelect_id">
+                                                            <div class="form-control-wrap d-flex">
+                                                                <select class="form-select js-select2 select_rech" id="causeSelect" data-search="on" data-placeholder="Recherche Cause" name="causeSelect_id" style="margin-right: 10px;">
                                                                     <option value="">
                                                                     </option>
                                                                     @foreach($causes_selects as $causes_select)
@@ -275,12 +275,15 @@
                                                                     </option>
                                                                     @endforeach
                                                                 </select>
+                                                                <a class="btn btn-outline-warning " id="vue_cause">
+                                                                    <em class="icon ni ni-eye"></em>
+                                                                </a>
                                                             </div>
                                                         </div>
                                                     </div>
                                                     <div class="col-lg-6">
                                                         <div class="form-group">
-                                                            <div class="form-control-wrap">
+                                                            <div class="form-control-wrap d-flex">
                                                                 <select class="form-select js-select2 select_rech" id="risqueSelect" data-search="on" data-placeholder="Recherche Risque" name="risqueSelect_id">
                                                                     <option value="">
                                                                     </option>
@@ -290,13 +293,28 @@
                                                                     </option>
                                                                     @endforeach
                                                                 </select>
+                                                                </p>
                                                             </div>
                                                         </div>
                                                     </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-12 col-xxl-12" >
+                                        <div class="card card-bordered">
+                                            <div class="card-inner">
+                                                <div class="card-head">
+                                                    <h5 class="card-title">
+                                                        Résultat de la recherche
+                                                    </h5>
+                                                </div>
+                                                <div class="row g-gs">
                                                     <div class="col-lg-12" id="div_choix">
                                                         <div class="row g-2">
                                                             <div class="col-md-4">
-                                                                <div class="form-group text-center">
+                                                                <div class="form-group">
                                                                     <div class="custom-control custom-radio">
                                                                         <input required type="radio" class="custom-control-input choix_select" name="choix_select" id="choixcause" value="cause">
                                                                         <label class="custom-control-label" for="choixcause">
@@ -306,7 +324,7 @@
                                                                 </div>
                                                             </div>
                                                             <div class="col-md-4">
-                                                                <div class="form-group text-center">
+                                                                <div class="form-group">
                                                                     <div class="custom-control custom-radio">
                                                                         <input required type="radio" class="custom-control-input choix_select" name="choix_select" id="choixnt" value="cause_risque_nt">
                                                                         <label class="custom-control-label" for="choixnt">
@@ -316,7 +334,7 @@
                                                                 </div>
                                                             </div>
                                                             <div class="col-md-4">
-                                                                <div class="form-group text-center">
+                                                                <div class="form-group">
                                                                     <div class="custom-control custom-radio">
                                                                         <input required type="radio" class="custom-control-input choix_select" name="choix_select" id="choixrisque" value="risque">
                                                                         <label class="custom-control-label" for="choixrisque">
@@ -518,12 +536,8 @@
                                                                             <label class="form-label" for="controle">
                                                                                 Coût
                                                                             </label>
-                                                                            @php
-                                                                            $cout = $risque->cout;
-                                                                            $formatcommande = number_format($cout, 0, '.', '.');
-                                                                            @endphp
                                                                             <div class="form-control-wrap">
-                                                                                <input value="{{ $formatcommande }} Fcfa" readonly type="text" class="form-control" id="controle">
+                                                                                <input value="{{ $risque->cout }} Fcfa" readonly type="text" class="form-control" id="controle">
                                                                             </div>
                                                                         </div>
                                                                     </div>
@@ -627,12 +641,8 @@
                                                                             <label class="form-label" for="controle">
                                                                                 Coût
                                                                             </label>
-                                                                            @php
-                                                                            $cout2 = $risque->cout_residuel;
-                                                                            $formatcommande2 = number_format($cout2, 0, '.', '.');
-                                                                            @endphp
                                                                             <div class="form-control-wrap">
-                                                                                <input value="{{ $formatcommande2 }} Fcfa" readonly type="text" class="form-control" id="controle">
+                                                                                <input value="{{ $risque->cout_residuel }} Fcfa" readonly type="text" class="form-control" id="controle">
                                                                             </div>
                                                                         </div>
                                                                     </div>
@@ -853,12 +863,8 @@
                                                                             <label class="form-label" for="controle">
                                                                                 Coût
                                                                             </label>
-                                                                            @php
-                                                                            $cout2 = $causes_select->cout;
-                                                                            $formatcommande2 = number_format($cout2, 0, '.', '.');
-                                                                            @endphp
                                                                             <div class="form-control-wrap">
-                                                                                <input value="{{ $formatcommande2 }} Fcfa" readonly type="text" class="form-control" id="controle">
+                                                                                <input value="{{ $causes_select->cout }} Fcfa" readonly type="text" class="form-control" id="controle">
                                                                             </div>
                                                                         </div>
                                                                     </div>
@@ -962,12 +968,8 @@
                                                                             <label class="form-label" for="controle">
                                                                                 Coût
                                                                             </label>
-                                                                            @php
-                                                                            $cout2 = $causes_select->cout_residuel;
-                                                                            $formatcommande2 = number_format($cout2, 0, '.', '.');
-                                                                            @endphp
                                                                             <div class="form-control-wrap">
-                                                                                <input value="{{ $formatcommande2 }} Fcfa" readonly type="text" class="form-control" id="controle">
+                                                                                <input value="{{ $causes_select->cout_residuel }} Fcfa" readonly type="text" class="form-control" id="controle">
                                                                             </div>
                                                                         </div>
                                                                     </div>
@@ -1083,16 +1085,12 @@
     $(document).ready(function() {
         // Écoutez l'événement de changement de l'élément select
         $('#risqueSelect').on('change', function() {
-            // Récupérez la valeur sélectionnée
+            
             var selectedValue = $(this).val();
-            // Fermez tous les modals existants
             $('.modal').modal('hide');
-            $(`#modalVurisque${selectedValue}`).modal('hide');
-            // Ouvrez le modal correspondant à la valeur sélectionnée
             $(`#modalVurisque${selectedValue}`).modal('show');
 
             var dynamicFields = document.getElementById("dynamic-fields");
-            // Supprimer le contenu existant
             while (dynamicFields.firstChild) {
                 dynamicFields.removeChild(dynamicFields.firstChild);
             }
@@ -1102,25 +1100,49 @@
 </script>
 
 <script>
+    document.getElementById("vue_cause").addEventListener("click", function(event) {
+        event.preventDefault();
+            var id_cause = $("#causeSelect").val();
+
+            if (id_cause == '') {
+                NioApp.Toast("<h5>Alert</h5><p>Veuillez sélectionner une cause.</p>.", "warning", {position: "top-right"});
+            }else{
+                $('.modal').modal('hide');
+                $(`#modalVucause${id_cause}`).modal('show'); 
+            }
+        });
+</script>
+
+<script>
     $(document).ready(function() {
         // Écoutez l'événement de changement de l'élément select
         $('#causeSelect').on('change', function() {
-            // Récupérez la valeur sélectionnée
+            
             var selectedValu = $(this).val();
-            // Fermez tous les modals existants
             $('.modal').modal('hide');
-            $(`#modalVucause${selectedValu}`).modal('hide');
-            // Ouvrez le modal correspondant à la valeur sélectionnée
             $(`#modalVucause${selectedValu}`).modal('show');
 
             var dynamicFields = document.getElementById("dynamic-fields");
-            // Supprimer le contenu existant
             while (dynamicFields.firstChild) {
                 dynamicFields.removeChild(dynamicFields.firstChild);
             }
             document.getElementById("btn_enrg").style.display = "none";
         });
     });
+</script>
+
+<script>
+    document.getElementById("vue_risque").addEventListener("click", function(event) {
+        event.preventDefault();
+            var id_risque = $("#risqueSelect").val();
+
+            if (id_risque == '') {
+                NioApp.Toast("<h5>Alert</h5><p>Veuillez sélectionner un risque.</p>.", "warning", {position: "top-right"});
+            }else{
+                $('.modal').modal('hide');
+                $(`#modalVurisque${id_risque}`).modal('show'); 
+            }
+        });
 </script>
 
 <script>
@@ -1287,15 +1309,15 @@
                                 method: 'GET',
                                 success: function(data) {
                                     var nbre = data.nbre;
-                                    NioApp.Toast("<h5>Information</h5><p>" + nbre + " Action(s) trouvée(s).", "info", {position: "top-right"});
+                                    NioApp.Toast("<h5>Information</h5><p>" + nbre + " Action(s) trouvée(s).</p>", "info", {position: "top-right"});
                                     addGroups_non_accepte(type, data);
                                 },
                                 error: function() {
-                                    NioApp.Toast("<h5>Erreur</h5><p>Une erreur s'est produite lors de la récupération des informations.", "error", {position: "top-right"});
+                                    NioApp.Toast("<h5>Erreur</h5><p>Une erreur s'est produite lors de la récupération des informations.</p>", "error", {position: "top-right"});
                                 }
                             });
                         } else {
-                            NioApp.Toast("<h5>Alert</h5><p>Veuillez sélectionner une cause.", "warning", {position: "top-right"});
+                            NioApp.Toast("<h5>Alert</h5><p>Veuillez sélectionner une cause.</p>", "warning", {position: "top-right"});
                         }
                     } else if (choixSelect === "risque") {
                         if (selectedRisque !== '') {
@@ -1304,19 +1326,19 @@
                                 method: 'GET',
                                 success: function(data) {
                                     var nbre = data.nbre;
-                                    NioApp.Toast("<h5>Information</h5><p>"+nbre+" Action(s) trouvée(s).", "info", {position: "top-right"});
+                                    NioApp.Toast("<h5>Information</h5><p>"+nbre+" Action(s) trouvée(s).</p>", "info", {position: "top-right"});
                                     addGroups_non_accepte(type, data);
                                 },
                                 error: function() {
-                                    NioApp.Toast("<h5>Erreur</h5><p>Une erreur s'est produite lors de la récupération des informations.", "error", {position: "top-right"});
+                                    NioApp.Toast("<h5>Erreur</h5><p>Une erreur s'est produite lors de la récupération des informations.</p>", "error", {position: "top-right"});
                                 }
                             });
                         } else {
-                            NioApp.Toast("<h5>Alert</h5><p>Veuillez sélectionner un risque.", "warning", {position: "top-right"});
+                            NioApp.Toast("<h5>Alert</h5><p>Veuillez sélectionner un risque.</p>", "warning", {position: "top-right"});
                         }
                     }
                 } else {
-                    NioApp.Toast("<h5>Erreur</h5><p>Veuillez préciser le choix de sélection.", "error", {position: "top-right"});
+                    NioApp.Toast("<h5>Erreur</h5><p>Veuillez préciser le choix de sélection.</p>", "error", {position: "top-right"});
                 }
             });
         });

@@ -176,7 +176,7 @@
             // Parcourir la liste des fichiers
             pdfFiles.forEach(function(pdfFile) {
                 if (selectedFileName === pdfFile.pdf_nom) {
-                    toastr.error("Ce fichier PDF existe déjà.");
+                    NioApp.Toast("<h5>Erreur</h5><p>Ce fichier PDF existe déjà.</p>", "error", {position: "top-right"});
                     fileInput.value = ''; // Vider l'input
                     trouver = 1;
                     
@@ -186,7 +186,7 @@
             });
             pdfFiles2.forEach(function(pdfFile2) {
                 if (selectedFileName === pdfFile2.pdf_nom) {
-                    toastr.error("Ce fichier PDF existe déjà.");
+                    NioApp.Toast("<h5>Erreur</h5><p>Ce fichier PDF existe déjà.</p>", "error", {position: "top-right"});
                     fileInput.value = ''; // Vider l'input
                     trouver = 1;
                     

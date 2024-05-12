@@ -169,6 +169,8 @@ class ListeamController extends Controller
                                     ->select('actions.*', 'postes.id as poste_id', 'processuses.id as processus_id', 'risques.nom as risque', 'causes.nom as cause')
                                     ->first();
 
+                        $am->nom_cause = $action->cause;
+
                         if ($action) {
                             $actionsDatam[$am->id][] = [
                                 'action' => $action->action,
@@ -191,6 +193,8 @@ class ListeamController extends Controller
                                     ->select('actions.*', 'postes.id as poste_id', 'processuses.id as processus_id', 'risques.nom as risque')
                                     ->first();
 
+                        $am->nom_risque = $action->risque;
+
                         if ($action) {
                             $actionsDatam[$am->id][] = [
                                 'action' => $action->action,
@@ -212,6 +216,8 @@ class ListeamController extends Controller
                                     ->where('actions.id', '=', $suivis->action_id)
                                     ->select('actions.*', 'postes.id as poste_id', 'processuses.id as processus_id', 'risques.nom as risque', 'causes.nom as cause')
                                     ->first();
+
+                        $am->nom_new_risque = $action->risque;
 
                         if ($action) {
                             $actionsDatam[$am->id][] = [

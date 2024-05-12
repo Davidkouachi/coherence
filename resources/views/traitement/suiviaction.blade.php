@@ -100,26 +100,6 @@
                                                             </div>
                                                         </div>
                                                     </div>
-                                                    <!--<div class="col-lg-6">
-                                                        <div class="form-group">
-                                                            <label class="form-label" for="Cause">
-                                                                Processus
-                                                            </label>
-                                                            <div class="form-control-wrap">
-                                                                <input disabled value="{{ $action->processus }}" type="text" class="form-control" readonly>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-lg-6">
-                                                        <div class="form-group">
-                                                            <label class="form-label" for="controle">
-                                                                Risque
-                                                            </label>
-                                                            <div class="form-control-wrap">
-                                                                <input disabled value="{{ $action->risque }}" type="text" class="form-control" readonly>
-                                                            </div>
-                                                        </div>
-                                                    </div>-->
                                                     <div class="col-lg-12">
                                                         <div class="form-group">
                                                             <label class="form-label" for="Coût">
