@@ -1,6 +1,6 @@
 @extends('app')
 
-@section('titre', 'Fiche Amélioration')
+@section('titre', "Fiche d'incident")
 
 @section('option_btn')
 
@@ -293,7 +293,9 @@
                                                                     </option>
                                                                     @endforeach
                                                                 </select>
-                                                                </p>
+                                                                <a class="btn btn-outline-warning " id="vue_risque">
+                                                                    <em class="icon ni ni-eye"></em>
+                                                                </a>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -326,9 +328,9 @@
                                                             <div class="col-md-4">
                                                                 <div class="form-group">
                                                                     <div class="custom-control custom-radio">
-                                                                        <input required type="radio" class="custom-control-input choix_select" name="choix_select" id="choixnt" value="cause_risque_nt">
-                                                                        <label class="custom-control-label" for="choixnt">
-                                                                            Cause / Risque non-trouvé
+                                                                        <input required type="radio" class="custom-control-input choix_select" name="choix_select" id="choixrisque" value="risque">
+                                                                        <label class="custom-control-label" for="choixrisque">
+                                                                            Risque trouvé
                                                                         </label>
                                                                     </div>
                                                                 </div>
@@ -336,9 +338,9 @@
                                                             <div class="col-md-4">
                                                                 <div class="form-group">
                                                                     <div class="custom-control custom-radio">
-                                                                        <input required type="radio" class="custom-control-input choix_select" name="choix_select" id="choixrisque" value="risque">
-                                                                        <label class="custom-control-label" for="choixrisque">
-                                                                            Risque trouvé
+                                                                        <input required type="radio" class="custom-control-input choix_select" name="choix_select" id="choixnt" value="cause_risque_nt">
+                                                                        <label class="custom-control-label" for="choixnt">
+                                                                            Cause / Risque non-trouvé
                                                                         </label>
                                                                     </div>
                                                                 </div>

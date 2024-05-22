@@ -22,6 +22,7 @@ use App\Http\Controllers\ParamettreController;
 use App\Http\Controllers\PosteController;
 use App\Http\Controllers\RisqueController;
 use App\Http\Controllers\HistoriqueController;
+use App\Http\Controllers\PanelController;
 
 
 /*--Connexion---------------------------------------------------------------------------------------------------------------*/

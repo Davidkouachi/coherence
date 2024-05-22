@@ -22,7 +22,7 @@
     </meta>
     </meta>
     </meta>
-</head>
+</head>index_ac_eff
 
 
 <body class="nk-body bg-lighter ">
@@ -183,7 +183,7 @@
                                     </ul>
                                 </li>
                                 @endif
-                                @if (session('user_auto')->new_risk === 'oui' || session('user_auto')->list_risk === 'oui' || session('user_auto')->val_risk === 'oui' || session('user_auto')->act_n_val === 'oui' || session('user_auto')->color_para === 'oui' )
+                                @if (session('user_auto')->new_risk === 'oui' || session('user_auto')->list_risk === 'oui' || session('user_auto')->val_risk === 'oui' || session('user_auto')->act_n_val === 'oui' || session('user_auto')->color_para === 'oui' || session('user_auto')->suivi_actp === 'oui' || session('user_auto')->list_actp === 'oui' || session('user_auto')->list_cause === 'oui')
                                 <li class="nk-menu-item has-sub">
                                     <a class="nk-menu-toggle btn " >
                                         <em class="ni ni-hot-fill me-2"></em>
@@ -208,6 +208,16 @@
                                                 <em class="ni ni-list-index me-1"></em>
                                                 <span class="nk-menu-text">
                                                     Liste des risques
+                                                </span>
+                                            </a>
+                                        </li>
+                                        @endif
+                                        @if(session('user_auto')->list_cause === 'oui')
+                                        <li >
+                                            <a class="nk-menu-link" href="{{ route("liste_cause") }}">
+                                                <em class="icon ni ni-property-add me-1"></em>
+                                                <span class="nk-menu-text ">
+                                                    Liste des causes
                                                 </span>
                                             </a>
                                         </li>
@@ -242,38 +252,6 @@
                                             </a>
                                         </li>
                                         @endif
-                                    </ul>
-                                </li>
-                                @endif
-                                @if (session('user_auto')->list_cause === 'oui' )
-                                <li class="nk-menu-item has-sub">
-                                    <a class="nk-menu-toggle btn " >
-                                        <em class="ni ni-alert me-2"></em>
-                                        <span class="nk-menu-text text-dark">
-                                            Causes
-                                        </span>
-                                    </a>
-                                    <ul class="nk-menu-sub">
-                                        <li >
-                                            <a class="nk-menu-link" href="{{ route("liste_cause") }}">
-                                                <em class="icon ni ni-property-add me-1"></em>
-                                                <span class="nk-menu-text ">
-                                                    Liste des causes
-                                                </span>
-                                            </a>
-                                        </li>
-                                    </ul>
-                                </li>
-                                @endif
-                                @if (session('user_auto')->suivi_actp === 'oui' || session('user_auto')->list_actp === 'oui' || session('user_auto')->suivi_actc === 'oui' || session('user_auto')->list_actc_eff === 'oui' || session('user_auto')->list_actc === 'oui')
-                                <li class="nk-menu-item has-sub">
-                                    <a class="nk-menu-toggle btn " >
-                                        <em class="ni ni-box-view-fill me-2"></em>
-                                        <span class="nk-menu-text text-dark">
-                                            Actions
-                                        </span>
-                                    </a>
-                                    <ul class="nk-menu-sub">
                                         @if (session('user_auto')->suivi_actp === 'oui' || session('user_auto')->list_actp === 'oui')
                                         <li class="nk-menu-item has-sub">
                                             <a class="nk-menu-link nk-menu-toggle" href="#">
@@ -306,52 +284,10 @@
                                             </ul>
                                         </li>
                                         @endif
-                                        @if (session('user_auto')->suivi_actc === 'oui' || session('user_auto')->list_actc_eff === 'oui' || session('user_auto')->list_actc === 'oui')
-                                        <li class="nk-menu-item has-sub">
-                                            <a class="nk-menu-link nk-menu-toggle" href="#">
-                                                <em class="ni ni-box-view-fill me-1"></em>
-                                                <span class="nk-menu-text">
-                                                    Action Corrective
-                                                </span>
-                                            </a>
-                                            <ul class="nk-menu-sub">
-                                                @if (session('user_auto')->suivi_actc === 'oui' )
-                                                <li class="nk-menu-item">
-                                                    <a class="nk-menu-link" href="{{ route('index_suiviactionc') }}">
-                                                        <em class="icon ni ni-view-list-sq me-1"></em>
-                                                        <span class="nk-menu-text">
-                                                            Tableau de suivi
-                                                        </span>
-                                                    </a>
-                                                </li>
-                                                @endif
-                                                <!--@if (session('user_auto')->list_actc_eff === 'oui')
-                                                <li class="nk-menu-item">
-                                                    <a class="nk-menu-link" href="{{ route('index_ac_eff') }}">
-                                                        <em class="ni ni-list-index me-1"></em>
-                                                        <span class="nk-menu-text">
-                                                            Actions éffectuées
-                                                        </span>
-                                                    </a>
-                                                </li>
-                                                @endif-->
-                                                @if (session('user_auto')->list_actc === 'oui')
-                                                <li class="nk-menu-item">
-                                                    <a class="nk-menu-link" href="{{ route('index_ac') }}">
-                                                        <em class="ni ni-list-index me-1"></em>
-                                                        <span class="nk-menu-text">
-                                                            Liste des actions
-                                                        </span>
-                                                    </a>
-                                                </li>
-                                                @endif
-                                            </ul>
-                                        </li>
-                                        @endif
                                     </ul>
                                 </li>
                                 @endif
-                                @if (session('user_auto')->fiche_am === 'oui' || session('user_auto')->list_am === 'oui' || session('user_auto')->val_am === 'oui' || session('user_auto')->am_n_val === 'oui')
+                                @if (session('user_auto')->fiche_am === 'oui' || session('user_auto')->list_am === 'oui' || session('user_auto')->val_am === 'oui' || session('user_auto')->am_n_val === 'oui' || session('user_auto')->suivi_actc === 'oui' || session('user_auto')->list_actc === 'oui')
                                 <li class="nk-menu-item has-sub">
                                     <a class="nk-menu-toggle btn " >
                                         <em class="ni ni-share-alt me-2"></em>
@@ -398,6 +334,38 @@
                                                     Fiche(s) non validé(s)
                                                 </span>
                                             </a>
+                                        </li>
+                                        @endif
+                                        @if (session('user_auto')->suivi_actc === 'oui' || session('user_auto')->list_actc === 'oui')
+                                        <li class="nk-menu-item has-sub">
+                                            <a class="nk-menu-link nk-menu-toggle" href="#">
+                                                <em class="icon ni ni-box-view-fill"></em>
+                                                <span class="nk-menu-text">
+                                                    Action Corrective
+                                                </span>
+                                            </a>
+                                            <ul class="nk-menu-sub">
+                                                @if (session('user_auto')->suivi_actc === 'oui' )
+                                                <li class="nk-menu-item">
+                                                    <a class="nk-menu-link" href="{{ route('index_suiviactionc') }}">
+                                                        <em class="icon ni ni-view-list-sq"></em>
+                                                        <span class="nk-menu-text">
+                                                            Tableau de suivi
+                                                        </span>
+                                                    </a>
+                                                </li>
+                                                @endif
+                                                @if (session('user_auto')->list_actc === 'oui')
+                                                <li class="nk-menu-item">
+                                                    <a class="nk-menu-link" href="{{ route('index_ac') }}">
+                                                        <em class="icon ni ni-list-index"></em>
+                                                        <span class="nk-menu-text">
+                                                            Liste des actions
+                                                        </span>
+                                                    </a>
+                                                </li>
+                                                @endif
+                                            </ul>
                                         </li>
                                         @endif
                                     </ul>
